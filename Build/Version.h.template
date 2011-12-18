@@ -1,0 +1,49 @@
+﻿#pragma once
+#ifndef VERSION_MAJOR
+#define VERSION_MAJOR ${Major}
+#endif
+#ifndef VERSION_MINOR
+#define VERSION_MINOR ${Minor}
+#endif
+#ifndef VERSION_BUILD
+#define VERSION_BUILD ${Build}
+#endif
+#ifndef VERSION_REVISION
+#define VERSION_REVISION ${Revision}
+#endif
+#ifndef VERSION_PRODUCTNAME_VALUE
+#define VERSION_PRODUCTNAME_VALUE "${ProductName}"
+#endif
+#ifndef VERSION_COMPANYNAME_VALUE
+#define VERSION_COMPANYNAME_VALUE "${CompanyName}"
+#endif
+#ifndef VERSION_LEGALCOPYRIGHT_VALUE
+#define VERSION_LEGALCOPYRIGHT_VALUE "${Copyright}"
+#endif
+#ifndef VERSION_LEGALTRADEMARK_VALUE
+#define VERSION_LEGALTRADEMARK_VALUE "${Trademark}"
+#endif
+#ifndef VERSION_VALUE
+#define VERSION_VALUE "${Major}.${Minor}.${Build}.${Revision}"
+#endif
+#ifndef BINARY_VERSION
+#define BINARY_VERSION ${Major},${Minor},${Build},${Revision}
+#endif
+#ifndef VERSION_FILEVERSION
+#define VERSION_FILEVERSION BINARY_VERSION
+#endif
+#ifndef VERSION_PRODUCTVERSION
+#define VERSION_PRODUCTVERSION BINARY_VERSION
+#endif
+#ifndef VERSION_FILEVERSION_VALUE
+#define VERSION_FILEVERSION_VALUE VERSION_VALUE
+#endif
+#ifndef VERSION_PRODUCTVERSION_VALUE
+#define VERSION_PRODUCTVERSION_VALUE VERSION_VALUE
+#endif
+#ifndef VERSION_PROJECT_SPECIAL_BUILD_VALUE
+#define VERSION_PROJECT_SPECIAL_BUILD_VALUE "${SpecialBuild}"
+#endif
+#ifndef VERSION_PROJECT_SPECIAL_BUILD
+#define VERSION_PROJECT_SPECIAL_BUILD ${SpecialBuildDefined}
+#endif

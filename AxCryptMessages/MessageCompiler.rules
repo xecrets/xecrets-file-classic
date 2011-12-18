@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualStudioToolFile
+	Name="Message Compiler"
+	Version="8.00"
+	>
+	<Rules>
+		<CustomBuildRule
+			Name="MessageCompiler"
+			DisplayName="Message Compiler"
+			CommandLine="mc -u -U $(InputFileName) -r res -h res"
+			Outputs="res\$(InputName).h;res\$(InputName).rc"
+			FileExtensions="*.mc"
+			ExecutionDescription="Compiling Messages"
+			>
+			<Properties>
+			</Properties>
+		</CustomBuildRule>
+	</Rules>
+</VisualStudioToolFile>

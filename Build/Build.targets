@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- You need MSBuild Community Tasks, at http://msbuildtasks.tigris.org/ -->
+<Project ToolsVersion="4.0" DefaultTargets="AxBuildVersion" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">Win32</Platform>
+        <OutputPlatformName Condition=" '$(OutputPlatformName)' == '' ">$(Platform)</OutputPlatformName>
+        <OutputName Condition=" '$(OutputName)' == '' ">AxCrypt</OutputName>
+        <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'x64' ">x64\$(Configuration)\</AxPlatformConfigurationDir>
+        <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'Win32' ">$(Configuration)\</AxPlatformConfigurationDir>
+        <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'x86' ">$(Configuration)\</AxPlatformConfigurationDir>
+        <AxSolutionDir>$(MSBuildThisFileDirectory)..\</AxSolutionDir>
+        <_AxSolutionWin32TargetDir>$(AxSolutionDir)$(Configuration)\</_AxSolutionWin32TargetDir>
+        <AxSolutionTargetDir>$(AxSolutionDir)$(AxPlatformConfigurationDir)</AxSolutionTargetDir>
+        <_AxVersionFilePath>$(MSBuildThisFileDirectory)Version.txt</_AxVersionFilePath>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <_AxPrivateBuildPath>..\Private\</_AxPrivateBuildPath>
+        <_AxPrivateBuildTargetsPath>$(_AxPrivateBuildPath)Private.targets</_AxPrivateBuildTargetsPath>
+    </PropertyGroup>
+
+    <!-- A GPL build is different, due to code signing and other issues. We do not distribute our private key in the GPL obviously for example -->
+    <PropertyGroup>
+        <AxIsGplBuild Condition=" !Exists('$(_AxPrivateBuildTargetsPath)') ">true</AxIsGplBuild>
+        <AxIsGplBuild Condition=" Exists('$(_AxPrivateBuildTargetsPath)') ">false</AxIsGplBuild>
+    </PropertyGroup>
+
+    <!-- This is the one and only place where we define which version is current. -->
+    <PropertyGroup>
+        <Major>1</Major>
+        <Minor>7</Minor>
+        <SpecialBuild></SpecialBuild>
+    </PropertyGroup>
+
+    <!-- Common string version resources go here. -->
+    <PropertyGroup>
+        <ProductName>AxCrypt</ProductName>
+        <CompanyName>Axantum Software AB</CompanyName>
+        <Copyright>Copyright \251 2002-2011 Svante Seleborg</Copyright>
+        <Trademark>All Rights Reserved</Trademark>
+    </PropertyGroup>
+
+    <!-- Always define something for SpecialBuild if we're building a Debug version -->
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <SpecialBuild>Debug$(SpecialBuild)</SpecialBuild>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(SpecialBuild)' == '' ">
+        <SpecialBuildDefined>0</SpecialBuildDefined>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(SpecialBuild)' != '' ">
+        <SpecialBuildDefined>1</SpecialBuildDefined>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <_AxGplConfigFiles Include="Sigs.xml" />
+        <_AxGplConfigFiles Include="Config.xml" />
+    </ItemGroup>
+
+    <Target Name="_AxSignGplSigs" />
+    
+    <!-- Copy the GPL configuration and signatures to target directory, if this is a GPL build. -->
+    <Target Name="_AxCopyGplSigs"
+            Inputs="%(_AxGplConfigFiles.Identity)"
+            Outputs="@(_AxGplConfigFiles->'$(AxSolutionTargetDir)%(Identity)')"
+            Condition=" '$(AxIsGplBuild)' == 'true' ">
+        <Copy SourceFiles="%(_AxGplConfigFiles.Identity)"
+              DestinationFolder="$(AxSolutionTargetDir)"
+              SkipUnchangedFiles="true" />
+    </Target>
+
+    <Target Name="AxGplSigs"
+            DependsOnTargets="_AxSignGplSigs;_AxCopyGplSigs" />
+
+    <Target Name="AxPrivateSigs" />
+    
+    <Target Name="_AxIsVersionUpdated">
+        <ReadLinesFromFile File="$(_AxVersionFilePath)" Condition=" Exists('$(_AxVersionFilePath)') ">
+            <Output TaskParameter="Lines" PropertyName="_AxOldBuildVersion" />
+        </ReadLinesFromFile>
+        <PropertyGroup>
+            <AxBuildVersion Condition=" '$(AxBuildVersion)' == '' ">0</AxBuildVersion>
+            <_AxVersionIsUpdated Condition=" '$(_AxOldBuildVersion)' &lt; '$(AxBuildVersion)' ">true</_AxVersionIsUpdated>
+            <_AxVersionIsUpdated Condition=" '$(_AxOldBuildVersion)' &gt;= '$(AxBuildVersion)' ">false</_AxVersionIsUpdated>
+        </PropertyGroup>
+        <PropertyGroup Condition=" '$(_AxOldBuildVersion)' &gt;= '$(AxBuildVersion)' ">
+            <AxBuildVersion>$(_AxOldBuildVersion)</AxBuildVersion>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="SaveVersionFile" Outputs="$(_AxVersionFilePath)" Condition=" '$(_AxVersionIsUpdated)' == 'true' ">
+        <WriteLinesToFile File="$(_AxVersionFilePath)"
+                          Lines="$(AxBuildVersion)"
+                          Overwrite="true"/>
+        <Message Text="Updated revision from '$(_AxOldBuildVersion)' to '$(AxBuildVersion)'"
+                 Importance="high"/>
+    </Target>
+
+    <Target Name="AxSetValuesForGplBuild" Condition=" '$(AxIsGplBuild)' == 'true' ">
+        <PropertyGroup>
+            <Major>1</Major>
+            <Minor>0</Minor>
+            <Revision>0</Revision>
+            <AxBuildVersion>0</AxBuildVersion>
+            <SpecialBuild>GPL</SpecialBuild>
+            <SpecialBuildDefined>1</SpecialBuildDefined>
+            <ProductName>GPL $(ProductName)</ProductName>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="AxSetVersion"
+            DependsOnTargets="AxSetValuesForGplBuild;_AxIsVersionUpdated;SaveVersionFile"
+            AfterTargets="_CheckForInvalidConfigurationAndPlatform">
+        <PropertyGroup>
+            <AxCryptVersionMajor>$(Major)</AxCryptVersionMajor>
+            <AxCryptVersionMinor>$(Minor)</AxCryptVersionMinor>
+            <AxCryptVersionRevision>$(Revision)</AxCryptVersionRevision>
+            <AxCryptVersionBuild>$(AxBuildVersion)</AxCryptVersionBuild>
+            <AxCryptVersionProductName>$(ProductName)</AxCryptVersionProductName>
+            <AxCryptVersionCompanyName>$(CompanyName)</AxCryptVersionCompanyName>
+            <AxCryptVersionLegalCopyright>$(LegalCopyright)</AxCryptVersionLegalCopyright>
+            <AxCryptVersionLegalTrademark>$(LegalTrademark)</AxCryptVersionLegalTrademark>
+            <AxCryptVersionProjectSpecialBuild>$(SpecialBuild)</AxCryptVersionProjectSpecialBuild>
+            <AxCryptVersionProjectIsSpecialBuild  Condition=" '$(SpecialBuildDefined)' == '1' ">true</AxCryptVersionProjectIsSpecialBuild>
+            <AxCryptVersionProjectIsSpecialBuild  Condition=" '$(SpecialBuildDefined)' != '1' ">false</AxCryptVersionProjectIsSpecialBuild>
+            <SpecialBuildSuffix Condition=" $(AxCryptVersionProjectIsSpecialBuild) ">-$(AxCryptVersionProjectSpecialBuild)</SpecialBuildSuffix>
+            <AxCryptVersion>$(Major).$(Minor).$(AxBuildVersion).$(Revision)</AxCryptVersion>
+        </PropertyGroup>
+
+        <Message Text="AxCryptVersion = $(AxCryptVersion)" Importance="normal" />
+    </Target>
+
+    <Target Name="MakeTemplates"
+            Inputs="$(_AxVersionFilePath);$(MSBuildProjectFile);$(AxSolutionTargetDir)Version.rc"
+            Outputs="$(AxSolutionTargetDir)Version.h;$(AxSolutionTargetDir)Version.wxi">
+        <CreateItem Include="Major" AdditionalMetadata="ReplacementValue=$(Major)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens" />
+        </CreateItem>
+        <CreateItem Include="Minor" AdditionalMetadata="ReplacementValue=$(Minor)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens" />
+        </CreateItem>
+        <CreateItem Include="Build" AdditionalMetadata="ReplacementValue=$(AxBuildVersion)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens" />
+        </CreateItem>
+        <CreateItem Include="Revision" AdditionalMetadata="ReplacementValue=$(Revision)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <CreateItem Include="Configuration" AdditionalMetadata="ReplacementValue=$(Configuration)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <CreateItem Include="ProductName" AdditionalMetadata="ReplacementValue=$(ProductName)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <CreateItem Include="CompanyName" AdditionalMetadata="ReplacementValue=$(CompanyName)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <CreateItem Include="Copyright" AdditionalMetadata="ReplacementValue=$(Copyright)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <CreateItem Include="Trademark" AdditionalMetadata="ReplacementValue=$(Trademark)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <CreateItem Include="SpecialBuild" AdditionalMetadata="ReplacementValue=$(SpecialBuild)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <CreateItem Include="SpecialBuildDefined" AdditionalMetadata="ReplacementValue=$(SpecialBuildDefined)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <CreateItem Include="ProductId" AdditionalMetadata="ReplacementValue=$(ProductId)">
+            <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+        </CreateItem>
+        <TemplateFile Template="$(MSBuildThisFileDirectory)\Version.h.template" OutputFilename="$(AxSolutionTargetDir)Version.h"  Tokens="@(AssemblyInfoTokens)" />
+        <TemplateFile Template="$(MSBuildThisFileDirectory)\Version.wxi.template" OutputFilename="$(AxSolutionTargetDir)Version.wxi"  Tokens="@(AssemblyInfoTokens) "/>
+    </Target>
+
+    <!-- Copy files that have 'Item Type' 'Custom Build Tool', but empty command, and also have 'Content' set to 'true'. We copy them here, but
+         use the 'Custom Build Tool' support to inform Visual Studio of the dependency so that the fast up-to-date check works as expected. This
+         needs to be done *really* early, before Visual Studio removes items from the 'CustomBuild' Item.-->
+    <Target Name="_AxSetupCopyContent"
+            AfterTargets="_CheckForInvalidConfigurationAndPlatform">
+        <ItemGroup>
+            <AxContent Include="@(CustomBuild)"
+                       Condition="'%(CustomBuild.ExcludedFromBuild)' != 'true' And '%(CustomBuild.Command)' == '' And '%(CustomBuild.DeploymentContent)' == 'true' " />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="_AxCopyContent"
+            Inputs="@(AxContent)"
+            Outputs="@(AxContent->'$(AxSolutionTargetDir)%(Identity)')"
+            BeforeTargets="Build"
+            Condition=" '@(AxContent)' != '' ">
+        <Copy SourceFiles="@(AxContent)"
+              DestinationFiles="@(AxContent->'$(AxSolutionTargetDir)%(Identity)')"
+              SkipUnchangedFiles="true">
+            <Output TaskParameter="CopiedFiles"
+                    ItemName="_AxCopiedFiles" />
+        </Copy>
+        <Message Text="Updated content files: @(_AxCopiedFiles->'%(Filename)%(Extension)')"
+                 Importance="high"
+                 Condition=" '@(_AxCopiedFiles)' != '' " />
+    </Target>
+
+    <Target Name="AxExtraBuildClean">
+        <ItemGroup>
+            <_AxFilesToClean Include="@(_AxPrivateConfigOutputFiles)" />
+            <_AxFilesToClean Include="@(AxContent->'$(AxSolutionTargetDir)%(Identity)')" />
+            <_AxFilesToClean Include="$(AxSolutionTargetDir)Version.h" />
+            <_AxFilesToClean Include="$(AxSolutionTargetDir)Version.wxi" />
+        </ItemGroup>
+        <Delete Files="@(_AxFilesToClean)" />
+    </Target>
+
+    <Target Name="AxBuildBeforeBuild"
+            DependsOnTargets="AxSetVersion; MakeTemplates; AxGplSigs">
+    </Target>
+
+    <Target Name="AxWixProjBeforeBeforeBuild"
+            BeforeTargets="AxWixProjBeforeBuild"
+            DependsOnTargets="AxSetVersion">
+        <Error Text="Missing Win32 AxDecrypt.exe - build this first [$(_AxSolutionWin32TargetDir)AxDecrypt.exe]."
+               Condition=" !Exists('$(_AxSolutionWin32TargetDir)AxDecrypt.exe') " />
+        <Error Text="Missing Win32 AxCrypt2Go.exe - build this first [$(_AxSolutionWin32TargetDir)AxCrypt2Go.exe]."
+               Condition=" !Exists('$(_AxSolutionWin32TargetDir)AxCrypt2Go.exe') " />
+    </Target>
+
+    <!-- These may be overridden, only here as place holders -->
+    <Target Name="AxWixProjBeforeBuild" />
+    <Target Name="AxWixProjAfterBuild" />
+
+    <Target Name="AxPrivateBeforeBuild" />
+    <Target Name="AxPrivateAfterBuild" />
+
+    <!-- WiX Hooks -->
+    <Target Name="BeforeBuild" DependsOnTargets="AxWixProjBeforeBuild" Condition=" '$(OutputType)' == 'Package' "/>
+    <Target Name="AfterBuild" DependsOnTargets="AxWixProjAfterBuild" Condition=" '$(OutputType)' == 'Package' "/>
+
+    <Import Project="$(_AxPrivateBuildTargetsPath)"
+            Condition=" Exists('$(_AxPrivateBuildTargetsPath)') " />
+</Project>

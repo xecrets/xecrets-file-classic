@@ -1,0 +1,237 @@
+How to build AxCrypt
+
+Introduction
+============
+
+AxCrypt is distributed as an open source software under a GPL license. This is presumably how you came into posession of this file and all the rest.
+
+There are some things to know about building AxCrypt. While I cannot give support for GPL builds, I still want to give some pointers on the
+requirements. This list may be incomplete, please let me know if this is the case, contact me at software@axantum.com .
+
+- When you first load the solution, you'll get a "Security Warning for Setup". Please select "Load project normally". This is by design.
+
+- Because of inconsistencies in various packages included in AxCrypt, there are three platforms actually defined, and Visual Studio may start off
+  with a default of 'Mixed Platforms'. Change this immediately, and only build for 'Win32' and 'x64'. (Not x86 - that's for the Setup project).
+  
+- Build the Win32 configuration first, since the x64 configuration depends on it.
+  
+- AxCrypt is developed with Visual Studio 2010 Professional / Windows SDK 7.1 / MSBuild 4.0. It is possible to build AxCrypt entirely with free
+  tools.
+
+- There are some special tweaks to handle the different build environments for AxCrypt, such as GPL Builds, Axantum developer builds and
+  Axantum build server builds. This is why you'll find some conditional code in various MSBuild project files.
+  
+- The end-result is not 100% binary identical to the released binaries, since they are timestamped and digitally signed, as well as versioned in
+  the continuous integration build server setup by Axantum.
+
+- There is one project in AxCrypt.sln that is not distributed as open source, 'Private.vcxproj'. Just remove this from the solution. This project
+  only contains things relevant to making the actual signed distribution by Axantum Software AB. It does not change any of the source code compiled
+  or the binary result (except to the extent that they are Authenticode signed with our private key, and that some identifying texts are substituted).
+
+Tools and Dependencies Installation
+===================================
+
+Executive summary (details in respective section below):
+
+- Install *Full* .NET 4 Framework (prerequisite for SDK 7.1).
+- Install Microsoft Windows SDK 7.1 or later
+- Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.1 (or later at your own risk)
+- Install, set AX_ZLIB=install-path and build zlib 1.2.5 (or later at your own risk)
+- Install WTL 8.1.11324 and set AX_WTL=Install-path\Include (or later at your own risk)
+- Install 'Build Environments' from Windows Driver Kit 7.1 (or later at your own risk) and set AX_ATL=Install-path...
+- Install MSBuild.Community.Tasks from http://msbuildtasks.tigris.org/
+- Install Microsoft Visual C++ 2010 Express or Microsoft Visual Studio 2010 Standard Edition or better.
+- Install Windows Installer XML (WiX) toolset v3.5 (or later at your own risk)
+- Start Visual Studio 2010, open the AxCrypt solution, and build.
+
+AX_XXX refers to environment variables, used to refer to external dependency disk locations.
+
+If you already have some components installed, just follow the list in the above order and skip the ones you already have.
+
+It takes about 2 hours to set the whole thing up from scratch. These procedures have been tested on 32-bit Windows 7 Professional,
+64-bit Windows 7 Ultimate and 32-bit Windows Web Server 2008. It should work equally well on all current Windows editions, but it has not been tested.
+
+Details follows.
+
+DEVELOPER PC VS BUILD SERVER
+============================
+
+We typically place contributed dependencies in (except when there is a default installlocation):
+
+Developer PC: "C:\Users\%USERNAME%\Documents\Contrib\[CONTRIBUTION]"
+Build Server: "C:\Lib\[CONTRIBUTION]"
+        
+Microsoft Windows SDK
+=====================
+
+Install Microsoft Windows 7.1 (or possibly later at your own risk) http://www.microsoft.com/downloads/details.aspx?FamilyID=e6e1c3df-a74f-4207-8586-711ebe331cdc&displaylang=en,
+or Google "Microsoft Windows SDK 7.1" .
+
+Include:
+    "Windows Native Code Develoment" (Itanium Libraries are not required).
+    ".NET Development".
+
+You do not need "Common Utilities" and "Redistributable Packages" for AxCrypt-development, but you may choose to install them for reasons
+of your own.
+
+Crypto++
+========
+
+Download Crypto++ Library 5.6.1 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
+
+Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\cryptopp561" .
+
+Open a SDK command prompt:
+
+cd %AX_CRYPTOPP%
+vcupgrade cryptlib.vcproj
+
+setenv /debug /x86 /xp
+msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
+setenv /release /x86 /xp
+msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
+
+setenv /debug /x64 /xp
+msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
+setenv /release /x64 /xp
+msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
+
+zlib
+====
+
+Download zlib msbuild community tasks
+1.2.5 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
+
+Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.5" .
+
+Due to a bug in zlibstat.vcxproj:
+
+Open %AX_ZLIB%\contrib\vstudio\vc10\zlibvc.sln in Visual Studio and 'zlibstat' Properties | Configuration Properties | C/C++ | Runtime Library to:
+"Multi-threaded Debug (/MTd)"
+and
+"Multi-threaded (/MT)"
+for Debug and Release configurations respectively.
+
+You can also edit zlibstat.vcxproj directly and change 'MultiThreaded*DLL' to 'MultiThreaded*' like this:
+
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  ...
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+  ...
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  ...
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+  ...
+  </ItemDefinitionGroup>
+
+Open a SDK command prompt:
+
+setenv /release /x64 /xp
+cd %AX_ZLIB%\contrib\masmx64
+bld_ml64.bat
+
+setenv /release /x86 /xp
+cd %AX_ZLIB%\contrib\masmx86
+bld_ml32.bat
+
+cd %AX_ZLIB%\contrib\vstudio\vc10
+
+setenv /debug /x86 /xp
+msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
+setenv /release /x86 /xp
+msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
+
+setenv /debug /x64 /xp
+msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
+setenv /release /x64 /xp
+msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
+
+WTL
+===
+
+Download WTL 8.1 (or possibly later at your own risk) from http://sourceforge.net/projects/wtl/files/ .
+
+Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\wtl81_11324" .
+
+WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is *not* included
+in the SDK or express edition of Visual Studio, but you can get it via the Windows Driver Kit. See more below.
+
+ATL
+===
+
+Download Windows Driver Kit 7.1 (or possibly later at your own risk) from http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=11800 .
+Mount the ISO and install the 'Full Development Environemnt | Build Environments', typically to the standard location C:\WinDDK\7600.16385.1\ .
+If you need software in order to mount the ISO as a DVD, try SlySoft Virtual CloneDrive at http://www.slysoft.com/en/virtual-clonedrive.html .
+
+Set the environment variable AX_ATL to point to the installation directory, perhaps "C:\WinDDK\7600.16385.1" .
+
+ATL needs no building, it's a set of header files and the libraries are pre-built.
+
+MSBuild.Community.Tasks
+=======================
+
+The build process is dependent on a few extensions to MSBuild. Get MSBuild.Community.Tasks at http://msbuildtasks.tigris.org/ .
+
+Get 'The Latest Release' and the MSBuild.Community.Tasks.msi distribution. Double-click to install and follow the instructions.
+
+Visual C++ 2010 Express
+=======================
+
+It's possible to build AxCrypt with Visual C++ 2010 Express (the free version), although the .MSI installers must be built from the command line in this case.
+
+If you have Visual Studio 2010 Professional or better, you can build it all from inside Visual Studio.
+
+Get Visual C++ 2010 Express from http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express . Follow the instructions. You do not
+need to install Microsoft SQL Server 2008 unless you want to for reasons of your own.
+
+Check for updates at Microsoft with Windows Update, and be sure to explicitly search for updates. Install all important updates.
+
+Windows Installer XML (WiX) toolset
+===================================
+
+WiX is required to build the MSI setup. There is support for building from Visual Studio Professional or better, but not from Express editions so if you're
+using Express you'll have to build from the command line (see below). You still need to install WiX.
+
+Get Windows Installer XML (WiX) toolset v3.5 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
+the instructions.
+
+Build the Solution
+==================
+
+Start Visual Studio and open AxCrypt.sln. 
+
+For Express:
+
+- You may get a warning about only opening projects from a trustworthy source. If you trust your source
+  of AxCrypt, click OK and continue.
+- You'll get a warning about Setup.wixproj not being supported. Click OK and ignore...
+- ...and as a result a warning about not all projects being loaded correctly. Click OK and ignore.
+
+For all editions:
+
+- You'll get a warning about one or more projects not being loaded correctly. Click OK and ignore.
+
+Now you can build the solution.
+
+Building from the command line
+==============================
+
+All is built using MSBuild. Please see Microsoft documentation for details. Briefly:
+
+- Open a SDK Command Prompt
+- Change current directory to the location of the source code.
+- Use the following to build for various configurations and platforms:
+
+    SetEnv /x86 /xp /Debug
+    MSBuild AxCrypt.sln /p:Configuration=Debug;Platform=Win32
+    SetEnv /x64 /xp /Debug
+    MSBuild AxCrypt.sln /p:Configuration=Debug;Platform=x64
+    SetEnv /x86 /xp /Release
+    MSBuild AxCrypt.sln /p:Configuration=Release;Platform=Win32
+    SetEnv /x64 /xp /Release
+    MSBuild AxCrypt.sln /p:Configuration=Release;Platform=x64
+
+You need to build the Win32 Platform in order to build x64, since the installer contains references to executables that are only built
+in for Win32 (i.e. x86 - Microsoft can't decide what name to use...).

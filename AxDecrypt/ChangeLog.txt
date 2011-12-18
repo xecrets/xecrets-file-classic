@@ -1,0 +1,31 @@
+@(#) $Id$
+
+1.6.3 2006-06-16
+- Chg: Removed version string from 'Help'-dialog [OEM]
+- Bug: See AxCrypt change log
+
+1.6.2.3 2006-02-26
+- Bug: Did not run on Windows 98
+
+1.6.2 2006-01-01
+- All: See AxCrypt change log
+
+1.5.4 2004-08-28
+- Bug: Did not run on NT4 due to missing GetLongPathName() there. [BUG 984161]
+- Chg: Simplified start dialog with 'More...' button. [RFE 1018128]
+
+1.5.3 2004-06-28
+- Bug: Entering an invalid directory caused a failed assertion. [BUG 951862]
+- Bug: A key-file with an empty passphrase could not be decrypted. [BUG 968144]
+- Bug: A potential memory leak fixed. Non-critical. [INTERNAL]
+- Bug: Version number reported incorrectly on some OS's. [INTERNAL]
+- Chg: Prettier display of names on certain file systems due to short name mapping. [INTERNAL]
+- Chg: Updated AxPipe library to 0.9b7, errors include API message texts. [INTERNAL]
+- Doc: A very few minor documentation additions to remove doxygen warnings. [INTERNAL]
+
+1.5.2 2004-05-05
+- Chg: None. Just a recompile.
+
+1.5.1 2004-03-21
+- New: Initial release.
+

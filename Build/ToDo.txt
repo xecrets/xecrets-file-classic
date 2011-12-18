@@ -1,0 +1,96 @@
+@(#) $Id$
+
+KNOWN PROBLEMS
+
+- Handling of insufficient permissions is inelegant and visually displeasing.
+- Two error messages when attempting to encrypt a write-locked file.
+
+TO DO
+
+- Pre-load default encryption/decryption key without require actual encrypt/decrypt.
+- Password strength meter
+- Fix new translations for INF_SAVE_ENCKEY and INF_SAVE_DECKEY
+
+TO DO WITH FILE FORMAT CHANGES
+
+- At the least, fix the HMAC so that it can be written in a streaming mode.
+
+WISHLIST FOR FUTURE VERSIONS
+
+- Define a properties interface for a real property sheet page.
+- Dynamic Icon change depending on if the key is known or not
+- Re-encryption under different passphrase
+- "Friendly Name" Key tagging in registry to select encryption keys
+- A reasonable way to handle auto-wipe of files for local security.
+- "Decrypt and Open With..." context menu option to force the Open With... dialogue.
+- Proper template-based thread safe list class for keys, active threads etc.
+- Implement NIST 800-22b statistical test for randomness to check entropy collection and log deviations.
+- Registry-based once-only fail on the cycle counter instruction if it causes illegal instruction.
+- Forbid/wait for suspend during actual encrypt/decrypt/wipe operations.
+- A proper division into interactive and non-interactive 'server', preferrably os-indep
+
+IMPLEMENTED
+
+- Progress bar for large files
+- Intelligent handling of multiple-file selection in differing circumstances.
+- Apartment threading compatibility for ShellExt as InprocServer32.
+- Proper class implementation of entropy pool.
+- Added a bit oscillator-based entropy source.
+- Increased default KeyWrapIterations to 10000, instead of 6.
+- Read KeyWrapIterations from registry, to prepare for user-settable option.
+- Salt the input to the Key Wrap Algorithm with 16-bytes of PRNG'd salt.
+- Make a doc-folder and a separate package for that.
+- Selfdestructing class template for handles to ensure handle closure.
+- Selfdestructing class template for pointers to ensure pointer deletion.
+- Auto wipe of left-over files in 'AxCrypt' temp directory structure.
+- Cleanup: Create a Utility module for misc utility functions.
+- Proper Key Wrapping using AES Key Wrapping Specification
+- Move secured heap into 'AxCrypt' toplevel subdirectory.
+- Fix: Do not SaveEntropy() when exiting after maintenance-only actions such as UnInstall.
+- Ensure use of (limited and defined) Ansi charset on passphrase reading.
+- 64-bit file lengths in appropriate headers. Header lengths will remain 32 bit.
+- Implicit info about encryption alg, key len etc in the file format.
+- Support for optional encryption in the file format.
+- Support for optional compression in the file format.
+- GUID first, not in a header.
+- Save key encrypting key when doing encrypt and wrap.
+- Proper wipe of file before delete.
+- Fix registry entry for property sheet page handler
+- Fix and test local-dependent language selection
+- Use E(DataEncryptingKey, 0) for HMAC. Actually all encryption ops use different constant-encryptions under the Data - Encrypting Key
+- Encrypt the length fields in the data header to protect against indirect length analysis.
+- Do not update wrapper when no changes are made in the plain text. 
+- Retain original creation and modification time for the plain text, and store it encrypted in a header.
+- Store original file-name, encrypted, in the header to allow renaming to hide file-name-info.
+- Ensure full thread safety in all operations, especially linked lists etc. Have tried at least
+- Fix uninstall/install bug that requires two runs
+- Move plain text-files under editing into unique directories under temp dir.
+- Pre-scan headers, avoid 'memory alloc' errors and give clearer reports on invalid files.
+- Improve entropy pool gathering - mouse and window movement.
+- Store entropy pool in registry and load at program start-up.
+- Verify encryption padding to increase robustness.
+- Handle system shutdown and logoff gracefully (can still be improved...)
+- Use a sub-menu instead on right-click, and implement 'Wipe' command.
+- Proper allocation of temp directory names, in a separate subdirectory 'AxCrypt'.
+- Check out behavior on .htm-files with Internet Explorer. Done - ok.
+- Encrypt-only when compression fails to acheive anything.
+- Make Wipe and Delete remove empty folders as well.
+- AxDecrypt should tell if a too-old version is attempted.
+- Make AxPipe an external dependency for AxDecrypt (and later AxCrypt 2.x).
+- Translation: Collect additional and changed texts for final translation.
+- Translation: Specifically include the modified text for notification about information sent.
+- Update to new Zlib, modify code for large files instead of ZLib à la AxDecrypt.
+- Exclude Zlib from actual distribution, external dependency instead.
+- Proper upgrade installation (not uninstall-reinstall).
+- Blank passphrase is accepted (it should not be) [BUG 972431]
+- Web pages include change log and release log.
+	
+NOT TO BE IMPLEMENTED
+
+- Store HMAC of the full clear text file in a header, and use to determine need to actually update after editing. [Nahh...]
+- Dynamic setting of MAX_VIEW_SIZE depending on phys memory size. [Does not give any advantage]
+- Pad according to NIST sp800-38a guidelines. Keep standard padding, pad with bytes of value number of pad - rationale: known plain text is assumed anyway.
+- Accept empty encryption key resulting in compression only.
+- Change into a COM object
+- Consider some way to handle the case of encrypting the key-file... What happens?
+- Compress only option (low prio - requires new icon and extension registration).

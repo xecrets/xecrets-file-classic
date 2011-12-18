@@ -1,0 +1,458 @@
+@(#) $Id$
+
+1.7.2867: 
+- Add: Support build using free tools VC++ Express 2010, MSBuild etc.
+- Bug: Copy Meta Info did not work in x64 version. [Internal]
+- Chg: Implement installer bootstrapper to support Win32 and x64 in a single installer.
+- Chg: Add OpenCandy installer offer in the private build.
+- Chg: Major refactorisation of the build and dependency handling.
+
+1.7.2687.0 Release 2011-09-23
+- Bug: Fix crash bug in AxCrypt2Go [Internal]
+- Chg: Make the trial mode code more robust for terminal server scenarios etc
+- Chg: Update Crypto++ to 5.6.1 from 5.6.0
+- Chg: Update Zlib to 1.2.5 from 1.2.3
+- Chg: Update build environment to Visual Studio 2010 and Windows SDK 7.1
+
+1.7.2614.0 Release 2011-08-06
+- Bug: Issue with the context menu sometimes showing 'cannot read message definitions'
+
+1.7.2610.0 Release 2011-08-05
+- Bug: Improved support for invocation by services such as IIS. [Internal]
+- Bug: Danish language menu text was wrong. [Internal]
+- Chg: Internal build changes to facilitate distribution of AxCrypt2Go and AxDecrypt. [Internal]
+- Chg: Windows 2000 obsolete and no longer supported. [Internal]
+
+1.7.2410.0 Beta 2010-11-23
+- New: Russian language added.
+- Bug: Operation via WebDrive causes crash. [Internal]
+- Chg: Remove FILE_FLAG_SEQENTIAL optimization.
+- Chg: Be even more careful with flushing.
+
+1.7.2126.0 Release 2010-04-19
+- Chg: Installation prompts clarified.
+- Chg: Ensure source distribution is complete and buildable.
+
+1.7.2067.0 Beta 2010-03-28
+- New: Polish language added.
+- Bug: Double delete caused SecondaryExecuteRequest[EN_GETTHREADEXIT] error. [Internal]
+
+1.7.2029.0 Beta 2010-03-23
+- Bug: Internal Error when picking "Open" from a 'Favorite Link' in Vista. [2956965]
+- Bug: Ctrl-V discards entire passphrase if an illegal character is found. [2672012, 2060139]
+- Bug: Memory leak when using wild cards from the command line. [Internal]
+- Bug: Heap corruption under certain circumstances when running for long. [Internal]
+- Bug: Deadlock/crash when starting two instances concurrently. [2015774]
+- Bug: Passphrase window offscreen. [1639564]
+- Bug: Access denied error on a read only network share. [1476671]
+- Bug: Word cannot complete the save due to a file permissions error. [2975138]
+- Bug: -x command line option does not exit cleanly. [1440757]
+
+1.7.1970.0 Beta 2010-02-23
+- Bug: Application taking too long to start message with Open Office. [2957414]
+- Bug: Query passphrase command line option always said yes. [2957418]
+
+1.7.1878.0 Beta 2007-12-06
+- Bug: Comment switch -y and -Y did not work. [2539854]
+- Bug: Exectuable file spoofing exploit possible. Now asks before starting an exe. [2385034]
+- Bug: Allow *.* as file filter for non-standard key files. [2462117]
+- Bug: Only ask once when wiping many files, and take no for an answer the first time. [2690715]
+- Bug: Test for display of decrypt menu was case sensitive. [2037669]
+
+1.7.1864.0 Beta 2009-11-17
+- Bug: No context menu on XP 64-bit. [2888848]
+- Chg: Better text when trying to install 32 bit on 64 bit.
+- Chg: Increase timeout for application from 5 to 10 seconds. Vista/Office is slow.
+
+1.7.1836.0 Beta 2009-10-11
+- Bug: Can't install due to pending reboot problem.  [2873242, 2872625]
+
+1.7.1813.0 Beta 2009-09-13
+- Bug: Intermittent assertion failure (memory leak). [2816793, 2803484]
+- Chg: Improved install experience.
+
+1.7.1796.0 Beta 2009-08-29
+- Chg: Allow running with only warning if digital signatures are wrong.
+- Bug: Handle Vista breaking change not allowing flush of a file opened for reading.
+- New: 64-bit installer and native compile including context menu.
+- Chg: Update to Crypto++ 5.6.0 [INTERNAL]
+
+1.6.4.4 2008-05-13
+
+1.6b4.3 2008-04-27
+- Bug: Encryption/Decryption of multiple files in folder fails on W2K. [BUG 1931690, 1936475, 1919353]
+- Bug: Encrypt to .EXE on folder with encrypted files fails. [BUG 1455309]
+- Bug: Error on Vista, error "No Interface" when trying to encrypt. [BUG 1914268]
+
+1.6b4.2 2008-04-10
+- Bug: Random crashes and Vista Taskbar Freeze. [BUG 1771252, 1771252, 1936170, 1937019]
+
+1.6.4.1 2008-03-17
+- Bug: Command line encryption key ignored. [BUG 1914481]
+
+1.6.4 2008-03-07
+- Bug: No default filter for keyfile selection. [BUG 1892193, 1519363]
+- Bug: Possible file pointer error with XP Synchronize. [BUG 1692597]
+- Bug: Silently ignore unexpected format of selections in non-standard shells etc. [BUG 1892655]
+
+1.6b3.3 2008-02-07
+- Chg: Full support for Unicode file names. [INTERNAL]
+
+1.6b3.2 2008-01-29
+- Bug: Error ... SecondaryExecuteRequest [hPrimaryProcess == NULL], Access is denied. [BUG 1678641]
+- Bug: Multiple menu items in Explorer File menu. [BUG 1880052]
+- Bug: Explore does not work from Start menu with AxCrypt installed. [BUG 1868797]
+- Chg: Refactor and convert to Unicode. [INTERNAL]
+
+1.6b3.1 2008-01-08
+- Bug: Error when right-clicking on first level of networked folder. [BUG 1851434, 1829644]
+- Bug: Error running AxCrypt -p during install on Windows Vista. [BUG 1801854]
+- Bug: Incorrect version number shown in error dialog from shell extension. [INTERNAL]
+- Bug: Fix missing progress dialog in Vista due to API change in Vista. [INTERNAL]
+- Chg: Run -i, -u and -p in foreground process for Vista UAC compatiblity with NSIS UAC plug-in. [INTERNAL]
+- Chg: Update NSIS installer for Vista compatiblity using UAC plug-in for all elevation. [INTERNAL]
+- Chg: Update to ZLib 1.2.3. [INTERNAL]
+- Chg: Update to Crypto++ 5.5.2. [INTERNAL]
+- Chg: Recompile and update to Visual Studio 2005. [INTERNAL]
+
+1.6.3 2006-06-16
+- Bug: AxDecrypt would always display save-as dialog. [INTERNAL]
+- Bug: AxDecrypt with multiple files append would sometimes fail reading header. [INTERNAL]
+- Bug: Batched wipes would only delete the first file in a list. [INTERNAL]
+- Bug: Answering No when wiping a folder would make it look like it was wiped, but it was not. [1497237]
+- New: Support for -v and -V, setting number of wipe passes globally and per command. [OEM]
+- New: Support for <Options ShowNoVersion="true|false" /> in Config.xml [OEM]
+- New: Support for Danish. [INTERNAL]
+- Chg: Removed all use of memory mapped I/O except for crypto heap for robustness. [INTERNAL]
+- Chg: AxDecrypt now exits when done if run in quick mode as self-decrypter. [OEM]
+
+1.6.2.3 2006-02-26
+- Bug: Used GetFileSizeEx and SetFilePointerEx which caused AxDecrypt to fail on Win98. [BUG 1397428]
+- New: Dutch language support. Thank you Rene Reynders! [INTERNAL]
+
+1.6.2 2006-01-01
+- Bug: AxDecrypt would fail to decrypt sometimes, although the encryption was ok. [BUG 1325193]
+- Bug: Made extension comparison case-insensitive [BUG 1373765, 1351806]
+- Bug: Too long timeout for network locks under certain circumstances [OEM]
+- Bug: Problem with rapidly launching the same file fixed [OEM]
+- Bug: Warning when opening a file with sharing violation [OEM]
+- Bug: Fixed various problems with progress window [OEM]
+- Bug: Unicode file names were not seen at all. Now converts to short file name form [BUG 1155332]
+- Bug: Added warning when using non-standard files as key-files [BUG 1358716]
+- Bug: Read-only flag on AxDecrypt.exe removed after copy when making self-decrypting files [BUG 1317414]
+- Bug: Files got multiply encrypted when using wild-cards from the command-line [BUG 1315603, 1256254]
+- Bug: Installer now writes DefaultLanguageId to HKLM as well [BUG 1240372]
+- Bug: Shell extension caused explorer to crash when AxCrypt was corrupted [BUG 1191549]
+- Bug: Relative paths and -o command line did not work. Improved handling of current directory [BUG 1182496]
+- Bug: Progress window did not appear without a mouse click [BUG 1167095]
+- New: Added registry entry UseEntropyPool, unless set new behavior is to use CryptoAPI. Less memory and threads. [FAQ]
+- Chg: Trim process memory after finished operation to appear to use less memory in task manager [RFE 1178839]
+- Chg: Improved logging in the launch logic [OEM]
+- Chg: Change of menu text from "Encrypt and copy" to "Encrypt a copy" [Bug 1298186]
+- Chg: Added a check to see if a file appears to be in the system or program directories before encryption. [RFE 1198905]
+
+1.6.1 2005-03-16
+- Bug: Use default verb instead of 'open' for launch. [BUG 1051728, 1079066, 1016467]
+- Bug: Would return non-zero exit with -g if last file was ignored. [BUG 1049954]
+- Bug: Upgrades would fail under a number of circumstances. [BUG 1044590]
+- Bug: Install to non-standard directory followed by uninstall may remove more than intended. Bad! [INTERNAL]
+- Chg: Made shell extension tolerant for Servant Salamander difference from Windows Explorer. [BUG 1161640]
+- Chg: Files not removed from temp folder when using Open Office. [BUG 1112578]
+- Chg: Modified logic for releasing and reencrypting after launch. [BUG 1105922]
+- Chg: Fixing various bugs in the installer, but also redesigned much of the upgrade/uninstall logic. [INTERNAL]
+- Chg: Minor changes to structure to work well with sourceforge CVS. [INTERNAL]
+- New: Full support for automatic 'runas' during install when not administrator. [BUG 1091308]
+- New: Terminal Server/Remote Desktop/XP User Switching-aware, support for same user in different sessions. [INTERNAL]
+
+1.6 2004-11-27
+- Bug: Context menus in the wrong contexts removed. [BUG 1031514]
+- Bug: Yet another case of upgrade installing mixed versions of files. [BUG 986073, 984161, 984470]
+- Bug: Windows positioned wrong on systems with multiple monitors. [INTERNAL]
+- Bug: Command line reference to single files did not use current directory properly. [INTERNAL]
+- Bug: Some API assertions could fail though successful. [INTERNAL]
+- Chg: Removed from Most Frequently Used on the Start Menu.
+- Chg: Added confirmation dialog before sending registration info during install.
+- Chg: Major re-org of project and new compile options.
+- Chg: Various minor tweaks too numerous to list.
+- Chg: Increased secure heap size to 48K. [INTERNAL]
+- Chg: Streamlined assertion handling. [INTERNAL]
+- Chg: Primary waits for ever for secondary. Avoids double pop-ups sometimes. [INTERNAL]
+- Chg: Improved message display on startup errors. [INTERNAL]
+- Chg: Added support for Norwegian, Hungarian and Dutch. Waiting for full translations.
+- Chg: Moved some static names out to Config.XML instead of using resources. [INTERNAL]
+- New: Setup program digitally signed with Authenticode Code Signing.
+- New: Elliptic Curve Digital Signature Algorithm (ECDSA) Code signing.
+- New: Signed XML-based configuration data.
+- New: Trial counter and Short ECDSA license support.
+- New: -l switch to start license manager added.
+- New: -O Path-to-exe added. Allows specifying the application to use to open.
+
+1.5.4.2 2004-09-11
+- Bug: Upgrade failed with bad message texts if reboot was required. [BUG 1022932]
+- Chg: Improved support for private branding - only install and texts. [INTERNAL]
+- Chg: Minor change to texts. [INTERNAL]
+
+1.5.4 2004-08-28
+- Bug: Upgrade failed with mixed versions of files installed. [BUG 986073, 984161, 984470]
+- Bug: Installation errors when using the root dir of drive as system temp. [BUG 981879]
+- Bug: 'Access is denied' sometimes when saving with Network Associates VirusScan 7 [BUG 1012979]
+- Bug: Sometimes failed encryption in GetTempPath() 'The operation completed successfully'. [BUG 1005884]
+- Bug: Did not 'see' hidden files when 'show hidden' is enabled in Windows Explorer. [BUG 1005395]
+- Bug: Encrypt copy to .EXE did not work on NT 4. [BUG 984161]
+- Chg: Modified default for new install to not save passphrase for decryption. [BUG 993382]
+- Chg: Installer checks for Admin privileges before start. [RFE 1017381]
+- Chg: Show a nice little bitmap next to the Windows Explorer context menu item. [INTERNAL]
+- Chg: Better error messages when abnormal exceptions occur in some cases. [INTERNAL]
+- Chg: Installer checks for at least IE 4 before start. [INTERNAL]
+
+1.5.3.1 2004-06-28
+- Bug: Re-/Uninstall with custom Start Menu-folder may delete other folders. [BUG 981891]
+
+1.5.3 2004-06-28
+- Chg: Possible to save key for both encryption and decryption at the same time.
+- Chg: Modifications to make installation scripts parameterized. [Internal]
+- Chg: Shell Ext refers to documentation URL via registry instead of hardcode. [Internal] 
+- Chg: Shell Ext as single threaded compile (runs in STA) [Internal]
+- Chg: Prettier 'do-not-ask-again' warning dialogs, dynamic sizing etc.
+- Chg: Make Key-File option is now always available and works in a sensible manner.
+- Chg: The time of encryption is now left alone as time-stamp on the result. [RFE 956052]
+- New: Bug reporting link in start menu and context menu.
+- Bug: Decreased CPU consumption in idle state. [BUG 951378]
+- Bug: When selecting the desktop in Windows Explorer it would assert in some cases.
+- Bug: Blank passphrases were acceptable. [BUG 972431]
+- Bug: Edit encrypted did not work in NT4. [BUG 970663/881520]
+- Bug: Install script broken for NT4 - did not install psapi.dll. [BUG 970663/881520]
+- Bug: Quitely ignores Self-Decrypting EXE's when making SDX's. [BUG 960480]
+- Bug: Would crate Self-Decrypt EXE with no data when output name was changed. [INTERNAL]
+- Bug: Version number reported incorrectly on some OS's. [INTERNAL]
+
+1.5.2 2004-05-05
+- Chg: Completed the Spanish translation. Thank you Jacobo Fortuny Ayuso!
+- Chg: 'Create key file' menu available when a file is selected too. [BUG 938720]
+- Chg: Elaborated handling of unlocked files, allowing reencrypt before process exit. [BUG 933483]
+- Chg: More robust use of zlib - full sync every 64K, makes data recovery more feasible.
+- Chg: Updated zlib to latest version 1.2.1.
+- Chg: Migrated to Visual Studio 2002/VC7. Sorry, no more official VC6 support.
+- New: Implemented Encrypt to Copy due to popular request. [RFE 898668]
+- Bug: Debug code inserted in install, to determine cause of some multiple registrations.
+- Bug: Lost network connection or forced device removal cause loss of changes [BUG 929538]
+- Bug: File explorer menu unusable/grey after encrypt/decrypt [BUG 944281]
+
+1.5.1 2004-03-21
+- Bug: Wild-card expansion would terminate early if ignoring already encrypted file.
+- Bug: Encryption of zero-sized file would fail in some cases.
+- Bug: Current directory when server started got locked. [BUG 906612]
+- Bug: WinMain would sometimes fail to open mutex, and abort during install etc.
+- Bug: Notification would sometimes fail [BUG 917704]
+- New: Dynamic key wrap strength determination during installation.
+- New: Key-file support and generation.
+- New: Self-decrypting .exe files. [RFE 861640]
+- New: Stand-alone, setup-free, decrypt utility.
+- New: Do not allow decryption with wrong extension, unless registry-overridden.
+- New: FastModeDefault reg key implemented to define default mode.
+- New: Put the 'Notify Me' option in the 'about' box.
+- New: Make the documentation 'readme' available in the 'about' box.
+- New: 'About' available on the context menu, with per-file version information etc. [RFE 859023]
+- Chg: Tons of minor changes and improvements.
+- Chg: Made wipe and delete remove empty directories and work like winexplorer delete. [RFE 783938]
+- Chg: Improved warning dialog, with 'Cancel' button and icon.
+- Chg: Save As-dialogs use extension-based filter instead of *.*.
+- Chg: Modify file name extension handling for save as dialogues.
+- Chg: Check HKCU and HKLM for DefaultLanguageId.
+- Chg: Installer selected language as default HKLM... DefaultLanguageId.
+- Chg: Context menu will now appear for hidden files too. [BUG 879358/SUP 862094]
+- Chg: Fast Mode now affects all modes of encryption/decryption not only copy.
+- Chg: More conservative determination of when a user is done with a file.
+- Chg: When encrypting, change last dot to a dash in original file name.
+- Chg: Use XP visual styles on XP.
+- Chg: Encryption Key Wrap Iteration count is now a HKLM base-default, overrideable by HKCU.
+
+1.4.3 2003-08-11
+- Chg: Safer handling of user saves to temp directory. [BUG 772041/RFE 770500]
+- Bug: Folders on the desktop did not display all menu choices. [BUG 780153]
+- Bug: Wild cards did not work properly from command line. [BUG 775442]
+- Bug: Launch of 16-bit apps failed with new logic. [BUG 770496]
+- Bug: Memory leak in CCryptoRand, 48 bytes per file wipe.[BUG 766283]
+
+1.4.2 2003-07-04
+- Bug: In stress-situations, one progress wnd became the parent of another.
+- Bug: Too many warnings about temp directory sometimes.
+- Bug: Did not clean temp after launch when launch failed sometimes.
+- Bug: Possible access violation during wipe of heap, bad destroy order.
+- Bug: Install/Uninstall problems as restricted user on 2K with FAT32 or unprotected file-system.
+- Bug: Now runs as non-Administrator on NT/2K/XP etc. [BUG 688184, 699260]
+- Bug: Second start of function server without params caused annoying error.
+- Bug: All file I/O memory mapped. Fixes broken files in non-ms networks. [BUG 675675 ?]
+- New: Support TryBrokenFile reg-key, to allow attempted decrypt anyway.
+- New: Copy 512 bytes from start of file to clipboard for broken file analysis.
+- New: Support plug-in for brute-force key-recovery. Not a backdoor!
+- New: Wild-card expansion of file-names on the command line. [BUG 677755/RFE 677778]
+- Chg: Minimize box on progress window.
+- Chg: Better getopt(), command-line options work better.
+- Chg: Ctrl-V works to paste passphrases.
+- Chg: Allow read-only open of opened encrypted file. [RFE 696578] 
+- Chg: Show Save As dialoge if encrypt/decrypt target creation fails.
+- Chg: Wipe from shell ext now interprets yes as for all files. [RFE 732021]
+- Chg: Re-confirm wipe for every directory iterated through.
+- Chg: Encrypted file now maintains time-stamp of plain-text. [RFE 675594]
+- Chg: Improved handling of read-only files, retain the attrib. Thanks D. Nay.
+- Chg: Default encryption key is not used for decryption. [RFE 679682]
+- Fix: No "'Program' is about to exit" when installing/uninstalling.
+- Fix: Improved handling in out-of-memory situations.
+- Fix: Writes through on plain/cipher files. Fixes some probs with removable media. [BUG 750230]
+- Fix: Several fixes in install/unstall script. [BUG 688184, 699260]
+
+1.4.1 2003-01-06
+- Chg: Worker thread now runs one step below normal priority.
+- Fix: Still shell file lock situations. Brute force fix in CFileIO.
+- Bug: CDummyFile allocated space in the swap file, typo in header.
+- Bug: Sometimes set default encryption key to last decryption key.
+- Bug: -a did not actually store the key in the cache after asking for it.
+- Bug: Operations on Desktop-items on Win 98 caused irritating error msg popup.
+- Bug: Right-Click on Computer in Network Neigborhood on Win98 caused error and crash.
+
+1.4 2002-11-27
+- New: -Y will display the tag of an encrypted file, if any.
+- New: -y "A tag" will place a cleartext tag in the headers during -z operations.
+- New: Italian program texts by Stefano Paganini - Thank You!
+- Chg: Command-line switches are now case-sensitive, so far all are lower case...
+- Chg: Better install/uninstall script, improved upgrade handling.
+- Fix: -n now works better, as an override of other defaults, including dir only.
+- Fix: Potential memory leaks from CVersion calls fixed.
+- Bug: -k "" caused access violation.
+- Bug: In Windows XP .zip and .cab etc files caused crash due to change in XP.
+- Bug: Access violation in certain cases when not using -n switch.
+- Bug: MSG_OPEN_LAUNCH did not show system error in some languages.
+- Bug: Forward compatibility failed when new header types were added. :-(.
+- Bug: Global strings were 'delete'd after the heap was 'delete'd.
+- Bug: Uninstall twice would fail.
+- Bug: The shell extension hogged the "Windows-key-E" hot-key combination.
+- Bug: -u failed sometimes if registry partially cleared before.
+- Bug: File wiping sometimes outsmarted by OS caching. Now ensures flush and write thru.
+
+1.3.0.2 2002-08-28
+- Bug: Problems if launched with differing usage of case, i.e. program and ProGram
+- Bug: -n option did not overwrite existing, as it should, but warned instead.
+- Bug: Memory leak when using ExtProductName from CVersion().
+
+1.3 2002-08-25
+- New: No compression if no gain - older versions can't read these files.
+- New: Anonymous rename - give files 'hidden' names. Restores on decrypt. Both dll and -h.
+- New: Test for key in cache with -q.
+- New: Ignore encryption requests for already encrypted with -g.
+- Chg: Fixes to remove dependencies on the program name.
+- Chg: Unused header space is random filled to make known plain-text attacks harder.
+- Fix: Entropy gathering is maximized to 2 seconds after activity stops.
+- Fix: Progress window is closed when displaying error message.
+
+1.2.1 2002-08-20
+- New: Registry flag ServerMode causes all interactivity to disappear etc.
+- New: -n command to specify the output name instead of default.
+- New: -f flag for fast. Increases speed at the expense of security.
+- Chg: Meaning of '-c' option to be a copy-flag instead of a directive.
+- Chg: Now can do copy both decrypting and encrypting from command-line.
+- Chg: Undocumented NoDecryptMode does just that. Requires re-start to change.
+- Chg: The log-file, if any, is now written to the temp-dir instead of win-dir.
+- Fix: Lots of clean-up in code. Again. Better naming. Use of CRegistry.
+- Fix: LogEvent now ensures data is only one line, regardless of length etc.
+- Fix: Lots of internal fixes to prepare for future directions.
+- Bug: Failure to write to log-file caused hang or crash.
+- Bug: An internal data structure (SRequest) was not zeroed properly. Minor.
+
+1.2 2002-08-14
+- Bug: Only partial key was used to wrap data encrypting key. Major!
+- Bug: Can now encrypt Media Player files in 2K with Active Desktop enabled.
+- Bug: Thread list purge sometimes crashed.
+- Bug: Mutex handle was closed twice in a normal exit. Minor.
+- Bug: Opened and reencrypted files were not version id updated. Minor.
+- New: Spanish translation by Carlos Fuentes - Thank You!
+- New: Now handles multiple file selections and folders.
+- New: Caches default encryption key too.
+- New: Registry sticky choice of caching keys or not.
+- New: Warns about file system encrypted or compressed files when wiping.
+- New: Ensures that the program temp directory is not compressed.
+- New: Full-featured command-line interface.
+- Fix: Clean-up of main code.
+- Fix: Changed strategy for starting main process thread, now always orthogonal.
+- Fix: Some minor corrections and changes to texts.
+
+1.1 2002-04-26
+- Bug: Sometimes failed with message about CEntropy::Invalid Handle when cleaning up old temp data.
+- Bug: Would not pick correct forced language first time in a dialogue.
+- Bug: May not pick correct key wrap iteration count from registry.
+- Bug: May skip first file deleting tmp-dir. Changed while() {} to do {} while()
+- Add: German translation by Juergen Nieveler - Thank You!
+- Add: French translation by Carl Seleborg - Thank You!
+
+1.0c1.1 2002-03-23
+- Security fix: Zlib upgrade to  1.1.4 after CERT advisory
+
+1.0c1 2002-03-06
+- Bug: Editing Excel document in already opened Excel failed at close after saved changes.
+- Bug: Accumulating timer interrupts during suspend causing long resume time in portables.
+- Bug: Logging off sometimes caused entropy timer problem. Cleanup to not use WM_TIMER, only threads.
+- Bug: Handle leak in LogEvent() caused exception "Reading Event Log Level", insufficient resources.
+- Chg: Use parity bit of low 32 bits from RDTSC instead of bit 0 in CEntropy::GatherThread()
+- Fix: sha1 code is now reentrant, i.e. thread-safe.
+- Add: DefaultLanguageId in registry to force language selection
+
+0.0b6 2002-01-27
+- Apartment threading compatibility for ShellExt as InprocServer32.
+- Proper class implementation of entropy pool.
+- Added a software bit oscillator-based entropy source.
+- Added use of Pentium cycle counter as entropy source.
+- Increased default KeyWrapIterations to 10000, instead of 6.
+- Read KeyWrapIterations from registry, to prepare for user-settable option.
+- Salt the input to the Key Wrap Algorithm with 16-bytes of PRNG'd salt.
+- Make a doc-folder and a separate package for that.
+- Selfdestructing class template for handles to ensure handle closure.
+- Selfdestructing class template for pointers to ensure pointer deletion.
+- Auto wipe of left-over files in 'Program' temp directory structure.
+- Cleanup: Create a Utility module for misc utility functions.
+- Proper Key Wrapping using AES Key Wrapping Specification
+- Move secured heap into Temp-directory toplevel subdirectory.
+- Fix: Do not SaveEntropy() when exiting after maintenance-only actions such as UnInstall.
+- Ensure use of (limited and defined) Ansi charset on passphrase reading.
+- 64-bit file lengths in appropriate headers. Header lengths will remain 32 bit.
+- Implicit info about encryption alg, key len etc in the file format.
+- Support for optional encryption in the file format.
+- Support for optional compression in the file format.
+- GUID first, not in a header.
+
+0.0b5 2002-01-02
+- Bug fix: The Context Menu now works on XP as well.
+- Bug fix: the secured heap was not always delete'd properly, is now.
+- Improved temp files and directory handling. Now all under ...\Program except for secured heap
+- Code now supports 64-bit file lengths. Will implement in file format together with other changes.
+- Version numbers are fetched from version resource, not constants and strings in the code.
+- Sub-context-menu to allow multiple operations.
+- New 'Wipe' command implemented.
+- Improved handling of system shutdown, logoff and forced exit.
+- Event logging to text file Program.log in windows directory (if enabled in registry).
+- New logic for keeping track of active threads.
+- NEXT BETA WILL BE FINAL AND WILL INCLUDE INCOMPATIBLE FILE FORMAT CHANGES!
+
+0.0b4 2001-12-02
+- Fixed loop with 'Decrypt and Unwrap' of files longer than 1024 bytes.
+- Move plain text-files under editing into unique directories under temp dir.
+- Pre-scan headers, avoid 'memory alloc' errors and give clearer reports on invalid files.
+- Completely new logic for how to detect when document editing is done.
+- Wait for application exit on system shutdown or logoff
+- Improved PRNG with entropy pool, both persistent in registry and volatile in memory.
+- Verify encryption padding to increase robustness.
+- Handle system shutdown and logoff gracefully (can still be improved...)
+- Only use secured heap in primary instance
+- Plugged some memory leaks and implemented heap checkpointing
+- Further improvements to decrypt-and-launch logic
+
+0.0b3
+- Fixed crash with "Error in system call CloseHandle()" on second start of the Program.
+
+0.0b2 2001-11-19
+- Allocate 10 proc id's at a time in CChildProc, debug value was 1.
+- Moved CloseHandle of worker threads to CActiveThreads, and asserted.
+- Proper delete of gpKeyStore on exit.
+
+0.0b1 2001-11-19
+Initial version to a few testers.
+

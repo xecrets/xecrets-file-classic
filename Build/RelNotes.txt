@@ -1,0 +1,306 @@
+@(#) $Id$
+
+1.7.2867 Release 2011-12-04
+This is a major refactorisation of the build and the dependency handling.
+We now fully support building AxCrypt with 100% free tools such as
+Visual C++ Express 2010, MSBuild and WiX. There is also support for
+a single installer for 32-bit and 64-bit both. Installation recommendations
+by OpenCandy are supported by the installer which are fully optional.
+Minor bugfixes. Dependency updates (Crypto++, ZLib, WTL, ATL, SDK, Tools)
+to the very latest.
+
+1.7.2687.0 Release 2011-09-23
+This release supersedes version 1.7.2126 and incorporates all changes
+documented in the change log from then. This release is a major rebuild
+with no new functionality. It updates libraries to current versions and
+the build environment to the current version. There is also a change to
+make it work better in some terminal server environments.
+
+1.7.2614 Release 2011-08-06
+This release supersedes version 1.7.2126 and incorporates all changes
+documented in the change log from then. This release is a minor change
+which only fixes an issue with the right-click menu.
+
+1.7.2610 Release 2011-08-05
+This release supersedes version 1.7.2126 and incorporates all changes
+documented in the change log from then. The release is a minor change
+which includes Russion support as an additional language, Windows
+2000 being obsolete an no longer supported as well as a few bug-fixes.
+
+1.7.2606 Beta
+Improved support invocation from services such as IIS.
+Windows 2000 obsolete and no longer supported.
+
+1.7.2410.0 Beta 2010-11-23
+A minor update with minor bug fixes, Russian is a new language
+supported.
+
+1.7.2126.0 Release 2010-04-19
+This release supersedes version 1.6.4.4 and incorporates all changes
+documented in the change log from then. The release is a major change
+with the change of installer technology to Windows Installer and the
+support for 64-bit in all current versions of Windows being the most
+visible changes. It also corrects a number of bugs, including some
+memory leaks and crashes and is fully Unicode-aware.
+
+1.7.2067.0 Beta 2010-03-28
+Improved fault detection in the memory allocation code caught a
+previously undetected double delete, causing a SecondaryExecuteRequest
+[EN_GETTHREADEXIT] direct exit instead of a silent memory leak.
+
+1.7.2029.0 Beta 2010-03-23
+A number of bug fixes, some significant for specific scenarios. The
+most useful is better ability to work with Office 2007 and some
+anti virus software without false permissions problems. Also some
+fixes for long running command line initiated tasks. See change
+log for details.
+
+1.7.1970.0 Beta 2010-02-23
+Minor bug fixes. See change log for details.
+
+1.7.1878.0 Beta 2007-12-06
+Bug fixes. See change log for details.
+
+1.7.1864.0 Beta 2009-11-17
+Fix context menu on XP 64 bit and similar.
+
+1.7.1836.0 Beta 2009-10-11
+Removed pending reboot check from installer, since it causes
+more problems than it solves.
+
+1.7.1813.0 Beta 2009-09-13
+Improved installer, fix a memory leak causing crashes in large
+jobs.
+
+1.7.1796.0 Beta 2009-08-29
+First Beta of 64-bit version with MSI-based installer. It is now
+released as two packages, a 32-bit and a 64-bit installer and software.
+
+1.6.4.4 2008-05-13
+Release of 1.6b4.3.
+
+1.6b4.3 2008-04-27
+Bug fixes, see change notes.
+
+1.6b4.2 2008-04-10
+Windows Vista has introduced a brilliant new feature in the name of
+security (sic!) which causes the address space of processes to be
+randomly assigned. This caused a latent bug to surface, causing
+random crashes and taskbar freezes. Another latent bug caused Vista
+to silently kill the process instead of showing it's exception
+dialog. In the end a rather major edit with lots of cleanup as a
+result.
+
+1.6.4.1 2008-03-17
+Fixed a major issue with not using provided passphrase when encrypting
+in batch files via the command line.
+
+1.6.4 2008-03-07
+Final release of the changes in 1.6b3.1 through 1.6b.3.3 plus a few
+minor changes.
+
+1.6b3.3 2008-02-07
+Include AxCrypt2Go beta in the distribution. Enable use of Unicode
+filenames (legacy versions will use translated name).
+
+1.6b3.2 2008-01-29
+Further changes to make it more Vista-aware. The largest change is
+re-compilation as a full Unicode application and dropping support for
+Windows 95, 98, ME and NT. We're no open for translations to more
+languages, as we're not limited in the texts. Filenames are still
+stored in Ansi only, will be fixed in next version.
+
+1.6b3.1 2008-01-08
+Minor bugfixes, but major upgrade of library code and development-
+environment to Visual Studio 2005. Vista support in installer and code.
+Fix of problem with networked folders in Windows XP after Microsoft
+security update.
+
+1.6.3 2006-06-16
+The major changes include a rewrite of the basic mechanism for reading
+and writing data, shifting away from memory mapped file I/O to regular
+I/O as there are indications that some networks and VPN software are
+not fully compatible with memory mapped I/O, at the worst causing data
+loss. Robustness before peformance, so... Also, Danish is now supported.
+Finally some minor changes and bugs are fixed of course.
+
+1.6.2.3 2006-02-26
+A maintenance release, fixes a bug in AxDecrypt causing it not to run
+on Windows 98, now with Dutch language support!
+
+1.6.2 2006-01-01
+Various minor bugs fixed. Incidentally, most of the time spent since
+the previous release has been for the the next version of AxCrypt which
+is the reason for the lack of major new functionality. This also explains
+for those of you downloading the source, why you'll get a message stating
+that the "AxCrypt2Go" project could not be found when you start Visual
+Studio. Just click ok, the source for that is just not included currently.
+
+1.6.1 2005-03-16
+Several annoyances removed, basically a bug-fix release. A potentially
+major bug in the uninstaller was fixed, under very unusual circumstances
+the uninstaller could remove more files than intended. This only applies
+if non-standard install locations were choosen during install, if so
+you should upgrade to this version before attempting uninstall.
+
+1.6 2004-11-27
+A major update, although few changes are visible to users.
+AxCrypt now supports trial use and strong digitally signed product
+activation codes. Irrelevant for the GPL version which remains free.
+A number of more or less minor bugs fixed, the most serious causing
+upgrade installations to fail. Nothing with security impact.
+Hungarian language is now supported!
+
+1.5.4.2 2004-09-11
+A very minor release. Fix a bug when upgrading previous versions
+in the installer.
+
+1.5.4 2004-08-28
+A maintenance release fixing various minor bugs and annoyances, the
+most serious causing failed upgrades. Self-decrypting archives now
+start with a simplified dialog.
+
+1.5.3.1 2004-06-29
+A patch for an re-/uninstall problem when using a custom Start Menu
+location, other Start Menu folders may get unintentionally deleted.
+
+1.5.3 2004-06-28
+A maintenance release with various bug-fixes and minor new
+features. Some prettier dialogs, true upgrade instead of uninstall
+followed by re-install, a bug reporting option on the context
+menu etc. The most critical bug-fix is broken NT4 compatibility.
+Minor documentation updates.
+
+1.5.2 2004-05-05
+Completed the Spanish translation. Kudos to Jacobo Fortuny Ayuso!
+A bug-fix, fixing loss of edited changes on network disconnect
+or forced removal of device. New feature to allow encrypt-to-copy
+from Windows Explorer. Migrated to more recent compiler and
+compression library. New documentation content and web site design.
+
+1.5.1 2004-03-21
+Many bug-fixes and minor improvements. None with security
+impact. Major new functionality in support of self-decrypting
+files, stand-alone install-free decrypt-only program.
+Generation and usage of key-files. Dynamic determination
+of key wrap iteration count depending on computer speed.
+
+1.4.3 2003-08-11
+Bug-fixes and improvements. 1.4.2 introduced a few problems
+in the application launch-logic, that's now further improved
+and fixed. A memory leak and a handle leak was fixed.
+Wild cards should work now.
+
+1.4.2 2003-07-04
+Mostly a bug-fix release. Many changes and additions too.
+One major annoyance, causing it to be unable to
+run as a non-Administrator on NT/2K/XP fixed. A serious
+problem (but affects very few) with file corruption in
+unusual network situations fixed. Due to that also made it
+possible to decrypt a file even if the HMAC is broken,
+but it requires enabling in the registry. Improved
+handling of read only files and removable media. Most
+wanted feature wild-cards on the command line is now
+implemented.
+
+1.4.1 2003-01-06
+Some minor annoyances with operations on the Desktop and
+Network Neighborhood on Win9x fixed. No longer reports
+file in use sometimes when attempting to open on XP/2K.
+Huge files could cause excessive disk space usage during
+operations. Fixed a situation where a previously used
+decryption key would become the default encryption key.
+
+1.4 2002-11-27
+Major fixes includes handling of .zip files in Windows XP,
+and a file wiping bug, causing data to be left unwiped in
+certain cases, depending on timing and os version. Also,
+Italian language texts are now included. Several minor
+changes, additions and bug-fixes. Recommend upgrade from
+previous version.
+
+1.3.0.2 2002-08-28
+Three minor bugs, one which was a memory leak, causing it
+to spontaneously combust (i.e. crash with Access Violation)
+after some time on a system with heavy usage.
+
+1.3 2002-08-25
+More command-line options to test for key in cache, anonymous
+rename from shell extension and command line, flag to ignore
+already encrypted from command-line. Most of all, only compress
+on need. Incompatible file-format change unfortunately,i.e.
+older versions can't read files produced by 1.3. Hopefully
+this is the last such change in a while.
+
+1.2.1 2002-08-20
+Fixes, changes and additions to improve command-line and
+non-interactive usage, server mode. Code clean-up and
+some minor bug-fixes. Not released to the web.
+
+1.2 2002-08-14
+One major bugfix affecting security, will read older files
+but previous releases will not read the new files.
+
+Major reworking of the user interface allowing multi file
+and folder selection, as well as displaying progress bar
+visual feedback on longer operations.
+
+Caching can be turned on or off optionally for both
+encryption default key and decryption keys.
+
+A complete and documented command-line interface is now
+available for programmatic access to the functionality.
+
+Spanish language texts added.
+
+Internally some rewriting of the resident server code.
+Lots of minor bugfixes.
+
+1.1 2002-04-26
+Release 1.1. Minor bugfixes. German and French language texts.
+The source package now includes project and workspace files
+for direct re-build using VC++.
+
+1.0c1.1 2002-03-23
+Upgraded to Zlib 1.1.4 after CERT advisory. No other changes.
+
+1.0c1 2002-03-06
+Release Candidate 1. Only minor bug-fixes, changes and additions from Beta 6.
+
+0.0b6 2002-01-27
+This is the final Beta Release before release candidate 1.
+Improvements in key wrapping, entropy gathering and pseudo
+random number generation. Full support for 64-bit file-sizes.
+Final file format changes done as previously planned. No
+further changes planned for version 1, and if any are found
+absolutely necessary, backward compatibility will apply.
+Code structure and robustness further increased.
+Many bug-fixes.
+
+0.0b5 2002-01-02
+This beta includes now works on XP as well, which beta 4 did not.
+It is known to work on 98/2K/XP.
+Acknowledgements of successful testing on 95/NT/ME appreciated.
+The major visible change is that the context menu now uses the program name
+as a starting point for a sub-menu that may include several
+possible options. New is 'Wipe and Delete' functionality. Internally
+there are some bug-fixes and preparations for full 64-bit file size
+support. Improved temp-file location and allocation. Improved handling of
+system shutdown and logoff.
+THE NEXT BETA WILL BE FINAL AND WILL INCLUDE INCOMPATIBLE FILE FORMAT CHANGES!
+
+0.0b4
+- Improved handling of application launch.
+- Several bug-fixes (none with risk of data loss).
+- Improved entropy input to Pseudo Random Number Generator.
+- Increased robustness reading damaged files.
+- Memory leaks fixed and heap checking implemented.
+- Some minor rearranging of the source code.
+
+0.0b3
+- Various small fixes of adminstrative nature
+- Will now work twice ;-)
+
+0.0b2 2001-11-22
+- Fully functional, tested on Win 98 and 2000. Please let me know if it works (it should ;-) on NT/95/XP.
+- Don't be put off by the low revision number... It really is quite stable.
