@@ -82,6 +82,7 @@
             <Output TaskParameter="Lines" PropertyName="_AxOldBuildVersion" />
         </ReadLinesFromFile>
         <PropertyGroup>
+            <_AxOldBuildVersion Condition=" '$(_AxOldBuildVersion)' == '' ">-1</_AxOldBuildVersion>
             <AxBuildVersion Condition=" '$(AxBuildVersion)' == '' ">0</AxBuildVersion>
             <_AxVersionIsUpdated Condition=" '$(_AxOldBuildVersion)' &lt; '$(AxBuildVersion)' ">true</_AxVersionIsUpdated>
             <_AxVersionIsUpdated Condition=" '$(_AxOldBuildVersion)' &gt;= '$(AxBuildVersion)' ">false</_AxVersionIsUpdated>
