@@ -99,7 +99,7 @@ msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
 zlib
 ====
 
-Download zlib msbuild community tasks
+Download zlib
 1.2.5 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
 
 Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.5" .

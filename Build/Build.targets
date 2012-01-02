@@ -77,13 +77,19 @@
 
     <Target Name="AxPrivateSigs" />
     
-    <Target Name="_AxIsVersionUpdated">
+    <Target Name="_AxSetOldVersion">
         <ReadLinesFromFile File="$(_AxVersionFilePath)" Condition=" Exists('$(_AxVersionFilePath)') ">
             <Output TaskParameter="Lines" PropertyName="_AxOldBuildVersion" />
         </ReadLinesFromFile>
         <PropertyGroup>
             <_AxOldBuildVersion Condition=" '$(_AxOldBuildVersion)' == '' ">-1</_AxOldBuildVersion>
             <AxBuildVersion Condition=" '$(AxBuildVersion)' == '' ">0</AxBuildVersion>
+            <_AxOldBuildVersion Condition=" '$(_AxOldBuildVersion)' == '' ">0</_AxOldBuildVersion>
+        </PropertyGroup>
+    </Target>
+    
+    <Target Name="_AxIsVersionUpdated" DependsOnTargets="_AxSetOldVersion">
+        <PropertyGroup>
             <_AxVersionIsUpdated Condition=" '$(_AxOldBuildVersion)' &lt; '$(AxBuildVersion)' ">true</_AxVersionIsUpdated>
             <_AxVersionIsUpdated Condition=" '$(_AxOldBuildVersion)' &gt;= '$(AxBuildVersion)' ">false</_AxVersionIsUpdated>
         </PropertyGroup>
