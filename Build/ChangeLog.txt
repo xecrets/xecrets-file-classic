@@ -1,6 +1,11 @@
 @(#) $Id$
 
-1.7.2867: 
+1.7.x
+- Add: Support for disabling passphrase cache via registry settings.
+- Chg: Fix minor first-time-build issue.
+- Chg: Re-integrate source code control x64 branch to trunk.
+
+1.7.2867.0 Release 2011-12-04 
 - Add: Support build using free tools VC++ Express 2010, MSBuild etc.
 - Bug: Copy Meta Info did not work in x64 version. [Internal]
 - Chg: Implement installer bootstrapper to support Win32 and x64 in a single installer.

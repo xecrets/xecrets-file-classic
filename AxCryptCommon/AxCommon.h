@@ -111,6 +111,8 @@ extern const TCHAR *szRegValInstallerLanguage;
 extern const TCHAR *szRegValVersion;
 extern const TCHAR *szRegValDefault;
 extern const TCHAR *szRegValAllowPrograms;
+extern const TCHAR *szRegValDisableSaveEncryptionKey;
+extern const TCHAR *szRegValDisableSaveDecryptionKey;
 
 extern const TCHAR *szSigsXML;              ///< Hardcoded name of signature XML in same folde as exe
 extern const unsigned char bPublicRootKey[];

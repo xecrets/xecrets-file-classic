@@ -79,6 +79,8 @@ struct SDlgInfo {
 	int IDDMainPrompt;
     BOOL fSaveInCache_E;      // Set check-box if the user wants to save the Enc-key
     BOOL fSaveInCache_D;      // Set check-box if the user wants to save the Dec-key
+    bool fDisableSaveInCache_E;
+    bool fDisableSaveInCache_D;
 };
 
 /// \brief Get a file name with an open dialog in an allocated string.
@@ -171,12 +173,8 @@ WarningDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
 	case WM_INITDIALOG:
         pDlgWarn = (CWarnDlg *)lParam;
-		
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
+
         (void)SetWindowLongPtr(hwndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
-        #pragma warning ( pop )
 
         // Get screen coordinates of main dialog window
         GetWindowRect(hwndDlg, &rectDlg);
@@ -186,7 +184,7 @@ WarningDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         // Calculate original height of the text-box rectangle
         deltaY = rect.bottom;
-        
+
         // Get the device context
         hdc = GetDC(GetDlgItem(hwndDlg, IDC_MSG));
         // Need to select the right font to get the right result...
@@ -234,7 +232,7 @@ WarningDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SetDlgItemText(hwndDlg, IDC_MSG, pDlgWarn->szMsg);
         SetDlgItemText(hwndDlg, IDC_CHECKMSG, pDlgWarn->szNotAgainMsg);
         CheckDlgButton(hwndDlg, IDC_CHECKMSG, BST_UNCHECKED);
-				
+
         {
             axpl::ttstring s = MainDlgTitleBar();
             SetWindowText(hwndDlg, s.c_str());
@@ -245,13 +243,13 @@ WarningDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         // Make sure it's on the desktop
         SendMessage(hwndDlg, DM_REPOSITION, 0, 0);
-        
+
 		return FALSE;
 
-    case WM_PAINT: 
-        hdc = BeginPaint(hwndDlg, &ps); 
+    case WM_PAINT:
+        hdc = BeginPaint(hwndDlg, &ps);
         DrawIcon(hdc, 10, 10, LoadIcon(NULL, IDI_WARNING));
-        EndPaint(hwndDlg, &ps); 
+        EndPaint(hwndDlg, &ps);
         return FALSE;
 
 	case WM_COMMAND:
@@ -327,11 +325,7 @@ LRESULT CALLBACK SafeEdit(
 	WNDPROC lpfnOldWndProc = pSafeEdit->lpfnOldWndProc;
 	switch (uMsg) {
 	case WM_DESTROY:
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
 		(void)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)lpfnOldWndProc);
-        #pragma warning ( pop )
 
 		delete pSafeEdit;
 		break;
@@ -475,11 +469,7 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
         SetDlgItemText(hwndDlg, IDC_TRYXECRETS, CMessage().AppMsg(INF_XECRETS_HYPERLINK).GetMsg());
         awl::IStaticHyperlink::GetInstance().EnableHyperlink(GetDlgItem(hwndDlg, IDC_TRYXECRETS));
 
-        // This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
         (void)SetWindowLongPtr(hwndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
-        #pragma warning ( pop )
 
         pSafeEdit = new SSafeEdit;
         ASSPTR(pSafeEdit);
@@ -489,24 +479,13 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
         ASSPTR(pSafeEdit->szPassphrase);
         pSafeEdit->szPassphrase[0] = '\0';
 
-        //SendMessage(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE1), WM_SETFONT, 0, 1);
-
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
 		pSafeEdit->lpfnOldWndProc = (WNDPROC)(LONG_PTR)SetWindowLongPtr(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE1), GWLP_WNDPROC, (LONG_PTR)SafeEdit);
-        #pragma warning ( pop )
 
 		pSafeEdit->fIsWindowUnicode = IsWindowUnicode(hwndDlg);
         pSafeEdit->fIsPasting = FALSE;
-        //SendMessage(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE1), WM_SETFONT, 0, 1);
 
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
         (void)SetWindowLongPtr(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE1), GWLP_USERDATA, (LONG_PTR)pSafeEdit);
-        #pragma warning ( pop )
-		
+
 		pSafeEdit = new SSafeEdit;
         ASSPTR(pSafeEdit);
 
@@ -515,23 +494,13 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
         ASSPTR(pSafeEdit->szPassphrase);
         pSafeEdit->szPassphrase[0] = '\0';
 
-        //SendMessage(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE2), WM_SETFONT, 0, 1);
-
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
         pSafeEdit->lpfnOldWndProc = (WNDPROC)(LONG_PTR)SetWindowLongPtr(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE2), GWLP_WNDPROC, (LONG_PTR)SafeEdit);
-        #pragma warning ( pop )
 
 		pSafeEdit->fIsWindowUnicode = IsWindowUnicode(hwndDlg);
         pSafeEdit->fIsPasting = FALSE;
 
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
 		(void)SetWindowLongPtr(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE2), GWLP_USERDATA, (LONG_PTR)pSafeEdit);
-        #pragma warning ( pop )
-		
+
         {
             CMessage message;
             SetDlgItemText(hwndDlg, IDC_ENTER_PASS, message.AppMsg(INF_ENTER_PASS).GetMsg());
@@ -540,12 +509,20 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
             SetDlgItemText(hwndDlg, IDOK, message.AppMsg(INF_IDOK).GetMsg());
 		    SetDlgItemText(hwndDlg, IDCANCEL, message.AppMsg(INF_IDCANCEL).GetMsg());
 
-            SetDlgItemText(hwndDlg, IDC_CHECKCACHE_E, message.AppMsg(INF_SAVE_ENCKEY).GetMsg());
-            CheckDlgButton(hwndDlg, IDC_CHECKCACHE_E, pDlgInfo->fSaveInCache_E ? BST_CHECKED : BST_UNCHECKED);
-            SetDlgItemText(hwndDlg, IDC_CHECKCACHE_D, message.AppMsg(INF_SAVE_DECKEY).GetMsg());
-            CheckDlgButton(hwndDlg, IDC_CHECKCACHE_D, pDlgInfo->fSaveInCache_D ? BST_CHECKED : BST_UNCHECKED);
+            if (!pDlgInfo->fDisableSaveInCache_E) {
+                SetDlgItemText(hwndDlg, IDC_CHECKCACHE_E, CMessage().AppMsg(INF_SAVE_ENCKEY).GetMsg());
+                CheckDlgButton(hwndDlg, IDC_CHECKCACHE_E, pDlgInfo->fSaveInCache_E ? BST_CHECKED : BST_UNCHECKED);
+            } else {
+                ShowWindow(GetDlgItem(hwndDlg, IDC_CHECKCACHE_E), SW_HIDE);
+            }
+            if (!pDlgInfo->fDisableSaveInCache_D) {
+                SetDlgItemText(hwndDlg, IDC_CHECKCACHE_D, CMessage().AppMsg(INF_SAVE_DECKEY).GetMsg());
+                CheckDlgButton(hwndDlg, IDC_CHECKCACHE_D, pDlgInfo->fSaveInCache_D ? BST_CHECKED : BST_UNCHECKED);
+            } else {
+                ShowWindow(GetDlgItem(hwndDlg, IDC_CHECKCACHE_D), SW_HIDE);
+            }
         }
-		
+
         {
             axpl::ttstring s = MainDlgTitleBar();
             SetWindowText(hwndDlg, s.c_str());
@@ -554,7 +531,6 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
         // Ensure that we are not obscured by parent, if possible.
 		SetWindowPos(hwndDlg, IsParentTopMost(hwndDlg) ? HWND_TOPMOST : GetParent(hwndDlg), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
         SetForegroundWindow(hwndDlg);
-        //SetWindowPos(GetParent(hwndDlg), hwndDlg, 0, 0, 0, 0, SWP_NOSIZE|SWP_NOMOVE);
         CenterWindow(hwndDlg);
 		SetFocus(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE1));
 
@@ -631,7 +607,6 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
                 _TCHAR *szExt = PathFindExtension(pDlgInfo->szKeyFileName.get());
                 if (gcbAxCryptKeyFile != cbFileSize ||
                     _tcsicmp(szExt, PathFindExtension(CMessage().AppMsg(INF_KEYFILE_NAME).GetMsg())) != 0) {
-
                     // Give a warning that it appears that the user is about to use a non-standard file...
                     CRegistry utRegWarn(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValKeyFileNotEncrypt);
                     BOOL fNotAgain = utRegWarn.GetDword(FALSE);
@@ -683,11 +658,7 @@ INT_PTR CALLBACK PassphraseDlgProc(
         SetDlgItemText(hwndDlg, IDC_TRYXECRETS, CMessage().AppMsg(INF_XECRETS_HYPERLINK).GetMsg());
         awl::IStaticHyperlink::GetInstance().EnableHyperlink(GetDlgItem(hwndDlg, IDC_TRYXECRETS));
 
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
         (void)SetWindowLongPtr(hwndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
-        #pragma warning ( pop )
 
 		pSafeEdit = new SSafeEdit;
         ASSPTR(pSafeEdit);
@@ -697,32 +668,30 @@ INT_PTR CALLBACK PassphraseDlgProc(
         ASSPTR(pSafeEdit->szPassphrase);
         pSafeEdit->szPassphrase[0] = '\0';
 
-        //SendMessage(GetDlgItem(hwndDlg, IDC_PASSPHRASE), WM_SETFONT, 0, 1);
-
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
         pSafeEdit->lpfnOldWndProc = (WNDPROC)(LONG_PTR)SetWindowLongPtr(GetDlgItem(hwndDlg, IDC_PASSPHRASE), GWLP_WNDPROC, (LONG_PTR)SafeEdit);
-        #pragma warning ( pop )
 
 		pSafeEdit->fIsWindowUnicode = IsWindowUnicode(hwndDlg);
         pSafeEdit->fIsPasting = FALSE;
 
-		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
 		(void)SetWindowLongPtr(GetDlgItem(hwndDlg, IDC_PASSPHRASE), GWLP_USERDATA, (LONG_PTR)pSafeEdit);
-        #pragma warning ( pop )
 
 		SetDlgItemText(hwndDlg, IDC_ENTER_PASS , CMessage().AppMsg(((SDlgInfo *)lParam)->IDDMainPrompt).GetMsg());
         SetDlgItemText(hwndDlg, IDC_KEYFILE, CMessage().AppMsg(INF_FRAME_KEYFILE).GetMsg());
 		SetDlgItemText(hwndDlg, IDOK, CMessage().AppMsg(INF_IDOK).GetMsg());
 		SetDlgItemText(hwndDlg, IDCANCEL, CMessage().AppMsg(INF_IDCANCEL).GetMsg());
 
-        SetDlgItemText(hwndDlg, IDC_CHECKCACHE_E, CMessage().AppMsg(INF_SAVE_ENCKEY).GetMsg());
-        CheckDlgButton(hwndDlg, IDC_CHECKCACHE_E, pDlgInfo->fSaveInCache_E ? BST_CHECKED : BST_UNCHECKED);
+        if (!pDlgInfo->fDisableSaveInCache_E) {
+            SetDlgItemText(hwndDlg, IDC_CHECKCACHE_E, CMessage().AppMsg(INF_SAVE_ENCKEY).GetMsg());
+            CheckDlgButton(hwndDlg, IDC_CHECKCACHE_E, pDlgInfo->fSaveInCache_E ? BST_CHECKED : BST_UNCHECKED);
+        } else {
+            ShowWindow(GetDlgItem(hwndDlg, IDC_CHECKCACHE_E), SW_HIDE);
+        }
+        if (!pDlgInfo->fDisableSaveInCache_D) {
         SetDlgItemText(hwndDlg, IDC_CHECKCACHE_D, CMessage().AppMsg(INF_SAVE_DECKEY).GetMsg());
         CheckDlgButton(hwndDlg, IDC_CHECKCACHE_D, pDlgInfo->fSaveInCache_D ? BST_CHECKED : BST_UNCHECKED);
+        } else {
+            ShowWindow(GetDlgItem(hwndDlg, IDC_CHECKCACHE_D), SW_HIDE);
+        }
 
         SetWindowLong(GetDlgItem(hwndDlg, IDS_FILENAME), GWL_STYLE, (LONG)(LONG_PTR)GetWindowLongPtr(GetDlgItem(hwndDlg, IDS_FILENAME), GWL_STYLE) | SS_PATHELLIPSIS);
         if (pDlgInfo->szFileName && pDlgInfo->szFileName[0]) {
@@ -730,7 +699,7 @@ INT_PTR CALLBACK PassphraseDlgProc(
         } else {
             ShowWindow(GetDlgItem(hwndDlg, IDS_FILENAME), SW_HIDE);
         }
-		
+
         // Set style of Key File Name control
         SetWindowLong(GetDlgItem(hwndDlg, IDS_KEYFILENAME), GWL_STYLE, (LONG)(LONG_PTR)GetWindowLongPtr(GetDlgItem(hwndDlg, IDS_KEYFILENAME), GWL_STYLE) | SS_PATHELLIPSIS);
 
@@ -742,7 +711,6 @@ INT_PTR CALLBACK PassphraseDlgProc(
         // Ensure that we are not obscured by parent, if possible.
 		SetWindowPos(hwndDlg, IsParentTopMost(hwndDlg) ? HWND_TOPMOST : GetParent(hwndDlg), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
         SetForegroundWindow(hwndDlg);
-        //SetWindowPos(GetParent(hwndDlg), hwndDlg, 0, 0, 0, 0, SWP_NOSIZE|SWP_NOMOVE);
         CenterWindow(hwndDlg);
 		SetFocus(GetDlgItem(hwndDlg, IDC_PASSPHRASE));
 
@@ -787,9 +755,9 @@ INT_PTR CALLBACK PassphraseDlgProc(
 	}
 }
 /// \brief Prompt for a new passphrase and possibly a key-file.
-/// \param szPassphrase The passphrase is returned here unless cancelled.
+/// \param szPassphrase The passphrase is returned here unless canceled.
 /// \param szFileName The key-file file name if any is returned here.
-/// \return true if one was gotten, false if user cancelled etc.
+/// \return true if one was gotten, false if user canceled etc.
 bool
 GetNewPassphrase(char **szPassphrase, TCHAR **szKeyFileName, HWND hWnd) {
     if (!CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValServerMode).GetDword(FALSE)) {
@@ -797,9 +765,15 @@ GetNewPassphrase(char **szPassphrase, TCHAR **szKeyFileName, HWND hWnd) {
         CRegistry utRegSaveFlag_E(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValSaveEncKey);
         CRegistry utRegSaveFlag_D(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValSaveDecKey);
 
+        DWORD dwDisableSaveEncryptionKey = CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValDisableSaveEncryptionKey).GetDword(0);
+        dlgInfo.fDisableSaveInCache_E = dwDisableSaveEncryptionKey != 0;
+
+        DWORD dwDisableSaveDecryptionKey = CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValDisableSaveDecryptionKey).GetDword(0);
+        dlgInfo.fDisableSaveInCache_D = dwDisableSaveDecryptionKey != 0;
+
         dlgInfo.szPassphrase = NULL;
-        dlgInfo.fSaveInCache_E = utRegSaveFlag_E.GetDword();
-        dlgInfo.fSaveInCache_D = utRegSaveFlag_D.GetDword();
+        dlgInfo.fSaveInCache_E = dlgInfo.fDisableSaveInCache_E ? FALSE : utRegSaveFlag_E.GetDword();
+        dlgInfo.fSaveInCache_D = dlgInfo.fDisableSaveInCache_D ? FALSE : utRegSaveFlag_D.GetDword();
         dlgInfo.szKeyFileName = auto_ptr<_TCHAR>(NULL);
 
         switch (DialogBoxParam(
@@ -843,10 +817,16 @@ GetPassphrase(int iPromptID, LPCTSTR szFileName, auto_ptr<char> &szPassphrase, a
         CRegistry utRegSaveFlag_E(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValSaveEncKey);
         CRegistry utRegSaveFlag_D(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValSaveDecKey);
 
+        DWORD dwDisableSaveEncryptionKey = CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValDisableSaveEncryptionKey).GetDword(0);
+        dlgInfo.fDisableSaveInCache_E = dwDisableSaveEncryptionKey != 0;
+
+        DWORD dwDisableSaveDecryptionKey = CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValDisableSaveDecryptionKey).GetDword(0);
+        dlgInfo.fDisableSaveInCache_D = dwDisableSaveDecryptionKey != 0;
+
 	    dlgInfo.IDDMainPrompt = iPromptID;
         dlgInfo.szPassphrase = NULL;
-        dlgInfo.fSaveInCache_E = utRegSaveFlag_E.GetDword();
-        dlgInfo.fSaveInCache_D = utRegSaveFlag_D.GetDword();
+        dlgInfo.fSaveInCache_E = dlgInfo.fDisableSaveInCache_E ? FALSE : utRegSaveFlag_E.GetDword();
+        dlgInfo.fSaveInCache_D = dlgInfo.fDisableSaveInCache_D ? FALSE : utRegSaveFlag_D.GetDword();
         dlgInfo.szFileName = szFileName;
         dlgInfo.szKeyFileName = auto_ptr<_TCHAR>(NULL);
 

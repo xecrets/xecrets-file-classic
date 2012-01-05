@@ -108,74 +108,235 @@
                   Value="!(loc.ExitDialogText)" />
 
         <UI>
-            <Dialog Id="AxWelcomeDlg" Width="370" Height="270" Title="!(loc.WelcomeDlg_Title)">
-                <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" >
-                    <Publish Property="WixUI_InstallMode" Value="Update">Installed AND PATCH</Publish>
+            <Dialog Id="AxWelcomeDlg"
+                    Width="370"
+                    Height="270"
+                    Title="!(loc.WelcomeDlg_Title)">
+                <Control Id="Next"
+                         Type="PushButton"
+                         X="236"
+                         Y="243"
+                         Width="56"
+                         Height="17"
+                         Default="yes"
+                         Text="!(loc.WixUINext)" >
+                    <Publish Property="WixUI_InstallMode"
+                             Value="Update">Installed AND PATCH</Publish>
                 </Control>
-                <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
-                    <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+                <Control Id="Cancel"
+                         Type="PushButton"
+                         X="304"
+                         Y="243"
+                         Width="56"
+                         Height="17"
+                         Cancel="yes"
+                         Text="!(loc.WixUICancel)">
+                    <Publish Event="SpawnDialog"
+                             Value="CancelDlg">1</Publish>
                 </Control>
-                <Control Id="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" TabSkip="no" Text="!(loc.WelcomeDlgBitmap)" />
-                <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUIBack)" />
-                <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
-                <Control Id="Description" Type="Text" X="135" Y="80" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.WelcomeDlgDescription)" >
+                <Control Id="Bitmap"
+                         Type="Bitmap"
+                         X="0"
+                         Y="0"
+                         Width="370"
+                         Height="234"
+                         TabSkip="no"
+                         Text="!(loc.WelcomeDlgBitmap)" />
+                <Control Id="Back"
+                         Type="PushButton"
+                         X="180"
+                         Y="243"
+                         Width="56"
+                         Height="17"
+                         Disabled="yes"
+                         Text="!(loc.WixUIBack)" />
+                <Control Id="BottomLine"
+                         Type="Line"
+                         X="0"
+                         Y="234"
+                         Width="370"
+                         Height="0" />
+                <Control Id="Description"
+                         Type="Text"
+                         X="135"
+                         Y="80"
+                         Width="220"
+                         Height="60"
+                         Transparent="yes"
+                         NoPrefix="yes"
+                         Text="!(loc.WelcomeDlgDescription)" >
                     <Condition Action="show">NOT Installed OR NOT PATCH</Condition>
                     <Condition Action="hide">Installed AND PATCH</Condition>
                 </Control>
-                <Control Id="PatchDescription" Type="Text" X="135" Y="80" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.WelcomeUpdateDlgDescriptionUpdate)" >
+                <Control Id="PatchDescription"
+                         Type="Text"
+                         X="135"
+                         Y="80"
+                         Width="220"
+                         Height="60"
+                         Transparent="yes"
+                         NoPrefix="yes"
+                         Text="!(loc.WelcomeUpdateDlgDescriptionUpdate)" >
                     <Condition Action="show">Installed AND PATCH</Condition>
                     <Condition Action="hide">NOT Installed OR NOT PATCH</Condition>
                 </Control>
-                <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.WelcomeDlgTitle)" />
+                <Control Id="Title"
+                         Type="Text"
+                         X="135"
+                         Y="20"
+                         Width="220"
+                         Height="60"
+                         Transparent="yes"
+                         NoPrefix="yes"
+                         Text="!(loc.WelcomeDlgTitle)" />
             </Dialog>
 
-            <Dialog Id="AxWelcomeEulaDlg" Width="370" Height="270" Title="!(loc.WelcomeEulaDlg_Title)">
-                <Control Id="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" TabSkip="no" Text="!(loc.WelcomeEulaDlgBitmap)" />
-                <Control Id="Title" Type="Text" X="130" Y="6" Width="225" Height="30" Transparent="yes" NoPrefix="yes" Text="!(loc.WelcomeEulaDlgTitle)" />
-                <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
-                <Control Id="LicenseAcceptedCheckBox" Type="CheckBox" X="130" Y="207" Width="226" Height="18" CheckBoxValue="1" Property="AxLicenseAccepted" Text="!(loc.WelcomeEulaDlgLicenseAcceptedCheckBox)" />
-                <Control Id="Print" Type="PushButton" X="88" Y="243" Width="56" Height="17" Text="!(loc.WixUIPrint)">
-                    <Publish Event="DoAction" Value="WixUIPrintEula">1</Publish>
+            <Dialog Id="AxWelcomeEulaDlg"
+                    Width="370"
+                    Height="270"
+                    Title="!(loc.WelcomeEulaDlg_Title)">
+                <Control Id="Bitmap"
+                         Type="Bitmap"
+                         X="0"
+                         Y="0"
+                         Width="370"
+                         Height="234"
+                         TabSkip="no"
+                         Text="!(loc.WelcomeEulaDlgBitmap)" />
+                <Control Id="Title"
+                         Type="Text"
+                         X="130"
+                         Y="6"
+                         Width="225"
+                         Height="30"
+                         Transparent="yes"
+                         NoPrefix="yes"
+                         Text="!(loc.WelcomeEulaDlgTitle)" />
+                <Control Id="BottomLine"
+                         Type="Line"
+                         X="0"
+                         Y="234"
+                         Width="370"
+                         Height="0" />
+                <Control Id="LicenseAcceptedCheckBox"
+                         Type="CheckBox"
+                         X="130"
+                         Y="207"
+                         Width="226"
+                         Height="18"
+                         CheckBoxValue="1"
+                         Property="AxLicenseAccepted"
+                         Text="!(loc.WelcomeEulaDlgLicenseAcceptedCheckBox)" />
+                <Control Id="Print"
+                         Type="PushButton"
+                         X="88"
+                         Y="243"
+                         Width="56"
+                         Height="17"
+                         Text="!(loc.WixUIPrint)">
+                    <Publish Event="DoAction"
+                             Value="WixUIPrintEula">1</Publish>
                 </Control>
-                <Control Id="Back" Type="PushButton" X="156" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUIBack)" />
-                <Control Id="Install" Type="PushButton" ElevationShield="yes" X="212" Y="243" Width="80" Height="17" Default="yes" Text="!(loc.WelcomeEulaDlgInstall)" Hidden="yes">
-                    <Publish Event="SpawnWaitDialog" Value="WaitForCostingDlg">!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1</Publish>
-                    <Publish Event="EndDialog" Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
-                    <Publish Event="SpawnDialog" Value="OutOfRbDiskDlg">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
-                    <Publish Event="EndDialog" Value="Return">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
-                    <Publish Event="EnableRollback" Value="False">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
-                    <Publish Event="SpawnDialog" Value="OutOfDiskDlg">(OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST="F")</Publish>
+                <Control Id="Back"
+                         Type="PushButton"
+                         X="156"
+                         Y="243"
+                         Width="56"
+                         Height="17"
+                         Disabled="yes"
+                         Text="!(loc.WixUIBack)" />
+                <Control Id="Install"
+                         Type="PushButton"
+                         ElevationShield="yes"
+                         X="212"
+                         Y="243"
+                         Width="80"
+                         Height="17"
+                         Default="yes"
+                         Text="!(loc.WelcomeEulaDlgInstall)"
+                         Hidden="yes">
+                    <Publish Event="SpawnWaitDialog"
+                             Value="WaitForCostingDlg">!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1</Publish>
+                    <Publish Event="EndDialog"
+                             Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
+                    <Publish Event="SpawnDialog"
+                             Value="OutOfRbDiskDlg">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
+                    <Publish Event="EndDialog"
+                             Value="Return">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
+                    <Publish Event="EnableRollback"
+                             Value="False">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
+                    <Publish Event="SpawnDialog"
+                             Value="OutOfDiskDlg">(OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST="F")</Publish>
                     <Condition Action="disable"><![CDATA[AxLicenseAccepted <> "1"]]></Condition>
                     <Condition Action="enable">AxLicenseAccepted = "1"</Condition>
                     <Condition Action="show">ALLUSERS</Condition>
                 </Control>
-                <Control Id="InstallNoShield" Type="PushButton" ElevationShield="no" X="212" Y="243" Width="80" Height="17" Default="yes" Text="!(loc.WelcomeEulaDlgInstall)" Hidden="yes">
-                    <Publish Event="SpawnWaitDialog" Value="WaitForCostingDlg">!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1</Publish>
-                    <Publish Event="EndDialog" Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
-                    <Publish Event="SpawnDialog" Value="OutOfRbDiskDlg">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
-                    <Publish Event="EndDialog" Value="Return">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
-                    <Publish Event="EnableRollback" Value="False">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
-                    <Publish Event="SpawnDialog" Value="OutOfDiskDlg">(OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST="F")</Publish>
+                <Control Id="InstallNoShield"
+                         Type="PushButton"
+                         ElevationShield="no"
+                         X="212"
+                         Y="243"
+                         Width="80"
+                         Height="17"
+                         Default="yes"
+                         Text="!(loc.WelcomeEulaDlgInstall)"
+                         Hidden="yes">
+                    <Publish Event="SpawnWaitDialog"
+                             Value="WaitForCostingDlg">!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1</Publish>
+                    <Publish Event="EndDialog"
+                             Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
+                    <Publish Event="SpawnDialog"
+                             Value="OutOfRbDiskDlg">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
+                    <Publish Event="EndDialog"
+                             Value="Return">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
+                    <Publish Event="EnableRollback"
+                             Value="False">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
+                    <Publish Event="SpawnDialog"
+                             Value="OutOfDiskDlg">(OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST="F")</Publish>
                     <Condition Action="disable"><![CDATA[AxLicenseAccepted <> "1"]]></Condition>
                     <Condition Action="enable">AxLicenseAccepted = "1"</Condition>
                     <Condition Action="show">NOT ALLUSERS</Condition>
                 </Control>
-                <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
-                    <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+                <Control Id="Cancel"
+                         Type="PushButton"
+                         X="304"
+                         Y="243"
+                         Width="56"
+                         Height="17"
+                         Cancel="yes"
+                         Text="!(loc.WixUICancel)">
+                    <Publish Event="SpawnDialog"
+                             Value="CancelDlg">1</Publish>
                 </Control>
-                <Control Id="LicenseText" Type="ScrollableText" X="130" Y="36" Width="226" Height="162" Sunken="yes" TabSkip="no">
+                <Control Id="LicenseText"
+                         Type="ScrollableText"
+                         X="130"
+                         Y="36"
+                         Width="226"
+                         Height="162"
+                         Sunken="yes"
+                         TabSkip="no">
                     <Text SourceFile="$(var.Package.TargetDir)\License.rtf" />
                 </Control>
             </Dialog>
-            
+
         </UI>
         <UI Id="AxUI_Minimal">
-            <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
-            <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
-            <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+            <TextStyle Id="WixUI_Font_Normal"
+                       FaceName="Tahoma"
+                       Size="8" />
+            <TextStyle Id="WixUI_Font_Bigger"
+                       FaceName="Tahoma"
+                       Size="12" />
+            <TextStyle Id="WixUI_Font_Title"
+                       FaceName="Tahoma"
+                       Size="9"
+                       Bold="yes" />
 
-            <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
-            <Property Id="WixUI_Mode" Value="Minimal" />
+            <Property Id="DefaultUIFont"
+                      Value="WixUI_Font_Normal" />
+            <Property Id="WixUI_Mode"
+                      Value="Minimal" />
 
             <DialogRef Id="ErrorDlg" />
             <DialogRef Id="FatalError" />
@@ -188,24 +349,58 @@
             <DialogRef Id="AxWelcomeDlg" />
             <DialogRef Id="AxWelcomeEulaDlg" />
 
-            <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return">WIXUI_EXITDIALOGOPTIONALCHECKBOX &lt;&gt; 1 OR UILevel &lt;&gt; 5</Publish>
-            <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND UILevel = 5</Publish>
-            <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+            <Publish Dialog="ExitDialog"
+                     Control="Finish"
+                     Event="EndDialog"
+                     Value="Return">WIXUI_EXITDIALOGOPTIONALCHECKBOX &lt;&gt; 1 OR UILevel &lt;&gt; 5</Publish>
+            <Publish Dialog="ExitDialog"
+                     Control="Finish"
+                     Event="DoAction"
+                     Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND UILevel = 5</Publish>
+            <Publish Dialog="ExitDialog"
+                     Control="Finish"
+                     Event="EndDialog"
+                     Value="Return"
+                     Order="999">1</Publish>
 
-            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+            <Publish Dialog="VerifyReadyDlg"
+                     Control="Back"
+                     Event="NewDialog"
+                     Value="MaintenanceTypeDlg">1</Publish>
 
-            <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+            <Publish Dialog="MaintenanceWelcomeDlg"
+                     Control="Next"
+                     Event="NewDialog"
+                     Value="MaintenanceTypeDlg">1</Publish>
 
-            <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-            <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-            <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+            <Publish Dialog="MaintenanceTypeDlg"
+                     Control="RepairButton"
+                     Event="NewDialog"
+                     Value="VerifyReadyDlg">1</Publish>
+            <Publish Dialog="MaintenanceTypeDlg"
+                     Control="RemoveButton"
+                     Event="NewDialog"
+                     Value="VerifyReadyDlg">1</Publish>
+            <Publish Dialog="MaintenanceTypeDlg"
+                     Control="Back"
+                     Event="NewDialog"
+                     Value="MaintenanceWelcomeDlg">1</Publish>
 
-            <Publish Dialog="AxWelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">Installed AND PATCH</Publish>
-            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="AxWelcomeDlg" Order="2">Installed AND PATCH</Publish>
+            <Publish Dialog="AxWelcomeDlg"
+                     Control="Next"
+                     Event="NewDialog"
+                     Value="VerifyReadyDlg">Installed AND PATCH</Publish>
+            <Publish Dialog="VerifyReadyDlg"
+                     Control="Back"
+                     Event="NewDialog"
+                     Value="AxWelcomeDlg"
+                     Order="2">Installed AND PATCH</Publish>
 
             <InstallUISequence>
-                <Show Dialog="AxWelcomeDlg" Before="AxWelcomeEulaDlg">Installed AND PATCH</Show>
-                <Show Dialog="AxWelcomeEulaDlg" Before="ProgressDlg">NOT Installed AND HIDEEULA = 0</Show>
+                <Show Dialog="AxWelcomeDlg"
+                      Before="AxWelcomeEulaDlg">Installed AND PATCH</Show>
+                <Show Dialog="AxWelcomeEulaDlg"
+                      Before="ProgressDlg">NOT Installed AND HIDEEULA = 0</Show>
             </InstallUISequence>
             <UIRef Id="WixUI_Common" />
         </UI>
@@ -558,7 +753,12 @@
                     <RegistryValue Type="integer"
                                    Name="AllowPrograms"
                                    Value="0" />
-                    <!--<RegistryValue Type="string" Name="InstallDir" Value="[APPLICATIONFOLDER]" />-->
+                    <RegistryValue Type="integer"
+                                   Name="DisableSaveEncryptionKey"
+                                   Value="0" />
+                    <RegistryValue Type="integer"
+                                   Name="DisableSaveDecryptionKey"
+                                   Value="0" />
                 </RegistryKey>
             </Component>
 
