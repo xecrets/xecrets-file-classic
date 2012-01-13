@@ -344,19 +344,29 @@ UnInitGlobalStrings(void) {
 DWORD
 MessageWaitForSingleObject(HANDLE hObject, DWORD dwTimeout) {
 	DWORD dwReturnCode;
+    SetLastError(ERROR_SUCCESS);
 	while (TRUE) {
 		MSG msg ;
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		if ((dwReturnCode = MsgWaitForMultipleObjects(1,
+        // We're having problems with MsgWaitForMultipleObjects returning with WAIT_FAILED but with either unchanged or
+        // no error code in GetLastError(). One thread on the Internet claims that using the Ex function solves the problem.
+		if ((dwReturnCode = MsgWaitForMultipleObjectsEx(1,
 			&hObject,
-			FALSE,
 			dwTimeout,
-			QS_ALLINPUT)) == (WAIT_OBJECT_0 + 1)) {
+			QS_ALLINPUT,
+            0
+            )) == (WAIT_OBJECT_0 + 1)) {
 			continue; // Message in queue, no event...
 		} else {
+            // Additional fail-safe code for handling the WAIT_FAILED && ERROR_SUCCESS problem. Hopefully this won't cause hangs...
+            if (dwReturnCode == WAIT_FAILED) {
+                if (GetLastError() == ERROR_SUCCESS) {
+                    continue;
+                }
+            }
 			return dwReturnCode;
 		}
 	}
