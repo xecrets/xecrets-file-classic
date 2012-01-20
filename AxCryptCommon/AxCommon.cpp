@@ -367,6 +367,9 @@ MessageWaitForSingleObject(HANDLE hObject, DWORD dwTimeout) {
                     continue;
                 }
             }
+            if (dwReturnCode == WAIT_IO_COMPLETION) {
+                continue;
+            }
 			return dwReturnCode;
 		}
 	}

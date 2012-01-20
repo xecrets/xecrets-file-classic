@@ -102,7 +102,7 @@
     The code below and in associated files tend to be executed in different contexts, so
     some clarification may help... This executable may be the first instance, or it may
     not... We call that first instance the "primary", the rest "secondary".
-    
+
     The code is presumably thread-safe, guarded with critical sections... I hope.
 
     A guide to my, sometimes inconsistent, dialect of hungarian may be in order...
@@ -312,7 +312,6 @@ static size_t cbDbgAllocs = 0;
 void *
 basenew(size_t stOctets) {
     if (gfHeapValid && pgHeap->heap != NULL) {
-
 #ifdef  _DEBUG
         // Add size of the overhead block, and align to even multiple of such block.
         size_t size = stOctets + sizeof UNIT + sizeof UNIT - 1;
@@ -349,7 +348,6 @@ void operator delete(void* vpMem) {
         vpMem >= (void *)((char *)pgHeap->heap + pgHeap->m_stHeapLen)) {
         free(vpMem);
     } else {
-
 #ifdef  _DEBUG
         UNIT *p = (UNIT *)((size_t)vpMem - sizeof UNIT);
         if ((p->size & ~USED) == 24) {
@@ -469,11 +467,11 @@ PrimaryPrepareForExit() {
 //
 static LRESULT CALLBACK
 PrimaryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    switch (uMsg) { 
-        case WM_CREATE: 
-            // Initialize the window. 
-            break; 
- 
+    switch (uMsg) {
+        case WM_CREATE:
+            // Initialize the window.
+            break;
+
         case WM_PAINT:
             // Paint the window's client area - actually do nothing to it.
             RECT stRect;
@@ -482,8 +480,8 @@ PrimaryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 HDC hHDC = BeginPaint(hWnd, &stPaint);
                 (void)EndPaint(hWnd, &stPaint);
             }
-            break; 
-        
+            break;
+
         // Obsolete - but we support for older NT
         case WM_POWER:
             switch (wParam) {
@@ -521,10 +519,9 @@ PrimaryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             case PBT_APMRESUMESUSPEND:
                 pgEntropyPool->Start();
                 return 0;
-
             }
             return 0;   // Dummy
- 
+
         case WM_QUERYENDSESSION:
             //
             // This is a case of difference between Windows NT/2K/XP etc on
@@ -582,10 +579,10 @@ PrimaryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             PostQuitMessage(0);
             break;
 
-        default: 
-            return DefWindowProc(hWnd, uMsg, wParam, lParam); 
-    } 
-    return 0; 
+        default:
+            return DefWindowProc(hWnd, uMsg, wParam, lParam);
+    }
+    return 0;
 }
 //
 // Register the Window Class
@@ -595,17 +592,17 @@ PrimaryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 static BOOL
 PrimaryInitApplication(HINSTANCE hInstance) {
     WNDCLASSEX wcx;
- 
+
     ZeroMemory(&wcx, sizeof wcx);
-    wcx.cbSize = sizeof wcx;            // size of structure 
-    wcx.style = CS_HREDRAW | 
-        CS_VREDRAW;                     // redraw if size changes 
-    wcx.lpfnWndProc = PrimaryWndProc;       // points to window procedure 
-    wcx.cbClsExtra = 0;                 // no extra class memory 
-    wcx.cbWndExtra = 0;                 // no extra window memory 
-    wcx.hInstance = hInstance;          // handle of instance 
+    wcx.cbSize = sizeof wcx;            // size of structure
+    wcx.style = CS_HREDRAW |
+        CS_VREDRAW;                     // redraw if size changes
+    wcx.lpfnWndProc = PrimaryWndProc;       // points to window procedure
+    wcx.cbClsExtra = 0;                 // no extra class memory
+    wcx.cbWndExtra = 0;                 // no extra window memory
+    wcx.hInstance = hInstance;          // handle of instance
     wcx.hIcon = (HICON)LoadImage(
-        hInstance, 
+        hInstance,
         MAKEINTRESOURCE(IDI_AXCRYPT),
         IMAGE_ICON,
         GetSystemMetrics(SM_CXICON),
@@ -613,54 +610,54 @@ PrimaryInitApplication(HINSTANCE hInstance) {
         LR_DEFAULTCOLOR);               // Application Icon
     CAssert(wcx.hIcon != NULL).Sys().Throw();
     wcx.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wcx.hbrBackground = (HBRUSH)GetStockObject( 
-        WHITE_BRUSH);                   // white background brush 
+    wcx.hbrBackground = (HBRUSH)GetStockObject(
+        WHITE_BRUSH);                   // white background brush
     wcx.lpszClassName = gszAxCryptInternalName; // name of window class
     wcx.hIconSm = (HICON)LoadImage(hInstance,
         MAKEINTRESOURCE(IDI_AXCRYPT),
         IMAGE_ICON,
-        GetSystemMetrics(SM_CXSMICON), 
-        GetSystemMetrics(SM_CYSMICON), 
+        GetSystemMetrics(SM_CXSMICON),
+        GetSystemMetrics(SM_CYSMICON),
         LR_DEFAULTCOLOR);               // Small class icon
     CAssert(wcx.hIconSm != NULL).Sys().Throw();
- 
-    return RegisterClassEx(&wcx) != 0; 
-} 
+
+    return RegisterClassEx(&wcx) != 0;
+}
 //
 // Create a window to receive messages etc
 //
 // "Primary Window Proc Main Thread"
 //
 static BOOL
-PrimaryInitInstance(HINSTANCE hInstance, int nCmdShow, HWND *phWnd) { 
+PrimaryInitInstance(HINSTANCE hInstance, int nCmdShow, HWND *phWnd) {
     CVersion utVersion;
-    *phWnd = CreateWindow( 
-        gszAxCryptInternalName,// name of window class 
-        utVersion.String(gfAxCryptShowNoVersion),     // title-bar string 
+    *phWnd = CreateWindow(
+        gszAxCryptInternalName,// name of window class
+        utVersion.String(gfAxCryptShowNoVersion),     // title-bar string
         WS_TILEDWINDOW|WS_MINIMIZE,
         0, // Zero Size
         0,
         0,  // Zero Position
         0,
-        (HWND)NULL,             // no owner window 
-        (HMENU)NULL,            // use class menu 
-        hInstance,              // handle of application instance 
-        (LPVOID) NULL);         // no window-creation data 
- 
+        (HWND)NULL,             // no owner window
+        (HMENU)NULL,            // use class menu
+        hInstance,              // handle of application instance
+        (LPVOID) NULL);         // no window-creation data
+
     if (*phWnd == NULL) {
-        return FALSE; 
+        return FALSE;
     }
- 
-// Show the window and send a WM_PAINT message to the window 
+
+// Show the window and send a WM_PAINT message to the window
 // procedure. Hide it if we are in production.
 #if     defined(_DEBUG)
     ShowWindow(*phWnd, nCmdShow);
 #else
     ShowWindow(*phWnd, SW_HIDE);
 #endif
-    UpdateWindow(*phWnd); 
+    UpdateWindow(*phWnd);
     TrimProcess();
-    return TRUE; 
+    return TRUE;
 }
 
 struct FindProgressWndS {
@@ -702,7 +699,7 @@ DoCmdFileExpand(pfCmdT pfCmd, CCmdParam *pCmdParam) {
     CFileName fn;
     if (PathIsRelative(pCmdParam->szParam1.c_str())) {
         TCHAR path[MAX_PATH];
-    
+
         PathCombine(path, pCmdParam->szCurDir.c_str(), pCmdParam->szParam1.c_str());
         fn.Set(path);
     } else {
@@ -750,7 +747,6 @@ static DWORD CmdExit(DWORD dwPrimaryThreadId) {
     return dwExitCode;
 }
 
-       
 //
 // This is where we do the actual work. As we want the message loop to continue
 // we create a separate thread for it.
@@ -793,7 +789,7 @@ PrimaryCommandThreadInternal(LPVOID lpParam) {
         utCmdParam.pDlgProgress = lpSRequest->pDlgProgress;
         utCmdParam.hProgressWnd = FindProgressWnd(lpSRequest->CallerProcId);
         utCmdParam.hStdOut = lpSRequest->hStdOut;
- 
+
         HEAP_CHECK_BEGIN(_T("PrimaryCommandThread()"), 0)
         switch (lpSRequest->eRequest) {
         case EN_WIPE:   // Wipe
@@ -913,19 +909,18 @@ PrimaryCommandThreadInternal(LPVOID lpParam) {
         if (lpSRequest->hStdOut != NULL && lpSRequest->hStdOut != INVALID_HANDLE_VALUE) {
             CAssert(CloseHandle(lpSRequest->hStdOut)).Sys().Throw();
         }
-
     } catch (TAssert utErr) {
         OutputDebugString(L"Caught unhandled C++ exception in PrimaryCommandThreadInternal");
         utErr.App(ERR_UNTRAPPED).Show();
         dwReturn = ERR_UNTRAPPED;
     }
-    
+
     // Allocated by caller, must be released here
     if (lpSRequest->pDlgProgress) {
         delete lpSRequest->pDlgProgress;
         lpSRequest->pDlgProgress = NULL;
     }
-    delete lpSRequest;  
+    delete lpSRequest;
     lpSRequest = NULL;
 
 //#ifdef XXXYYY
@@ -942,7 +937,7 @@ PrimaryCommandThreadInternal(LPVOID lpParam) {
                                   (LPTSTR)&szCmd,
                                   0,
                                   (va_list *)&utCmdParam.szParam1)).Sys(MSG_SYSTEM_CALL, _T("PrimaryCommandThread() [FormatMessage()]")).Throw();
-        
+
             STARTUPINFO StartupInfo;
             ZeroMemory(&StartupInfo, sizeof StartupInfo);
             StartupInfo.cb = sizeof StartupInfo;
@@ -1083,7 +1078,7 @@ ValidateSigsEtc() {
 
             // If we have restrictions, let's get licenses and all that
             axpl::ttstring sLicenseVerifier = gpConfig->GetFromXML(pRestrictXML, _TT("verifier")).first;
-            // If there's a verifier in the restrictions section... 
+            // If there's a verifier in the restrictions section...
             if (!sLicenseVerifier.empty()) {
                 // ...load the public verifier for licenses for this program. This has to succeed, otherwise
                 // the constructor asserts. The config is signed, so it really should be correct.
@@ -1135,7 +1130,7 @@ ValidateSigsEtc() {
                 // A valid <Terms> element determine what is modfied of the restrictions. We feed the
                 // RestictionMgr with restrictions as we parse the XML. It's then up to the rest of the
                 // code to use the restrictions if it pleases it.
-                
+
                 // Create the global restriction manager
                 gpRestrictMgr = new CRestrictMgr;
 
@@ -1182,7 +1177,7 @@ PrimaryInit(int nCmdShow) {
     }
 
     pgEntropyPool->Stop().Save();
-            
+
     // Create new tempdirectory and ensure that it is not compressed
     // These calls and the need for it only exists in NT and later
     if (COsVersion().IsWinNx()) {
@@ -1336,7 +1331,7 @@ PrimaryEvent() {
         } else {
             hParent = glpSRequest->hCurWnd;
         }
-                
+
         lpSRequestCopy->pDlgProgress->Create(ghInstance, IDD_PROGRESS, hParent, CVersion(ghInstance).String(gfAxCryptShowNoVersion));
     } else {
         lpSRequestCopy->pDlgProgress = NULL;
@@ -1422,15 +1417,15 @@ DestroyGlobals1() {
     // The global restriction manager
     delete gpRestrictMgr;
     gpRestrictMgr = NULL;
-    
+
     // The global license manager
     delete gpLicMgr;
     gpLicMgr = NULL;
-    
+
     // The global trial counter tracker
     delete gpTrialMgr;
     gpTrialMgr = NULL;
-    
+
     // The global configuration tracker, loaded at run-time startup - ready to use!
     delete gpConfig;
     gpConfig = NULL;
@@ -1531,19 +1526,19 @@ PrimaryProcess(int nCmdShow) {
     // We are now the master server process, waiting for requests for action
     // through the shared memory map - signalled through SendEvent semaphore.
     while (TRUE) {
-        MSG msg ; 
-        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) { 
+        MSG msg ;
+        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
             if (msg.message == WM_QUIT) {
                 // ... then clean up etc.
                 PrimaryPrepareForExit();
                 return (int)msg.wParam;
             } else {
-                TranslateMessage(&msg); 
-                DispatchMessage(&msg); 
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
             }
         }
         if (MsgWaitForMultipleObjects(1,
-            &ghSendEvent, 
+            &ghSendEvent,
             FALSE,
             INFINITE,
             QS_ALLINPUT) == (WAIT_OBJECT_0)) {
@@ -1604,7 +1599,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
         glpSRequest->eRequest = EN_GETPROCID;
         CAssert(SetEvent(ghSendEvent)).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [SetEvent(ghSendEvent)]")).Throw();
         CAssert(MessageWaitForSingleObject(ghReceiveEvent, MAX_WAIT_EVENT) == WAIT_OBJECT_0).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [EN_GETPROCID]")).Throw();
-        
+
         // Now we know the primary process id. Lets open a handle to it.
         DWORD dwPrimaryProcessId = glpSRequest->dwPrimaryProcessId;
         CHandle hPrimaryProcess = OpenProcess(PROCESS_DUP_HANDLE|SYNCHRONIZE|PROCESS_QUERY_INFORMATION, FALSE, dwPrimaryProcessId);
@@ -1619,10 +1614,10 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
             // it, so let's be a bit tolerant and just log it here, and check below if we have it.
             CMessage().AppMsg(INF_DEBUG, _T("SecondaryExecuteRequest [hPrimaryProcess == NULL]")).LogEvent(2);
         }
-        
+
         // Get the new request into the global request buffer.
         *glpSRequest = *pRequest;
-        
+
         // Get handle to stdout into the the global request buffer, if possible
         //
         // It's not possible to duplicate console handles to other processes, and...
@@ -1636,7 +1631,6 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
         if (hPrimaryProcess == NULL || hStdOut == INVALID_HANDLE_VALUE ||
             GetFileType(hStdOut) != FILE_TYPE_DISK &&
             GetFileType(hStdOut) != FILE_TYPE_PIPE) {
-
             glpSRequest->hStdOut = INVALID_HANDLE_VALUE;
         } else {
             CAssert(DuplicateHandle(GetCurrentProcess(), hStdOut, hPrimaryProcess, &glpSRequest->hStdOut, 0, FALSE, DUPLICATE_SAME_ACCESS)).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [DuplicateHandle()]")).Throw();
@@ -1664,7 +1658,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
         }
 
         glpSRequest->CallerProcId = GetCurrentProcessId();
-        
+
         // Disable foreground window handing in server mode
         if (CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValServerMode).GetDword(FALSE)) {
             glpSRequest->hCurWnd = NULL;
@@ -1687,7 +1681,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
         HANDLE hWorkerThread = OpenThread(SYNCHRONIZE, FALSE, dwWorkerThreadId);
         ASSAPI(hWorkerThread != NULL);
 
-        // Let someone else have a go... Release the mutex, also signalling the primary instance we're ready to go.
+        // Let someone else have a go... Release the mutex, also signaling the primary instance we're ready to go.
         ReleaseMutex();
 
         // We'll wait for ever for the worker thread.
@@ -1697,8 +1691,8 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
         // There's a bug, or at least a large difference in behavior in Win98 (et.al. presumably).
         // When we do a GetExitCodeThread, the thread in question must specifically return an exit code.
         // In XP (et.al I guess), it does the sensible thing and assigns the process exit code to the
-        // last thread as well. Since the secondary process get's its return code from the primary
-        // thread, we need to ensure that if we know we've executed a command that causes the entire
+        // last thread as well. Since the secondary process gets its return code from the primary
+        // thread, we need to ensure that if we know we have executed a command that causes the entire
         // process to exit, not just the thread, we must get the exit code from the process instead,
         // thus we special-case here. Sigh. Another wasted 6 hours.
         switch (pRequest->eRequest) {
@@ -1713,7 +1707,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
             CAssert(GetExitCodeProcess(hPrimaryProcess, pdwExitCode)).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [GetExitCodeProcess]")).Throw();
             break;
         default:
-            // To avoide Access Denied problems, we won't try to get the exit code directly from the worker thread, but instead ask the
+            // To avoid Access Denied problems, we won't try to get the exit code directly from the worker thread, but instead ask the
             // primary process to get it for us. It requires THREAD_QUERY_INFORMATION, and we won't always be able to get it.
             if (!GetMutex()) {
                 *pdwExitCode = MSG_INTERNAL_ERROR;
@@ -1722,12 +1716,15 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
             glpSRequest->eRequest = EN_GETTHREADEXIT;
             glpSRequest->dwWorkerThreadId = dwWorkerThreadId;
             CAssert(SetEvent(ghSendEvent)).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [SetEvent(ghSendEvent) 2]")).Throw();
-            CAssert(MessageWaitForSingleObject(ghReceiveEvent, MAX_WAIT_EVENT) == WAIT_OBJECT_0).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [EN_GETTHREADEXIT]")).Throw();
+            DWORD dwReturnCode = MessageWaitForSingleObject(ghReceiveEvent, MAX_WAIT_EVENT);
+            CAssert(dwReturnCode != WAIT_FAILED).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [EN_GETTHREADEXIT] WAIT_FAILED")).Throw();
+            CAssert(dwReturnCode != WAIT_ABANDONED_0).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [EN_GETTHREADEXIT] WAIT_ABANDONED_0")).Throw();
+            CAssert(dwReturnCode != WAIT_TIMEOUT).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [EN_GETTHREADEXIT] WAIT_TIMEOUT")).Throw();
+            CAssert(dwReturnCode == WAIT_OBJECT_0).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [EN_GETTHREADEXIT]")).Throw();
             *pdwExitCode = glpSRequest->dwExitCode;
             ReleaseMutex();
             break;
         }
-
     } catch (TAssert utErr) {
         (void)ReleaseMutex(ghMutex);
         // If we have a parameter, use a message were we show it.
@@ -2017,7 +2014,7 @@ SecondaryParseCommand() {
                 // Potentially it can be implemented if the key is known.
                 // It is retained unchanged on -o with re-encryption.
                 szIdTag = optarg;
-                break;              
+                break;
             case _T('Y'):   // Show tag if any of following encrypted files.
                 eRequest = EN_SHOWTAG;
                 break;
@@ -2223,7 +2220,6 @@ SetSecurity() {
   		SetLastError(SetSecurityInfo(hProc, SE_KERNEL_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, pdacl, NULL));
 		ASSAPI(GetLastError() == ERROR_SUCCESS || GetLastError() == ERROR_CALL_NOT_IMPLEMENTED);
 		ASSAPI(CloseHandle(hProc));
-
     } while (false);
 	LocalFree(pdacl);
 	LocalFree(psidWorldSid);
@@ -2271,7 +2267,6 @@ WinMainInternal(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, i
     atexit(DestroyGlobals1);            // All but the entropy pool
     atexit(UnInitGlobalStrings);
 
-
     try {
         // Common initialization, regardless of primary or secondary
         // We create/open two Events (one to send, one to acknowledge reception) and
@@ -2306,7 +2301,7 @@ WinMainInternal(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, i
                     stStartupInfo.cb = sizeof stStartupInfo;
                     PROCESS_INFORMATION stProcessInformation;
                     ZeroMemory(&stProcessInformation, sizeof stProcessInformation);
-                    
+
                     CAssert(CreateProcess(
                         NULL,
                         (LPWSTR)(CFileName().SetPath2ExeName(hInstance).GetQuoted()),
@@ -2318,7 +2313,7 @@ WinMainInternal(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, i
                         NULL,
                         &stStartupInfo,
                         &stProcessInformation)).Sys(MSG_SYSTEM_CALL, _T("CreateProcess() [WinMain()]")).Throw();
-                    
+
                     WaitForInputIdle(stProcessInformation.hProcess, MAX_WAIT_PRIMARY);
                     CAssert(CloseHandle(stProcessInformation.hThread)).Sys(MSG_SYSTEM_CALL, _T("CloseHandle() [WinMain() .hThread]")).Throw();
                     CAssert(CloseHandle(stProcessInformation.hProcess)).Sys(MSG_SYSTEM_CALL, _T("CloseHandle() [WinMain() .hProcess]")).Throw();
@@ -2356,7 +2351,7 @@ WinMainInternal(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, i
     if (ghMutex) CloseHandle(ghMutex);
     if (glpSRequest) UnmapViewOfFile(glpSRequest);
     if (hRequestFileMap) CloseHandle(hRequestFileMap);
-    
+
     CoUninitialize();
     return iReturn;
 }
@@ -2374,4 +2369,3 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdS
     }
     return iReturn;
 }
-
