@@ -34,6 +34,8 @@
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
+
+static volatile LONG unique_internal_id = 0;
 //
 // Create an object with a new thread so as to keep track of them.
 //
@@ -42,6 +44,7 @@ CActiveThreads::CActiveThreads(CActiveThreads*& pRoot, HANDLE hThread, DWORD dwT
 	pRoot = this;
 	m_hThread = hThread;
     m_dwThreadId = dwThreadId;
+    m_dwUniqueInternalId = (DWORD)InterlockedIncrement(&unique_internal_id);
 }
 //
 // Destructor
@@ -53,10 +56,10 @@ CActiveThreads::~CActiveThreads() {
 //	Remove a given thread, if it is there.
 //
 void
-CActiveThreads::Remove(CActiveThreads*& pRoot, DWORD dwThreadId) {
+CActiveThreads::Remove(CActiveThreads*& pRoot, DWORD dwUniqueInternalId) {
 	CActiveThreads** ppPrevNext = &pRoot;
 	while (*ppPrevNext != NULL) {
-		if ((*ppPrevNext)->m_dwThreadId == dwThreadId) {
+		if ((*ppPrevNext)->m_dwUniqueInternalId == dwUniqueInternalId) {
 			CActiveThreads* pToDelete = *ppPrevNext;
 			*ppPrevNext = pToDelete->m_pNext;
 			pToDelete->m_pNext = NULL;
@@ -78,6 +81,11 @@ CActiveThreads::Thread() {
 DWORD
 CActiveThreads::ThreadId() {
     return m_dwThreadId;
+}
+
+DWORD
+CActiveThreads::UniqueInternalId() {
+    return m_dwUniqueInternalId;
 }
 
 //

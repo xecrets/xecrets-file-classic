@@ -37,12 +37,14 @@ class CActiveThreads {
 	CActiveThreads* m_pNext;
 	HANDLE m_hThread;
     DWORD m_dwThreadId;
+    DWORD m_dwUniqueInternalId;
 public:
 	CActiveThreads(CActiveThreads*& pRoot, HANDLE hThread, DWORD dwThreadId);
 	~CActiveThreads();
-	void Remove(CActiveThreads*& pRoot, DWORD dwThreadId);
+	void Remove(CActiveThreads*& pRoot, DWORD dwUniqueInternalId);
 	HANDLE Thread();
     DWORD ThreadId();
+    DWORD UniqueInternalId();
 	CActiveThreads* Next();
 };
 #endif	_CACTIVETHREADS

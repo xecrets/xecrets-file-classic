@@ -217,6 +217,7 @@ struct SRequest {
 
     // Out from primary to secondary
     DWORD dwWorkerThreadId;
+    DWORD dwWorkerUniqueInternalId;
     CProgressDialog *pDlgProgress;
     DWORD dwPrimaryProcessId;       // Primary process Id
     DWORD dwExitCode;
@@ -402,7 +403,7 @@ PurgeThreadList(DWORD dwTimeOut) {
         if (dwReturn == WAIT_OBJECT_0) {
             // This critical section stuff should really be done by CActiveThreads...
             utThreadListCritical.Enter();
-            gpCActiveThreadsRoot->Remove(gpCActiveThreadsRoot, pActiveThread->ThreadId());
+            gpCActiveThreadsRoot->Remove(gpCActiveThreadsRoot, pActiveThread->UniqueInternalId());
             pActiveThread = gpCActiveThreadsRoot;
         } else {
             utThreadListCritical.Enter();
@@ -1247,14 +1248,13 @@ PrimaryEvent() {
     if (eRequest == EN_GETTHREADEXIT) {
 		// We treat this also as a request to remove ourselves from the ActiveThread-list. It appears
 		// that in Windows 2000, we can't open a thread by it's thread id after the thread has ended,
-		// although this does seem to work in other os's. The solution then is to use the handle we
+		// although this does seem to work in other os:s. The solution then is to use the handle we
 		// already have in the active list, and keep that around until now. The drawback is that we'll
 		// keep the handle to thread around until we get asked for the exit code (so all callers must),
-		// and also it's not really kosher to use the thread id as the key, because there's no guarantee
-		// it won't get re-used the next millisecond. This needs to be refactored to have the primary
-		// threads store the exit code directly I guess, and use an internal cookie to keep the connection
-		// between the primary and secondary process instead of thread id.
-		// The active list should also be re-factored to use stl.
+		// since it's not really kosher to use the thread id as the key, because there's no guarantee
+		// it won't get re-used the next millisecond. We use a unique internal id as key to avoid the risk
+        // of collision.
+		// The active list should be re-factored to use stl.
 
 		// We are no longer active - lets leave! ActiveThread's destructor also
         // closes the thread handle stored there, but first let's also query for the exit code.
@@ -1264,11 +1264,11 @@ PrimaryEvent() {
 	    CActiveThreads *pActiveThread = gpCActiveThreadsRoot;
 		glpSRequest->dwExitCode = MSG_INTERNAL_ERROR;
 		while (pActiveThread != NULL) {
-			if (pActiveThread->ThreadId() == glpSRequest->dwWorkerThreadId) {
+			if (pActiveThread->UniqueInternalId() == glpSRequest->dwWorkerUniqueInternalId) {
 				if (!GetExitCodeThread(pActiveThread->Thread(), &glpSRequest->dwExitCode)) {
 					glpSRequest->dwExitCode = GetLastError();
 				}
-		        gpCActiveThreadsRoot->Remove(gpCActiveThreadsRoot, glpSRequest->dwWorkerThreadId/*GetCurrentThreadId()*/);
+		        gpCActiveThreadsRoot->Remove(gpCActiveThreadsRoot, glpSRequest->dwWorkerUniqueInternalId);
 				break;
 			}
 			pActiveThread = pActiveThread->Next();
@@ -1345,37 +1345,26 @@ PrimaryEvent() {
     hWorkerThread = (HANDLE)_beginthreadex(NULL, 0, (PTHREAD_START)PrimaryCommandThread, lpSRequestCopy, CREATE_SUSPENDED, (unsigned *)&dwThreadID);
     CAssert(hWorkerThread != NULL).Sys(MSG_SYSTEM_CALL, _T("CreateThread()")).Throw();
 
+    // Add the new thread to the active list.
+    if (eRequest != EN_EXIT) {
+        CCriticalSection utThreadListCritical(&gThreadListCritical);
+        utThreadListCritical.Enter();
+        CActiveThreads *pactiveThread = new CActiveThreads(gpCActiveThreadsRoot, hWorkerThread, dwThreadID);
+        ASSPTR(pactiveThread);
+        glpSRequest->dwWorkerUniqueInternalId = pactiveThread->UniqueInternalId();
+        utThreadListCritical.Leave();
+    }
+
     // Give the caller the thread id to wait for
     glpSRequest->dwWorkerThreadId = dwThreadID;
 
     // Don't let the worker thread affect foreground too much if it's a long operation
     CAssert(SetThreadPriority(hWorkerThread, THREAD_PRIORITY_BELOW_NORMAL)).Sys(MSG_SYSTEM_CALL, _T("PrimaryEvent() SetThreadPriority()")).Throw();
 
-    //CHandle hCallerProc = OpenProcess(PROCESS_DUP_HANDLE, FALSE, glpSRequest->CallerProcId);
-    //CAssert(hCallerProc.IsValid()).Sys(MSG_SYSTEM_CALL, _T("OpenProcess() [WinMain()]")).Throw();
-    //CAssert(
-    //    DuplicateHandle(
-    //        GetCurrentProcess(),
-    //        hThreadWait,
-    //        hCallerProc,
-    //        &glpSRequest->hWorkerThread,
-    //        SYNCHRONIZE|THREAD_QUERY_INFORMATION,
-    //        FALSE,
-    //        0)).Sys(MSG_SYSTEM_CALL, _T("DuplicateHandle()")).Throw();
-    //CAssert(hCallerProc.Close()).Sys(MSG_SYSTEM_CALL, _T("CloseHandle(hCallerProc) [WinMain()]")).Throw();
-
     // We can release the interprocess buffer, and let the caller get on with it.
     CAssert(SetEvent(ghReceiveEvent)).Sys(MSG_SYSTEM_CALL, _T("SetEvent()")).Throw();
 
-    // There's no need to wait for anything more, we've acknowledged the caller and we're ready to run.
-
-    // Add the new thread to the active list.
-    if (eRequest != EN_EXIT) {
-        CCriticalSection utThreadListCritical(&gThreadListCritical);
-        utThreadListCritical.Enter();
-        ASSPTR(new CActiveThreads(gpCActiveThreadsRoot, hWorkerThread, dwThreadID));
-        utThreadListCritical.Leave();
-    }
+    // There's no need to wait for anything more, we have acknowledged the caller and we're ready to run.
 
     // Make a copy of the handle for processing below, after we resume the
     // worker thread, we cannot use hWorkerThread, as it will be closed by the worker thread when it removes itself from the
@@ -1584,7 +1573,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
     try {
         // Get exclusive access to the request buffer. We actually do not assert here, since this is the secondary instance
         // a failure to get the mutex at this point probably means the primary died - or even more likely never got started.
-        // Users get confused by two messages, so we just quitely exit with an error code here.
+        // Users get confused by two messages, so we just quietly exit with an error code here.
         if (!GetMutex()) {
             // If, GetLastError() for whatever reason returns ERROR_SUCCESS here, it's still an error so
             // we return our own non-1, non-0 return code.
@@ -1623,7 +1612,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
         // It's not possible to duplicate console handles to other processes, and...
         // ...GUI process are not created with a console, and are not attached to a
         // console even when started from the command prompt. Thus, we must check
-        // that we have a valid stdout beore passing it.
+        // that we have a valid stdout before passing it.
         // This handle is used to output the id string for example from the primary process. An alternative
         // in the future is to let the secondary get the info instead, and use it's own handle.
         // The main process will close the handle passed to it, if any.
@@ -1681,6 +1670,8 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
         HANDLE hWorkerThread = OpenThread(SYNCHRONIZE, FALSE, dwWorkerThreadId);
         ASSAPI(hWorkerThread != NULL);
 
+        DWORD dwWorkerUniqueInternalId = glpSRequest->dwWorkerUniqueInternalId;
+
         // Let someone else have a go... Release the mutex, also signaling the primary instance we're ready to go.
         ReleaseMutex();
 
@@ -1714,7 +1705,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
                 break;
             }
             glpSRequest->eRequest = EN_GETTHREADEXIT;
-            glpSRequest->dwWorkerThreadId = dwWorkerThreadId;
+            glpSRequest->dwWorkerUniqueInternalId = dwWorkerUniqueInternalId;
             CAssert(SetEvent(ghSendEvent)).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [SetEvent(ghSendEvent) 2]")).Throw();
             DWORD dwReturnCode = MessageWaitForSingleObject(ghReceiveEvent, MAX_WAIT_EVENT);
             CAssert(dwReturnCode != WAIT_FAILED).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [EN_GETTHREADEXIT] WAIT_FAILED")).Throw();
