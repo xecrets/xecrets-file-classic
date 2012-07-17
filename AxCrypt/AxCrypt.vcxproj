@@ -407,7 +407,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Package\AxCrypt.ico" />
     <None Include="AxCrypt.manifest.Win32" />
     <None Include="AxCrypt.manifest.x64" />
   </ItemGroup>

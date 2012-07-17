@@ -150,9 +150,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Package\AxCrypt.ico">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="AxCrypt.manifest.Win32">
       <Filter>Resource Files</Filter>
     </None>
