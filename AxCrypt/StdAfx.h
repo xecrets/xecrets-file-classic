@@ -57,7 +57,6 @@
 #include <memory.h>
 #include <tchar.h>
 
-
 // TODO: reference additional headers your program requires here
 #include <winioctl.h>                       // Include here to avoid namespace collission for BOOLEAN with CryptoPP
 #include <lm.h>                             // Include here to avoid namespace collission for BOOLEAN with CryptoPP
@@ -70,6 +69,7 @@
 //
 // AxCrypt common includes
 //
+#include "../AxCryptCommon/Oem.h"
 #include "../AxCryptCommon/Types.h"
 #include "AxCryptTexts.h"
 #include "../AxCryptCommon/AxCommon.h"

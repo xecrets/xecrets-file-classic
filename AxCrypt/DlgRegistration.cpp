@@ -169,7 +169,7 @@ GetTempIniPath()
     DWORD cb = GetTempPath(0, NULL);
     vector<wchar_t> szTempPath(cb);
     cb = GetTempPath(cb, &szTempPath[0]);
-    return wstring(&szTempPath[0], cb) + L"AxCrypt.ini";
+    return wstring(&szTempPath[0], cb) + AXPRODUCTFILENAME L".ini";
 }
 
 wstring GetTempIniValue(wstring sKeyName) {
@@ -206,7 +206,7 @@ GetDefaultLanguageId() {
 /// \param email The email, if any, to send along.
 void
 Register(axpl::ttstring& email, std::wstring& sVersion) {
-    const wchar_t *szUserAgent = L"AxCrypt Registration Client/1.0";
+    const wchar_t *szUserAgent = AXPRODUCTFILENAME L" Registration Client/1.0";
     BOOL  bResults = FALSE;
     HINTERNET  hSession = NULL, hConnect = NULL, hRequest = NULL;
 
@@ -234,7 +234,7 @@ Register(axpl::ttstring& email, std::wstring& sVersion) {
 
     // Specify an HTTP server.
     // Update=1, Critical=1, Decline=1
-    // Program=AxCrypt
+    // Program=AXPRODUCTFILENAME
     // Previous=[old-version]
     // Version=[this-version]
     // Windows=Win95 | Win98 | WinME | NTn.n | Win2K, WinXP, W2003, WinVista, WinXX (unknown)
@@ -244,7 +244,7 @@ Register(axpl::ttstring& email, std::wstring& sVersion) {
         hConnect = WinHttpConnect(hSession, L"notify.axondata.se", INTERNET_DEFAULT_HTTP_PORT, 0);
     }
 
-    wstring urlPathPart = L"/index.html?Program=AxCrypt";
+    wstring urlPathPart = L"/index.html?Program=" AXPRODUCTFILENAME;
     urlPathPart += L"&Windows=" + GetWindowsVersionString();
     urlPathPart += L"&email=" + email;
     if (!sVersion.empty()) {
