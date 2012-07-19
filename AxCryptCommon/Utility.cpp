@@ -120,7 +120,7 @@ CopyWzSz(WCHAR *wzIn) {
 }
 
 void DebugBox(LPTSTR szMsg) {
-    (void)MessageBox(NULL, szMsg, _T("AxCrypt Debug Message"), MB_OK);
+    (void)MessageBox(NULL, szMsg, AXPRODUCTFILENAME _T(" Debug Message"), MB_OK);
 }
 //
 //  Wait for the foreground window to change from the given window,

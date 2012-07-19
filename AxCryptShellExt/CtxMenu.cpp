@@ -1461,7 +1461,7 @@ CShellExt::DoSfxEncName(itEventT eventId, HWND hProgressWnd, IShellFolder *pShel
     case IT_END_FOLDER:
     case IT_FILE:
     default:
-        MessageBox(NULL, _T("DoSfxEncName"), _T("AxCrypt"), MB_OK);
+        MessageBox(NULL, _T("DoSfxEncName"), AXPRODUCTFILENAME, MB_OK);
         break;
     }
     return 0;
@@ -1577,7 +1577,7 @@ DWORD
 CShellExt::DoDebug(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam) {
     switch (eventId) {
     case IT_INIT:
-        if (MessageBox(NULL, _T("Initalizing iteration, continue?"), _T("AxCrypt Shell Extension Debug"), MB_YESNO) == IDYES) {
+        if (MessageBox(NULL, _T("Initalizing iteration, continue?"), AXPRODUCTFILENAME _T(" Shell Extension Debug"), MB_YESNO) == IDYES) {
             return 0;
         } else {
             return WRN_CANCEL;
@@ -1588,7 +1588,7 @@ CShellExt::DoDebug(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFold
     case IT_END_FOLDER:
     case IT_FILE:
     default:
-        MessageBox(NULL, GetPath(pShellFolder, pidlFile).c_str(), _T("AxCrypt Shell Extension Debug"), MB_OK);
+        MessageBox(NULL, GetPath(pShellFolder, pidlFile).c_str(), AXPRODUCTFILENAME _T(" Shell Extension Debug"), MB_OK);
         break;
     }
     return 0;
@@ -2234,7 +2234,7 @@ CShellExt::CallAxCrypt(HWND hProgressWnd, LPTSTR szParams) {
     DlgMessageWaitForSingleObject(GetParent(hProgressWnd), ProcessInformation.hProcess, INFINITE);
 
     if (!GetExitCodeProcess(ProcessInformation.hProcess, &dwReturn)) {
-        MessageBox(NULL, _T("Could not get exit code"), _T("AxCrypt Shell Extension"), MB_OK);
+        MessageBox(NULL, _T("Could not get exit code"), AXPRODUCTFILENAME _T(" Shell Extension"), MB_OK);
         CMessage().SysMsg(GetLastError()).ShowError();
         return GetLastError();
     }

@@ -60,6 +60,7 @@
 //
 #include "resource.h"
 
+#include "../AxCryptCommon/Oem.h"
 #include "../AxCryptCommon/Types.h"
 #include "../AxCryptCommon/Utility.h"
 #include "../AxCryptCommon/AxCommon.h"
