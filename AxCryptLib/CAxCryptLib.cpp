@@ -38,7 +38,7 @@
 
 /// \brief The AxCrypt GUID
 /// Define the guid here xor 0xff, i.e. inverted, so we won't trig on it
-/// when scanning for GUID in ourselves, looking for the appended .axx-
+/// when scanning for GUID in ourselves, looking for the appended .xxx-
 /// files.
 axcl::byte axcl::guidAxCryptFileIdInverse[16] = {
     0xc0 ^ 0xff, 0xb9 ^ 0xff, 0x07 ^ 0xff, 0x2e ^ 0xff, 0x4f ^ 0xff, 0x93 ^ 0xff, 0xf1 ^ 0xff, 0x46 ^ 0xff,

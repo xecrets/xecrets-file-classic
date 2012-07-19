@@ -72,7 +72,7 @@
 /// \brief The AxCrypt GUID
 ///
 /// Define the guid here xor 0xff, i.e. inverted, so we won't trig on it
-/// when scanning for GUID in ourselves, looking for the appended .axx-
+/// when scanning for GUID in ourselves, looking for the appended .xxx-
 /// files.
 DEFINE_GUID(guidAxCryptFileIdInverse,
     0x2e07b9c0 ^ 0xffffffff,
@@ -313,13 +313,13 @@ public:
         m_pData = pData;
         m_cbLen = cbLen;
     }
-    
+
     /// \brief A proper copy-constructor
     /// \see CopyAssign
     CMetaSection(const CMetaSection& rhs) {
         CopyAssign(rhs.m_eType, rhs.m_pData, rhs.m_cbLen);
     }
-    
+
     /// \brief delete the data buffer
     ~CMetaSection() {
         delete m_pData;
@@ -357,7 +357,7 @@ public:
 class CAxCryptKeySeq : public AxPipe::CSourceFileIO {
     auto_ptr<char> m_szPassphrase;          ///< The passphrase to start sending
     bool m_fHaveFile;                       ///< true if we got a file name to send too
-  
+
 public:
     /// \brief Initialize private members.
     CAxCryptKeySeq() : m_szPassphrase(NULL), m_fHaveFile(false) {}
@@ -488,7 +488,7 @@ class CAxCryptMeta : public std::list<CMetaSection> {
             if (m_fKeyIsValid) {
 			    // Initialize an AES structure with the Data Encrypting Key and the proper direction.
                 CAes aesContext(CSubKey().Set(GetMasterDEK(), CSubKey::eHeaders).Get(), CAes::eCBC, CAes::eDecrypt);
-			    
+
 			    // Encrypt/Decrypt the block with default IV of zero.
 			    aesContext.Xblock((TBlock *)p, (TBlock *)p, (DWORD)i->Len() / sizeof TBlock);
             } else {
@@ -538,7 +538,7 @@ public:
         }
         return 0;
     }
-            
+
     /// \brief Remember the offset where to start HMAC'ing
     ///
     /// This is after the initial preamble, including the HMAC itself.
@@ -982,7 +982,7 @@ public:
         // Dummy references to make the compiler happy
         fOk;
     }
-    
+
     /// \brief Get the folder selected for output, if any
     ///
     /// (This implementation is a no-op - refine in derived classes)
@@ -995,7 +995,7 @@ public:
         }
         return szFolder;
     }
-    
+
     /// \brief Report user preference concerning overwriting of output
     ///
     /// The user may select to be prompted or not when the output would
@@ -1006,7 +1006,7 @@ public:
     virtual bool OverwriteWithoutPrompt() {
         return true;
     }
-    
+
     /// \brief Report user preference concering launch app after decrypt
     ///
     /// The user may select that an attempt to launch after decryption shold
@@ -1108,7 +1108,7 @@ class CPipeAxCryptHeaders : public CFilterBlock {
         }
         return ReadBlock(cb);
     }
-    
+
     /// \brief Push back a segment that we've already read.
     void InPush(CSeg *pSeg) {
         if (m_pSeg.get() && m_pSeg->Len()) {
@@ -1214,7 +1214,7 @@ public:
 
                 // Get the length of the header data, following the header-header
                 size_t cbHeaderData = *(size_t *)(pHeader->aoLength) - sizeof SHeader;
-            
+
                 // Get extra data - do not ask for zero bytes from In(), it'll get all available.
                 CAutoSeg pSegHeaderData = cbHeaderData ? In(cbHeaderData) : new CSeg(0);
                 if (pSegHeaderData->Len() != cbHeaderData) {
@@ -1273,7 +1273,7 @@ public:
             while (!m_pMeta->SetDecryptKey(m_pAxDecrypt->Passphrase()->Passphrase(),
                                            m_pAxDecrypt->Passphrase()->KeyFileName())) {
                 if (fRetry) {
-                    if (MessageBox(m_pAxDecrypt->GetWnd(), 
+                    if (MessageBox(m_pAxDecrypt->GetWnd(),
                                    auto_ptr<_TCHAR>(ALoadString(IDS_WRONGPASSPHRASE)).get(),
                                    auto_ptr<_TCHAR>(ALoadString(IDS_AXDECRYPT)).get(),
                                    MB_ICONEXCLAMATION|MB_RETRYCANCEL) != IDRETRY) {
@@ -1303,7 +1303,7 @@ public:
 
             // Record the offset to data in the meta information
             m_pMeta->SetOffsetData(cbOffsetData);
-        
+
             // We're just about to send data onwards, so let the next steps in the
             // pipe know about it.
             Sync();
@@ -1969,7 +1969,7 @@ About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
         SetWindowText(hDlg, szMsg);
         delete sz;
         delete szNameVersion;
-        
+
         ASSPTR(sz = ver.newLegalCopyright());
         SetDlgItemText(hDlg, IDC_COPYRIGHT, sz);
         delete sz;
@@ -2123,7 +2123,6 @@ MainDialogFunc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     CAxDecryptSelf *pAxDecrypt = (CAxDecryptSelf *)(LONG_PTR)GetWindowLongPtr(hwndDlg, GWLP_USERDATA);
 
     switch (uMsg) {
-
     case WM_INITDIALOG:
 #pragma warning ( push )
 #pragma warning ( disable : 4244 )
@@ -2141,7 +2140,7 @@ MainDialogFunc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         PostMessage(hwndDlg, WM_AXDECRYPT_DONE, 0, 0);
         break;
-	
+
     case WM_DESTROY:
         pAxDecrypt->Cancel();
         pAxDecrypt->Wait();
@@ -2159,7 +2158,7 @@ MainDialogFunc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         wsprintf(szMsg, sz, PathFindFileName((_TCHAR *)lParam));
         delete sz;
         SetDlgItemText(hwndDlg, IDC_PROMPT, szMsg);
-        
+
         sz = ALoadString(IDS_AXDECRYPT);
         wsprintf(szMsg, _T("%s - %s"),  sz, PathFindFileName((_TCHAR *)lParam));
         delete sz;
@@ -2169,7 +2168,7 @@ MainDialogFunc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         lstrcpy(szMsg, (_TCHAR *)lParam);
         PathRemoveFileSpec(szMsg);
         SetDlgItemText(hwndDlg, IDC_FOLDER, szMsg);
-        
+
         // SetFile() takes ownership of the allocated string passed as file name
         pAxDecrypt->SetFile((_TCHAR *)lParam);
 
@@ -2263,8 +2262,8 @@ MainDialogFunc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         break;
 
     case WM_COMMAND:
-		wmId    = LOWORD(wParam); 
-		wmEvent = HIWORD(wParam); 
+		wmId    = LOWORD(wParam);
+		wmEvent = HIWORD(wParam);
         switch (wmId) {
             case IDC_ABOUT:
             case IDM_HELP_ABOUT:
@@ -2461,7 +2460,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdS
     InitCommonControls();
     CoInitialize(NULL);
 
-	HWND hmainWnd; 
+	HWND hmainWnd;
     if ((hmainWnd = InitInstance(hInstance, nCmdShow)) == NULL) {
 		return FALSE;
 	}
@@ -2480,4 +2479,3 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdS
     CoUninitialize();
     return (int)msg.wParam;
 }
-

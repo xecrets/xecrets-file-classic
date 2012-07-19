@@ -49,12 +49,13 @@
 #include "atlctrls.h"
 #include "atlctrlw.h"
 #include "atlctrlx.h"
-#include "atlcrack.h"      // WTL enhanced msg map 
+#include "atlcrack.h"      // WTL enhanced msg map
 #include "atlddx.h"
 #include "atldlgs.h"
 
 #include <map>
 
+#include "..\AxCryptCommon\Oem.h"
 #include "Axgettext.h"
 #include "CConfigWin.h"
 

@@ -16,6 +16,7 @@
 
 #include <memory>
 
+#include "Oem.h"
 #include "AxCommon.h"
 #include "Types.h"
 #include "CAssert.h"

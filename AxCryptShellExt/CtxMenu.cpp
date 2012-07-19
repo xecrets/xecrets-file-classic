@@ -31,35 +31,35 @@
 /*
 Running the Shell Under a Debugger
 
-To debug your extension, you need to execute the Shell from the debugger. Follow these steps: 
+To debug your extension, you need to execute the Shell from the debugger. Follow these steps:
 
-Load the extension's project into the debugger, but do not run it. 
-From the Start menu on the Microsoft Windows taskbar, choose Shut Down. 
+Load the extension's project into the debugger, but do not run it.
+From the Start menu on the Microsoft Windows taskbar, choose Shut Down.
 Press CTRL+ALT+SHIFT, and click No in the Shut Down Windows dialog box. On Windows 2000, click Cancel instead of No.
-The Shell is now shut down, but all other applications are still running, including the debugger. 
-Set the debugger to run the extension DLL with Explorer.exe from the Windows directory. 
-Run the project from the debugger. The Shell will start up as usual, but the debugger will be attached to the Shell's process. 
+The Shell is now shut down, but all other applications are still running, including the debugger.
+Set the debugger to run the extension DLL with Explorer.exe from the Windows directory.
+Run the project from the debugger. The Shell will start up as usual, but the debugger will be attached to the Shell's process.
 Running and Testing Shell Extensions on Windows NT
 You can run and test your Microsoft Windows NT extensions in a separate Windows Explorer process to avoid stopping and
-restarting the desktop and taskbar. Your desktop and taskbar can still be used while you run and test the extensions. 
+restarting the desktop and taskbar. Your desktop and taskbar can still be used while you run and test the extensions.
 
-To enable this feature, add the following value to the registry. 
+To enable this feature, add the following value to the registry.
 
 HKEY_CURRENT_USER Software Microsoft Windows CurrentVersion Explorer DesktopProcess (REG_DWORD)= 1
 
 For this value to take effect, you must log off and log on again. This setting causes the desktop and taskbar windows to be
-created in one Explorer.exe process, and all other Explorer and folder windows to be opened in a different Explorer.exe process. 
+created in one Explorer.exe process, and all other Explorer and folder windows to be opened in a different Explorer.exe process.
 
 In addition to making running and testing your extensions more convenient, this setting also makes the desktop more robust as
 it relates to Shell extensions. Many such extensions (shortcut menu extensions, for example) will be loaded into the
 nondesktop Explorer.exe process. If this process terminates, the desktop and taskbar will be unaffected, and the next Explorer
-or folder window will re-create the terminated process. 
+or folder window will re-create the terminated process.
 */
 
 #include	"StdAfx.h"
 #include	"Shellapi.h"
 #include	"../AxCryptCommon/CFileName.h"
-#include	"process.h" 
+#include	"process.h"
 #include	"AxCryptTexts.h"
 #include	"../AxCryptCommon/CVersion.h"
 #include	"../AxCryptCommon/Utility.h"
@@ -225,7 +225,7 @@ IsFile(IShellFolder *pShellFolder, LPCITEMIDLIST pidl) {
     // Some tricks are necessary to handle .zip files and other such-like extensions in XP. They are viewed
     // as folders by the shell, but not by the file system. In XP, they do not have the SFGAO_FILESYSANCESTOR
     // set, but then neither does regular folders in Win9x, so we can't use that. Instead we check the
-    // actual file attributes too, as we can't be sure just 
+    // actual file attributes too, as we can't be sure just
     DWORD dwAttrib = GetFileAttributes(sPath.c_str());
     if (dwAttrib != 0xFFFFFFFF) {
         // The net effect here is to disregard the shells opinion, if the file system insists that the
@@ -233,7 +233,7 @@ IsFile(IShellFolder *pShellFolder, LPCITEMIDLIST pidl) {
         // this here for the future when this mess maybe gets cleared up and we don't have to support Win9x
         // anymore.
         if ((rgf & SFGAO_FOLDER) == 0 || (dwAttrib & FILE_ATTRIBUTE_DIRECTORY) == 0) {
-            if ((dwAttrib & (FILE_ATTRIBUTE_DIRECTORY | 
+            if ((dwAttrib & (FILE_ATTRIBUTE_DIRECTORY |
                              FILE_ATTRIBUTE_OFFLINE |
                              FILE_ATTRIBUTE_SYSTEM)) == 0) {
                 return TRUE;
@@ -247,7 +247,7 @@ IsFile(IShellFolder *pShellFolder, LPCITEMIDLIST pidl) {
 //  Determine if a file is an axcrypt encrypted file.
 //
 //  This is done by ensuring that it's not a folder, and that the
-//  name ends with .axx. In the future, one might go further and actually
+//  name ends with .xxx. In the future, one might go further and actually
 //  examine the file itself.
 //
 static BOOL
@@ -326,8 +326,8 @@ CFileObjectList::~CFileObjectList() {
 //
 void
 CFileObjectList::SetObject(IDataObject *pdObj) {
-	// We may be called more than once 
-	if (m_pDataObj) m_pDataObj->Release(); 
+	// We may be called more than once
+	if (m_pDataObj) m_pDataObj->Release();
 
     // Save the object
 	if (pdObj) {
@@ -462,7 +462,7 @@ CFileObjectList::ShowWipeMenu() {
         ITEMIDLIST *pidlRecycleBin;
         HRESULT hRes = SHGetSpecialFolderLocation(NULL, CSIDL_BITBUCKET, &pidlRecycleBin);
         CAssert(SUCCEEDED(hRes), hRes).Sys(MSG_SYSTEM_CALL, _T("CFileObjectList::ShowWipeMenu [SHGetSpecialFolderLocation]")).Throw();
-        
+
         // now we can compare the PIDLs
 		hRes = m_pShellFolder->CompareIDs(0, pidl, pidlRecycleBin);
         // If they are the same, return true
@@ -697,7 +697,7 @@ CFileObjectList::IteratePidl(IShellFolder *pShellFolder, LPCITEMIDLIST pidl, CSh
             ITEMIDLIST *pidlDesktop;
             hRes = SHGetSpecialFolderLocation(m_hShellFolderWnd, CSIDL_DESKTOP, &pidlDesktop);
             CAssert(SUCCEEDED(hRes), hRes).Sys(MSG_SYSTEM_CALL, _T("CFileObjectList::IteratePidl [SHGetSpecialFolderLocation]")).Throw();
-            
+
             // now we can compare the PIDLs
 			hRes = pShellFolder->CompareIDs(0, pidl, pidlDesktop);
 
@@ -709,7 +709,7 @@ CFileObjectList::IteratePidl(IShellFolder *pShellFolder, LPCITEMIDLIST pidl, CSh
                 hRes = pShellFolder->BindToObject(pidl, NULL, IID_IShellFolder, (LPVOID *)&pShellSubFolder);
                 CAssert(SUCCEEDED(hRes), hRes).Sys(MSG_SYSTEM_CALL, _T("CFileObjectList::IteratePidl [BindToObject]")).Throw();
             }
-        
+
 			// Determine if we should 'see' hidden files as well. This may not be implemented on Win95/2k all versions,
 			// it may depend on the version of IE installed (version 4), so we load the address dynamically and if we
 			// can't find it we do the 'safe' thing and let the shell decide without our interference. Otherwise the idea
@@ -837,20 +837,20 @@ CFileObjectList::ShellNotify(IShellFolder *pShellFolder, LPCITEMIDLIST pidl, LON
 //
 //	Adds menu items to the specified menu. The menu items should be inserted
 //	in the menu at the position specified by indexMenu, and their menu item
-//	identifiers must be between the idCmdFirst and idCmdLast parameter values. 
+//	identifiers must be between the idCmdFirst and idCmdLast parameter values.
 //
 //	Returns anHRESULT structure in which, if the method is successful,
-//	the code member contains the menu identifier of the last menu item added plus one. 
-//	hMenu 
+//	the code member contains the menu identifier of the last menu item added plus one.
+//	hMenu
 //		Handle to the menu. The handler should specify this handle when
-//		adding menu items. 
+//		adding menu items.
 //	indexMenu
-//		Zero-based position at which to insert the first menu item. 
-//	idCmdFirst 
-//		Minimum value that the handler can specify for a menu item identifier. 
-//	idCmdLast 
-//		Maximum value that the handler can specify for a menu item identifier. 
-//	uFlags 
+//		Zero-based position at which to insert the first menu item.
+//	idCmdFirst
+//		Minimum value that the handler can specify for a menu item identifier.
+//	idCmdLast
+//		Maximum value that the handler can specify for a menu item identifier.
+//	uFlags
 //		Optional flags specifying how the context menu can be changed.
 //		The remaining bits of the low-order word are reserved by the system.
 //		The high-order word may be used for context-specific communications.
@@ -915,7 +915,7 @@ CShellExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT i
                         //fnAxxDest.AddExt(gszAxCryptFileExt);
                         //InsertMenu(hEncryptMenu, -1, MF_STRING | MF_BYPOSITION, idCmd, fnAxxDest.GetTitle());
                         InsertMenu(m_hMenu, -1, MF_STRING | MF_BYPOSITION, idCmd, CMessage().AppMsg(GetMenuMsgId(m_Verbs, idCmd - idCmdFirst)).GetMsg());
-                        
+
                         if (!fDefaultSet && m_pSelection->SelectionIsOneFile()) {
                             fDefaultSet = SetMenuDefaultItem(m_hMenu, idCmd, FALSE);
                         }
@@ -972,7 +972,6 @@ CShellExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT i
                     fAnyFileOp = TRUE;
                 }
 
-
                 if (m_pSelection->ShowRenameMenu()) {
 		            SetVerb(m_Verbs, VERB_RENAME, idCmd - idCmdFirst);
 		            InsertMenu(m_hMenu, -1, MF_STRING | MF_BYPOSITION, idCmd, CMessage().AppMsg(GetMenuMsgId(m_Verbs, idCmd - idCmdFirst)).GetMsg());
@@ -1012,7 +1011,7 @@ CShellExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT i
 
                 if (m_pSelection->ShowWipeMenu()) {
                     InsertMenu(m_hMenu, -1, MF_SEPARATOR | MF_BYPOSITION, 0, NULL);
-	                
+
 	                SetVerb(m_Verbs, VERB_WIPE, idCmd - idCmdFirst);
 	                InsertMenu(m_hMenu, -1, MF_STRING | MF_BYPOSITION, idCmd, CMessage().AppMsg(GetMenuMsgId(m_Verbs, idCmd - idCmdFirst)).GetMsg());
 	                idCmd++;
@@ -1137,19 +1136,19 @@ CShellExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT i
 	return (HRESULT)(MAKE_SCODE(SEVERITY_SUCCESS, 0, (WORD)(idCmd - idCmdFirst)));
 }
 //
-//	Carries out the command associated with a context menu item. 
+//	Carries out the command associated with a context menu item.
 //
-//	Returns NOERROR if successful, or an OLE-defined error code otherwise. 
-//	lpici 
+//	Returns NOERROR if successful, or an OLE-defined error code otherwise.
+//	lpici
 //		Address of a CMINVOKECOMMANDINFO structure containing information
 //		about the command.
 //
 //	The shell calls this method when the user chooses a command that the
 //	handler added to a context menu. This method may also be called by an
 //	application without any corresponding user action
-// 
+//
 STDMETHODIMP
-CShellExt::InvokeCommand(LPCMINVOKECOMMANDINFO lpici) { 
+CShellExt::InvokeCommand(LPCMINVOKECOMMANDINFO lpici) {
     HRESULT hRes = S_OK;
 	// if we are called by the shell, invoke the right action depending
 	// on which menu item that was selected.
@@ -1158,7 +1157,7 @@ CShellExt::InvokeCommand(LPCMINVOKECOMMANDINFO lpici) {
     try {
         pfCmdHandlerT pfCmdHandler = NULL;
         // See comment at function. 2005-04-03 /SS if (lpici->hwnd) m_pSelection->SetActiveShellView(lpici->hwnd);
-		
+
         // It appears that the parent can be NULL in some cases, and it also appears that at least in some cases in Vista
         // you can get a non-null, but according to IsWindow() invalid handle here. See Sourceforge Bug 2956965
 		if (m_pSelection->m_hShellFolderWnd == NULL) {
@@ -1173,11 +1172,10 @@ CShellExt::InvokeCommand(LPCMINVOKECOMMANDINFO lpici) {
 		    (lpici->fMask & CMIC_MASK_UNICODE) &&
 			    // ...and a verb, not a cmd...
 			HIWORD(((LPCMINVOKECOMMANDINFOEX)lpici)->lpVerbW)) {
-
 		    // ... then Do Unicode based verb look-up
 		    int iLen = WideCharToMultiByte(CP_ACP, 0, ((LPCMINVOKECOMMANDINFOEX)lpici)->lpVerbW, -1, NULL, 0, NULL, NULL);
 		    // Not generic here!
-		    
+
 		    szVerb = new char[iLen];
             ASSPTR(szVerb);
 
@@ -1207,38 +1205,38 @@ CShellExt::InvokeCommand(LPCMINVOKECOMMANDINFO lpici) {
         hRes = E_INVALIDARG;
     }
     if (szVerb != NULL) delete szVerb;
-	return hRes; 
-} 
+	return hRes;
+}
 //
 //	Retrieves the language-independent command string or the
-//	Help text for a context menu item. 
+//	Help text for a context menu item.
 //
 //	Returns NOERROR if successful, or an OLE-defined error code otherwise.
 //
-//	idCmd 
-//		Menu item identifier offset. 
-//	uFlags 
+//	idCmd
+//		Menu item identifier offset.
+//	uFlags
 //		Flags specifying the information to retrieve. This can be one of
 //		the following values:
-//			GCS_HELPTEXT	Returns the Help text for the menu item.  
-//			GCS_VALIDATE	Validates that the menu item exists.  
+//			GCS_HELPTEXT	Returns the Help text for the menu item.
+//			GCS_VALIDATE	Validates that the menu item exists.
 //			GCS_VERB		Returns the language-independent command
-//							name for the menu item.  
-//	pwReserved 
+//							name for the menu item.
+//	pwReserved
 //		Reserved. Applications must specify NULL when calling this method,
-//		and handlers must ignore this parameter when called. 
-//	pszName 
+//		and handlers must ignore this parameter when called.
+//	pszName
 //		Address of the buffer to receive the null-terminated string
-//		being retrieved. 
-//	cchMax 
+//		being retrieved.
+//	cchMax
 //		Size of the buffer to receive the null-terminated string.
 //
 //	The language-independent command name can be passed to the
 //	IContextMenu::InvokeCommand method to activate a command by an application.
 //
 //	The Help text is a description that Windows Explorer displays in its status bar;
-//	it should be reasonably short (under 40 characters). 
-// 
+//	it should be reasonably short (under 40 characters).
+//
 STDMETHODIMP
 CShellExt::GetCommandString(UINT_PTR idCmd,	UINT uFlags, UINT *pwReserved, LPSTR pszName, UINT cchMax) {
         try {
@@ -1267,8 +1265,8 @@ CShellExt::GetCommandString(UINT_PTR idCmd,	UINT uFlags, UINT *pwReserved, LPSTR
         } catch (TAssert utErr) {
             utErr.Show();
         }
-	return NOERROR; 
-} 
+	return NOERROR;
+}
 //
 //	Init verb-command id association
 //
@@ -1359,7 +1357,7 @@ CShellExt::DoVerbByVerb(SVerbs *pVerbs, const char *szVerb) {
 void
 CShellExt::IterateSelection() {
     // Ensure that OLE does not unload our DLL prematurely!
-    //InterlockedIncrement(&glRefThisDLL); 
+    //InterlockedIncrement(&glRefThisDLL);
 
     // Assign a batch-id to this operation, unless it's just a single file, in which case we
     // don't use a batch-id at all.
@@ -1374,11 +1372,11 @@ CShellExt::IterateSelection() {
     if (!fIsOneFile || (m_pfCmdHandler == &CShellExt::DoClearKeys)) {
         CallAxCrypt(NULL, _T(" -t"));
     }
-    
+
     // Decrement our own reference counter.
     Release();
     // Also release the hold on the DLL it-self.
-    //InterlockedDecrement(&glRefThisDLL); 
+    //InterlockedDecrement(&glRefThisDLL);
 }
 //
 //  Just an intermediary for the worker thread.
@@ -1645,7 +1643,7 @@ CShellExt::DoKeyFileHelper(HWND hProgressWnd, const TCHAR *szFolder) {
                                       + CStrPtr(_T("\""));
     // Always return non-zero to terminate iteration immediately, as we
     // do not want to do this for every file in a folder.
-    return CallAxCrypt(hProgressWnd, szCmd) || INF_NOERROR;	
+    return CallAxCrypt(hProgressWnd, szCmd) || INF_NOERROR;
 }
 
 DWORD
@@ -1746,7 +1744,7 @@ CShellExt::DoDocs(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolde
 }
 
 /// \brief Helper for About-box, formats strings of info about component files
-static void 
+static void
 aboutOneLine(HWND hwndListBox, const _TCHAR *szFileName, CVersion& ver, DWORD& dwMaxExtent) {
     HDC hDCListBox;
     HFONT hFontOld, hFontNew;
@@ -1768,7 +1766,7 @@ aboutOneLine(HWND hwndListBox, const _TCHAR *szFileName, CVersion& ver, DWORD& d
     SendMessage(hwndListBox, LB_ADDSTRING, 0, (LPARAM)sz.get());
 
     SelectObject(hDCListBox, hFontOld);
-    ReleaseDC(hwndListBox, hDCListBox); 
+    ReleaseDC(hwndListBox, hDCListBox);
 }
 
 /// \brief Dialog procedure for about box
@@ -1809,7 +1807,6 @@ AboutDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         CMessage msg;
 
         SetDlgItemText(hwndDlg, IDC_INF_ABOUT, msg.Wrap(0).AppMsg(INF_ABOUT, verAxCrypt.LegalCopyright()).GetMsg());
-
 
         // Set window title 'About AxCrypt'
         msg.AppMsg(INF_MENU_ABOUT);
@@ -2041,8 +2038,8 @@ CShellExt::DoRussian(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFo
 }
 
 static TCHAR szBruteForce[80]; // receives checkpoint/starting value
- 
-static BOOL CALLBACK BruteForceProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam) { 
+
+static BOOL CALLBACK BruteForceProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam) {
     switch (message) {
         case WM_INITDIALOG:
             {
@@ -2052,20 +2049,20 @@ static BOOL CALLBACK BruteForceProc(HWND hwndDlg, UINT message, WPARAM wParam, L
                 SetDlgItemText(hwndDlg, IDC_BRUTEFORCE, szBruteForce);
             }
             return TRUE;
-        case WM_COMMAND: 
-            switch (LOWORD(wParam)) { 
-                case IDOK: 
+        case WM_COMMAND:
+            switch (LOWORD(wParam)) {
+                case IDOK:
                     if (!GetDlgItemText(hwndDlg, IDC_BRUTEFORCE, szBruteForce, sizeof szBruteForce))  {
-                         szBruteForce[0] = _T('\0'); 
+                         szBruteForce[0] = _T('\0');
                     }
-                    // Fall through. 
-                 case IDCANCEL: 
-                    EndDialog(hwndDlg, wParam); 
-                    return TRUE; 
-            } 
-    } 
-    return FALSE; 
-} 
+                    // Fall through.
+                 case IDCANCEL:
+                    EndDialog(hwndDlg, wParam);
+                    return TRUE;
+            }
+    }
+    return FALSE;
+}
 
 DWORD
 CShellExt::DoBruteForce(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam) {
@@ -2197,7 +2194,7 @@ CShellExt::DoEncryptOnly(itEventT eventId, HWND hProgressWnd, IShellFolder *pShe
 //
 //	Actually perform  an action by calling the main process, adding the
 //  batch identifier in the process...
-// 
+//
 DWORD
 CShellExt::CallAxCrypt(HWND hProgressWnd, LPTSTR szParams) {
     CFileName szPath2Exe;
@@ -2249,8 +2246,8 @@ CShellExt::CallAxCrypt(HWND hProgressWnd, LPTSTR szParams) {
 DWORD
 CShellExt::DoAxCrypt(HWND hProgressWnd, LPTSTR szOption, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile) {
     CStrPtr szCmd = CStrPtr(szOption) + CStrPtr(CFileName(GetPath(pShellFolder, pidlFile).c_str()).GetQuoted());
-    return CallAxCrypt(hProgressWnd, szCmd);	
-} 
+    return CallAxCrypt(hProgressWnd, szCmd);
+}
 
 //
 //  Derive a reasonably unique batch id for this operation.
@@ -2266,7 +2263,7 @@ CShellExt::SetBatch(int iBatch) {
     }
 
     if (m_szBatch != NULL) delete m_szBatch;
-    
+
     // Calculate the length of the resulting string, in chars, including null.
     int iStrLen = 1, j = m_iBatch;
     do {

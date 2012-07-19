@@ -44,7 +44,7 @@
 static HMODULE hModule = ::GetModuleHandle(NULL);
 
 /// \brief The current way of specifying the extension - should be moved from here in the future likely
-const axcl::tstring CConfigWin::m_sEncryptedFileExtension = _T(".axx");
+const axcl::tstring CConfigWin::m_sEncryptedFileExtension = AXENCRYPTEDFILEEXT;
 
 /// \brief Derive a short product name from the name of the executable
 static axcl::tstring GetShortProductName() {
@@ -64,14 +64,14 @@ axcl::tstring CConfig::m_sInternalName = MakeInternalName(m_sShortProductName);
 
 /// \brief Transform a file-name into a file name representing an encrypted file
 /// This converts a string, assumed to be a file name, into the form used for encrypted files.
-/// Example: append .axx to the name.
+/// Example: append .xxx to the name.
 axcl::tstring CConfig::MakeEncryptedFileName(const axcl::tstring& sPlainName) {
     return axcl::tstring(sPlainName).append(CConfigWin::GetEncryptedFileExtension());
 }
 
 /// \brief Transform a file-name into a file name representing a decrypted file
 /// This converts a string, assumed to be a file name, into the form used for decrypted files.
-/// Example: remove .axx from the name.
+/// Example: remove .xxx from the name.
 axcl::tstring CConfig::MakeDecryptedFileName(const axcl::tstring& sCipherName) {
     if (IsEncryptedFileName(sCipherName)) {
         return axcl::tstring(sCipherName).erase(sCipherName.length() - CConfigWin::GetEncryptedFileExtension().length());
@@ -82,7 +82,7 @@ axcl::tstring CConfig::MakeDecryptedFileName(const axcl::tstring& sCipherName) {
 /// \brief Check if a file-name represents an encrypted file.
 /// Tests to see if the file-name pattern appears to represent an encrypted file. This is only
 /// an educated guess, so to be certain the file must be inspected.
-/// Example: check if the name ends with .axx
+/// Example: check if the name ends with .xxx
 bool CConfig::IsEncryptedFileName(const axcl::tstring& sCipherName) {
     if (sCipherName.length() > CConfigWin::GetEncryptedFileExtension().length()) {
         axcl::tstring sCipherExtension(sCipherName.substr(sCipherName.length() - CConfigWin::GetEncryptedFileExtension().length()));

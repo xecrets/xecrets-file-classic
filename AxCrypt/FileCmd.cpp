@@ -162,7 +162,7 @@ public:
             return true;
         }
 
-		// The documenation and implementation of WNetGetUniversalName is incorrect. The documentation states: 
+		// The documenation and implementation of WNetGetUniversalName is incorrect. The documentation states:
 		//   If the function fails because the buffer is too small, this location receives the required buffer size, and the function returns ERROR_MORE_DATA.
 		// This statement is only correct up to '4' - the size of a pointer. The problem is that it actually writes the resulting string directly afterwards,
 		// just overwriting whatever is there! There is no way to know how much this data is, except the 'approximate' maximum size of a UNC path 32767 in chars,
@@ -367,8 +367,6 @@ IncrementTrialCtr() {
     }
 }
 
-
-
 //
 //  Expand a wild-card spec, calling the appropriate command handler
 //  for every match that is a file. If it's a directory, we walk into
@@ -505,9 +503,9 @@ CmdEncryptZCFile(CCmdParam *pCmdParam) {
 
             size_t ccRequired;
 
-            _tgetenv_s(&ccRequired, szSystemRoot, sizeof szSystemRoot / sizeof szSystemRoot[0], _T("SystemRoot")); 
+            _tgetenv_s(&ccRequired, szSystemRoot, sizeof szSystemRoot / sizeof szSystemRoot[0], _T("SystemRoot"));
             _tgetenv_s(&ccRequired, szWindir, sizeof szWindir / sizeof szWindir[0], _T("windir"));
-            _tgetenv_s(&ccRequired, szProgramFiles, sizeof szProgramFiles / sizeof szProgramFiles[0], _T("ProgramFiles")); 
+            _tgetenv_s(&ccRequired, szProgramFiles, sizeof szProgramFiles / sizeof szProgramFiles[0], _T("ProgramFiles"));
 
             if (IsInFolder(fnPlain.Get(), szSystemRoot) || IsInFolder(fnPlain.Get(), szWindir) || IsInFolder(fnPlain.Get(), szProgramFiles)) {
                 // Give a warning that it appears that the user is about to encrypt a file in a bad folder
@@ -537,7 +535,7 @@ CmdEncryptZCFile(CCmdParam *pCmdParam) {
         if (IsExpired()) {
             return WRN_CANCEL;
         }
-        
+
         CKeyPrompt utKeyPrompt; // we need this for the duration
 		CCryptoKey *pCryptoKey = pgKeyList->FindEncKey(pCmdParam->dwBatch);
         TKey *pKey = NULL;
@@ -573,7 +571,6 @@ CmdEncryptZCFile(CCmdParam *pCmdParam) {
 
 		HEAP_CHECK_BEGIN(_T("CmdEncryptZCFile(b)"), 0)
 		if (pKey != NULL) {
-
             // Either use the given output name, or derive one.
             CFileName fnCipher;
             fnCipher.Set(pCmdParam->szParam1.c_str());
@@ -745,12 +742,12 @@ CmdSfxEncNewFile(CCmdParam *pCmdParam) {
     if (IsExpired()) {
         return WRN_CANCEL;
     }
-        
+
     // Use a local copy.
     CCmdParam cmdParam = *pCmdParam;
     try {
         // If we don't have a specific output-name set, we remove a
-        // possible .axx extension, and then add a .exe.
+        // possible .xxx extension, and then add a .exe.
         if (cmdParam.szParam2.empty()) {
             CFileName fnOutput(cmdParam.szParam1.c_str());
             if (_tcscmp(fnOutput.GetExt(), gszAxCryptFileExt) == 0) {
@@ -832,7 +829,7 @@ CmdEncryptZFile(CCmdParam *pCmdParam) {
 
     // Start by checking the read-only status of the plain-text.
     CReadOnlyMgr utPlainROM(fnPlain.Get());
-    
+
     DWORD dwReturn;
     try {
         // ..and by ensuring writeability, as we're intending to wipe it!
@@ -872,7 +869,6 @@ CmdEncryptZFile(CCmdParam *pCmdParam) {
 //
 static BOOL
 TryCacheAndPromptOpen(CHeaders *pHeaders, TKey **ppKeyEncKey, DWORD dwBatch, LPCTSTR szFileName, HWND hProgressWnd) {
-
     if (pgKeyList->TryOpen(pHeaders, ppKeyEncKey, dwBatch)) {
 	    return TRUE;
     }
@@ -955,7 +951,7 @@ CmdDecryptCFile(CCmdParam *pCmdParam) {
 
             // Try to create it. If it fails, present a dialoge
             CreateSaveFile(&utFilePlain, fnPlain, CREATE_NEW, GetForegroundWindow());
-            
+
             // Keep the file in all cases if we're in recover mode
             if (fTryBrokenFile) {
                 utFilePlain.SetDelete(FALSE);
@@ -1011,7 +1007,6 @@ CmdDecryptFile(CCmdParam *pCmdParam) {
 		return 0;
 	}
 
-
 	DWORD dwReturn = CmdDecryptCFile(pCmdParam);
     if (dwReturn) return dwReturn;
 
@@ -1023,7 +1018,7 @@ CmdDecryptFile(CCmdParam *pCmdParam) {
 
         // Throw an exception if not writeable
         utCipherROM.AssWriteable();
-        
+
         // If the source was read-only, we try to wipe it, removing read-only if necessary and possible
         if (!utCipherROM.IsReadOnly() || utCipherROM.SetReadWrite()) {
             // Since it's a cipher-file, we just wipe the initial part to be a little faster.
@@ -1301,7 +1296,7 @@ MyShellExecute(const TCHAR *szDocumentName, const TCHAR *szDir, const TCHAR *szA
     }
     return false;
 
-/*      
+/*
     TCHAR szExec[MAX_PATH];
 
     DWORD dwRet;
@@ -1333,7 +1328,7 @@ MyShellExecute(const TCHAR *szDocumentName, const TCHAR *szDir, const TCHAR *szA
             // No spaces in file-name - don't quote it.
             szCmdLine = auto_ptr<TCHAR>(FormatSz(_T("\"%1\" %2"), szExec, szDocumentName));
         }
-        
+
         if (CreateProcess(szExec, szCmdLine.get(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
             // Give the application a second to settle and initialize...
             WaitForInputIdle(pi.hProcess, 1000);
@@ -1432,42 +1427,42 @@ CheckIfNotObviouslyDangerous(const wchar_t *szFileName) {
 //
 // 1 - The standard case. The application is a single document application, locks the file during edit, unlocks it only
 // when it is done with it. We can then monitor the file, and when it's unlocked we can re-encrypt.
-// 
+//
 // 2 - The notepad case (simple). The application is a single document application, but does not lock the file during
 // edit. We can then wait for the application to exit, provided we can figure out which one it is. This causes the
 // side-effect that if you inside the app save the file, and then open a different document, we'll still be waiting.
-// 
+//
 // 3 - The notepad case (double-launch). The application is a single document application, but does not lock the file
 // during edit. Then, for example in the notepad case, if the file is too large for it, it won't open the file at all,
 // but instead ask the user if she would like to start WordPad instead. If the user says 'yes', notepad exits, and
 // WordPad is launched instead. If the user says 'no', notepad just exits. We must now detect that Notepad has launched
 // a child, and wait for that.
-// 
+//
 // 4 - The 'open with' case. There's no application associated with the extension, so the 'open with'-dialog is shown.
 // We must now detect that (in our case we detect it before trying, and then present the open with dialog ourselves),
 // and then figure out which child of the open with-dialog process is actually launched. Then it all starts over again
 // essentially...
-// 
+//
 // 5 - The MDI-case, like word. The launch may or may not start a new application, then the document is opened in a
 // window inside the application. For Word we can detect that the file is kept locked (unless it's a read-only file...).
 // We can also find that a new thread was started, or a new window was created.
-// 
+//
 // 6 - The Open Office-case. OO keeps an internal thread-pool that get's re-used in a complex manner, and is also an
 // MDI-application.
-// 
+//
 // The current strategy is thus a very complex interaction of various heuristic ways to make this work.
-// 
+//
 // 1 - AxCrypt checks for the file getting locked, and assumes that if it stays locked for an appreciable amount of time
 // after the application has reached Input Idle state, we can trust that when it's released for an appreciable amount of
 // time, the application is done with it.
-// 
+//
 // 2 - AxCrypt checks for new processes, and child processes of new processes.
-// 
+//
 // 3 - AxCrypt checks for new threads of processes that have the same executable as that which is associated with the
 // files extension.
-// 
+//
 // 4 - AxCrypt checks for new windows.
-// 
+//
 /// \param szApp2Use The application to use instead of the associated one.
 void
 LaunchApp(LPCTSTR szFileName, const TCHAR *szDir, HWND hForegroundWnd, LPCTSTR szApp2Use) {
@@ -1480,10 +1475,10 @@ LaunchApp(LPCTSTR szFileName, const TCHAR *szDir, HWND hForegroundWnd, LPCTSTR s
 	// concerning tracking of process id's etc, especially finding children,
     // and children of children.
 	//
-	
+
 	// Child snapshot object
 	CChildProc utAppProc;
-	
+
 	// Ensure that no other thread launches an app until we have determined
 	// the child process id
 	BOOL fLaunchAppOk;
@@ -1545,7 +1540,7 @@ LaunchApp(LPCTSTR szFileName, const TCHAR *szDir, HWND hForegroundWnd, LPCTSTR s
 
 		PROCESS_INFORMATION ProcessInfo;
 		ZeroMemory(&ProcessInfo, sizeof ProcessInfo);
-		
+
 		STARTUPINFO StartupInfo;
 		ZeroMemory(&StartupInfo, sizeof StartupInfo);
 		StartupInfo.cb = sizeof StartupInfo;
@@ -1572,7 +1567,7 @@ LaunchApp(LPCTSTR szFileName, const TCHAR *szDir, HWND hForegroundWnd, LPCTSTR s
 				&ProcessInfo)).File(MSG_SHELL_EXECUTE, szFileName).Throw();
 			//utLaunchAppCritical.Leave();
 		}
-		
+
 		CAssert(ProcessInfo.dwProcessId != 0).File(MSG_OPEN_WITH, szFileName).Throw();
 
         // Here we don't need a critical sections, since the open with
@@ -1714,7 +1709,7 @@ LocalCmdSaveExtraFilesNoProgress(CCmdParam *pCmdParam) {
 
     SHFILEOPSTRUCT shfo;
     ZeroMemory(&shfo, sizeof shfo);
-    
+
     // Build a double-nul-terminated from
     size_t ccFrom = _tcslen(pCmdParam->szParam1.c_str()) + 2;
     auto_ptr<TCHAR> szzFrom(new TCHAR[ccFrom]);
@@ -1729,7 +1724,7 @@ LocalCmdSaveExtraFilesNoProgress(CCmdParam *pCmdParam) {
     size_t ccTo = _tcslen(pCmdParam->szParam2.c_str()) + 1 + _tcslen(szFileTitle) + 2;
     auto_ptr<TCHAR> szzTo(new TCHAR[ccTo]);
     ASSPTR(szzTo.get());
-    
+
     _tcscpy_s(szzTo.get(), ccTo, pCmdParam->szParam2.c_str());
 
     // Append the default file-name too.
@@ -1743,7 +1738,7 @@ LocalCmdSaveExtraFilesNoProgress(CCmdParam *pCmdParam) {
     shfo.pFrom = szzFrom.get();
     shfo.pTo = szzTo.get();
     shfo.fFlags = FOF_NORECURSION;
-    
+
     // Do the actual move, if it fails, ask for a different name until the user presses cancel.
     bool fRetry;
     do {
@@ -1797,12 +1792,12 @@ LocalCmdSaveExtraFilesNoProgress(CCmdParam *pCmdParam) {
             ofn.lpstrFile = szFileName.get();
             ofn.nMaxFile = MAX_PATH;
             ofn.Flags = OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
-            
+
             if (GetSaveFileName(&ofn) == TRUE) {
                 size_t ccTo = _tcslen(ofn.lpstrFile) + 2;
                 szzTo = auto_ptr<TCHAR>(new TCHAR[ccTo]);
                 ASSPTR(szzTo.get());
-            
+
                 _tcscpy_s(szzTo.get(), ccTo, ofn.lpstrFile);
                 szFileTitle = PathFindFileName(szzTo.get());
                 // Append a second nul
@@ -1981,13 +1976,13 @@ CmdDecryptOpenLaunch(CCmdParam *pCmdParam) {
 			    HEAP_CHECK_BEGIN(_T("CmdDecryptOpenLaunch(a.a)"), TRUE)
 			    utFilePlain.Create(fnPlain.Get(), TRUE, GENERIC_READ|GENERIC_WRITE);	// create always w/delete-on-close
 			    HEAP_CHECK_END
-	    
+
                 CWrapper utWrap(&utHeaders, pCmdParam->hProgressWnd);
 
 			    HEAP_CHECK_BEGIN(_T("CmdDecryptOpenLaunch(a.b)"), 0)
                 utWrap.Unwrap(utFileCipher, utFilePlain, pCmdParam->nWipePasses);
 			    HEAP_CHECK_END
-			    
+
 			    // Restore the old file times. Close, and re-open
 			    utFilePlain.Close(TRUE);				// Keep the plain-file.
 				utFilePlain.Open(fnPlain.Get(), FALSE, GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE);
@@ -2013,7 +2008,7 @@ CmdDecryptOpenLaunch(CCmdParam *pCmdParam) {
                 }
 
 			    HEAP_CHECK_END
-				    
+
                 // If the copy was made read-only, restore it to read-write for wipe.
                 if (bPlainIsReadOnly) {
                     utPlainROM.SetReadWrite();
@@ -2056,7 +2051,7 @@ CmdDecryptOpenLaunch(CCmdParam *pCmdParam) {
 
                 utFilePlain.WipeTemp(pCmdParam->hProgressWnd, pCmdParam->nWipePasses); 		// Implies delete-on-close
 			    utFilePlain.Close();					// Close and delete.
-                
+
                 // Scan temporary directory for left-over or extra-saved files.
                 SaveExtraFiles(fnPlain.GetDir(), fnCipher.GetDir(), GetForegroundWindow(), pCmdParam->hProgressWnd);
 		    }
@@ -2090,7 +2085,7 @@ CmdWipeSilent(CCmdParam *pCmdParam) {
 
 	HEAP_CHECK_BEGIN(_T("CmdWipeSilent()"), 0)
 
-    try {    
+    try {
         // If we should show a possible warning,
         // Check the attributes for those we cannot wipe properly.
         CRegistry utRegWarn(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValNoUnsafeWipeWarn);
@@ -2204,24 +2199,23 @@ CmdClearKeys(CCmdParam *pCmdParam) {
 //  compatibility...
 //
 DWORD CmdAddKey(CCmdParam *pCmdParam) {
-	
 	// Just ignore empty key requests.
     if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
-    
+
 	//
     //  Filter the key using the same criteria as the the Password entry
     //  dialog. Remember about Unicode and Ansi...
     //
     std::string s = axpl::t2s(pCmdParam->szParam1);
     const char *pNxtInChar = s.c_str();
-    
+
     // Ensure that szFilterKey is deallocated on exit of this function.
     CPtrTo<char> szFilterKey;
     szFilterKey = new char[strlen(pNxtInChar) + 1];
     ASSPTR(szFilterKey);
-    
+
     char *pNxtOutChar = szFilterKey;
 
     while (*pNxtInChar) {
@@ -2382,7 +2376,7 @@ CmdMakeKeyFile(CCmdParam *pCmdParam) {
     try {
         CFileIO keyFile;
         bool fAlwaysPromptForSaveAs = true;
-    
+
         keyFileName.SetCurDir(pCmdParam->szCurDir.c_str());
         if (!pCmdParam->szParam1.empty()) {
             keyFileName.Set(pCmdParam->szParam1.c_str());
@@ -2540,13 +2534,13 @@ CmdAnonRename(CCmdParam *pCmdParam) {
     fnCipher.Set(pCmdParam->szParam1.c_str()).SetCurDir(pCmdParam->szCurDir.c_str());
 
 	HEAP_CHECK_BEGIN(_T("CmdAnonRename()"), 0)
-    try {    
+    try {
 		CFileIO utFileCipher;
 		CHeaders utHeaders;
 		utFileCipher.Open(fnCipher.Get(), FALSE, GENERIC_READ);
 
 		utHeaders.Load(utFileCipher);
-        
+
         // Get the low 32 bits of the HMAC.
         DWORD dwHmacLow = (DWORD)((DQWORD *)utHeaders.GetHMAC())->Lsb64();
         utFileCipher.Close();
@@ -2614,7 +2608,7 @@ CmdShowIdTag(CCmdParam *pCmdParam) {
 			(void)fprintf(fp, "%ls\n", (wchar_t *)szIdTag);
 			(void)fflush(fp);
 			// I don't think we should do any close here...
-			//(void)fclose(fp); 
+			//(void)fclose(fp);
 			//(void)close(fd);
 		} else {
 			return ERR_NO_IDTAG;
@@ -2630,7 +2624,6 @@ CmdShowIdTag(CCmdParam *pCmdParam) {
 		return utErr.LastError();
 	}
 	return 0;
-
 }
 //
 //  Start a brute force key search, and output the result in the registry and in
@@ -2707,7 +2700,7 @@ CmdBruteForce(CCmdParam *pCmdParam) {
                           GENERIC_READ|GENERIC_WRITE);
 
 		utHeaders.Load(utFileCipher);
-        
+
         int state;
         if (!pCmdParam->szParam2.empty()) {
             std::string s = axpl::t2s(pCmdParam->szParam2);
@@ -2728,7 +2721,7 @@ CmdBruteForce(CCmdParam *pCmdParam) {
             CAssert(FALSE).App(MSG_INTERNAL_ERROR, _T("CmdBruteForce() [pCtx == NULL]")).Throw();
         }
         SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_LOWEST);
-        
+
         // Initialize progress window, if any.
         HWND hProgressWnd = pCmdParam->hProgressWnd;
         if (hProgressWnd != NULL) {
@@ -2791,7 +2784,7 @@ CmdBruteForce(CCmdParam *pCmdParam) {
 }
 
 /// \brief Key Wrap Speed Test
-/// 
+///
 /// Step through a number of key wrap iterations until the
 /// initiator signals us to stop. The purpose is to calibrate
 /// the speed to set the key wrap iteration count.
@@ -2893,7 +2886,7 @@ DWORD AesSpeedTest(DWORD dwMilliseconds) {
 //
 // [HKEY_CLASSES_ROOT\szAxCryptProgID\DefaultIcon]
 // @ = \"path-to-exe\", 0
-// 
+//
 // [HKEY_CLASSES_ROOT\szAxCryptProgID\CLSID]
 // @ = gszAxCryptCLSID
 //
@@ -2922,7 +2915,7 @@ DWORD AesSpeedTest(DWORD dwMilliseconds) {
 // "SaveDecKey" = 1			; TRUE => Do save dec passphrases in the cache.
 //
 DWORD
-CmdInstallInRegistry(CCmdParam *pCmdParam) { 
+CmdInstallInRegistry(CCmdParam *pCmdParam) {
     const bool fOverwrite = false;          // Prepare for optional forced overwrite
 
     CFileName szPath2Exe; szPath2Exe.SetPath2ExeName();
@@ -2955,12 +2948,12 @@ CmdInstallInRegistry(CCmdParam *pCmdParam) {
                                    &hRegKey)) {
 		case ERROR_ACCESS_DENIED:
             {
-			    // The user does not have permission to add a new value to this key. In this 
-			    // case, a reasonable action would be to warn the user that some 
-			    // application features will not be available unless an administrator 
-			    // installs the application. If the shell extension is central to the 
-			    // functioning of the application, tell the user that the install 
-			    // can only be performed by an administrator, and stop the install. 
+			    // The user does not have permission to add a new value to this key. In this
+			    // case, a reasonable action would be to warn the user that some
+			    // application features will not be available unless an administrator
+			    // installs the application. If the shell extension is central to the
+			    // functioning of the application, tell the user that the install
+			    // can only be performed by an administrator, and stop the install.
 			    //
                 // Before failing, we check if shell extension security is enforced. If it's not,
                 // we silently ignore.
@@ -2969,9 +2962,9 @@ CmdInstallInRegistry(CCmdParam *pCmdParam) {
             }
 			break;
 		case ERROR_FILE_NOT_FOUND:
-			// The key does not exist. This should only happen if setup is running 
-			// on Windows 95 instead of Windows NT, or if you are installing on an older 
-			// version of either operating system that does not have the new shell. 
+			// The key does not exist. This should only happen if setup is running
+			// on Windows 95 instead of Windows NT, or if you are installing on an older
+			// version of either operating system that does not have the new shell.
 			// We ignore this.
             break;
         default:
@@ -3236,7 +3229,7 @@ CmdRemoveFromRegistry(CCmdParam *pCmdParam) {
             dwLastError = utErr.App(MSG_UNINSTALL_ERROR).Show().LastError();
         }
 		utReg.HKey(NULL);
-    
+
 		// [HKEY_CLASSES_ROOT\Folder\shellex\ContextMenuHandlers\szAxCryptProgID]
         try {
 			utReg.Root(HKEY_CLASSES_ROOT);
@@ -3313,7 +3306,6 @@ CmdRemoveFromRegistry(CCmdParam *pCmdParam) {
 				// Ignore!
 			}
 		}
-
 	} catch (TAssert utErr) {
 		dwLastError = utErr.App(MSG_UNINSTALL_ERROR).Show().LastError();
 	}

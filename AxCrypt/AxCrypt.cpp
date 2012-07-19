@@ -61,7 +61,7 @@
         -   Data is kept locally secure, excepting untimely crashes, with the caveat that we have no control
             of other applications caretaking of the data, i.e. temp-files and paging-files from Word etc.
 
-    The extension .axx is registered to start AxCrypt which
+    The extension .xxx is registered to start AxCrypt which
     then does the following:
 
     - Tries cached keys or asks if necessary for a key

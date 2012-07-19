@@ -48,7 +48,7 @@ protected:
 
 public:
     /// \brief Return the extension we use for encrypted files, with the "."
-    /// \returns .axx
+    /// \returns .xxx
     static const axcl::tstring& GetEncryptedFileExtension() {
         return m_sEncryptedFileExtension;
     }

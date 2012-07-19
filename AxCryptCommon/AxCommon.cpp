@@ -69,7 +69,7 @@ CPtrTo<TCHAR> gszAxCryptCompanyName;
 CPtrTo<TCHAR> gszAxCryptCopyright;
 bool gfAxCryptShowNoVersion = false;
 
-const TCHAR *szAxCryptDefFileExt = _T(".axx");
+const TCHAR *szAxCryptDefFileExt = AXENCRYPTEDFILEEXT;
 const TCHAR *szAxBruteDLL = _T("AxBrute.dll");
 
 // The following lists ALL registry keys - all that are used, regardless if they are only for the installer etc.

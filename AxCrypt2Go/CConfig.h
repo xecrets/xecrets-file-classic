@@ -102,18 +102,18 @@ public:
 
     /// \brief Transform a file-name into a file name representing an encrypted file
     /// This converts a string, assumed to be a file name, into the form used for encrypted files.
-    /// Example: append .axx to the name.
+    /// Example: append .xxx to the name.
     static axcl::tstring MakeEncryptedFileName(const axcl::tstring& sPlainName);
 
     /// \brief Transform a file-name into a file name representing a decrypted file
     /// This converts a string, assumed to be a file name, into the form used for decrypted files.
-    /// Example: remove .axx from the name.
+    /// Example: remove .xxx from the name.
     static axcl::tstring MakeDecryptedFileName(const axcl::tstring& sCipherName);
 
     /// \brief Check if a file-name represents an encrypted file.
     /// Tests to see if the file-name pattern appears to represent an encrypted file. This is only
     /// an educated guess, so to be certain the file must be inspected.
-    /// Example: check if the name ends with .axx
+    /// Example: check if the name ends with .xxx
     static bool IsEncryptedFileName(const axcl::tstring& sCipherName);
 };
 
