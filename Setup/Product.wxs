@@ -507,7 +507,7 @@
 
         <DirectoryRef Id="APPLICATIONFOLDER">
             <Component Id="AxCrypt.exe"
-                       Guid="C232738B-8479-449f-90A0-5F709F7E9736"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="AxCrypt.exe"
                       Name="AxCrypt.exe"
@@ -515,26 +515,26 @@
                       KeyPath="yes"
                       Checksum="yes" />
             </Component>
-            <Component Id="AxCryptMessages.dll"
-                       Guid="3B098A24-F028-4bdb-A705-CC68EFE0FB9B"
+            <Component Id="Messages.dll"
+                       Guid="*"
                        DiskId="1" >
-                <File Id="AxCryptMessages.dll"
-                      Name="AxCryptMessages.dll"
-                      Source="$(var.Package.TargetDir)\AxCryptMessages.dll"
+                <File Id="Messages.dll"
+                      Name="Messages.dll"
+                      Source="$(var.Package.TargetDir)\Messages.dll"
                       KeyPath="yes"
                       Checksum="yes" />
             </Component>
-            <Component Id="AxCryptShellExt.dll"
-                       Guid="8327B994-2841-42e3-8084-2201F4B6A4E4"
+            <Component Id="ShellExt.dll"
+                       Guid="*"
                        DiskId="1" >
-                <File Id="AxCryptShellExt.dll"
-                      Name="AxCryptShellExt.dll"
-                      Source="$(var.Package.TargetDir)\AxCryptShellExt.dll"
+                <File Id="ShellExt.dll"
+                      Name="ShellExt.dll"
+                      Source="$(var.Package.TargetDir)\ShellExt.dll"
                       KeyPath="yes"
                       Checksum="yes" />
             </Component>
             <Component Id="Config.xml"
-                       Guid="E35BC595-4EAE-4fc6-9215-ED9158981B03"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="Config.xml"
                       Name="Config.xml"
@@ -542,7 +542,7 @@
                       KeyPath="yes" />
             </Component>
             <Component Id="Sigs.xml"
-                       Guid="F3994241-2B83-4fc2-8C72-DC9BD12539CA"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="Sigs.xml"
                       Name="Sigs.xml"
@@ -550,7 +550,7 @@
                       KeyPath="yes" />
             </Component>
             <Component Id="ReadMe.html"
-                       Guid="B2A7D879-475E-489a-B006-11028BBADB45"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="ReadMe.html"
                       Name="ReadMe.html"
@@ -558,7 +558,7 @@
                       KeyPath="yes" />
             </Component>
             <Component Id="License.rtf"
-                       Guid="14ED4673-3882-40a9-9F37-4C18FF0A3EAE"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="License.rtf"
                       Name="License.rtf"
@@ -566,7 +566,7 @@
                       KeyPath="yes" />
             </Component>
             <Component Id="ChangeLog.txt"
-                       Guid="3B8FE0BC-2358-4941-BB0E-9A43FE6D5EF2"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="ChangeLog.txt"
                       Name="ChangeLog.txt"
@@ -574,7 +574,7 @@
                       KeyPath="yes" />
             </Component>
             <Component Id="RelNotes.txt"
-                       Guid="EEE6EF15-A121-4a9f-B734-A7D5E24B495E"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="RelNotes.txt"
                       Name="RelNotes.txt"
@@ -582,7 +582,7 @@
                       KeyPath="yes" />
             </Component>
             <Component Id="AxDecrypt.exe"
-                       Guid="7C29F70C-FE30-40dc-BD4F-4907536DF79D"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="AxDecrypt.exe"
                       Name="AxDecrypt.exe"
@@ -591,7 +591,7 @@
                       Checksum="yes" />
             </Component>
             <Component Id="AxCrypt2Go.exe"
-                       Guid="DF076C65-9434-4632-AB31-62537F09453D"
+                       Guid="*"
                        DiskId="1" >
                 <File Id="AxCrypt2Go.exe"
                       Name="AxCrypt2Go.exe"
@@ -603,7 +603,7 @@
 
         <DirectoryRef Id="AxantumProgramMenu">
             <Component Id="CompanyApplicationShortcutFolder"
-                       Guid="92E96C77-131E-456f-A291-92B8F1494934">
+                       Guid="*">
                 <RegistryValue Root="HKCU"
                                Key="$(var.AxCryptRegKey)"
                                Name="installed"
@@ -653,7 +653,7 @@
 
         <DirectoryRef Id="APPLICATIONFOLDER">
             <Component Id="ShellExtensionRegistryApproved"
-                       Guid="2D585A84-C143-42c6-9F82-37B663F93839">
+                       Guid="*">
                 <Condition>SHELLEXTENSIONSECURITYENFORCEDHKCU OR SHELLEXTENSIONSECURITYENFORCEDHKLM OR Privileged</Condition>
                 <RegistryKey Root="HKMU"
                              Key="Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved">
@@ -665,7 +665,7 @@
             </Component>
 
             <Component Id="ShellExtensionRegistryAssociation"
-                       Guid="8EBB3138-08FF-45fc-885D-452512E021FF">
+                       Guid="*">
                 <RegistryKey Root="HKCR"
                              Key="$(var.AxCryptExtension)"
                              Action="createAndRemoveOnUninstall">
@@ -695,7 +695,7 @@
                              Key="CLSID\$(var.AxCryptCLSID)\InprocServer32"
                              Action="createAndRemoveOnUninstall">
                     <RegistryValue Type="string"
-                                   Value="[APPLICATIONFOLDER]AxCryptShellExt.dll" />
+                                   Value="[APPLICATIONFOLDER]ShellExt.dll" />
                     <RegistryValue Type="string"
                                    Name="ThreadingModel"
                                    Value="Apartment" />
@@ -731,7 +731,7 @@
             </Component>
 
             <Component Id="AxCryptRegistryEntriesMachine"
-                       Guid="ECA758D4-8B9E-44dd-8C11-CCCCBDCB3900">
+                       Guid="*">
                 <RegistryKey Root="HKMU"
                              Key="$(var.AxCryptRegKey)"
                              Action="createAndRemoveOnUninstall">
@@ -763,7 +763,7 @@
             </Component>
 
             <Component Id="AxCryptRegistryEntriesUser"
-                       Guid="53F780BE-2CC5-46a3-A648-5C0EA81B73D1">
+                       Guid="*">
                 <RegistryKey Root="HKCU"
                              Key="$(var.AxCryptRegKey)"
                              Action="createAndRemoveOnUninstall">
@@ -818,7 +818,7 @@
                  Title="!(loc.MainExecutablesTitle)"
                  Level="1">
             <ComponentRef Id="AxCrypt.exe" />
-            <ComponentRef Id="AxCryptMessages.dll" />
+            <ComponentRef Id="Messages.dll" />
             <ComponentRef Id="Config.xml" />
             <ComponentRef Id="Sigs.xml" />
             <ComponentRef Id="ReadMe.html" />
@@ -835,8 +835,8 @@
                  Title="!(loc.ShellExtensionTitle)"
                  Level="1">
             <ComponentRef Id="AxCrypt.exe" />
-            <ComponentRef Id="AxCryptMessages.dll" />
-            <ComponentRef Id="AxCryptShellExt.dll" />
+            <ComponentRef Id="Messages.dll" />
+            <ComponentRef Id="ShellExt.dll" />
             <ComponentRef Id="Config.xml" />
             <ComponentRef Id="Sigs.xml" />
             <ComponentRef Id="ShellExtensionRegistryApproved" />
