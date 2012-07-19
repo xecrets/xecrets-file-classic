@@ -5,7 +5,7 @@
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free AxCrypt for the road.
+    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     This file defines configuration data that might differ for different builds, and provides an
     interface for the rest of the code to fetch strings and other values that might differ between
@@ -34,7 +34,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 

@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CRegistry.cpp					Registry manipulating class
-	
+
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2002-08-17				Rel 1.2.1	Initial
+	software@axantum.com 			2002-08-17				Rel 1.2.1	Initial
 */
 #include	"StdAfx.h"
 #include    "CRegistry.h"
@@ -74,7 +74,7 @@ CRegistry& CRegistry::Key(LPCTSTR szKey) {
 	// Assert that we really specify a subkey, otherwise RegOpenKeyEx opens the current m_hRootKey again - we do NOT want that,
 	// if this is used later for deletion we risk deleting the entire registry sub-tree... Not good.
 	CAssert(szKey && szKey[0] != _T('\0')).App(ERR_ARGUMENT, _T("CRegistry::Key(LPCTSTR szKey)")).Throw();
-    
+
     LONG lRes = RegOpenKeyEx(m_hRootKey, szKey, 0, KEY_READ | KEY_WRITE, &m_hRegKey);
     // We allow silent failure if the key is no found. This is ok if we only want to
     // read it...
@@ -183,7 +183,7 @@ LPTSTR CRegistry::GetSz(LPCTSTR szDefault) {
     if (dwType != REG_SZ) {
         return CopySz(szDefault);
     }
-    
+
     dwLen = ((dwLen / sizeof TCHAR) + 1) * sizeof TCHAR; // Round upwards, just in case...
     LPTSTR szValue = new TCHAR[dwLen / sizeof TCHAR]; // Yes, ReqQuery returns the size in bytes...
     ASSPTR(szValue);

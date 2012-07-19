@@ -1,11 +1,11 @@
 #ifndef CAXCRYPTAES_H
 #define CAXCRYPTAES_H
 /*! \file
-    \brief CAxCryptAES.h - An AxCrypt special purpose AES-wrapper
+    \brief CAxCryptAES.h - An Ax Crypt special purpose AES-wrapper
 
     @(#) $Id$
 
-    CAxCryptAES.h - An AxCrypt special purpose AES-wrapper
+    CAxCryptAES.h - An Ax Crypt special purpose AES-wrapper
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -21,7 +21,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 
@@ -35,7 +35,6 @@ extern "C" {
 #define ASSERT_FILE "CAxCryptAES.h"
 
 namespace axcl {
-
 /// \brief Simple wrapper class for the AES-code.
 ///
 ///  A major reason to do our own wrapper instead of using existing code is that
@@ -49,7 +48,7 @@ namespace axcl {
 ///  To get full control we only use the low-level algoritm parts.
 ///
 ///  This class is not a complete API - it only implements exactly the modes
-///  needed by AxCrypt.
+///  needed by Ax Crypt.
 ///
 ///  Please note that padding must be done external to this code - we only
 ///  handle whole blocks here.
@@ -150,7 +149,7 @@ public:
     /// \brief The caller must know the size of the salt.
     byte *GetSalt();
     /// \brief Just get the key, obviously m_nKeySize long.
-    byte *GetKey(); 
+    byte *GetKey();
     /// \brief The result is by definition m_nKeySize + 8 bytes long.
     byte *GetWrap();
     /// \brief Get the size of the wrap

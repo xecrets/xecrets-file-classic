@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CXform.cpp						File transformation operations such as encrypt/decrypt/compress/decompress/wipe etc
-	
+
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
 									2001-11-27				Fixed loop in CWipe with partial wipe > 1K
                                     2002-08-02              Rev 1.2
 
@@ -107,7 +107,7 @@ CXform::XformData(CFileIO& utInFile, CFileIO& utOutFile) {
 
 	QWORD qwTotalInputSize = Init(utInFile);
 	CAssert(qwTotalInputSize >= 0).File(MSG_FILE_LENGTH, utInFile.FileName()).Throw();
-    
+
     // Set the name of the operation in the progress window, if any
     StartProgress();
 
@@ -240,7 +240,7 @@ CCompress::Init(CFileIO& utInFile) {
 /*virtual*/ void CCompress::Xform() {
     do {
         unsigned long cb = 0;
-        
+
         if (utZstream.avail_in > ZLIB_FULL_FLUSH_SIZE) {
             cb = utZstream.avail_in - ZLIB_FULL_FLUSH_SIZE;
             utZstream.avail_in = ZLIB_FULL_FLUSH_SIZE;
@@ -357,7 +357,7 @@ CCompressRatio::GetRatio() {
 //	Decompress transformer class begins here
 //
 //	Wrap ZLib inflateInit()
-//	
+//
 /*virtual*/ QWORD
 CDecompress::Init(CFileIO& utInFile) {
 	utZstream.next_in = Z_NULL;	// Defer check to first call to inflate

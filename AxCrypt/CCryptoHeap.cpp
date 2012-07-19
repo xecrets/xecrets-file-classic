@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,14 +18,14 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CCryptoHeap.cpp					A heap to be placed in a memory map and under full
 									control as sensitive info is put there. Overload new
 									and delete as well, unless _DEBUGHEAP is #defined.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
 
 */
 //
@@ -93,7 +93,7 @@ CCryptoHeap::Init() {
         // This is debateable, it's not 100% clear from the documentation what FILE_FLAG_WRITE_THROUGH
         // really does, but it should be ok. Caching is still ok, but flushing should really flush.
 		MakeTmp(CFileTemp().New().Get(), TRUE);
-		
+
 		// Initialize and enter critical section now
 		InitializeCriticalSection(&csThreadLock);
 		EnterCriticalSection(&csThreadLock);
@@ -122,7 +122,6 @@ CCryptoHeap::Init() {
         LeaveCriticalSection(&csThreadLock);
 
         m_nWipePasses = CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValWipePasses).GetDword(1);
-
 	} catch (TAssert utErr) {
 		utErr.App(MSG_CRYPTO_HEAP_CONSTRUCT);
 		FatalAppExit(0, utErr.GetMsg());

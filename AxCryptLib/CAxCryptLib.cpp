@@ -1,9 +1,9 @@
 /*! \file
-    \brief CAxCryptLib.cpp - The private implementation class of the non-GUI AxCrypt library
+    \brief CAxCryptLib.cpp - The private implementation class of the non-GUI Ax Crypt library
 
     @(#) $Id$
 
-    CAxCryptLib - Common non-GUI implementation class of the AxCryptLib library for AxCrypt.
+    CAxCryptLib - Common non-GUI implementation class of the AxCryptLib library for Ax Crypt.
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -19,7 +19,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -36,7 +36,7 @@
 #include "Assert.h"
 #define ASSERT_FILE "CAxCryptLib.cpp"
 
-/// \brief The AxCrypt GUID
+/// \brief The Ax Crypt GUID
 /// Define the guid here xor 0xff, i.e. inverted, so we won't trig on it
 /// when scanning for GUID in ourselves, looking for the appended .xxx-
 /// files.

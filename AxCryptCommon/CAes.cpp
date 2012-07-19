@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CAes.cpp						Special purpose wrapper-class for AES-primitives
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
                                     2002-08-11              Rel 1.2
 
 */
@@ -173,7 +173,6 @@ void CAesWrap::Init(int nIter, int nKeySize) {
     ASSPTR(m_pWrap);
 }
 
-
 CAesWrap::~CAesWrap() {
     if (m_pSalt != NULL) {
         ZeroMemory(m_pSalt, m_nKeySize);
@@ -238,7 +237,7 @@ BOOL
 CAesWrap::UnWrap(void *pWrappingKey, void *pWrappedKey, void *pSalt) {
     // Copy the wrapped data to class local storage
     CopyMemory(m_pWrap, pWrappedKey, sizeof m_aoKeyWrapA + m_nKeySize);
-    
+
 	// Generate the Salted KEK by XOR-ing the given key with the salt.
 	auto_ptr<BYTE> pSaltedWrappingKey(new BYTE[m_nKeySize]);	// Self-destructing
     ASSPTR(pSaltedWrappingKey.get());

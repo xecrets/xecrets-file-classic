@@ -5,7 +5,7 @@
 
     @(#) $Id$
 
-    AxCryptLib - C-callable library for AxCrypt
+    AxCryptLib - C-callable library for Ax Crypt
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -21,7 +21,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 
@@ -32,7 +32,6 @@
 #define ASSERT_FILE "AxCryptLibPP.h"
 
 namespace axcl {
-
     // Modify according to compiler version. Include appropriate #ifdef's.
     typedef __int64 longlong;                   ///< Substitute for long long which is not always supported
     typedef unsigned __int64 ulonglong;         ///< Substitute for unsigned long long which is not always supported
@@ -101,7 +100,6 @@ namespace axcl {
     inline std::wstring t2w(const ttstring& ts) { return s2w(ts); }
 #endif
 #pragma warning(default:4995)       /* restore "name was marked as #pragma deprecated */
-
 } // namespace axcl
 
 #endif AXCRYPTLIBPP_H

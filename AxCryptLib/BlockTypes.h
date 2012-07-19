@@ -5,7 +5,7 @@
 
     @(#) $Id$
 
-    axcl - AxCrypt support classes and types
+    axcl - Ax Crypt support classes and types
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -21,7 +21,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 
@@ -41,7 +41,7 @@ namespace axcl {
 
         TLongBlock(int i) {
             // TODO: This is actually a bug - the value should be at the highest index (i.e. Lsb).
-            // retained temporarily for compatibility with AxCrypt version 1.x, since it initializes
+            // retained temporarily for compatibility with Ax Crypt version 1.x, since it initializes
             // subkeys using similar code to this. It's not a security problem - it's just silly.
             m_aTheBits[0] = i;
             for (size_t ix = 1; ix < sizeof m_aTheBits / sizeof *m_aTheBits; ix++) {
@@ -92,7 +92,6 @@ namespace axcl {
         const unsigned char *get(int i = 0) {
             return &static_cast<const unsigned char *>(m_aTheBits)[i];
         }
-
     };
 
     class T128Bit : public TLongBlock<16> {

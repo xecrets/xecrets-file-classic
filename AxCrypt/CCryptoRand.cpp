@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,14 +18,14 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CCryptoRand.cpp					Entropy pool and random number generator (FIPS 186-2).
 									Reference:
 									http://csrc.nist.gov/publications/fips/fips186-2/fips186-2.pdf
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
 
 */
 //
@@ -85,7 +85,7 @@ CCryptoRand::~CCryptoRand() {
 
 //
 //	Generating random data is *hard*... We have an 'entropy pool' which
-//	is gathering data, based on mouse movements and other things. If 
+//	is gathering data, based on mouse movements and other things. If
 //	these fail, we also add in the user-supplied key. The strategy being
 //	that even if it is not random, it *is* secret from the attacker point
 //	of view, by definition. The problem which may be hard to predict the
@@ -98,10 +98,10 @@ CCryptoRand::~CCryptoRand() {
 CCryptoRand&
 CCryptoRand::Seed(void *pvXSeed, int iLen) {
 	SHA1Init(m_putContext);
-		
+
 	// Hash in the user supplied (secret) data.
 	SHA1Update(m_putContext, (BYTE *)pvXSeed, iLen);
-	
+
 	// Hash in tick count from system
 	DWORD dwTickCount = GetTickCount();
 	SHA1Update(m_putContext, (BYTE *)&dwTickCount, sizeof dwTickCount);
@@ -140,7 +140,7 @@ CCryptoRand::RandomFill(void *vpBuf, DWORD dwLen) {
 	THash utXVal;
 	while (dwLen) {
 		SHA1Init(m_putContext);
-	
+
 		utXVal = *m_putXKey + *m_putXSeed;			// XVAL = (XKEY + XSEED) mod 2**160
 
 		SHA1Transform(m_putContext, (BYTE *)&utXVal);

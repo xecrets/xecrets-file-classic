@@ -25,7 +25,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	AxAssert.cpp
 */
@@ -157,5 +157,4 @@ AxLib::OutputDebugStringF(const _TCHAR *szFmt, ...) {
     OutputDebugString(szBuf);
 }
 #endif
-
 } // namespace AxLib

@@ -21,7 +21,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ---
 */
 
@@ -36,7 +36,6 @@ USING_NAMESPACE(std)
 /// RBITS bits.
 template <class EC, class H, unsigned int RBITS>
 class DL_Algorithm_SECDSA : public DL_Algorithm_ECDSA<EC> {
-
 public:
     /// \brief Hash to Integers with the same hash that's used for the algorithm
     /// Create a shortened hash, to the bit, and represent it as an integer. The

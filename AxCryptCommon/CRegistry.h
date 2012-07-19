@@ -3,7 +3,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -20,13 +20,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CRegistry.h 					Registry manipulating class
 
-
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2002-08-17              Rel 1.2.1 Initial
+	software@axantum.com 			2002-08-17              Rel 1.2.1 Initial
 */
 //
 //  Helper class to work with the registry. Throws TAssert on error.
@@ -38,7 +37,7 @@ class CRegistry {
 public:
     CRegistry(HKEY hRootKey = NULL, LPCTSTR szKey = NULL, LPCTSTR szValue = NULL);
     ~CRegistry();
-    
+
     CRegistry& Root(HKEY hRootKey);
     CRegistry& Key(LPCTSTR szKey);
     CRegistry& HKey(HKEY hKey);
@@ -46,13 +45,13 @@ public:
     CRegistry& Value(LPCTSTR szValue);
 
     HKEY GetHKey() { return m_hRegKey; }
-    
+
     DWORD GetDword(DWORD dwDefault = 0);
     void SetDword(DWORD dwValue);
-    
+
     void *GetBinary(int *nLen = NULL);
     void SetBinary(void *vData, int nLen);
-    
+
     LPTSTR GetSz(LPCTSTR szDefault = _T(""));
     void SetSz(LPCTSTR szValue);
     void SetSz(LPCTSTR szValueFormat, LPCTSTR szFillIn);

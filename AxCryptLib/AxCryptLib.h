@@ -1,13 +1,13 @@
 #ifndef AXCRYPTLIB_H
 #define AXCRYPTLIB_H
 /*! \file
-    \brief AxCryptLib.h - An AxCrypt support library
+    \brief AxCryptLib.h - An Ax Crypt support library
 
     @(#) $Id: AxCryptLib.h 1177 2008-01-08 08:27:50Z svante $
 
-    AxCryptLib - An AxCrypt support library
+    AxCryptLib - An Ax Crypt support library
 
-    This interface may be used directly by code implementing AxCrypt-functions.
+    This interface may be used directly by code implementing Ax Crypt-functions.
 
     The library is built around a single parameter buffer, which is a struct AXCL_PARAM
     and various function calls, passing this parameter buffer and other things as parameters.
@@ -136,7 +136,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 
@@ -195,7 +195,7 @@
 
 #endif // !_UNICODE
 
-/// \brief The C-library interface to AxCrypt functions
+/// \brief The C-library interface to Ax Crypt functions
 /// This should be included within extern "C" if used from C++ as a DLL
 
 #ifndef AXCL_CHUNK_SIZE
@@ -225,11 +225,11 @@ enum {
     AXCL_E_NOTFOUND,                        ///< File not found
     AXCL_E_HMAC,                            ///< HMAC mismatch
     AXCL_E_BAD_VERSION,                     ///< Too new version
-    AXCL_E_BAD_GUID,                        ///< Not an AxCrypt file
+    AXCL_E_BAD_GUID,                        ///< Not an Ax Crypt file
     AXCL_E_ACCESS,                          ///< Some form of access error
     AXCL_E_CANCEL,                          ///< Cancel requested/performed
     AXCL_E_IGNORED,                         ///< Requested action/function ignored
-    AXCL_E_AXCRYPT,                         ///< AxCrypt error
+    AXCL_E_AXCRYPT,                         ///< Ax Crypt error
     AXCL_E_MEMORY,                          ///< Memory allocation error or similar
     AXCL_E_NOTYET,                          ///< Not Yet Implemented
     AXCL_E_BADOP,                           ///< Unknown operation requested

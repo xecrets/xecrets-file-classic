@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CFileTemp.cpp					Actions on temporary files and directories
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2002-01-22				Initial
+	software@axantum.com 			2002-01-22				Initial
 */
 #include	"StdAfx.h"
 #include	"CFileTemp.h"
@@ -151,7 +151,7 @@ CTempDir::RmDir(LPCTSTR szDir) {
         CAssert((GetLastError() == ERROR_PATH_NOT_FOUND) || (GetLastError() == ERROR_FILE_NOT_FOUND)).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [SetCurrentDirectory(szDir)]")).Throw();
         return GetLastError();
     }
-	
+
     int iRetry = 2;
     bool fNeedRetry = false;
     do {
@@ -191,7 +191,7 @@ CTempDir::RmDir(LPCTSTR szDir) {
             Sleep(100);
         }
     } while (fNeedRetry && --iRetry);
-	
+
     CAssert(SetCurrentDirectory(szCurDir)).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [SetCurrentDirectory(szCurDir)]")).Throw();
     if (!RemoveDirectory(szDir)) {
         dwReturn = GetLastError();

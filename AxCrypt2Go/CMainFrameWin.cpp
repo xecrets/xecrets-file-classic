@@ -9,7 +9,7 @@
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free AxCrypt for the road.
+    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -25,7 +25,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -240,7 +240,7 @@ HRESULT CMainFrame::FillTreeView(IShellFolder* pShellFolder, LPITEMIDLIST lpifq,
 
         // Add the item to the tree and combo
         hPrev = TreeView_InsertItem(m_wndTreeView.m_hWnd, &tvins);
-        cbei.iItem = iCnt++;    
+        cbei.iItem = iCnt++;
         cbei.iImage = tvi.iImage;
         cbei.iSelectedImage = tvi.iSelectedImage;
 
@@ -279,7 +279,7 @@ HWND CMainFrame::CreateAddressBarCtrl(HWND hWndParent)
 LRESULT CMainFrame::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 {
     ASSAPI(SetWindowText(CConfig::ShortProductName().c_str()));
-    
+
     // create command bar window
     RECT rcCmdBar = { 0, 0, 100, 100 };
     HWND hWndCmdBar = m_wndCmdBar.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
@@ -306,20 +306,20 @@ LRESULT CMainFrame::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
     m_hWndClient = m_wndSplitter.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
     m_wndFolderTree.Create(m_wndSplitter, _("FolderTree|Folders"), WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
-    
-    m_wndTreeView.Create(m_wndFolderTree, rcDefault, NULL, 
-        WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | 
-        TVS_HASLINES | TVS_LINESATROOT | TVS_HASBUTTONS | TVS_SHOWSELALWAYS, 
+
+    m_wndTreeView.Create(m_wndFolderTree, rcDefault, NULL,
+        WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN |
+        TVS_HASLINES | TVS_LINESATROOT | TVS_HASBUTTONS | TVS_SHOWSELALWAYS,
         WS_EX_CLIENTEDGE);
 
     m_wndFolderTree.SetClient(m_wndTreeView);
 
-    m_wndListView.Create(m_wndSplitter, rcDefault, NULL, 
-        WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | 
+    m_wndListView.Create(m_wndSplitter, rcDefault, NULL,
+        WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN |
         LVS_REPORT | LVS_AUTOARRANGE | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS,
         WS_EX_CLIENTEDGE);
     m_wndListView.SetExtendedListViewStyle(LVS_EX_TRACKSELECT | LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT);
-    
+
     InitViews();
 
     UpdateLayout();
@@ -358,7 +358,6 @@ void CMainFrame::OnDestroy() {
     SetMsgHandled(false);
 }
 
-
 LRESULT CMainFrame::OnViewChange(WORD, WORD wID, HWND, BOOL&)
 {
     UISetCheck(ID_VIEW_ICONS, FALSE);
@@ -392,7 +391,7 @@ LRESULT CMainFrame::OnComboGo(WORD, WORD, HWND, BOOL&)
 {
 //  TCHAR szBuff[MAX_PATH] = { 0 };
 //  m_wndCombo.GetWindowText(szBuff, MAX_PATH);
-//      
+//
 //  m_wndTreeView.SelectItem(NULL);
     //m_wndCombo.SetEditSel(0, -1);
     //FillListView(m_wndListView, szBuff);
@@ -410,7 +409,7 @@ void CMainFrame::ListViewRefresh() {
         CComPtr<IShellFolder> spFolder;
         HRESULT hr = lptvid->spParentFolder->BindToObject(lptvid->lpi, 0, IID_IShellFolder, (LPVOID *)&spFolder);
         ASSCOM(hr);
-        
+
         if (m_wndListView.GetItemCount() > 0) {
             m_wndListView.DeleteAllItems();
         }
@@ -494,14 +493,14 @@ LRESULT CMainFrame::OnTVSelChanged(int, LPNMHDR pnmh, BOOL&)
         //    m_wndListView.DeleteAllItems();
         //FillListView(lptvid, spFolder);
         ListViewRefresh();
-        
+
         TCHAR psz[MAX_PATH] = { 0 };
         m_ShellMgr.GetName(lptvid->spParentFolder, lptvid->lpi, SHGDN_FORPARSING, psz, sizeof psz);
-        
+
         if (StrChr(psz, _T('{'))) {   //special case
             m_ShellMgr.GetName(lptvid->spParentFolder, lptvid->lpi, SHGDN_NORMAL, psz, sizeof psz);
         }
-    
+
         int nImage = 0;
         int nSelectedImage = 0;
         m_wndTreeView.GetItemImage(lpTV->itemNew.hItem, nImage, nSelectedImage);
@@ -518,9 +517,8 @@ LRESULT CMainFrame::OnTVSelChanged(int, LPNMHDR pnmh, BOOL&)
             cbei.iSelectedImage = nSelectedImage;
         }
         cbei.iIndent = 1;
-        
+
         m_wndCombo.SetItem(&cbei);
-        
     }
 
     return 0L;
@@ -535,27 +533,26 @@ LRESULT CMainFrame::OnTVItemExpanding(int, LPNMHDR pnmh, BOOL&)
     }
 
     LPTVITEMDATA lptvid = (LPTVITEMDATA)pnmtv->itemNew.lParam;
-    
+
     CComPtr<IShellFolder> spFolder;
     HRESULT hr=lptvid->spParentFolder->BindToObject(lptvid->lpi, 0, IID_IShellFolder, (LPVOID *)&spFolder);
     if (FAILED(hr)) {
         return hr;
     }
-    
+
     // Don't redraw the window during the update
     m_wndTreeView.SetRedraw(FALSE);
     FillTreeView(spFolder, lptvid->lpifq, pnmtv->itemNew.hItem);
     m_wndTreeView.SetRedraw(TRUE);
-    
+
     TVSORTCB tvscb;
     tvscb.hParent = pnmtv->itemNew.hItem;
     tvscb.lpfnCompare = CMainFrame::TreeViewCompareProc;
     tvscb.lParam = 0;
 
     TreeView_SortChildrenCB(m_wndTreeView.m_hWnd, &tvscb, 0);
-    
-    return 0L;
 
+    return 0L;
 }
 
 LRESULT CMainFrame::OnTVDeleteItem(int, LPNMHDR pnmh, BOOL&)
@@ -589,7 +586,7 @@ LRESULT CMainFrame::OnLVGetDispInfo(int, LPNMHDR pnmh, BOOL&)
     if (lptvid == NULL) {
         return 0L;
     }
-    
+
     if (plvdi->item.mask & LVIF_IMAGE) {
         plvdi->item.iImage = m_MyImageListSmall.GetIconIndex(CShellItemIDList(m_ShellMgr.ConcatPidls(lptvid->lpifq, lplvid->lpi)), SHGFI_ICON | SHGFI_PIDL | SHGFI_SYSICONINDEX | SHGFI_SMALLICON);
         //plvdi->item.iImage = m_ShellMgr.GetIconIndex(CShellItemIDList(m_ShellMgr.ConcatPidls(lptvid->lpifq, lplvid->lpi)), SHGFI_PIDL | SHGFI_SYSICONINDEX | SHGFI_SMALLICON);
@@ -616,7 +613,7 @@ LRESULT CMainFrame::OnLVGetDispInfo(int, LPNMHDR pnmh, BOOL&)
         SHELLDETAILS sd = { 0 };
         sd.fmt = LVCFMT_CENTER;
         sd.cxChar = 15;
-        
+
         // The interface uses hardcoded indices for the size, type and date modified info - which just happen
         // to correspond to our listview subitem indices. So here we simply get the text associated with
         // the appropriate column.
@@ -636,7 +633,7 @@ LRESULT CMainFrame::OnLVGetDispInfo(int, LPNMHDR pnmh, BOOL&)
             plvdi->item.pszText = A2T(sd.str.cStr);
         }
     }
-    
+
     plvdi->item.mask |= LVIF_DI_SETITEM;
 
     return 0L;
@@ -663,7 +660,7 @@ LRESULT CMainFrame::OnNMRClick(int, LPNMHDR pnmh, BOOL&)
     POINT ptClient = pt;
     if(pnmh->hwndFrom != NULL)
         ::ScreenToClient(pnmh->hwndFrom, &ptClient);
-    
+
     if(pnmh->hwndFrom == m_wndTreeView.m_hWnd)
     {
         TVHITTESTINFO tvhti = { 0 };
@@ -734,7 +731,7 @@ LRESULT CMainFrame::OnLVItemClick(int, LPNMHDR pnmh, BOOL&)
         if (lplvid == NULL) {
             return 0L;
         }
-        // Since you are interested in the display attributes as well as other attributes, 
+        // Since you are interested in the display attributes as well as other attributes,
         // you need to set ulAttrs to SFGAO_DISPLAYATTRMASK before calling GetAttributesOf()
         ULONG ulAttribs = SFGAO_DISPLAYATTRMASK;
         HRESULT hr = lplvid->spParentFolder->GetAttributesOf(1, (const struct _ITEMIDLIST **)&lplvid->lpi, &ulAttribs);
@@ -789,7 +786,7 @@ LRESULT CMainFrame::OnLVItemClick(int, LPNMHDR pnmh, BOOL&)
             //    ::GetParent(m_wndListView.m_hWnd),   // hwnd of parent
             //    _T("open"),                          // lpVerb
             //    NULL,                                // lpFile
-            //    NULL,  
+            //    NULL,
             //    NULL,                                // lpDirectory
             //    SW_SHOWNORMAL,                       // nShow
             //    0,                                   // hInstApp

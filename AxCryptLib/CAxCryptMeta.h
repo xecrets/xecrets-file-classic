@@ -1,11 +1,11 @@
 #ifndef CAXCRYPTMETA_H
 #define CAXCRYPTMETA_H
 /*! \file
-    \brief CAxCryptMeta.h - Handle AxCrypt meta information in headers
+    \brief CAxCryptMeta.h - Handle Ax Crypt meta information in headers
 
     @(#) $Id$
 
-    CAxCryptMeta.h - Handle AxCrypt meta information in headers
+    CAxCryptMeta.h - Handle Ax Crypt meta information in headers
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -21,7 +21,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 
@@ -45,7 +45,7 @@ extern "C" {
 #pragma pack(1)
 
 namespace axcl {
-    /// \brief AxCrypt Header Type Codes.
+    /// \brief Ax Crypt Header Type Codes.
     ///
     /// The different header types. Preamble must be first, Data last.
     /// Sections with eEncryptedFlag set will be encrypted with variations
@@ -75,7 +75,7 @@ namespace axcl {
         eUnicodeFileNameInfo,               ///< Original file name in Unicode. 1.6.3.3
     } TBlockType;
 
-    /// \brief Exactly one meta section from an AxCrypt-formated file stream.
+    /// \brief Exactly one meta section from an Ax Crypt-formated file stream.
     class CMetaSection {
         TBlockType m_eType;                     ///< The type of the section, defined by TBlockType
         size_t m_cbLen;                         ///< The total length of m_pData (excluding type byte)
@@ -96,7 +96,7 @@ namespace axcl {
                 m_pData = NULL;
             }
         }
-    
+
     public:
         /// \brief Take ownership of the buffer when constructed like this.
         ///
@@ -117,7 +117,7 @@ namespace axcl {
             m_pData = NULL;
             CopyAssign(rhs.m_eType, rhs.m_pData, rhs.m_cbLen);
         }
-        
+
         /// \brief delete the data buffer
         ~CMetaSection() {
             delete[] m_pData;
@@ -150,7 +150,7 @@ namespace axcl {
         }
     };
 
-    /// \brief Manage the meta information of an AxCrypt stream.
+    /// \brief Manage the meta information of an Ax Crypt stream.
     ///
     /// The base class is a std::list of CMetaSection. This is where
     /// we define the various instances of CMetaSection in detail,
@@ -288,7 +288,7 @@ namespace axcl {
                 if (m_fKeyIsValid) {
                     // Initialize an AES structure with the Data Encrypting Key and the proper direction.
                     axcl::CAxCryptAES aesContext(axcl::CAxCryptAESSubKey().Set(GetMasterDEK(), axcl::CAxCryptAESSubKey::eHeaders).Get(), axcl::CAxCryptAES::eCBC, axcl::CAxCryptAES::eDecrypt);
-                    
+
                     // Encrypt/Decrypt the block with default IV of zero.
                     aesContext.Xblock(reinterpret_cast<const axcl::TBlock *>(p), reinterpret_cast<axcl::TBlock *>(p), static_cast<axcl::uint32>(i->Len()) / sizeof axcl::TBlock);
                 } else {
@@ -519,7 +519,7 @@ namespace axcl {
             }
             return 0;
         }
-                
+
         /// \brief Remember the offset where to start HMAC'ing
         ///
         /// This is after the initial preamble, including the HMAC itself.
@@ -672,11 +672,10 @@ namespace axcl {
         int GetSaveRatioForCompress() {
             return m_pParam->iZipMinSaveRatio;
         }
-        
+
         size_t GetChunkSize() {
             return m_pParam->cbChunkSize;
         }
-
     };
 } // namespace axcl
 

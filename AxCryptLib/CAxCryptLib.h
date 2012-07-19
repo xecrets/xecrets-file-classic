@@ -21,7 +21,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 extern "C" {
@@ -68,7 +68,7 @@ namespace axcl {
                 Close();
             }
         }
-    
+
     public:
         static const void *StaticCallback(const AXCL_PARAM *pParam, int iCallbackAction, const void *p, size_t cb, int *piResult) {
             return static_cast<CAxCryptLib *>(pParam->pCallbackContext)->InstanceCallback(pParam, iCallbackAction, p, cb, piResult);
@@ -109,7 +109,7 @@ namespace axcl {
         /// \brief Determine the full path to the plain-text
         /// \return The resulting path, or an empty string
         virtual const axcl::tstring GetPlainPath() = 0;
-        
+
     private:
         /// \brief Convert a TCHAR string into an Ansi version. Possibly this is a null-op.
         /// \param sTchar The TCHAR string to convert. If TCHAR == char, no actual conversion takes place.
@@ -121,7 +121,7 @@ namespace axcl {
         /// \param sAnsi The Ansi string to convert. If TCHAR == char, no actual conversion takes place.
         /// \return A TCHAR string equivalent to the input Ansi string
         virtual const axcl::tstring Ansi2Tchar(std::string sAnsi) = 0;
-        
+
     private:
         /// \brief Convert a TCHAR string into an Unicode version. Possibly this is a null-op.
         /// \param sTchar The TCHAR string to convert. If TCHAR == wchar_t, no actual conversion takes place.
@@ -133,7 +133,7 @@ namespace axcl {
         /// \param sUnicode The Unicode string to convert. If TCHAR == wchar_t, no actual conversion takes place.
         /// \return A TCHAR string equivalent to the input Unicode string
         virtual const axcl::tstring Unicode2Tchar(std::wstring sUnicode) = 0;
-        
+
     private:
         const void *InstanceCallback(const AXCL_PARAM *pParam, int iCallbackAction, const void *p, size_t /*cb*/, int *piResult) {
             int iResult = AXCL_E_INTERNAL;
@@ -266,6 +266,5 @@ public:
             return axcl_CacheClose(pCache);
         }
     };
-
 }
 #endif CAXCRYPTLIB_H

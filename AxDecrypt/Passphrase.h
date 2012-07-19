@@ -5,7 +5,7 @@
 
     @(#) $Id$
 
-    AxCrypt/AxDecrypt et. al - Common definitions for passphrase handling
+    Ax Crypt/AxDecrypt et. al - Common definitions for passphrase handling
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -21,7 +21,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ---
 */
 extern const char szPassphraseChars[];
@@ -35,7 +35,7 @@ extern const char szPassphraseChars[];
 /// chars in memory under this programs control, via 'new'. If 'new' is
 /// overridden to provide secure memory, then the passphrase is never
 /// stored in 'open' memory, as it will be if we use a regular edit control.
-/// We also handle mapping from Unicode to Ansi, as passphrases in AxCrypt
+/// We also handle mapping from Unicode to Ansi, as passphrases in Ax Crypt
 /// always are in Ansi.
 class CSafeEdit {
     char *m_szPassphrase;                   ///< The passphrase to return

@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CFileName.cpp					File name related utility operations.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
                                     2002-08-11              Rel 1.2
 
 */
@@ -50,7 +50,6 @@ CFileName::CFileName(LPCTSTR szFileName) {
 	Split(szFileName);
 }
 
-
 CFileName&
 CFileName::SetPath2ExeName(HINSTANCE hInstance) {
 	CAssert(GetModuleFileName(hInstance, m_szWorkName, sizeof m_szWorkName / sizeof TCHAR) != 0).Sys().Throw();
@@ -61,7 +60,7 @@ CFileName::SetPath2ExeName(HINSTANCE hInstance) {
 CFileName&
 CFileName::SetPath2TempDir() {
 	// Be Terminal Services / Fast User Switching aware here
-    typedef BOOL (WINAPI *pfProcessIdToSessionIdT)(DWORD dwProcessId, DWORD* pSessionId); 
+    typedef BOOL (WINAPI *pfProcessIdToSessionIdT)(DWORD dwProcessId, DWORD* pSessionId);
 	pfProcessIdToSessionIdT pfProcessIdToSessionId = (pfProcessIdToSessionIdT)GetProcAddress(GetModuleHandle(_T("kernel32.dll")), "ProcessIdToSessionId");
 	TCHAR *szSubDir = gszAxCryptInternalName, sz[1024];
 	DWORD  dw = 0;
@@ -187,7 +186,7 @@ CFileName::SetCurDir(LPCTSTR szCurDir) {
 //
 //	Override the components that exist in the given path
 //
-CFileName& 
+CFileName&
 CFileName::Override(LPCTSTR szPath) {
 	CFileName Path;
 	Path.Set(szPath);

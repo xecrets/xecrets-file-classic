@@ -20,7 +20,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 //    version
@@ -79,7 +79,6 @@ extern "C" int libintl_vswprintf (wchar_t *resultbuf, size_t length, const wchar
 extern "C" int libintl_vsnprintf (char *resultbuf, size_t length, const char *format, va_list args);
 
 namespace AxLib {
-
     CGettext::stringset CGettext::m_setTranslations;
     CGettext::uintstringmap CGettext::m_mapStringResources;
 
@@ -233,7 +232,7 @@ namespace AxLib {
     }
 
     /// \brief Get stuff which should not be translated - but may need be different in different versions - from resources
-    /// 
+    ///
     /// The function is included in this gettext-wrapper for easier full-feature useage in a Windows-environment. The wrapper
     /// is anyway fully Windows-dependent. In a Unix-situation, a different wrapper is needed. It should be noted that
     /// the idea is to use string resources (in lieu of the alternative - to use non-translated strings) for things which
@@ -272,5 +271,4 @@ namespace AxLib {
         va_end(args);
         return retval;
     }
-
 } // namespace AxLib

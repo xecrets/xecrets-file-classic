@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CKeyList.cpp					Key encrypting key handler and cache.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
                                     2002-08-11              Rel 1.2
 
 */
@@ -124,7 +124,7 @@ CKeyList::AddKey(TKey* putKeyBits, BOOL fEncKey, DWORD dwBatch) {
 
     CCriticalSection utCritSect(&m_CritSect, TRUE);
 	putNewKey->m_pNext = m_pKeyRoot;
-	
+
 	return m_pKeyRoot = putNewKey;
 	HEAP_CHECK_END
 }
@@ -143,7 +143,7 @@ CKeyList::AddEncKey(TKey* pKeyBits, DWORD dwBatch) {
 
 	// First, ensure that the previous key, if any, is removed.
     CCriticalSection utCritSect(&m_CritSect, TRUE);
-    
+
     while (pEncKey != NULL) {
         if ((pEncKey->Batch() == dwBatch) && pEncKey->m_fEncKey) {
             *pputPrevNext = pEncKey->m_pNext;

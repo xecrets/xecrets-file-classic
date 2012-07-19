@@ -9,7 +9,7 @@
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free AxCrypt for the road.
+    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -25,7 +25,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -35,7 +35,6 @@
     2005-08-06              Initial
 \endverbatim
 */
-
 
 #include "stdafx.h"
 
@@ -165,7 +164,7 @@ public:
         while (m_dwCount > 0) {
             dwRet = ::MsgWaitForMultipleObjects(m_dwCount, m_arrThreadHandles, FALSE, INFINITE, QS_ALLINPUT);
             ASSAPI(dwRet != WAIT_FAILED);
-            
+
             if (dwRet >= WAIT_OBJECT_0 && dwRet <= (WAIT_OBJECT_0 + m_dwCount - 1)) {
                 RemoveThread(dwRet - WAIT_OBJECT_0);
             } else if (dwRet == (WAIT_OBJECT_0 + m_dwCount)) {

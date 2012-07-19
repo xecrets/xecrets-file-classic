@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	FileCmd.cpp						Implementation of file operation commands from main code.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001-12-02				Initial for 0.0b4
+	software@axantum.com 			2001-12-02				Initial for 0.0b4
                                     2002-02-12              Use IsValid() for CHandle vars.
                                     2002-07-25              Rev 1.2
                                     2002-08-22              Rel 1.2.2
@@ -682,17 +682,17 @@ protected:
     }
 };
 
-/// \brief Test if a file is a AxCrypt SFX-file
-/// Do some heuristic tests to determine if it's an AxCrypt SFX-file. These are
+/// \brief Test if a file is a Ax Crypt SFX-file
+/// Do some heuristic tests to determine if it's an Ax Crypt SFX-file. These are
 /// not perfect currently, but should serve. Currently, the critera that has to
 /// met are:
 /// 1 - The file name ends with .exe
 /// 2 - Is a Windows Executable
-/// 3 - The AxCrypt GUID appears within the first 256K
+/// 3 - The Ax Crypt GUID appears within the first 256K
 /// Additional tests should actually validate the structure of the headers and
 /// data as well, but for currently we don't.
 /// \param szFileName The full path or relative to current directory of the file
-/// \return true if it appears to be an AxCrypt SFX-file
+/// \return true if it appears to be an Ax Crypt SFX-file
 static bool
 IsAlreadySfx(const _TCHAR *szFileName) {
     // We probably don't need a sfi, for this call, but the docs are unclear.
@@ -1401,7 +1401,7 @@ CheckIfNotObviouslyDangerous(const wchar_t *szFileName) {
 //	that can be waited for. An app may, or may not, keep the file opened with no sharing
 //	as long as the app is open. We try to handle all these cases, sometimes resulting in
 //	slightly non-intuitive results for the user unfortunately. Basically the rule will be:
-//	close the whole app, then AxCrypt will definitely become aware of the fact. In an MDI-type
+//	close the whole app, then Ax Crypt will definitely become aware of the fact. In an MDI-type
 //	of app it may not be enough to just close the actual document.
 //
 //	We have two things to look for: A process to wait for and/or Release of the file. The
@@ -1452,16 +1452,16 @@ CheckIfNotObviouslyDangerous(const wchar_t *szFileName) {
 //
 // The current strategy is thus a very complex interaction of various heuristic ways to make this work.
 //
-// 1 - AxCrypt checks for the file getting locked, and assumes that if it stays locked for an appreciable amount of time
+// 1 - Ax Crypt checks for the file getting locked, and assumes that if it stays locked for an appreciable amount of time
 // after the application has reached Input Idle state, we can trust that when it's released for an appreciable amount of
 // time, the application is done with it.
 //
-// 2 - AxCrypt checks for new processes, and child processes of new processes.
+// 2 - Ax Crypt checks for new processes, and child processes of new processes.
 //
-// 3 - AxCrypt checks for new threads of processes that have the same executable as that which is associated with the
+// 3 - Ax Crypt checks for new threads of processes that have the same executable as that which is associated with the
 // files extension.
 //
-// 4 - AxCrypt checks for new windows.
+// 4 - Ax Crypt checks for new windows.
 //
 /// \param szApp2Use The application to use instead of the associated one.
 void
@@ -1617,8 +1617,8 @@ LaunchApp(LPCTSTR szFileName, const TCHAR *szDir, HWND hForegroundWnd, LPCTSTR s
     // Since there are problems with false-positive-exits, we check for all conditions
     // to apply before exiting. A specific situation where this is a problem is if in
     // word for example, you do a 'save-as' to a different file. The original file
-    // is then released, and AxCrypt will attempt to move the new file if it was
-    // accidently saved in the AxCrypt directory to the original source directory. In
+    // is then released, and Ax Crypt will attempt to move the new file if it was
+    // accidently saved in the Ax Crypt directory to the original source directory. In
     // this case it can't do that, as it's now open by word again.
     //
     // Finally, if we don't know the child process, we wait for known started threads (if any)
@@ -2630,7 +2630,7 @@ CmdShowIdTag(CCmdParam *pCmdParam) {
 //  a dialog box, if any is ever found...
 //
 //  Now this might require a bit of consideration... Do I reduce the effectiveness
-//  of AxCrypt by including code in the product to actually try to force it? Sounds
+//  of Ax Crypt by including code in the product to actually try to force it? Sounds
 //  a bit counter-intuitive... But no, that's not the case. Because:
 //
 //  1 - We can only brute force, and only very small key spaces.
@@ -2645,7 +2645,7 @@ CmdShowIdTag(CCmdParam *pCmdParam) {
 //      get faster, but just use a reasonable passphrase and you are safe.
 //  4 - Now that you know that it exists - you have incentive to use strong passphrases,
 //      instead of hoping that no-one had gone to the effort of doing this themselves.
-//  5 - The whole point of AxCrypt is to be safe - if an unknown attacker can find your
+//  5 - The whole point of Ax Crypt is to be safe - if an unknown attacker can find your
 //      passphrase with this brute force plug-in - You Are At Fault! This is because you
 //      have choosen a ridiculously simple passphrase. Read the documentation on what is
 //      a good passphrase. Do not trust security by obscurity. The only thing that should

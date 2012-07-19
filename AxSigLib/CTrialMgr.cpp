@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-    AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
     Server or Web Storage of Document Files.
 
     Copyright (C) 2004 Svante Seleborg/Axantum Software AB, All rights reserved.
@@ -18,7 +18,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
     CTrialMgr.cpp                     Handle trial counters etc.
 */
@@ -35,7 +35,6 @@
 /// \brief Initialize access to the trial counter storage.
 CTrialMgr::CTrialMgr(const ttstring &sProgram) {
     m_sProgram = sProgram;
-
 }
 
 CTrialMgr::~CTrialMgr() {
@@ -64,7 +63,7 @@ static ttstring GetCounterPath(const ttstring &program_name, const ttstring &cou
         delete[] tempPath;
         return ttstring();
     }
-    
+
     ttstring counter_path(tempPath);
     if (counter_path[counter_path.length()-1] != L'\\') {
         counter_path.append(L"\\");
@@ -81,7 +80,7 @@ static HANDLE OpenFile(ttstring counter_file) {
     return h;
 }
 
-static HANDLE OpenAndGetTimes(const ttstring &program_name, const ttstring &counter_name, PULARGE_INTEGER create_time, PULARGE_INTEGER modify_time) 
+static HANDLE OpenAndGetTimes(const ttstring &program_name, const ttstring &counter_name, PULARGE_INTEGER create_time, PULARGE_INTEGER modify_time)
 {
     ttstring counter_path = GetCounterPath(program_name, counter_name);
     HANDLE h = OpenFile(counter_path);
@@ -123,7 +122,6 @@ int CalculateCounter(int iMax, ULARGE_INTEGER create_time, ULARGE_INTEGER modify
     return (int)count;
 }
 
-
 /// \brief Get the trial counter as it is now
 int CTrialMgr::Get(const ttstring &sCounterName, int iMax) {
     ULARGE_INTEGER create_time, modify_time;
@@ -141,7 +139,7 @@ int CTrialMgr::Get(const ttstring &sCounterName, int iMax) {
 }
 
 /// \brief Increment a trial counter by one, and return the result.
-/// The result returned is maximized by the iMax parameter + 1. If 
+/// The result returned is maximized by the iMax parameter + 1. If
 /// iMax is < 0, there is no limit.
 /// \param iMax The maximum value of the counter.
 /// \return The new value, or what it would have been if allowed.

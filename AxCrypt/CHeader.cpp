@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,13 +18,13 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CHeader.cpp						Define format and operations on the headers in the wrapped
 									output file.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
                                     2002-08-11              Rel 1.2
                                     2003-06-23              1.4d1.5 - Remove std file I/O
 
@@ -165,7 +165,7 @@ CHeaderHeader::PeekType(CFileIO& rFile) {
 void
 CHeaderHeader::Get(CFileIO& rFile) {
     size_t cb;
-    
+
     cb = sizeof m_utHeader;
     rFile.ReadData(&m_utHeader, &cb);
     CAssert(cb == sizeof m_utHeader).App(MSG_INTERNAL_ERROR, _T("CHeaderHeader::Get [Short read(1)]")).Throw();
@@ -185,7 +185,7 @@ CHeaderHeader::Put(CFileIO& rFile) {
 	SetDW(m_utHeader.aoLength, sizeof m_utHeader + m_iHeaderSize);
 
     size_t cb;
-    
+
     cb = sizeof m_utHeader;
     rFile.WriteData(&m_utHeader, &cb);
     CAssert(cb == sizeof m_utHeader).App(MSG_INTERNAL_ERROR, _T("CHeaderHeader::Get [Short write(1)]")).Throw();
@@ -251,7 +251,7 @@ CHeaderHeader::AllocateHeader(size_t iLen, size_t iAlign) {
 	m_iHeaderSize = (DWORD)((iLen + iAlign - 1) - (iLen + iAlign - 1) % iAlign);
 	m_pvHeaderData = new BYTE[m_iHeaderSize];
     ASSPTR(m_pvHeaderData);
-    
+
     // Ensure that any left-over space contains random junk.
     pgPRNG->RandomFill(m_pvHeaderData, m_iHeaderSize);
 	return;
@@ -393,7 +393,7 @@ THmac *
 CHeaders::GetHMAC() {
 	CHeaderPreamble *pPreamble = (CHeaderPreamble *)Find(ePreamble);
 	CAssert(pPreamble != NULL).App(MSG_MISSING_SECTION, _T("Preamble")).Throw();
-	
+
 	return &((CHeaderPreamble::SPreamble *)pPreamble->m_pvHeaderData)->utHMAC;
 }
 //
@@ -405,7 +405,7 @@ CHeaders::SetHMAC(THmac *pHMAC) {
     if (pPreamble == NULL) {
         pPreamble = new CHeaderPreamble;
         ASSPTR(pPreamble);
-     
+
         Add(pPreamble);
     }
 
@@ -453,7 +453,7 @@ CHeaders::SetFileVersion() {
     }
 }
 //
-//	Get IV, throw error if missing. The IV is loaded from the 
+//	Get IV, throw error if missing. The IV is loaded from the
 //	encryption info block. As it is connected with a key, the
 //	key must be valid.
 //
@@ -488,7 +488,7 @@ CHeaders::GetDataEncKey() {
 void
 CHeaders::SetDataEncKey(TKey *pKeyEncKey) {
 	CAssert(Find(eKeyWrap1) == NULL).App(MSG_INTERNAL_ERROR, _T("CHeaders::SetDataEncKey")).Throw();
-	
+
 	// Do this before the seeding.
 	SetIV();
 
@@ -520,7 +520,7 @@ CHeaders::SetPlainSize(QWORD qwPlain) {
 
         Add(pEncryptionInfo);
     }
-	
+
 	pEncryptionInfo->SetQW(((CHeaderEncryptionInfo::SEncryptionInfo *)pEncryptionInfo->m_pvHeaderData)->aoPlainSize, qwPlain);
 }
 //
@@ -660,7 +660,7 @@ CHeaders::SetIdTag(const wchar_t* szIdTag) {
         Add(pIdTag);
     }
 
-    // AxCrypt was originally not a Unicode app, so header data is stored in
+    // Ax Crypt was originally not a Unicode app, so header data is stored in
     // Ansi Code Page. Since we're now Unicode, we'll convert the incoming Unicode
     // text to ACP. It's simply not worth it to store it in both Unicode and Ansi
     // for backwards compatiblity. It's simply easier to say that comments are only
@@ -781,7 +781,7 @@ CHeaders::OffsetToHMAC() {
 CHeaders&
 CHeaders::Load(CFileIO& rFile) {
 	VerifyStructure(rFile);
-	
+
 	// The file must begin with the preamble header, begin with rewind,
     // skipping the GUID.
     rFile.SetFilePointer(sizeof guidAxCryptFileId);
@@ -798,7 +798,7 @@ CHeaders::Load(CFileIO& rFile) {
 		case ePreamble:
 			// Ensure that preamble starts the headers.
 			CAssert(m_pFirst == NULL).App(MSG_PREAMBLE_NOT_FIRST).Throw();
-			
+
 			// Allocate the first header.
 			(void)Add(new CHeaderPreamble)->Get(rFile); // Add checks the pointer
 
@@ -809,7 +809,7 @@ CHeaders::Load(CFileIO& rFile) {
 			CAssert(Find(eVersion) == NULL).App(MSG_VERSION_TWICE).Throw();
 
 			(void)Add(new CHeaderVersion)->Get(rFile); // Add checks the pointer
-			
+
 			// Check that the file version is down-compatible to our level.
 			CAssert(GetFileVersionMajor() <= CVersion().FileMajor()).App(MSG_FILE_VERSION).Throw();
 			break;
@@ -896,7 +896,7 @@ CHeaders::Open(TKey *pKeyEncKey) {
 	// Internal sequence error if we attempt to open already open headers.
 	CAssert(!m_fOpen).App(MSG_INTERNAL_ERROR, _T("CHeaders::Open [fOpen]")).Throw();
 	CAssert(!m_fKeyIsValid).App(MSG_INTERNAL_ERROR, _T("CHeaders::Open [fKeyIsValid]")).Throw();
-	
+
 	// For all Key Enc Key-headers, try to see if we have a match.
 	for (CHeaderHeader *pHeader = Find(eKeyWrap1); (pHeader != NULL) && (pHeader->GetType() == eKeyWrap1); pHeader = pHeader->m_pNext) {
 		// Try to unwrap it.
@@ -923,7 +923,7 @@ CHeaders::ReOpen() {
 	// Internal sequence error if we attempt to open already open headers.
 	CAssert(!m_fOpen).App(MSG_INTERNAL_ERROR, _T("CHeaders::ReOpen [m_fOpen]")).Throw();
 	CAssert(m_fKeyIsValid).App(MSG_INTERNAL_ERROR, _T("CHeaders::ReOpen [m_fKeyIsValid]")).Throw();
-	
+
 	DecryptHeaders();
 	return m_fOpen;
 }
@@ -931,7 +931,7 @@ void
 CHeaders::WrapKeyData(TKey *pKeyEncKey) {
 	CAssert(m_fOpen).App(MSG_INTERNAL_ERROR, _T("CHeaders::Wrap [m_fOpen]")).Throw();
 	CAssert(m_fKeyIsValid).App(MSG_INTERNAL_ERROR, _T("CHeaders::Wrap [m_fKeyIsValid]")).Throw();
-	
+
 	// Now get hold of the key wrap header
 	CHeaderKeyWrap1 *pKeyWrap = (CHeaderKeyWrap1 *)Find(eKeyWrap1);
 	CAssert(pKeyWrap != NULL).App(MSG_MISSING_SECTION, _T("CHeaders::WrapKeyData")).Throw();
@@ -976,13 +976,13 @@ CHeaders::Save(CFileIO& rFile, HWND hProgressWnd, LONGLONG llOffset) {
     CAssert(cb == sizeof guidAxCryptFileId).App(MSG_INTERNAL_ERROR, _T("CHeaders::Save [Short write]")).Throw();
 
 	m_pFirst->PutAll(rFile);
-    
+
 	// Get the subkey and initialize the HMAC-object
 	CHmac utFileHMAC(GetDataEncKey(), hProgressWnd);
-	
+
 	// Skip the parts of the file that should not be included in the HMAC
     rFile.SetFilePointer(llOffset + OffsetToHMAC());
-	
+
 	// Do the job
 	utFileHMAC.XformData(rFile, CFileDummy());
 
@@ -1050,7 +1050,7 @@ CHeaders::EncDecHelper(CAes::etDirection eDirection) {
 		if (pHeader->m_utHeader.oType & eEncryptedFlag) {
 			// Initialize an AES structure with the Data Encrypting Key and the proper direction.
 			CAes utAesContext(CSubKey().Set(m_pDataEncKey, CSubKey::eHeaders).Get(), CAes::eCBC, eDirection);
-			
+
 			// Encrypt/Decrypt the block with default IV of zero.
 			utAesContext.Xblock((TBlock *)pHeader->m_pvHeaderData, (TBlock *)pHeader->m_pvHeaderData, pHeader->m_iHeaderSize / sizeof TBlock);
 		}
@@ -1063,7 +1063,7 @@ CHeaders::EncDecHelper(CAes::etDirection eDirection) {
 BOOL
 CHeaders::UnAESWrapKey(TKey *pKeyEncKey, CHeaderKeyWrap1 *pKeyWrap) {
     CHeaderKeyWrap1::SKeyWrap *pSKeyWrap = (CHeaderKeyWrap1::SKeyWrap *)pKeyWrap->m_pvHeaderData;
-	
+
     CAesWrap utAesWrap(CHeaderHeader::GetDW(pSKeyWrap->oIter), sizeof TKey);
 
     //
@@ -1089,7 +1089,7 @@ CHeaders::UnAESWrapKey(TKey *pKeyEncKey, CHeaderKeyWrap1 *pKeyWrap) {
 
         ZeroMemory(pBadSalt, sizeof *pBadSalt);
         CopyMemory(pBadSalt, pSKeyWrap->oSalt, 4);
-        
+
         if (m_fKeyIsValid = utAesWrap.UnWrap(pBadKey, pSKeyWrap->utKeyData, pBadSalt)) {
             CMessage().AppMsg(WRN_REENCRYPT, NULL, m_EncryptedFileName.Get()).ShowWarning();
         }
@@ -1144,7 +1144,7 @@ CHeaders::VerifyStructure(CFileIO& rFile) {
 	BYTE aoGUID[16];
 
     rFile.SetFilePointer(0);
-    
+
     size_t cb = sizeof aoGUID;
     rFile.ReadData(aoGUID, &cb);
     CAssert(cb == sizeof aoGUID).App(MSG_INVALID_GUID).Throw();
@@ -1166,7 +1166,7 @@ CHeaders::VerifyStructure(CFileIO& rFile) {
 
             rFile.SetFilePointer(rFile.GetFilePointer() + dwHeaderLen - sizeof utSHeader);
 	    } while (utSHeader.oType != eData);
-	    
+
 	    struct CHeaderData::SData utSData;
 
         // Go back the length of the length field in the CHeaderData section.
@@ -1238,7 +1238,7 @@ CHeaders::Add(void *pNewHeader) {
 void CHeaders::Remove(void *pHeader) {
     CAssert(pHeader != NULL).App(MSG_INTERNAL_ERROR, _T("CHeaders::Remove() [1]")).Throw();
     CHeaderHeader **ppPrevious = &m_pFirst, *pCurrent = m_pFirst;
-    
+
     while (pCurrent != NULL) {
         if (pCurrent == pHeader) {
             *ppPrevious = pCurrent->m_pNext;

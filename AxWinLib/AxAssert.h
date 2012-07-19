@@ -25,18 +25,18 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
     AxAssert.h
 
     E-mail                          YYYY-MM-DD              Reason
-    axcrypt@axantum.com             2003-11-22              Initial
+    software@axantum.com             2003-11-22              Initial
 
 */
 
 #include <tchar.h>
 
-#ifndef ASSCHK 
+#ifndef ASSCHK
 /// \brief Assert any custom condition
 ///
 /// Do the if to ensure that the condition is evaluted before the call AssFunc, so that parameters
@@ -46,7 +46,7 @@
 #define ASSCHK(fOk, sz) if (!(fOk)) AxLib::AssFunc(false, sz, _T(AXLIB_ASSERT_FILE), __LINE__)
 #endif
 
-#ifndef ASSERR 
+#ifndef ASSERR
 /// \brief Assert always unconditionally
 ///
 /// \param sz A string with a message about the assertion.

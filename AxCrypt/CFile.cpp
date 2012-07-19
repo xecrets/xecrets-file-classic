@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CFile.cpp						Basic open/read/write/memory map operations on files.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
 									2001-11-29				Moved temp-files to the temp dir.
                                     2002-08-11              Rel 1.2
                                     2003-06-23              1.4d1.5 - Remove std file I/O
@@ -163,7 +163,7 @@ CFileIO::MakeTmp(LPCTSTR szTempFile, BOOL fForceWriteThru) {
     ASSPTR(m_szFileName);
 
 	_tcscpy_s(m_szFileName, ccFileName, szTempFile);
-	
+
     DWORD dwFlagsAndAttributes = FILE_ATTRIBUTE_TEMPORARY |
 		FILE_ATTRIBUTE_HIDDEN |
 		FILE_FLAG_RANDOM_ACCESS |
@@ -294,7 +294,7 @@ void
 CFileIO::WipeOnePass(CFileIO& fileSrc, CNoXform& copier, QWORD qwSize) {
 	fileSrc.m_qwFileSize = qwSize;
     fileSrc.SetFilePointer(0);
-	
+
     SetFilePointer(0);
     copier.XformData(fileSrc, *this);
     FlushBuffers();
@@ -302,7 +302,7 @@ CFileIO::WipeOnePass(CFileIO& fileSrc, CNoXform& copier, QWORD qwSize) {
 
 //
 //  Read data sequentially
-// 
+//
 void
 CFileIO::ReadData(void *pBuf, size_t *pcb) {
     DWORD dwRead = 0;

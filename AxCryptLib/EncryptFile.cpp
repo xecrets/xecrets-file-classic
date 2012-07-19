@@ -19,7 +19,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -46,7 +46,6 @@
 extern AxPipe::CGlobalInit AxPipeGlobalInit;
 
 namespace axcl {
-
     class CEncryptMeta : public axcl::CAxCryptMeta, public AxPipe::CCriticalSection {
         typedef axcl::CAxCryptMeta base;
     public:
@@ -91,7 +90,6 @@ namespace axcl {
             return p;
         }
 
-
     private:
         /// \brief Endian-independent store of ints in little-endian format.
         template<class T> void SetInt(axcl::byte aoValue[sizeof T], T v) {
@@ -110,7 +108,7 @@ namespace axcl {
 
                 // Initialize an AES structure with the Data Encrypting Key and the proper direction.
                 axcl::CAxCryptAES aesContext(axcl::CAxCryptAESSubKey().Set(GetMasterDEK(), axcl::CAxCryptAESSubKey::eHeaders).Get(), axcl::CAxCryptAES::eCBC, axcl::CAxCryptAES::eEncrypt);
-                
+
                 // Encrypt/Decrypt the block with default IV of zero.
                 aesContext.Xblock(static_cast<axcl::TBlock *>(p), static_cast<axcl::TBlock *>(p), cb / sizeof axcl::TBlock);
             }
@@ -320,7 +318,6 @@ namespace axcl {
         bool VerifyHeaderLen() {
             return m_cbHeaders == Emit(NULL);
         }
-
     };
 
     /// \brief Build headers, excluding HMAC and other info that needs filling at the end
@@ -370,7 +367,7 @@ namespace axcl {
                     SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set passphrase"));
                     return false;
                 }
-                
+
                 // Store original file times in the headers
                 if (!m_pEncryptMeta->SetFileInfo()) {
                     SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set file info"));
@@ -463,7 +460,6 @@ namespace axcl {
                     SetError(axcl::ERROR_CODE_AXCRYPT, _TT("SetCompressionFlag() failed"));
                     break;
                 }
-
             } while (false);
             return fReturn;
         }
@@ -551,7 +547,7 @@ namespace axcl {
                 }
             }
 
-            // Always call the base-class, as it may need to clean up 
+            // Always call the base-class, as it may need to clean up
             return base::OutClose();
         }
 
@@ -578,7 +574,7 @@ namespace axcl {
         }
     };
 
-    /// \brief AxCrypt encryption specific derivation of HMAC_SHA1 calculation
+    /// \brief Ax Crypt encryption specific derivation of HMAC_SHA1 calculation
     ///
     /// \see AxPipe::Stock::CPipeHMAC_SHA1
     class CPipeEncHMAC_SHA1_128 : public AxPipe::Stock::CPipeHMAC_SHA1<128> {
@@ -594,10 +590,9 @@ namespace axcl {
                        pEncryptMeta->GetOffsetHMAC());
             return this;
         }
-
     };
 
-    /// \brief AxCrypt specific derivation which calls back for the name of the file
+    /// \brief Ax Crypt specific derivation which calls back for the name of the file
     ///
     /// The output file name is recived via a callback.
     class CEncryptSinkFile : public AxPipe::CSinkFileIO {
@@ -691,7 +686,7 @@ namespace axcl {
                 return;
             }
             Out(pSeg);
-            
+
             // Synchronize
             Sync();
 
@@ -705,7 +700,7 @@ namespace axcl {
                 InHMAC.Append(new AxPipe::CSinkNull);
 
                 InHMAC.Init(this);
-                
+
                 // Run the input through the pipe...
                 if (InHMAC.Open()->Drain()->Close()->Plug()->GetErrorCode() != AxPipe::ERROR_CODE_SUCCESS) {
                     SetError(InHMAC.GetErrorCode(), InHMAC.GetErrorMsg());
@@ -744,12 +739,11 @@ namespace axcl {
             return base::OutClose();
         }
     };
-
 }
 
 /// \brief Encrypt a plain-text file.
 /// \return The full path to the resulting encrypted file
-int axcl_EncryptFile(AXCL_PARAM *pParam, int iKeyTypeEnc, const _TCHAR *szPlainTextFullPath, const _TCHAR *szPlainTextFileName) { 
+int axcl_EncryptFile(AXCL_PARAM *pParam, int iKeyTypeEnc, const _TCHAR *szPlainTextFullPath, const _TCHAR *szPlainTextFileName) {
     axcl::CSourceProgressCancel In;
     std::auto_ptr<axcl::CEncryptMeta> pEncryptMeta(new axcl::CEncryptMeta(pParam, iKeyTypeEnc));
 
@@ -760,7 +754,7 @@ int axcl_EncryptFile(AXCL_PARAM *pParam, int iKeyTypeEnc, const _TCHAR *szPlainT
 
     // ...and finally accept the stream, and at the end rewind, fixup the headers and do a new pass and patch the HMAC...
     In.Append((new axcl::CEncryptSinkFile)->Init(pEncryptMeta.get()));
-    
+
     // Pass the recommended plain-text filename in the parameter block
     delete[] pParam->strBufs[AXCL_STR_FILENAME];
     pParam->strBufs[AXCL_STR_FILENAME] = axcl::tstrdup(szPlainTextFileName);

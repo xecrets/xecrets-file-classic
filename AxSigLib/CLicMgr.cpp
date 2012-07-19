@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-    AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
     Server or Web Storage of Document Files.
 
     Copyright (C) 2004 Svante Seleborg/Axantum Software AB, All rights reserved.
@@ -18,7 +18,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
     CLicMgr.cpp                     Handle and validate licenses
 */
@@ -57,7 +57,7 @@ CLicMgr::AddChkType(const axpl::ttstring &sType, const axpl::ttstring &sLicensee
 	    if (signatureSource.MaxRetrievable() != m_Verifier.SignatureLength()) {
             m_sLastErrorMsg =  _T("Internal error. Signature wrong length.");
         } else {
-            // Allocate a block and put the signature there 
+            // Allocate a block and put the signature there
             SecByteBlock signature(m_Verifier.SignatureLength());
 	        signatureSource.Get(signature, signature.size());
 

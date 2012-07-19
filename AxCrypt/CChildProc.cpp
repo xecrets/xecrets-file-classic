@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-    AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
     Server or Web Storage of Document Files.
 
     Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,7 +18,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
     CChildProc.cpp                  Utility functions of a more esoteric nature, doing the
                                     things that really should just require some simple API
@@ -33,7 +33,7 @@
                                     that are not part of the Win32 API as such.
 
     E-mail                          YYYY-MM-DD              Reason
-    axcrypt@axondata.se             2001                    Initial
+    software@axantum.com             2001                    Initial
 
 */
 #include    "StdAfx.h"
@@ -267,7 +267,7 @@ CChildProc::NeedPsapi() {
     // Check if the toolhelp library seems to be implemented, if so we don't care
     // about os-versions etc!
     if (pfCreateToolhelp32Snapshot) return false;
-        
+
     OSVERSIONINFO stOsVersion;
     stOsVersion.dwOSVersionInfoSize = sizeof stOsVersion;
     // check if we are running Windows NT < 5. The call will probably fail (i can't test this)
@@ -339,7 +339,6 @@ CChildProc::NtEnumProcesses() {
             return false;
         }
         m_ciProcTable = cbTableSize / sizeof DWORD;
-    
     } while (ciTableSize == m_ciProcTable);
     CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::NtEnumProcesses [succeeded]"), GetCurrentThreadId()).LogEvent();
     return true;
@@ -364,7 +363,6 @@ CChildProc::AddNewChildProcesses(dwSetT& procSetOld, dwSetT& procSetNew, bool fI
         CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::AddNewChildProcesses [using Toolhelp32 - GetCurrentProcessId()]"), GetCurrentProcessId()).LogEvent();
         CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::AddNewChildProcesses [m_dwPProcessId]"), m_dwPProcessId).LogEvent();
 
-
         if (CMessage::LogLevel() >= 3) {
             dwSetT::iterator it;
             for (it = procSetNew.begin(); it != procSetNew.end(); it++) {
@@ -375,7 +373,7 @@ CChildProc::AddNewChildProcesses(dwSetT& procSetOld, dwSetT& procSetNew, bool fI
         HANDLE hSnapshot = pfCreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
         PROCESSENTRY32 stProcessEntry;
         stProcessEntry.dwSize = sizeof stProcessEntry;
-    
+
         if (pfProcess32First(hSnapshot, &stProcessEntry)) {
             do {
                 CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::AddNewChildProcesses [stProcessEntry.th32ProcessID]"), stProcessEntry.th32ProcessID).LogEvent(3);
@@ -397,7 +395,6 @@ CChildProc::AddNewChildProcesses(dwSetT& procSetOld, dwSetT& procSetNew, bool fI
                     // shiny new notepad. And yes, this complete whole thing is in major need of rewriting. The whole strategy needs re-evaluation,
                     // process id's are not a good thing to use, or if we do, the code really, really needs a total reengineering session.
                     (m_dwPProcessId == 0)) {
-
                     if (procSetOld.find(stProcessEntry.th32ProcessID) == procSetOld.end()) {
                         // This is a bit of a kludge, we should figure out why we even can get here with
                         // ourselves.
@@ -414,7 +411,7 @@ CChildProc::AddNewChildProcesses(dwSetT& procSetOld, dwSetT& procSetNew, bool fI
         CloseHandle(hSnapshot);
         return;
     }
-    
+
     // Next let's try the NT-stuff - dependent on PSAPI.DLL, which the install
     // may, or may not, have installed on the system.
     // Try to get the address of the native API-function
@@ -441,7 +438,6 @@ CChildProc::AddNewChildProcesses(dwSetT& procSetOld, dwSetT& procSetNew, bool fI
                         // this process has the given id as its parent, lets add it!
                         if ((!fIgnoreParent && pbi.InheritedFromUniqueProcessId == m_dwPProcessId) ||
                             (procSetNew.find(pbi.InheritedFromUniqueProcessId) != procSetNew.end())) {
-
                             if (procSetOld.find(pbi.UniqueProcessId) == procSetOld.end()) {
                                 CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::AddNewChildProcesses [Adding process]"), GetCurrentProcessId()).LogEvent(2);
                                 procSetNew.insert(pbi.UniqueProcessId);
@@ -515,11 +511,10 @@ CChildProc::AddNewThreads(dwSetT& threadOld, dwSetT& threadNew, HWND hWndForegro
     // better in many cases. We only get here if the above could not detect any foreground
 	// window change.
 
-    // MessageBox(NULL, _T("Failed GetWindowThreadProcessId() strategy"), _T("AxCrypt"), MB_OK);
     // Check if we have the entry-points (we assume that if we have the
     // the main, we have them all...)
     if (!pfCreateToolhelp32Snapshot) return;
-	
+
     dwSetT procSet;                     // The set of process candidates
     HANDLE hSnapshot = pfCreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     PROCESSENTRY32 pe32;

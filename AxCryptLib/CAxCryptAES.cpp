@@ -1,9 +1,9 @@
 /*! \file
-    \brief CAxCryptAES.cpp - An AxCrypt special purpose AES-wrapper
+    \brief CAxCryptAES.cpp - An Ax Crypt special purpose AES-wrapper
 
     @(#) $Id$
 
-    axcl - Common support library for AxCrypt
+    axcl - Common support library for Ax Crypt
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -19,14 +19,14 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
 ----
 \verbatim
     YYYY-MM-DD              Reason
-    2005-06-26              Initial (moved/restructured from AxCrypt)
+    2005-06-26              Initial (moved/restructured from Ax Crypt)
 \endverbatim
 */
 #include "stdafx.h"
@@ -46,7 +46,6 @@ extern "C" {
 #define ASSERT_FILE "CAxCryptAES.cpp"
 
 namespace axcl {
-
 /// Default constructor - just mark it as not ready.
 CAxCryptAES::CAxCryptAES() {
     m_bStateOk = false;
@@ -113,7 +112,7 @@ CAxCryptAES::Init(const TKey *putKey, etMode eMode, etDirection eDirection, etKe
 /// \param putSrc Pointer to one or more blocks of input
 /// \param putDst Pointer to one or more blocks of output
 /// \param nBlocks Number of blocks to transform.
-/// \return true if all is ok - false otherwise. 
+/// \return true if all is ok - false otherwise.
 bool
 CAxCryptAES::Xblock(const TBlock *putSrc, TBlock *putDst, size_t nBlocks) {
     if (m_bStateOk) {
@@ -228,7 +227,6 @@ void CAxCryptAESWrap::Init(longlong nIter, int nKeySize) {
     ASSPTR(m_pWrap);
 }
 
-
 /// Free and clear allocated memory
 CAxCryptAESWrap::~CAxCryptAESWrap() {
     if (m_pSalt != NULL) {
@@ -294,7 +292,7 @@ bool
 CAxCryptAESWrap::UnWrap(const void *pWrappingKey, const void *pWrappedKey, const void *pSalt) {
     // Copy the wrapped data to class local storage
     memcpy(m_pWrap, pWrappedKey, sizeof m_aoKeyWrapA + m_nKeySize);
-    
+
     // Generate the Salted KEK by XOR-ing the given key with the salt.
     std::auto_ptr<byte> pSaltedWrappingKey(new byte[m_nKeySize]);    // Self-destructing
     ASSPTR(pSaltedWrappingKey.get());
@@ -365,5 +363,4 @@ CAxCryptAESWrap::SetKeyAndSalt(const void *pKeyToWrap, const void *pSalt) {
     // and then the salt
     memcpy(m_pSalt, pSalt, m_nKeySize);
 }
-
 }

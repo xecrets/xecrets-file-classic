@@ -19,7 +19,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ---
 */
 
@@ -29,7 +29,6 @@
 #include <vector>
 
 namespace axpl {
-
 #if defined(_UNICODE) || defined(UNICODE)
     typedef std::wstring ttstring;
 
@@ -67,7 +66,6 @@ namespace axpl {
     typedef std::map<ttstring, ttstring> ttstringmap;      ///< A map from string to string - too useful not to have...
     typedef std::vector<ttstringpair> ttstringpairvector;  ///< A vector of stringpairs - slightly more unusual
     typedef std::map<ttstring, int> ttstringintmap;        ///< A map from string to int.
-
 } // namespace AxPortLib
 
 #endif

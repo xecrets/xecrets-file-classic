@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CVersion.cpp					Get and present version information
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001-12-06				Initial
+	software@axantum.com 			2001-12-06				Initial
 */
 #include	"StdAfx.h"
 #include	"stdio.h"
@@ -140,7 +140,7 @@ CVersion::ExtProductName() {
 
 	    LPTSTR szProductName = NULL;
 	    CAssert(VerQueryValue(m_pFileVersionInfo, _T("\\StringFileInfo\\000004b0\\ProductName"), (void **)&szProductName, &uLen)).App(ERR_VERSION_RESOURCE).Throw();
-    
+
         m_szExtProductName = CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValProductName).GetSz(szProductName);
     }
 	return m_szExtProductName;
@@ -199,7 +199,7 @@ CVersion::FileVersionString() {
 
 	LPCTSTR szSpecialBuild = _T("");        // It's not necessarily an error with no SpecialBuild resource
 	VerQueryValue(m_pFileVersionInfo, _T("\\StringFileInfo\\000004b0\\SpecialBuild"), (void **)&szSpecialBuild, &uLen);
-	
+
 	// Keep the various cases here, but we're switching to the MS format of 1.7.1751.0 etc for typical version info.
 	if (szSpecialBuild && uLen) {
         wsprintf(sz, PatchFileVersion() ? _T("%d.%d.%d.%d %s") : _T("%d.%d.%d.%d %s"), MajorFileVersion(), MinorFileVersion(), MinuscleFileVersion(), PatchFileVersion(), szSpecialBuild);
@@ -227,7 +227,7 @@ CVersion::String(bool fShowNoVersion) {
 
 	    LPCTSTR szSpecialBuild = _T("");        // It's not necessarily an error with no SpecialBuild
 	    VerQueryValue(m_pFileVersionInfo, _T("\\StringFileInfo\\000004b0\\SpecialBuild"), (void **)&szSpecialBuild, &uLen);
-    	
+
 	    if (szSpecialBuild && uLen) {
             m_szString.Fmt(Patch() ? _T("%1 %2!d!.%3!d!.%5!d!.%6!d! %4") : _T("%1 %2!d!.%3!d!.%5!d!.%6!d! %4"), gszAxCryptExternalName, Major(), Minor(), szSpecialBuild, Minuscle(), Patch());
 	    } else {

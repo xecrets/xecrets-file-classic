@@ -80,7 +80,7 @@
 
     \version
     \htmlinclude Version.txt
-    
+
     \author
     Svante Seleborg/Axon Data
 
@@ -88,7 +88,7 @@
     \ref License "GNU General Public License"
 
     AxPipe is a multi-threading basic binary stream class hierarchy.
-    
+
     It provides all required functionality for push and pull style
     processing of data in a stream model, and it also
     also enables optimizations
@@ -163,7 +163,7 @@ namespace AxPipe {
             reset(rhs.release());
             return *this;
         }
-        
+
         /// \brief Delete the object pointed to
         ~my_ptr() {
             delete m_p;
@@ -489,7 +489,7 @@ public:
 class CSplit : public CPipe {
     CPipe *m_pLeft;                         ///< The start of the 'left' side of the split.
     CPipe *m_pRight;                        ///< The start of the 'right' side of the split.
-    
+
     void DestructSink();                    ///< Always delete the left and right upon deletion of this part.
     void PumpSplit(CSeg *pSeg);             ///< Send the same segment down both left and right legs of the split
 public:
@@ -672,7 +672,7 @@ protected:
     CSeg *ReadBlock(size_t cb);             ///< Attempt to get a segment of a requested size.
 };
 /// \brief A Y join, taking any number of streams and joining them.
-/// 
+///
 /// Build any number of streams, with CSource's at the start
 /// and any number of CPipe sections, but do not terminate them
 /// with a CSink.
@@ -740,7 +740,7 @@ public:
     is built in run-time, with each stage optionally running in it's own thread
     at the programmers discretion.
 
-    \section Background 
+    \section Background
 
     AxPipe is useful in all situations where streams of data is
     to be transformed. It grew out of many needs, mostly centered around
@@ -763,7 +763,7 @@ public:
     as they are some samples of derived filters and pipes, as well as AxPipe::CSourceFileMap
     and AxPipe::CSinkFileMap.
 
-    For a complete real life example, please see the AxDecrypt program, part of the <A HREF="http://axcrypt.sourceforge.net">AxCrypt</A>
+    For a complete real life example, please see the AxDecrypt program, part of the <A HREF="http://www.axantum.com">AxCrypt</A>
     package. Download the source code and examine AxDecrypt.cpp.
 
     \see \ref PageIntro "Introduction", \ref PageInstall "Installation", \ref PageSample1 "A First Example",
@@ -955,7 +955,7 @@ public:
     It's the same override of CFilterByte::InFilter, but now the CFilterByte::ReadByte
     function is called, providing a byte at a time, or -1 at the end of the
     stream. Here also we need to call CFilterByte::Open and CFilterByte::Close.
-    
+
     <HR>
     A rudimentary join, which will just intermix any number of streams, on a segment
     by segment basis, round-robin fashion. This is not very useful either, as the
@@ -981,7 +981,7 @@ public:
     First, note the definition of a CGlobalInit object. You need one, and only one,
     such object to be defined in your program before using ::AxPipe. The constructor
     of this object will initialize various global data.<BR>
-    
+
     The second thing to note is the Open()->Drain()->Close()->Plug() sequence.<BR>
     The CSource::Drain() call causes data to be read from the CSource and passed along
     the pipe to the CSink. But before that, you must call CSource::Open(). This causes

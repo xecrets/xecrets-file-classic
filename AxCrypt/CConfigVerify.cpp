@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-    AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
     Server or Web Storage of Document Files.
 
     Copyright (C) 2004 Svante Seleborg/Axantum Software AB, All rights reserved.
@@ -18,12 +18,12 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
     CVerifyFileSigs.cpp - Verify file signatures
 
     E-mail                          YYYY-MM-DD              Reason
-    axcrypt@axondata.se             2004-09-13              Initial
+    software@axantum.com             2004-09-13              Initial
 
 */
 #include "stdafx.h"
@@ -111,7 +111,7 @@ CConfigVerify::VerifyFile(const axpl::ttstring &sFile, const axpl::ttstring &sSi
         m_sLastError = axpl::s2t(Err.GetWhat());
         return false;
     }
-    
+
     // Yes! All was well, the file was untampered with.
     return true;
 }

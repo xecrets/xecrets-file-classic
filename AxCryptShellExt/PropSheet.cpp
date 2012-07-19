@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,35 +18,35 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	PropertySheet.cpp				IShellPropSheetExt implementation
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
 
 */
-#include	"StdAfx.h" 
+#include	"StdAfx.h"
 #include	"../AxCryptCommon/CAssert.h"
 #include	"../AxCryptCommon/CVersion.h"
 //
 //	Specifies an application-defined callback function that a property sheet
 //	calls when a page is created and when it is about to be destroyed.
 //	An application can use this function to perform initialization and
-//	cleanup operations for the page. 
+//	cleanup operations for the page.
 //
 //	The return value depends on the value of uMsg.
-//	hWnd 
-//		Reserved; must be NULL. 
-//	uMsg 
+//	hWnd
+//		Reserved; must be NULL.
+//	uMsg
 //		Action flag. This parameter can be one of the following values:
 //			PSPCB_CREATE	A page is being created. Return nonzero to allow
-//							the page to be created, or zero to prevent it.  
-//			PSPCB_RELEASE	A page is being destroyed. The return value is ignored.  
+//							the page to be created, or zero to prevent it.
+//			PSPCB_RELEASE	A page is being destroyed. The return value is ignored.
 //
 //	ppsp
 //		Address of a PROPSHEETPAGE structure that defines the page being
-//		created or destroyed. 
+//		created or destroyed.
 //
 UINT CALLBACK
 PropPageCallback(HWND hWnd, UINT uMsg, LPPROPSHEETPAGE  ppsp) {
@@ -61,7 +61,7 @@ PropPageCallback(HWND hWnd, UINT uMsg, LPPROPSHEETPAGE  ppsp) {
 		return TRUE;
 	}
 	return TRUE;
-} 
+}
 //
 //	Standard DialogProc
 //
@@ -70,18 +70,18 @@ PropPageCallback(HWND hWnd, UINT uMsg, LPPROPSHEETPAGE  ppsp) {
 //		should return nonzero if it processes the message, and zero if it does not.
 //
 INT_PTR CALLBACK
-PropPageDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) { 
+PropPageDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	// Pickup pointer to our property sheet page structure that
 	// we save in in the WM_INITDIALOG
 	LPPROPSHEETPAGE psp = (LPPROPSHEETPAGE)(LONG_PTR)GetWindowLongPtr(hDlg, DWLP_USER);
 	LPCSHELLEXT lpcs;
 	// If not before WM_INITDIALOG, fix CShellExt ptr.
 	if (psp != NULL) {
-		lpcs = (LPCSHELLEXT)psp->lParam; 
+		lpcs = (LPCSHELLEXT)psp->lParam;
 	}
- 
-	switch (uMsg) { 
-	case WM_INITDIALOG: 
+
+	switch (uMsg) {
+	case WM_INITDIALOG:
 		// Save lParam, i.e. PROPSHEETPAGE structure ptr provided by
 		// the shell.
 		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
@@ -91,8 +91,8 @@ PropPageDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         #pragma warning ( pop )
 
 		// These may be needed, are normally setup at the top, but we are too early.
-		psp = (LPPROPSHEETPAGE)lParam; 
-		lpcs = (LPCSHELLEXT)psp->lParam; 
+		psp = (LPPROPSHEETPAGE)lParam;
+		lpcs = (LPCSHELLEXT)psp->lParam;
 		SetDlgItemText(hDlg, IDC_ENC_LEAD, CMessage().AppMsg(INF_ENC_LEAD).GetMsg());
 		SetDlgItemText(hDlg, IDC_COMP_LEAD, CMessage().AppMsg(INF_COMP_LEAD).GetMsg());
 		SetDlgItemText(hDlg, IDC_AUTH_LEAD, CMessage().AppMsg(INF_AUTH_LEAD).GetMsg());
@@ -103,52 +103,52 @@ PropPageDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		SetDlgItemText(hDlg, IDC_RAND, CMessage().AppMsg(INF_RAND).GetMsg());
 		SetDlgItemText(hDlg, IDC_ABOUT_GROUP, CVersion(ghInstance).String());
 		SetDlgItemText(hDlg, IDC_ABOUT, CMessage().Wrap(0).AppMsg(INF_ABOUT, CStrPtr(CVersion(ghInstance).LegalCopyright())).GetMsg());
-		break; 
+		break;
 
-	case WM_DESTROY: 
-		break; 
+	case WM_DESTROY:
+		break;
 
-	case WM_COMMAND: 
-		switch (LOWORD(wParam)) { 
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
 		case 0: // Dummy to get rid of warning
-		default: 
-			break; 
-		} 
-		break; 
+		default:
+			break;
+		}
+		break;
 
-	case WM_NOTIFY: 
-		switch (((NMHDR FAR *)lParam)->code) { 
-		case PSN_SETACTIVE: 
-			break; 
+	case WM_NOTIFY:
+		switch (((NMHDR FAR *)lParam)->code) {
+		case PSN_SETACTIVE:
+			break;
 
 		case PSN_APPLY:
 			// OK or Apply - do something.
-			break; 
+			break;
 
-		default: 
-			break; 
-		} 
-		break; 
+		default:
+			break;
+		}
+		break;
 
-	default: 
-		return FALSE; 
-	} 
-	return TRUE; 
+	default:
+		return FALSE;
+	}
+	return TRUE;
 }
 //
 //	Adds one or more pages to a property sheet that the shell displays
 //	for a file object. When it is about to display the property sheet,
 //	the shell calls this method for each property sheet handler
-//	registered to the file type. 
+//	registered to the file type.
 //
 //	Returns NOERROR if successful, or an OLE-defined error value otherwise.
 //
-//	lpfnAddPage 
+//	lpfnAddPage
 //		Address of a function that the property sheet handler calls to
 //		add a page to the property sheet. The function takes a property
 //		sheet handle returned by the CreatePropertySheetPage function and
-//		the lParam parameter passed to the AddPages method. 
-//	lParam 
+//		the lParam parameter passed to the AddPages method.
+//	lParam
 //		Parameter to pass to the function specified by the lpfnAddPage method.
 //
 //	For each page the property sheet handler needs to add to a property sheet,
@@ -156,11 +156,11 @@ PropPageDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 //	function, and then calls the function specified by the lpfnAddPage parameter.
 //
 STDMETHODIMP
-CShellExt::AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam) { 
+CShellExt::AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam) {
 	PROPSHEETPAGE psp;
 	HPROPSHEETPAGE hPage;
 
-	HRESULT hRes = S_OK; 
+	HRESULT hRes = S_OK;
     try {
         if (m_pSelection->ShowPropertySheet()) {
             // Create the property sheet page
@@ -175,7 +175,7 @@ CShellExt::AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam) {
 		    psp.pfnCallback = PropPageCallback;
 		    psp.lParam = (LPARAM)this;
 
-		    AddRef(); 
+		    AddRef();
 		    hPage = CreatePropertySheetPage(&psp);
 		    if (hPage) {
 			    if (!lpfnAddPage(hPage, lParam)) {
@@ -192,9 +192,9 @@ CShellExt::AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam) {
 	return hRes;
 }
 //
-//	Replaces a page in a property sheet for a Control Panel object. 
+//	Replaces a page in a property sheet for a Control Panel object.
 //
-//	Returns NOERROR if successful, or an OLE-defined error value otherwise. 
+//	Returns NOERROR if successful, or an OLE-defined error value otherwise.
 //
 //	uPageID
 //		Identifier of the page to replace. The values for this parameter
@@ -203,8 +203,8 @@ CShellExt::AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam) {
 //		Address of a function that the property sheet handler calls to replace
 //		a page to the property sheet. The function takes a property sheet handle
 //		returned by the CreatePropertySheetPage function and the lParam parameter
-//		passed to the ReplacePage method. 
-//	lParam 
+//		passed to the ReplacePage method.
+//	lParam
 //		Parameter to pass to the function specified by the lpfnReplacePage
 //		parameter.
 //
@@ -213,7 +213,7 @@ CShellExt::AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam) {
 //	by lpfnReplacePage.
 //
 STDMETHODIMP
-CShellExt::ReplacePage(UINT uPageID, LPFNADDPROPSHEETPAGE lpfnReplaceWith, LPARAM lParam) { 
+CShellExt::ReplacePage(UINT uPageID, LPFNADDPROPSHEETPAGE lpfnReplaceWith, LPARAM lParam) {
 	// We are not a control panel...
-	return E_FAIL; 
-} 
+	return E_FAIL;
+}

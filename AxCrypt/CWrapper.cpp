@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CWrapper.cpp					Batch the component operations of wrapping/unwrapping in one little class.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
                                     2002-08-02              Ver 1.2
 
 */
@@ -57,7 +57,7 @@ CWrapper::Wrap(CFileIO& rFilePlain, CFileIO& rFileCipher, DWORD nWipePasses, BOO
     CMessage().AppMsg(INF_COMPRESS_RATIO, rFilePlain.GetFileName(), utRatio.GetRatio()).LogEvent(2);
 
     BOOL fCompFlag = utRatio.GetRatio() >= (int)CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValCompressLevel).GetDword(COMPRESS_THRESHOLD);
-    
+
     // 'leak' is allowed as this may cause header allocation
     // It's important that the operations are done in the same order, regardless of whether
     // compression is done or not, so the state cannot be inferred from for example the
@@ -74,7 +74,7 @@ CWrapper::Wrap(CFileIO& rFilePlain, CFileIO& rFileCipher, DWORD nWipePasses, BOO
 
 	    // We allow a "leak" here as MakeTmp will allocate memory for the temp file name
 	    HEAP_CHECK_BEGIN(_T("Wrap() [c]"), TRUE)
-	    // Create and make the temp file.	
+	    // Create and make the temp file.
 	    utTmpFile.MakeTmp(CFileTemp().New().Get(), fSlowSafe);
 	    HEAP_CHECK_END
 
@@ -222,7 +222,7 @@ CWrapper::DecryptData(CFileIO& rFileCipher, CFileIO& rFilePlain) {
     rFileCipher.SetFilePointer(m_pHeaders->SizeOnFile());
 
 	HEAP_CHECK_BEGIN(_T("DecryptData(c)"), 0);
-    
+
     // Catch errors if we're tolerant with TryBrokenFile for data recovery
     try {
         // Initilialize the Xform-object with the actual Data Encrypting Key, and run the decryption.

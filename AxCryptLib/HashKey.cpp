@@ -19,7 +19,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -55,7 +55,7 @@ namespace axcl {
         size_t m_cbPassphrase;
 
         bool m_fHaveFile;                       ///< true if we got a file name to send too
-      
+
     public:
         /// \brief Initialize private members.
         CAxCryptKeySeq() : m_fHaveFile(false), m_pPassphrase(NULL), m_cbPassphrase(0) {

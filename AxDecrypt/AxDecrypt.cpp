@@ -1,9 +1,9 @@
 /*! \file
-	\brief AxDecrypt - Stand-alone AxCrypt-decrypter and self-extractor.
+	\brief AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
 
     @(#) $Id$
 */
-/*! \page License AxDecrypt - Stand-alone AxCrypt-decrypter and self-extractor.
+/*! \page License AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
 
     Copyright (C) 2004 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -19,12 +19,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 //    version
 //    htmlinclude Version.txt
-/*! \mainpage Decrypt AxCrypt-archives as a stand-alone program.
+/*! \mainpage Decrypt Ax Crypt-archives as a stand-alone program.
 
     \author
     Svante Seleborg/Axon Data
@@ -69,7 +69,7 @@
 #define	INITGUID
 #include <initguid.h>
 
-/// \brief The AxCrypt GUID
+/// \brief The Ax Crypt GUID
 ///
 /// Define the guid here xor 0xff, i.e. inverted, so we won't trig on it
 /// when scanning for GUID in ourselves, looking for the appended .xxx-
@@ -94,10 +94,10 @@ enum {
     ERROR_CODE_HMAC,                        ///< HMAC does not match
     ERROR_CODE_ABORT,                       ///< User cancelled whilst working
     ERROR_CODE_MORE,                        ///< Not an error - want a bigger dialog
-    AXCRYPT_CODE_DATA,                      ///< Not an error - we found AxCrypt data status
+    AXCRYPT_CODE_DATA,                      ///< Not an error - we found Ax Crypt data status
 };
 
-/// \brief AxCrypt Header Type Codes.
+/// \brief Ax Crypt Header Type Codes.
 ///
 /// The different header types. Preamble must be first, Data last.
 /// Sections with eEncryptedFlag set will be encrypted with variations
@@ -280,7 +280,7 @@ protected:
     }
 };
 
-/// \brief Exactly one meta section from an AxCrypt-formated file stream.
+/// \brief Exactly one meta section from an Ax Crypt-formated file stream.
 class CMetaSection {
     TBlockType m_eType;                     ///< The type of the section, defined by TBlockType
     size_t m_cbLen;                         ///< The total length of m_pData (excluding type byte)
@@ -402,7 +402,7 @@ public:
     }
 };
 
-/// \brief Manage the meta information of an AxCrypt stream.
+/// \brief Manage the meta information of an Ax Crypt stream.
 ///
 /// The base class is a std::list of CMetaSection. This is where
 /// we define the various instances of CMetaSection in detail,
@@ -1052,7 +1052,7 @@ public:
     }
 };
 
-/// \brief Parse AxCrypt headers
+/// \brief Parse Ax Crypt headers
 ///
 /// Parse headers and call a call-back when all headers
 /// have been read and we're about to start sending
@@ -1167,7 +1167,7 @@ public:
     /// \brief The main filter override
     ///
     /// Process the input, which may consist of several appended encrypted
-    /// files, but it must start with the AxCrypt GUID, so any preceeding
+    /// files, but it must start with the Ax Crypt GUID, so any preceeding
     /// data must be descarded before getting here.
     void InFilter() {
         for (;;) {
@@ -1366,7 +1366,7 @@ public:
     }
 };
 
-/// \brief AxCrypt-specific derivation of HMAC_SHA1 calculation
+/// \brief Ax Crypt-specific derivation of HMAC_SHA1 calculation
 ///
 /// This derived class will accept header info and signal an error
 /// on mismatching HMAC
@@ -1433,7 +1433,7 @@ public:
     }
 };
 
-/// \brief Skip the headers from an AxCrypt stream
+/// \brief Skip the headers from an Ax Crypt stream
 ///
 /// Using info from the meta data about the offset to
 /// the data, skip bytes before starting to pass it
@@ -1564,7 +1564,7 @@ public:
     }
 };
 
-/// \brief Inflate (decompress) with ZLib for AxCrypt
+/// \brief Inflate (decompress) with ZLib for Ax Crypt
 ///
 /// Only inflate if the stream was compressed - otherwise
 /// just pass through. Get the compress flag through the
@@ -1630,7 +1630,7 @@ public:
     }
 };
 
-/// \brief AxCrypt specific derivation which restores original file times
+/// \brief Ax Crypt specific derivation which restores original file times
 ///
 /// Using the file times gotten from the meta data in a CAxCryptMeta
 /// structure, passed via CPipe::Signal() to CPipe::OutSignal(), we
@@ -2064,9 +2064,9 @@ AGetModuleFileName(HMODULE hModule = NULL) {
     return szFileName;
 }
 
-/// \brief Check if there is any AxCrypt headers in a file
+/// \brief Check if there is any Ax Crypt headers in a file
 /// \param szPath The path to the file to check
-/// \return true if we recognize this as a proper AxCrypt file
+/// \return true if we recognize this as a proper Ax Crypt file
 static bool
 IsAxCryptFile(_TCHAR *szPath) {
     CSourceFileIO In;

@@ -2,7 +2,7 @@
 /*
     @(#) $Id: ShellExt.h 1687 2009-04-09 14:09:51Z svante $
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -19,19 +19,19 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
-	ShellExt.h      				Definition of Class Factory and Object for the AxCrypt
+	ShellExt.h      				Definition of Class Factory and Object for the Ax Crypt
 									Shell Extension.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se	    		2001					Initial
+	software@axantum.com	    		2001					Initial
                                     2002-07-25              Ver 1.2
 */
 
-#ifndef		STRICT 
-#define		STRICT 
-#endif 
+#ifndef		STRICT
+#define		STRICT
+#endif
 
 #ifdef AXCRYPTSHELLEXT_EXPORTS
 #define AXCRYPTSHELLEXT_API __declspec(dllexport)
@@ -53,7 +53,7 @@
 #define _WIN32_IE 0x0550        // Specifies that the minimum required platform is Internet Explorer 5.5.
 #endif
 
-#include <windowsx.h> 
+#include <windowsx.h>
 #include <shlobj.h>
 #include <tchar.h>
 #include <commctrl.h>
@@ -68,13 +68,13 @@
 
 #include "../AxPipe/AxPipe.h"
 
-// 
-// The class ID of the AxCrypt Shell Extension class. 
-// 
-// class id:  1918AECB-5BDB-43D9-83B4-FDD4BEC67E4F 
-// 
-// 
-extern long glRefThisDLL;					// Reference count of this DLL. 
+//
+// The class ID of the Ax Crypt Shell Extension class.
+//
+// class id:  1918AECB-5BDB-43D9-83B4-FDD4BEC67E4F
+//
+//
+extern long glRefThisDLL;					// Reference count of this DLL.
 extern HINSTANCE ghInstance;				// Handle to this DLL itself.
 extern HBITMAP ghBitmap;					// Handle to the menu bit-map
 extern IMalloc *gpMalloc;
@@ -86,17 +86,17 @@ extern void IncrementDllReference();
 //
 //	Our very own Class Factory - used and required by the shell
 //
-class CShellExtClassFactory : public IClassFactory { 
-protected: 
+class CShellExtClassFactory : public IClassFactory {
+protected:
 	ULONG m_cRef;
-public: 
-	CShellExtClassFactory(); 
-	virtual ~CShellExtClassFactory(); 
+public:
+	CShellExtClassFactory();
+	virtual ~CShellExtClassFactory();
 
 	// IUnknown
-	STDMETHODIMP QueryInterface(REFIID iid, void **ppvObject); 
-	STDMETHODIMP_(ULONG) AddRef(); 
-	STDMETHODIMP_(ULONG) Release(); 
+	STDMETHODIMP QueryInterface(REFIID iid, void **ppvObject);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
 
 	// IClassFactory
 	STDMETHODIMP CreateInstance(IUnknown * pUnkOuter, REFIID riid, void ** ppvObject);
@@ -128,7 +128,6 @@ typedef enum {
 class CShellExt;
 typedef DWORD (CShellExt::*pfCmdHandlerT)(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
 
-
 //
 //  Support class to handle all interaction with the list of files
 //  we get from the Windows Explorer.
@@ -140,7 +139,7 @@ public:
 
     void SetObject(IDataObject *pdobj);
     // void SetActiveShellView(HWND hWnd);
-    
+
     int ItemsSelected();
     BOOL SelectionIsOneFile();
     BOOL SelectionIsOneFolder();            ///< TRUE if sel is exactly one folder
@@ -159,7 +158,7 @@ public:
     BOOL ShowBugReportMenu();
     BOOL ShowActivationMenu();
     LPTSTR GetTitle();                      ///< Get the name of one selected item, or NULL;
-    
+
     void IterateAll(CShellExt *pShellExt, pfCmdHandlerT pfCmdHandler);
 
 private:
@@ -178,7 +177,7 @@ private:
 
     CIDA *m_pCIDA;
     STGMEDIUM m_StgMedium;
-    
+
 public:
 	HWND m_hShellFolderWnd;
 private:
@@ -187,29 +186,29 @@ private:
     HWND m_hProgressWnd;
 };
 //
-// The shell extension object as such 
+// The shell extension object as such
 //
 class CShellExt : public IShellExtInit, IContextMenu, IShellPropSheetExt {
 public:
-	CShellExt(); 
-	virtual ~CShellExt(); 
- 
+	CShellExt();
+	virtual ~CShellExt();
+
 	// IUnknown
 	STDMETHODIMP QueryInterface(REFIID iid, void **ppvObject);
 	STDMETHODIMP_(ULONG) AddRef();
 	STDMETHODIMP_(ULONG) Release();
- 
+
 	// IShellExtInit
-	STDMETHODIMP Initialize(LPCITEMIDLIST pidlFolder, IDataObject *pdobj, HKEY hkeyProgID);	
+	STDMETHODIMP Initialize(LPCITEMIDLIST pidlFolder, IDataObject *pdobj, HKEY hkeyProgID);
 
 	// IContextMenu
 	STDMETHODIMP QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags);
- 	STDMETHODIMP InvokeCommand(LPCMINVOKECOMMANDINFO lpici); 
+ 	STDMETHODIMP InvokeCommand(LPCMINVOKECOMMANDINFO lpici);
  	STDMETHODIMP GetCommandString(UINT_PTR idCmd, UINT uFlags, UINT *pwReserved, LPSTR pszName, UINT cchMax);
- 
+
 	// IShellPropSheetExt
-	STDMETHODIMP AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam); 
-	STDMETHODIMP ReplacePage(UINT uPageID, LPFNADDPROPSHEETPAGE lpfnReplaceWith, LPARAM lParam); 
+	STDMETHODIMP AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam);
+	STDMETHODIMP ReplacePage(UINT uPageID, LPFNADDPROPSHEETPAGE lpfnReplaceWith, LPARAM lParam);
 
 private:
     int m_iBatch;               // The batch-id assigned to this operation.
@@ -286,6 +285,6 @@ public:
     void SetBatch(int iBatch = -1);
 private:
     LPTSTR GetBatchStr();
-}; 
+};
 
-typedef CShellExt *LPCSHELLEXT; 
+typedef CShellExt *LPCSHELLEXT;

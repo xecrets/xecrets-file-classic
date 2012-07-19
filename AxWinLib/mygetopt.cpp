@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-    AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
     Server or Web Storage of Document Files.
 
     Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,13 +18,13 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
     GetOption.cpp                   Parse the command line, standard stuff. This is taken
                                     from Hans Dietrich XGetopt. Thank you Hans!
 
     E-mail                          YYYY-MM-DD              Reason
-    axcrypt@axondata.se             2001                    Initial
+    software@axantum.com             2001                    Initial
                                     2003-05-26              Switch to XGetopt. It's better.
                                                             Minor changes, return -1 instead of EOF
                                                             Allow optional arguments
@@ -43,7 +43,7 @@
 //     - Added Unicode support
 //
 //     Version 1.1 - 2002 March 10
-//     - Added example to XGetopt.cpp module header 
+//     - Added example to XGetopt.cpp module header
 //
 // This software is released into the public domain.
 // You are free to use it in any way you like.
@@ -54,12 +54,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // if you are using precompiled headers then include this line:
 #include "stdafx.h"
 ///////////////////////////////////////////////////////////////////////////////
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // if you are not using precompiled headers then include these lines:
@@ -68,10 +66,8 @@
 //#include <tchar.h>
 ///////////////////////////////////////////////////////////////////////////////
 
-
 //#include "XGetopt.h"
 #include "mygetopt.h"
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //

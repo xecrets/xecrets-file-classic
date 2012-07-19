@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CEntropy.cpp					Entropy pool gathering and reading
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2002					Initial
+	software@axantum.com 			2002					Initial
 */
 #include	"StdAfx.h"
 #include	"CEntropy.h"
@@ -44,7 +44,7 @@
 /// random number generator. At that time it was new, and it was not quite clear how users would
 /// react to such a use. At this time, 2006, there has been no weaknesses spotted and it seems
 /// reasonable to use the Crypto API instead of this homegrown. Also, it's been a FAQ about why
-/// AxCrypt consumes memory and processor time even when not idle, and that's caused more grief
+/// Ax Crypt consumes memory and processor time even when not idle, and that's caused more grief
 /// than any possible kudos received due to the careful design of the entropy generator. So, as
 /// a first step, we introduce a new default behavior which is to check for a new registry value,
 /// and if it says TRUE we revert back to the old behavior, otherwise we shunt all the entropy
@@ -63,7 +63,6 @@ CEntropy::UseEntropyPool() {
     return false;
 }
 
-
 //
 //
 //  Constructor - load from szRegKey and szRegSubKey if given.
@@ -80,7 +79,7 @@ CEntropy::CEntropy(HKEY hKey, LPCTSTR szRegSubKey) {
 
 	m_pEntropyPool = new BYTE[ENTROPY_POOL_SIZE];
     ASSPTR(m_pEntropyPool);
-    
+
 	m_iReadIndex = m_iWriteIndex = 0;
 
     // New behavior is to use the Windows API
@@ -194,7 +193,7 @@ CEntropy::Stop() {
 		CAssert(CloseHandle(m_hFlipperThread)).Sys(MSG_SYSTEM_CALL, _T("CEntropy::Stop [CloseHandle(m_hFlipperThread)]")).Throw();
 		m_hFlipperThread = NULL;
 	}
-    
+
     // ...and stop the User Entropy Thread as well
 	if (m_hUserEntropyThread != NULL) {
 		CAssert(SetEvent(m_hUserEntropyEvent)).Sys(MSG_SYSTEM_CALL, _T("CEntropy::Stop [SetEvent(m_hUserEntropyEvent)]")).Throw();
@@ -524,7 +523,7 @@ CEntropy::UserEntropyThread() {
     do {
 	    POINT stNewPoint;
 	    BYTE oNewPointHash, oNewWindowsHash;
-	    
+
 	    GetCursorPos(&stNewPoint);
 	    oNewPointHash = ByteSumHash(&stNewPoint, sizeof stNewPoint);
 

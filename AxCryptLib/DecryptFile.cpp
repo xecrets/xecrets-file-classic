@@ -19,7 +19,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -61,7 +61,7 @@ namespace axcl {
         }
     };
 
-    /// \brief Parse AxCrypt Meta information/headers
+    /// \brief Parse Ax Crypt Meta information/headers
     /// Read and parses headers into a CAxCryptMeta object. Sends nothing
     /// downstream.
     class CPipeAxCryptDecryptMeta : public AxPipe::CFilterBlock {
@@ -170,7 +170,7 @@ namespace axcl {
 
                 // Get the length of the header data, following the header-header
                 size_t cbHeaderData = CAxCryptMeta::GetHeaderDataLen((CAxCryptMeta::SHeader *)apSeg->PtrRd());
-            
+
                 // Get extra data - do not ask for zero bytes from In(), it'll get all available.
                 pSegHeaderData = cbHeaderData ? In(cbHeaderData) : new AxPipe::CSeg(0);
                 if (pSegHeaderData->Len() != cbHeaderData) {
@@ -220,7 +220,7 @@ namespace axcl {
         /// \brief The main filter override
         ///
         /// Process the input, which is restricted to a single file at this point
-        /// and it must start with the AxCrypt GUID, so any preceeding
+        /// and it must start with the Ax Crypt GUID, so any preceeding
         /// data must be discarded before getting here.
         void InFilter() {
             // We call Sync(), ensuring that any pending Close() operation finishes. We then
@@ -239,13 +239,12 @@ namespace axcl {
         }
     };
 
-    /// \brief Parse AxCrypt Meta information/headers
+    /// \brief Parse Ax Crypt Meta information/headers
     /// Reads and buffers data, parsing headers into a CAxCryptMeta object.
     /// Sends the raw data downstream, including the headers.
     class CPipeAxCryptMeta : public CPipeAxCryptDecryptMeta {
         typedef CPipeAxCryptDecryptMeta base;
 
-        
         /// \brief Push back a segment that we've already read.
         void InPush(AxPipe::CSeg *apSeg) {
             if (m_apSeg.get() && m_apSeg->Len()) {
@@ -259,7 +258,7 @@ namespace axcl {
         /// \brief The main filter override
         ///
         /// Process the input, which may consist of several appended encrypted
-        /// files, but it must start with the AxCrypt GUID, so any preceeding
+        /// files, but it must start with the Ax Crypt GUID, so any preceeding
         /// data must be discarded before getting here.
         void InFilter() {
             while (true) {
@@ -284,7 +283,7 @@ namespace axcl {
                     // Something bad happened when passing the signal.
                     return;
                 }
-     
+
                 // We start by re-generating the data we've cached as headers, as later stages may need it.
                 // An CAutoSeg is like a CSeg except that it calls Release() when it destructs,
                 // thus it can be used when premature exits from the function occur for example.
@@ -293,7 +292,7 @@ namespace axcl {
 
                 // We're done with the need for exclusive access now.
                 aLock.ReleaseLock();
-                
+
                 Pump(apSeg->AddRef());           // Since we're keeping apSeg around we need to add a reference
                 if (GetErrorCode()) {
                     // Something bad happened when passing the signal.
@@ -301,7 +300,7 @@ namespace axcl {
                 }
 
                 axcl::uint64 cb = m_pDecryptMeta->GetStreamSize();
-                
+
                 // Now just pass through the rest of the data. Requesting zero means - take what we get.
                 // We only read just enough and continue reading again if we have more to read.
                 while (cb && (apSeg = In(0)).get() && apSeg->Len()) {
@@ -328,7 +327,7 @@ namespace axcl {
         }
     };
 
-    /// \brief AxCrypt-specific derivation of HMAC_SHA1 calculation
+    /// \brief Ax Crypt-specific derivation of HMAC_SHA1 calculation
     ///
     /// \see AxPipe::Stock::CPipeHMAC_SHA1
     class CPipeHMAC_SHA1_128 : public AxPipe::Stock::CPipeHMAC_SHA1<128> {
@@ -395,7 +394,7 @@ namespace axcl {
         }
     };
 
-    /// \brief Skip the headers from an AxCrypt stream
+    /// \brief Skip the headers from an Ax Crypt stream
     ///
     /// Using info from the meta data about the offset to
     /// the data, skip bytes before starting to pass it
@@ -536,7 +535,7 @@ namespace axcl {
         }
     };
 
-    /// \brief Inflate (decompress) with ZLib for AxCrypt
+    /// \brief Inflate (decompress) with ZLib for Ax Crypt
     ///
     /// Only inflate if the stream was compressed - otherwise
     /// just pass through. Get the compress flag through the
@@ -602,7 +601,7 @@ namespace axcl {
         }
     };
 
-    /// \brief AxCrypt specific derivation which calls back for the name of the file
+    /// \brief Ax Crypt specific derivation which calls back for the name of the file
     ///
     /// The output file name is recived via a callback.
     class CDecryptSinkFile : public AxPipe::CSinkFileIO {
@@ -671,7 +670,6 @@ namespace axcl {
             return base::OutClose();
         }
     };
-
 } // namespace axcl
 
 /// \brief Decrypt a file to plain-text, using the provided parameters

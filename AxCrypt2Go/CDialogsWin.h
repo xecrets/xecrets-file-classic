@@ -22,7 +22,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 /*! \mainpage CDialogsWin.h - Various dialogs for AxCrypt2Go
@@ -83,7 +83,6 @@ public:
         StringCbPrintf(szStarDotPattern, sizeof szStarDotPattern, _T("*%s"), &CFileFilter::GetDefaultExtension);
         AddFilter(sDisplayText, szStarDotPattern);
     }
-
 
 public:
     void AddFilter(const axcl::tstring& sDisplayText, const axcl::tstring& sPattern) {
@@ -276,7 +275,7 @@ private:
     void OnClose() {
         m_bCancel = true;
     }
- 
+
 private:
     /// \brief There is no OK button, so this can only mean Close
     LRESULT OnOKCancel(UINT /*wNotifyCode*/, int /*wID*/, HWND /*hWndCtl*/) {
@@ -380,7 +379,7 @@ protected:
     }
 
 protected:
-    /// \brief Get a pointer to the passphrase in it's Ansi representation - filtered for AxCrypt 1.x legal chars
+    /// \brief Get a pointer to the passphrase in it's Ansi representation - filtered for Ax Crypt 1.x legal chars
     /// \param sPassphrase a pointer to a buffer (or NULL)
     /// \param ccPassphrase the size of the buffer
     /// \return The number of chars needed - if ccPassphrase == 0, sPassphrase is not used
@@ -433,7 +432,6 @@ public:
     BEGIN_MSG_MAP_EX(CPassphraseBase<T>)
         COMMAND_ID_HANDLER_EX(IDC_BTN_KEYFILE, OnButtonKeyFile)
     END_MSG_MAP()
-
 };
 
 class CEncryptPassphrase : public CPassphraseBase<CEncryptPassphrase> {
@@ -486,7 +484,7 @@ public:
     }
 
     enum { IDD = IDD_ENCRYPT_PASSPHRASE };
- 
+
     BEGIN_DDX_MAP(CEncryptPassphrase)
         DDX_TEXT(IDC_EDIT_PASSPHRASE_1, m_Passphrase1);
         DDX_TEXT(IDC_EDIT_PASSPHRASE_2, m_Passphrase2);
@@ -499,7 +497,7 @@ public:
         COMMAND_ID_HANDLER_EX(IDCANCEL, OnOKCancel)
         CHAIN_MSG_MAP(base)
     END_MSG_MAP()
- 
+
     LRESULT OnInitDialog(HWND /*hWnd*/, LPARAM /*lParam*/) {
         SetDlgItemText(IDC_STATIC_ENTER_PASSPHRASE, _("CEncryptPassphrase|Enter a passphrase and optionally a key-file"));
         SetDlgItemText(IDC_STATIC_GRP_PASSPHRASE, _("CEncryptPassphrase|Passphrase"));
@@ -517,11 +515,11 @@ public:
         ::SetFocus(GetDlgItem(IDC_EDIT_PASSPHRASE_1));
         return TRUE;
     }
- 
+
     void OnClose() {
         EndDialog(IDCANCEL);
     }
- 
+
     LRESULT OnOKCancel(UINT /*wNotifyCode*/, int wID, HWND /*hWndCtl*/) {
         if (wID == IDOK && !DoDataExchange(DDX_SAVE)) {
             return TRUE;
@@ -530,7 +528,6 @@ public:
             return FALSE;
         }
     }
-
 };
 
 class CDecryptPassphrase : public CPassphraseBase<CDecryptPassphrase> {
@@ -581,7 +578,7 @@ public:
 public:
 
     enum { IDD = IDD_DECRYPT_PASSPHRASE };
- 
+
     BEGIN_DDX_MAP(CDecryptPassphrase)
         DDX_TEXT(IDC_EDIT_PASSPHRASE_1, m_Passphrase1);
     END_DDX_MAP()
@@ -593,7 +590,7 @@ public:
         COMMAND_ID_HANDLER_EX(IDCANCEL, OnOKCancel)
         CHAIN_MSG_MAP(base)
     END_MSG_MAP()
- 
+
     LRESULT OnInitDialog(HWND /*hWnd*/, LPARAM /*lParam*/) {
         SetDlgItemText(IDC_STATIC_ENTER_PASSPHRASE, _("CDecryptPassphrase|Enter a passphrase and optionally a key-file"));
         SetDlgItemText(IDC_STATIC_GRP_PASSPHRASE, _("CDecryptPassphrase|Passphrase"));
@@ -610,11 +607,11 @@ public:
         ::SetFocus(GetDlgItem(IDC_EDIT_PASSPHRASE_1));
         return TRUE;
     }
- 
+
     void OnClose() {
         EndDialog(IDCANCEL);
     }
- 
+
     LRESULT OnOKCancel(UINT /*wNotifyCode*/, int wID, HWND /*hWndCtl*/) {
         if (wID == IDOK && !DoDataExchange(DDX_SAVE)) {
             return TRUE;
@@ -623,13 +620,12 @@ public:
             return FALSE;
         }
     }
-
 };
 
 class CAboutDlg : public CDialogImpl<CAboutDlg> {
 public:
     enum { IDD = IDD_ABOUTBOX };
- 
+
     BEGIN_MSG_MAP(CAboutDlg)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
         MESSAGE_HANDLER(WM_CLOSE, OnClose)
@@ -637,7 +633,7 @@ public:
         COMMAND_ID_HANDLER(IDOK, OnOKCancel)
         COMMAND_ID_HANDLER(IDCANCEL, OnOKCancel)
     END_MSG_MAP()
- 
+
     LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
     {
         AxLib::CVersion ver;
@@ -646,7 +642,7 @@ public:
         StringCbPrintf(szMsg, sizeof szMsg, _("About %s"), szNameVersion);
         SetWindowText(szMsg);
         delete[] szNameVersion;
-        
+
         _TCHAR *sz;
         ASSPTR(sz = ver.newLegalCopyright());
         SetDlgItemText(IDC_COPYRIGHT, sz);
@@ -677,7 +673,7 @@ public:
         EndDialog(IDCANCEL);
         return 0;
     }
- 
+
     LRESULT OnOKCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
     {
         EndDialog(wID);

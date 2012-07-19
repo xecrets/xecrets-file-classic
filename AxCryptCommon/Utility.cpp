@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	Utility.cpp						Various context-free utility functions.
-	
+
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2002-08-05				Rel 1.2	Initial
+	software@axantum.com 			2002-08-05				Rel 1.2	Initial
                                     2002-08-16              RegCloseKey instead of CloseHandle
                                                             Additional functions in CRegistry
 
@@ -34,7 +34,7 @@
 
 // Include and compile the multi-monitor stubs here.
 #define COMPILE_MULTIMON_STUBS
-#include "multimon.h" 
+#include "multimon.h"
 
 #include    "../AxWinLib/AxAssert.h"
 #define     AXLIB_ASSERT_FILE "Utility.cpp"
@@ -85,7 +85,7 @@ static UINT GetSizePidl(LPCITEMIDLIST pidl) {
 
 LPITEMIDLIST CopyPidl(IMalloc *pMalloc, LPCITEMIDLIST pidl) {
     UINT cb = 0;
-	
+
     // Calculate size of list.
     cb = GetSizePidl(pidl);
 
@@ -203,5 +203,3 @@ void CenterWindow(HWND hwnd, bool fDesktop) {
     // Move the window to its new location
     ASSAPI(SetWindowPos(hwnd, HWND_TOP, nX, nY, 0, 0, SWP_NOSIZE));
 }
-
-

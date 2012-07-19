@@ -5,7 +5,7 @@
 
     @(#) $Id$
 
-    axcl - AxCrypt support classes and types
+    axcl - Ax Crypt support classes and types
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -21,7 +21,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 extern "C" {
@@ -41,7 +41,7 @@ namespace axcl {
     const int chunkSize = 0x100000;           ///< The chunk size we work in.
     #endif
 
-    /// \brief The AxCrypt GUID
+    /// \brief The Ax Crypt GUID
     extern byte guidAxCryptFileIdInverse[16];
 
     /// \brief Custom error codes from ::AxPipe -derived classes.
@@ -52,7 +52,7 @@ namespace axcl {
         ERROR_CODE_ABORT,                       ///< User cancelled whilst working
         ERROR_CODE_MORE,                        ///< Not an error - want a bigger dialog
         ERROR_CODE_WRONGKEY,                    ///< The key provided does not work for this data
-        AXCRYPT_CODE_DATA,                      ///< Not an error - we found AxCrypt data status
+        AXCRYPT_CODE_DATA,                      ///< Not an error - we found Ax Crypt data status
     };
 
     /// \brief Simple helper to XOR two memory blocks to a third.
@@ -66,7 +66,7 @@ namespace axcl {
     }
 
     /// \brief A source for decryption, also reporting progress
-    /// This class 
+    /// This class
     class CSourceProgressCancel : public AxPipe::CSourceFileIO {
         typedef AxPipe::CSourceFileIO base;
 

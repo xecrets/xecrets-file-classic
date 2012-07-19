@@ -11,7 +11,7 @@
 
     @(#) $Id$
 
-    axcl - AxCrypt support classes and types
+    axcl - Ax Crypt support classes and types
 
     Copyright (C) 2008 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -27,12 +27,12 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 #include <assert.h>
 
-#ifndef ASSCHK 
+#ifndef ASSCHK
 /// \brief Assert any custom condition
 ///
 /// Do the if to ensure that the condition is evaluted before the call AssFunc, so that parameters

@@ -15,7 +15,7 @@ to download and install software from the Internet and basic use of Windows.
 
 While the installation is in English, the program is translated into many languages - hopefully yours.
 
-If you would like to contribute a translation, please send an e-mail to mailto:axcrypt@axantum.com .
+If you would like to contribute a translation, please send an e-mail to mailto:software@axantum.com .
 
 In addition to basic use, AxCrypt can also be integrated into IT management solutions and other software.
 

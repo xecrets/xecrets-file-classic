@@ -1,10 +1,10 @@
 #pragma once
 /*! \file
-    \brief AxDecrypt - Stand-alone AxCrypt-decrypter and self-extractor.
+    \brief AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
 
     @(#) $Id$
 
-    AxDecrypt - Stand-alone AxCrypt-decrypter and self-extractor.
+    AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
 
     Copyright (C) 2004 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -20,7 +20,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 
@@ -67,7 +67,7 @@
 //#undef _CATCH                               /// Dummy to avoid exception code included
 //#undef _CATCH_ALL                           /// Dummy to avoid exception code included
 //#undef _CATCH_END                           /// Dummy to avoid exception code included
-//#undef _RAISE                               /// Dummy to avoid exception code included    
+//#undef _RAISE                               /// Dummy to avoid exception code included
 //#undef _RERAISE                             /// Dummy to avoid exception code included
 //#undef _THROW0                              /// Dummy to avoid exception code included
 //#undef _THROW1                              /// Dummy to avoid exception code included

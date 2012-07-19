@@ -3,7 +3,7 @@
 /*
     @(#) $Id$
 
-    AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
     Server or Web Storage of Document Files.
 
     Copyright (C) 2004 Svante Seleborg/Axantum Software AB, All rights reserved.
@@ -20,7 +20,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
     CLicMgr.h                    Manage licenses
 */
@@ -37,7 +37,7 @@ class CLicMgr {
     static const unsigned int ShortRbits = 55;// The shortened hash
     static const int SBits = 128;           // The size of the s parameter from the elliptic curve used
     SHORTVERIFY<SECDSA<ECP, SHA, ShortRbits> > m_Verifier;
-    
+
     map<axpl::ttstring, axpl::ttstringpair> m_smspValidLic; // A map of validated license types along with the info
     axpl::ttstring m_sLastErrorMsg;                 // The last error message...
 public:

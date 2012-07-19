@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CSha1.cpp						Special purpose wrapper for Steve Reids SHA-1 code.
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
 
 */
 #include	"StdAfx.h"
@@ -91,7 +91,7 @@ CSha1::GetKeyHash(BYTE *poMsg, size_t iLen, TCHAR *szFileName) {
 	// Get the final hash
 	THash utHash;
 	SHA1Final((BYTE *)&utHash, m_putContext);
-	
+
 	// Copy the key hash before returning a valid pointer.
 	*putKeyHash = *utHash.KeyHash();
 	return putKeyHash;

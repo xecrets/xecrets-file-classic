@@ -3,7 +3,7 @@
 
 @(#) $Id$
 
-AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 Server or Web Storage of Document Files.
 
 Copyright (C) 2009 Svante Seleborg/Axon Data, All rights reserved.
@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License along with thi
 if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 Boston, MA 02111-1307 USA
 
-The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
 #include "StdAfx.h"
@@ -104,7 +104,7 @@ INT_PTR CALLBACK DlgProcRegistration(
                                          }
 }
 
-/// \brief Get a Windows version string formatted for AxCrypt registration
+/// \brief Get a Windows version string formatted for Ax Crypt registration
 wstring
 GetWindowsVersionString() {
     auto_ptr<AxLib::IWinVersion> pIWinVersion(AxLib::IWinVersion::New());

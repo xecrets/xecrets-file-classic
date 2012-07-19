@@ -11,7 +11,7 @@
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free AxCrypt for the road.
+    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -27,7 +27,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -83,7 +83,7 @@ public:
 
 extern CMyAppModule _Module;
 
-/// \brief Wrap the system icon-list slightly to allow special handling of the AxCrypt icon
+/// \brief Wrap the system icon-list slightly to allow special handling of the Ax Crypt icon
 class CMyImageList {
 private:
     /// \brief This maps System Image List indices to our private indices.
@@ -101,7 +101,7 @@ public:
     }
 
 public:
-    /// \brief Dupliate the image-list and get the AxCrypt-icon
+    /// \brief Dupliate the image-list and get the Ax Crypt-icon
     void Init(HIMAGELIST hSystemImageList) {
         // This is complicated. We need to make a clone of the system image list, and then provide
         // a map between our indices and the 'real' indices. We start by duplicating the current
@@ -114,11 +114,11 @@ public:
             mapSystemToMy[i] = i;
         }
 
-        // Get the dimensions of the icon in the system image-list, so we can get the same for the AxCrypt icon
+        // Get the dimensions of the icon in the system image-list, so we can get the same for the Ax Crypt icon
         int cx, cy;
         ASSCHK(::ImageList_GetIconSize(m_hMyImageList, &cx, &cy) == TRUE, _T("ImageList_GetIconSize()"));
 
-        // get the AxCrypt icon from our loaded module
+        // get the Ax Crypt icon from our loaded module
         HICON hAxCryptIcon = (HICON)::LoadImage(_Module.GetModuleInstance(), MAKEINTRESOURCE(IDR_MAINFRAME), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR);
         ASSAPI(hAxCryptIcon != NULL);
 
@@ -126,7 +126,7 @@ public:
         ASSCHK(nAxCrypt2GoIconIndex == n, _T("ImageList_ReplaceIcon() failed"));
         ASSAPI(::DestroyIcon(hAxCryptIcon));
 
-        // Finally, insert the dummy-mapping of -1 to our index for the AxCrypt icon
+        // Finally, insert the dummy-mapping of -1 to our index for the Ax Crypt icon
         mapSystemToMy[-1] = nAxCrypt2GoIconIndex;
     }
 
@@ -214,9 +214,8 @@ public:
 	}
 };
 
-
-class CMainFrame : 
-            public CFrameWindowImpl<CMainFrame>, 
+class CMainFrame :
+            public CFrameWindowImpl<CMainFrame>,
 			public CUpdateUI<CMainFrame>,
 			public CMessageFilter,
 			public CIdleHandler
@@ -266,7 +265,6 @@ public:
 
     CMainFrame() : m_nSort(0), m_bReverseSort(false), m_bFirstIdle(true) {
         m_hChangeNotification = INVALID_HANDLE_VALUE;
-
     }
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg)

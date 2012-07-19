@@ -9,7 +9,7 @@
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free AxCrypt for the road.
+    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -25,7 +25,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
     Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:axcrypt@axantum.com and http://axcrypt.sourceforge.net
+    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 
     Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -101,10 +101,10 @@ CShellMgr::GetName(LPSHELLFOLDER lpsf, LPITEMIDLIST lpi, DWORD dwFlags, LPTSTR l
             ::CoTaskMemFree(str.pOleStr);
             break;
         case STRRET_OFFSET:
-            ASSCHK(SUCCEEDED(StringCbCopy(lpFriendlyName, cbFriendlyName, (LPTSTR)lpi + str.uOffset)), _T("StringCbCopy() failed")); 
+            ASSCHK(SUCCEEDED(StringCbCopy(lpFriendlyName, cbFriendlyName, (LPTSTR)lpi + str.uOffset)), _T("StringCbCopy() failed"));
             break;
         case STRRET_CSTR:
-            ASSCHK(SUCCEEDED(StringCbCopy(lpFriendlyName, cbFriendlyName, A2CT(str.cStr))), _T("StringCbCopy() failed")); 
+            ASSCHK(SUCCEEDED(StringCbCopy(lpFriendlyName, cbFriendlyName, A2CT(str.cStr))), _T("StringCbCopy() failed"));
             break;
         default:
             bSuccess = FALSE;
@@ -182,7 +182,6 @@ DWORD CShellMgr::WorkerEncrypt(WorkerThreadParam *pParam) {
 
     _TCHAR szBuf[MAX_PATH];
     if (GetName(lpsfParent, lpi, SHGDN_FORPARSING, szBuf, sizeof szBuf)) {
-
         _TCHAR szFolder[MAX_PATH];
         ASSCHK(SUCCEEDED(StringCbCopy(szFolder, sizeof szFolder, szBuf)), _T("StringCbCopy() failed"));
         ASSCHK(PathRemoveFileSpec(szFolder), _T("PathRemoveFileSpec() did not find a file name to remove"));
@@ -205,7 +204,6 @@ DWORD CShellMgr::WorkerDecrypt(WorkerThreadParam *pParam) {
 
     _TCHAR szBuf[MAX_PATH];
     if (GetName(lpsfParent, lpi, SHGDN_FORPARSING, szBuf, sizeof szBuf)) {
-
         _TCHAR szFolder[MAX_PATH];
         ASSCHK(SUCCEEDED(StringCbCopy(szFolder, sizeof szFolder, szBuf)), _T("StringCbCopy() failed"));
         ASSCHK(PathRemoveFileSpec(szFolder), _T("PathRemoveFileSpec() did not find a file name to remove"));
@@ -297,7 +295,7 @@ CShellMgr::DoContextMenu(HWND hWnd, LPSHELLFOLDER lpsfParent, LPITEMIDLIST lpi, 
     UINT idCmdShellFirst = idCmdFirst = 100;
     ASSCOM(hr = spContextMenu->QueryContextMenu(hMenuPopup, indexMenu, idCmdShellFirst, 0x7fff, CMF_NORMAL | CMF_EXPLORE));
     idCmdFirst = HRESULT_CODE(hr);
-    
+
     UINT idCmd = ::TrackPopupMenu(hMenuPopup, TPM_LEFTALIGN | TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, hWnd, NULL);
 
     // If something was choosen...

@@ -1,7 +1,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	CAssert.cpp						Exception and Message handling
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
 									2001-12-23				Added logging support
 									2002-02-11				Use CHKey in LogLevel to fix handle leak
                                     2002-08-11              Rel 1.2
@@ -70,7 +70,7 @@ static void AllocTls(void) {
 //	The third argument is the previous message, if any.
 //
 //	Return the generated message.
-//	
+//
 CStrPtr
 CMessage::Msg(DWORD dwFlag, DWORD dwMsgID, CStrPtr utStr1, CStrPtr utStr2) {
     // This is initialized once per process start/dll load, early.
@@ -141,7 +141,7 @@ CMessage::Msg(DWORD dwFlag, DWORD dwMsgID, CStrPtr utStr1, CStrPtr utStr2) {
     //
     //	Note to developers: Newer versions of the message compiler produces Unicode messages, there
     //	is no switch do disable this. This in turn, causes messages to be erroneously formatted.
-    //	Currently AxCrypt is not Unicode-enabled, thus please use the old message compiler. The compiler
+    //	Currently Ax Crypt is not Unicode-enabled, thus please use the old message compiler. The compiler
     //	may reside in for example Microsoft SDK\bin or Microsoft Visual Studio\VC98\bin. A good (for
     //	this purpose) version is dated 1998-04-20 and is named mc.exe.
     //

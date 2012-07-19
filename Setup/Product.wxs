@@ -5,7 +5,7 @@
 <?if $(var.Platform) = "x64" ?>
 <?define UpgradeCode="{0EDC72B5-C3D7-4511-9183-C3A3EDDB8646}" ?>
 <?endif?>
-<!-- AxCrypt releases are always released as major upgrades, i.e. a version number change + Product Code change. -->
+<!-- Releases are always released as major upgrades, i.e. a version number change + Product Code change. -->
 <?include $(var.Version.IncludeDir)\Version.wxi ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">

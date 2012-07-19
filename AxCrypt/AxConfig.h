@@ -3,7 +3,7 @@
 /*
     @(#) $Id$
 
-	AxCrypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -20,12 +20,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 	AxConfig.h						Some constants and version numbers etc
 
 	E-mail							YYYY-MM-DD				Reason
-	axcrypt@axondata.se 			2001					Initial
+	software@axantum.com 			2001					Initial
 
 */
 // Define to use VC's debug heap instead.
@@ -41,7 +41,7 @@
 //
 //	Use small values in debug, large values for effiency in release builds.
 //
-//	As of Beta 5, 2001-12-16, Each active instance of AxCrypt requires approx 1K of secure heap.
+//	As of Beta 5, 2001-12-16, Each active instance of Ax Crypt requires approx 1K of secure heap.
 //
 #ifdef	_DEBUG
 #define		MAX_VIEW_SIZE		(64*1024)
