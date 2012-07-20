@@ -9,7 +9,7 @@
     <PropertyGroup>
         <Major>1</Major>
         <Minor>7</Minor>
-        <SpecialBuild>Beta</SpecialBuild>
+        <SpecialBuild></SpecialBuild>
     </PropertyGroup>
 
     <PropertyGroup>

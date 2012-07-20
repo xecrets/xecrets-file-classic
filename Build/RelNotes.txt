@@ -1,5 +1,9 @@
 @(#) $Id$
 
+1.7.2931 Release 2012-07-20
+Minor refactorizations and feature enhancement, including OpenCandy
+dependency update.
+
 1.7.2867 Release 2011-12-04
 This is a major refactorisation of the build and the dependency handling.
 We now fully support building AxCrypt with 100% free tools such as
