@@ -1,5 +1,8 @@
 @(#) $Id$
 
+1.7.x
+Added Czech translation - thank you Miroslav Geisselreiter!
+
 1.7.2931 Release 2012-07-20
 Minor refactorizations and feature enhancement, including OpenCandy
 dependency update.
