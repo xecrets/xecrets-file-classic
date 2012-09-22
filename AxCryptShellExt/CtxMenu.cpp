@@ -1121,6 +1121,10 @@ CShellExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT i
 	            InsertMenu(hLanguageSubMenu, -1, MF_STRING | MF_BYPOSITION, idCmd, CMessage().AppMsg(GetMenuMsgId(m_Verbs, idCmd - idCmdFirst)).GetMsg());
 	            idCmd++;
 
+                SetVerb(m_Verbs, VERB_CZECH, idCmd - idCmdFirst);
+                InsertMenu(hLanguageSubMenu, -1, MF_STRING | MF_BYPOSITION, idCmd, CMessage().AppMsg(GetMenuMsgId(m_Verbs, idCmd - idCmdFirst)).GetMsg());
+                idCmd++;
+
 #ifdef _DEBUG
                 SetVerb(m_Verbs, VERB_DEBUG, idCmd - idCmdFirst);
 	            InsertMenu(m_hMenu, -1, MF_STRING | MF_BYPOSITION, idCmd, CMessage().AppMsg(GetMenuMsgId(m_Verbs, idCmd - idCmdFirst)).GetMsg());
