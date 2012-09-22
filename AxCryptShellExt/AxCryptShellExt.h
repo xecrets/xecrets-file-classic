@@ -276,6 +276,7 @@ private:
     DWORD DoBrazilPortuguese(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
     DWORD DoPolish(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
     DWORD DoRussian(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
+    DWORD DoCzech(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
 
     DWORD DoKeyFileHelper(HWND hProgressWnd, const TCHAR *szFolder);
 public:

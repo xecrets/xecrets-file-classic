@@ -29,6 +29,7 @@
     <None Include="MessageCompiler.xml" />
     <None Include="MessageCompiler.props" />
     <None Include="AddLanguage.vb" />
+    <None Include="AddLanguage\AddLanguage.vsmacros" />
   </ItemGroup>
   <ItemGroup>
     <MessageCompiler Include="AxCryptTexts.mc">

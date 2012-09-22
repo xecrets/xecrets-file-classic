@@ -174,6 +174,7 @@
       <FileType>Document</FileType>
     </MessageCompiler>
     <None Include="AddLanguage.vb" />
+    <None Include="AddLanguage\AddLanguage.vsmacros" />
     <None Include="MessageCompiler.props">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

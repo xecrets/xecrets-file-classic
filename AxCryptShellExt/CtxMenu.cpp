@@ -102,7 +102,8 @@ or folder window will re-create the terminated process.
 #define VERB_SWEDISH    "swedish"           ///< Select user interface language to swedish
 #define VERB_BRAZILPORTUGUESE "brazilportuguese"    ///< Select user interface language to brazilian portuguese
 #define VERB_POLISH     "polish"            ///< Select user interface language to polish
-#define VERB_RUSSIAN    "russian"            ///< Select user interface language to russian
+#define VERB_RUSSIAN    "russian"           ///< Select user interface language to russian
+#define VERB_CZECH      "czech"             ///< Select user interface language to russian
 
 //
 struct CShellExt::SVerbs CShellExt::m_Verbs[] = {
@@ -138,6 +139,7 @@ struct CShellExt::SVerbs CShellExt::m_Verbs[] = {
     {VERB_BRAZILPORTUGUESE, INF_MENU_BRAZILPORTUGUESE, HLP_MENU_LANGUAGE, 0, &CShellExt::DoBrazilPortuguese},
     {VERB_POLISH, INF_MENU_POLISH, HLP_MENU_LANGUAGE, 0, &CShellExt::DoPolish},
     {VERB_RUSSIAN, INF_MENU_RUSSIAN, HLP_MENU_LANGUAGE, 0, &CShellExt::DoRussian},
+    {VERB_CZECH, INF_MENU_CZECH, HLP_MENU_LANGUAGE, 0, &CShellExt::DoCzech},
     {"", 0, 0, -1, &CShellExt::DoNothing}
 };
 
@@ -2035,6 +2037,11 @@ CShellExt::DoPolish(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFol
 DWORD
 CShellExt::DoRussian(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam) {
     return DoLanguage(eventId, 1049);
+}
+
+DWORD
+    CShellExt::DoCzech(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam) {
+        return DoLanguage(eventId, 1029);
 }
 
 static TCHAR szBruteForce[80]; // receives checkpoint/starting value
