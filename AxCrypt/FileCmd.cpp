@@ -194,9 +194,17 @@ public:
             buffer.resize(dwBufferSize);
         }
 
-        // If we can't get network info, assume local and then we know that it's not read-only
+        // If we can't get network info, assume local and then check if the volume is readonly. Apparently it's possible to open
+        // a file with GENERIC_WRITE on a volume such as a USB-drive that is readonly...
         if (status != NO_ERROR) {
-            return false;
+            CFileName fileName(m_szFileName.c_str());
+
+            DWORD dwFileSystemFlags;
+            LPCTSTR rootDir = fileName.GetRootDir();
+            if (!GetVolumeInformation(rootDir, NULL, 0, NULL, NULL, &dwFileSystemFlags, NULL, 0)) {
+                return false;
+            }
+            return (dwFileSystemFlags & FILE_READ_ONLY_VOLUME) == FILE_READ_ONLY_VOLUME;
         }
 
         // There appears to be no reasonable way to actually check the 'share permissions' of a network share! NetShareGetInfo at level 2
@@ -2208,7 +2216,7 @@ DWORD CmdAddKey(CCmdParam *pCmdParam) {
     //  Filter the key using the same criteria as the the Password entry
     //  dialog. Remember about Unicode and Ansi...
     //
-    std::string s = axpl::t2s(pCmdParam->szParam1);
+    std::string s = axpl::t2s(std::wstring(pCmdParam->szParam1));
     const char *pNxtInChar = s.c_str();
 
     // Ensure that szFilterKey is deallocated on exit of this function.
@@ -2703,7 +2711,7 @@ CmdBruteForce(CCmdParam *pCmdParam) {
 
         int state;
         if (!pCmdParam->szParam2.empty()) {
-            std::string s = axpl::t2s(pCmdParam->szParam2);
+            std::string s = axpl::t2s(std::wstring(pCmdParam->szParam2));
             const char *szParamTry = s.c_str();
             auto_ptr<char> szCheckPointTry(new char[strlen(szParamTry) + 1]);
             ASSPTR(szCheckPointTry.get());

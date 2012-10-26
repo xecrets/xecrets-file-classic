@@ -109,7 +109,7 @@ INT_PTR CALLBACK DlgProcLicense(
 
             if (fChange) {
                 if (gpLicMgr->AddChkType(_TT("Full"), szLicensee, szSignature)) {
-                    pLicDlgInfo->sLicensee = axpl::t2s(szLicensee);
+                    pLicDlgInfo->sLicensee = axpl::t2s(std::wstring(szLicensee));
                     pLicDlgInfo->sSignature = szSignature;
                     EndDialog(hwndDlg, TRUE);
                     break;

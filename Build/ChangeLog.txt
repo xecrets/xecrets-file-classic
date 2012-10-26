@@ -2,6 +2,8 @@
 
 1.7.x.0 Release 2012-xx-xx
 - Add: Support for Czech language texts.
+- Bug: Assertion in Debug mode due to const string iterator change in VS 2010.
+- Bug: Did not detect Read-Only volumes such as USB drives with hardware Write Lock.
 
 1.7.2931.0 Release 2012-07-20
 - Add: Support for disabling passphrase cache via registry settings.
