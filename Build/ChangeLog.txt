@@ -1,6 +1,6 @@
 @(#) $Id$
 
-1.7.x.0 Release 2012-xx-xx
+1.7.2976.0 Release 2012-11-12
 - Add: Support for Czech language texts.
 - Bug: Assertion in Debug mode due to const string iterator change in VS 2010.
 - Bug: Did not detect Read-Only volumes such as USB drives with hardware Write Lock.
