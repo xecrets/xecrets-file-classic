@@ -22,7 +22,7 @@ requirements. This list may be incomplete, please let me know if this is the cas
   Axantum build server builds. This is why you'll find some conditional code in various MSBuild project files.
   
 - The end-result is not 100% binary identical to the released binaries, since they are timestamped and digitally signed, as well as versioned in
-  the continuous integration build server setup by Axantum.
+  the continuous integration build server setup by Axantum Software AB.
 
 Tools and Dependencies Installation
 ===================================
