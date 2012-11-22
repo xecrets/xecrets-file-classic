@@ -24,10 +24,6 @@ requirements. This list may be incomplete, please let me know if this is the cas
 - The end-result is not 100% binary identical to the released binaries, since they are timestamped and digitally signed, as well as versioned in
   the continuous integration build server setup by Axantum.
 
-- There is one project in AxCrypt.sln that is not distributed as open source, 'Private.vcxproj'. Just remove this from the solution. This project
-  only contains things relevant to making the actual signed distribution by Axantum Software AB. It does not change any of the source code compiled
-  or the binary result (except to the extent that they are Authenticode signed with our private key, and that some identifying texts are substituted).
-
 Tools and Dependencies Installation
 ===================================
 
@@ -208,10 +204,6 @@ For Express:
   of AxCrypt, click OK and continue.
 - You'll get a warning about Setup.wixproj not being supported. Click OK and ignore...
 - ...and as a result a warning about not all projects being loaded correctly. Click OK and ignore.
-
-For all editions:
-
-- You'll get a warning about one or more projects not being loaded correctly. Click OK and ignore.
 
 Now you can build the solution.
 
