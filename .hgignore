@@ -1,0 +1,9 @@
+syntax: glob
+*.vcxproj.user
+*.opensdf
+*.sdf
+*.DotSettings
+*.suo
+Build/Version.txt
+Debug/*
+Release/*
