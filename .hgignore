@@ -7,3 +7,4 @@ syntax: glob
 Build/Version.txt
 Debug/*
 Release/*
+ipch/*
