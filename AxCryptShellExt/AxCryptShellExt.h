@@ -1,6 +1,6 @@
 #pragma once
 /*
-    @(#) $Id: ShellExt.h 1687 2009-04-09 14:09:51Z svante $
+    @(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.

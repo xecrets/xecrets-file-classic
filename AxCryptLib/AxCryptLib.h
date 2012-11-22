@@ -3,7 +3,7 @@
 /*! \file
     \brief AxCryptLib.h - An Ax Crypt support library
 
-    @(#) $Id: AxCryptLib.h 1177 2008-01-08 08:27:50Z svante $
+    @(#) $Id$
 
     AxCryptLib - An Ax Crypt support library
 

@@ -1,5 +1,5 @@
 /*
-    @(#) $Id: ShellExtInit.cpp 1401 2008-04-15 16:35:34Z svante $
+    @(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
