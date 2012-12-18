@@ -183,6 +183,7 @@
     <ClInclude Include="Base34Enc.h" />
     <ClInclude Include="BaseM.h" />
     <ClInclude Include="BaseMDec.h" />
+    <ClInclude Include="BaseMEnc.h" />
     <ClInclude Include="CLicMgr.h" />
     <ClInclude Include="CRestrictMgr.h" />
     <ClInclude Include="CTrialMgr.h" />
