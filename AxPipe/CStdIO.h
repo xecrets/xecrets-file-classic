@@ -115,7 +115,7 @@ public:
     virtual void Out(CSeg *pSeg) {
         size_t cbLen = fwrite(pSeg->PtrRd(), 1, pSeg->Len(), stdout);
         if (cbLen != pSeg->Len()) {
-            SetError(ERROR_CODE_GENERIC, _T("CSinkStdOut::fwrite failed [%s]"), strerror(errno));
+            SetError(ERROR_CODE_GENERIC, _T("CSinkStdOut::fwrite failed [%s]"), _tcserror(errno));
         }
     }
 };

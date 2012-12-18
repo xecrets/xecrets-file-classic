@@ -39,7 +39,7 @@ namespace AxPipe {
 
         /// \brief produce a XML-stream from an XMLite XML object
         class CSourceAxMLite : public CSourceMem {
-            std::string m_xml;                      ///< The string representation of the XML
+            axpl::ttstring m_xml;                      ///< The string representation of the XML
         public:
             CSourceAxMLite() : CSourceMem() {
             }

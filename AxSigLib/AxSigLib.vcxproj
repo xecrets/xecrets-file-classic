@@ -180,12 +180,14 @@
     <ClInclude Include="AxSigLib.h" />
     <ClInclude Include="Base34.h" />
     <ClInclude Include="Base34Dec.h" />
+    <ClInclude Include="Base34Enc.h" />
     <ClInclude Include="BaseM.h" />
     <ClInclude Include="BaseMDec.h" />
     <ClInclude Include="CLicMgr.h" />
     <ClInclude Include="CRestrictMgr.h" />
     <ClInclude Include="CTrialMgr.h" />
     <ClInclude Include="secdsa.h" />
+    <ClInclude Include="SSign.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SVerify.h" />
     <ClInclude Include="targetver.h" />
