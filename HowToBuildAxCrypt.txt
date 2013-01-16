@@ -37,7 +37,7 @@ Executive summary (details in respective section below):
 - Install 'Build Environments' from Windows Driver Kit 7.1 (or later at your own risk) and set AX_ATL=Install-path...
 - Install MSBuild.Community.Tasks from http://msbuildtasks.tigris.org/
 - Install Microsoft Visual C++ 2010 Express or Microsoft Visual Studio 2010 Standard Edition or better.
-- Install Windows Installer XML (WiX) toolset v3.5 (or later at your own risk)
+- Install Windows Installer XML (WiX) toolset v3.7 (or later at your own risk)
 - Start Visual Studio 2010, open the AxCrypt solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
@@ -190,7 +190,7 @@ Windows Installer XML (WiX) toolset
 WiX is required to build the MSI setup. There is support for building from Visual Studio Professional or better, but not from Express editions so if you're
 using Express you'll have to build from the command line (see below). You still need to install WiX.
 
-Get Windows Installer XML (WiX) toolset v3.5 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
+Get Windows Installer XML (WiX) toolset v3.7 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
 the instructions.
 
 Build the Solution
