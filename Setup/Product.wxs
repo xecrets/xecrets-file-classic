@@ -668,32 +668,32 @@
                        Guid="*">
                 <RegistryKey Root="HKCR"
                              Key="$(var.AxCryptExtension)"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="$(var.AxCryptProgID)"
                                    KeyPath="yes" />
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="*\shellex\ContextMenuHandlers\$(var.AxCryptProgID)"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="$(var.AxCryptCLSID)" />
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="Folder\shellex\ContextMenuHandlers\$(var.AxCryptProgID)"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="$(var.AxCryptCLSID)" />
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="CLSID\$(var.AxCryptCLSID)"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="$(var.AxCryptProgID)" />
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="CLSID\$(var.AxCryptCLSID)\InprocServer32"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="[APPLICATIONFOLDER]ShellExt.dll" />
                     <RegistryValue Type="string"
@@ -702,29 +702,29 @@
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="$(var.AxCryptProgID)"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="!(loc.FileTypeName)" />
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="$(var.AxCryptProgID)\CLSID"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="$(var.AxCryptCLSID)" />
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="$(var.AxCryptProgID)\DefaultIcon"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="[APPLICATIONFOLDER]AxCrypt.exe,0" />
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="$(var.AxCryptProgID)\shellex\PropertySheetHandlers\$(var.AxCryptCLSID)"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                 </RegistryKey>
                 <RegistryKey Root="HKCR"
                              Key="$(var.AxCryptProgID)\shell\open\command"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Value="&quot;[APPLICATIONFOLDER]AxCrypt.exe&quot; &quot;%1&quot;" />
                 </RegistryKey>
@@ -734,7 +734,7 @@
                        Guid="*">
                 <RegistryKey Root="HKMU"
                              Key="$(var.AxCryptRegKey)"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="string"
                                    Name="FileExtension"
                                    Value="$(var.AxCryptExtension)" />
@@ -766,7 +766,7 @@
                        Guid="*">
                 <RegistryKey Root="HKCU"
                              Key="$(var.AxCryptRegKey)"
-                             Action="createAndRemoveOnUninstall">
+                             ForceDeleteOnUninstall="yes">
                     <RegistryValue Type="integer"
                                    Name="ServerMode"
                                    Value="0" />
