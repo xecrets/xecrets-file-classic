@@ -36,6 +36,7 @@
     </None>
     <None Include="..\HowToBuildAxCrypt.txt" />
     <None Include="README.txt" />
+    <None Include="..\Build.cmd" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ChangeLog.txt" />

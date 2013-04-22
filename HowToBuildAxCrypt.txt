@@ -15,10 +15,7 @@ requirements. This list may be incomplete, please let me know if this is the cas
   
 - Build the Win32 configuration first, since the x64 configuration depends on it.
   
-- AxCrypt is developed with Visual Studio 2012 Professional / Windows DDK 7.1 / MSBuild 4.0. It is possible to build AxCrypt entirely with free
-  tools.
-
-- AxCrypt is developed with Visual Studio 2010 Professional / Windows SDK 7.1 / MSBuild 4.0. It is possible to build AxCrypt entirely with free
+- AxCrypt is developed with Visual Studio 2012 Professional Update 2 / Windows DDK 7.1 / MSBuild 4.0. It is possible to build AxCrypt entirely with free
   tools.
 
 - There are some special tweaks to handle the different build environments for AxCrypt, such as GPL Builds, Axantum developer builds and
@@ -32,23 +29,23 @@ Tools and Dependencies Installation
 
 Executive summary (details in respective section below):
 
-- Install *Full* .NET 4 Framework (prerequisite for SDK 7.1).
-- Install Microsoft Windows SDK 7.1 or later
-- Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.1 (or later at your own risk)
-- Install, set AX_ZLIB=install-path and build zlib 1.2.5 (or later at your own risk)
-- Install WTL 8.1.11324 and set AX_WTL=Install-path\Include (or later at your own risk)
+- Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.2 (or later at your own risk)
+- Install, set AX_ZLIB=install-path and build zlib 1.2.7 (or later at your own risk)
+- Install WTL 8.1.11324 and set AX_WTL=Install-path (or later at your own risk)
 - Install 'Build Environments' from Windows Driver Kit 7.1 (or later at your own risk) and set AX_ATL=Install-path...
 - Install MSBuild.Community.Tasks from http://msbuildtasks.tigris.org/
-- Install Microsoft Visual C++ 2010 Express or Microsoft Visual Studio 2010 Standard Edition or better.
+- Install Microsoft Visual Studio 2012 Express for Windows Desktop or Microsoft Visual Studio 2012 Professional Edition or better.
+- Install Microsoft Visual Studio 2012 Update 2 or later.
 - Install Windows Installer XML (WiX) toolset v3.7 (or later at your own risk)
-- Start Visual Studio 2010, open the AxCrypt solution, and build.
+- Start Visual Studio 2012, open the AxCrypt solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
 
 If you already have some components installed, just follow the list in the above order and skip the ones you already have.
 
 It takes about 2 hours to set the whole thing up from scratch. These procedures have been tested on 32-bit Windows 7 Professional,
-64-bit Windows 7 Ultimate and 32-bit Windows Web Server 2008. It should work equally well on all current Windows editions, but it has not been tested.
+64-bit Windows 7 Ultimate and 64-bit Windows Server 2012 Standard. It should work equally well on all
+current Windows editions, but it has not been tested.
 
 Details follows.
 
@@ -60,19 +57,6 @@ We typically place contributed dependencies in (except when there is a default i
 Developer PC: "C:\Users\%USERNAME%\Documents\Contrib\[CONTRIBUTION]"
 Build Server: "C:\Lib\[CONTRIBUTION]"
         
-Microsoft Windows SDK
-=====================
-
-Install Microsoft Windows 7.1 (or possibly later at your own risk) http://www.microsoft.com/downloads/details.aspx?FamilyID=e6e1c3df-a74f-4207-8586-711ebe331cdc&displaylang=en,
-or Google "Microsoft Windows SDK 7.1" .
-
-Include:
-    "Windows Native Code Develoment" (Itanium Libraries are not required).
-    ".NET Development".
-
-You do not need "Common Utilities" and "Redistributable Packages" for AxCrypt-development, but you may choose to install them for reasons
-of your own.
-
 Crypto++
 ========
 
@@ -80,73 +64,42 @@ Download Crypto++ Library 5.6.2 (or possibly later at your own risk) from http:/
 
 Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\cryptopp562" .
 
+Open %AX_CRYPTOPP%\cryptlib.vcproj in Visual Studio, say yes to upgrade ignore the warnings and then change 'cryptlib'
+
 Open VS2012 x86 Native Tools Command Prompt
 
 cd  %AX_CRYPTOPP%
-vcupgrade cryptlib.vcproj
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open VS2012 x64 Native Tools Command Prompt
+Open VS2012 x64 Native/Cross Tools Command Prompt
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
-
----------- OLD FOLLOWS --------
-Open a SDK command prompt:
-
-rem *** START VS 2012 ***
-cd vc
-vcvarsall x86
-
-pushd  %AX_CRYPTOPP%
-vcupgrade cryptlib.vcproj
-msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
-msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
-popd
-
-rem *** x86_amd64 for cross compiler if the host is 32-bit
-vcvarsall amd64
-pushd  %AX_CRYPTOPP%
-msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
-msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
-popd
-rem *** END VS 2012 ***
-
-rem *** START Windows SDK 7.1
-cd %AX_CRYPTOPP%
-vcupgrade cryptlib.vcproj
-
-setenv /debug /x86 /xp
-msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
-setenv /release /x86 /xp
-msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
-
-setenv /debug /x64 /xp
-msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
-setenv /release /x64 /xp
-msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
-rem *** END Windows SDK 7.1
------------ END OLD ------
 
 zlib
 ====
 
-Download zlib
-1.2.7 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
+Download zlib 1.2.7 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
 
-Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.5" .
+Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.7" .
 
-Due to a bug in zlibstat.vcxproj (and upgrade need to VS2012):
+Due to a bug in zlibstat.vcxproj (and upgrade required for VS2012):
 
-Open %AX_ZLIB%\contrib\vstudio\vc10\zlibvc.sln in Visual Studio, say yes to upgrad and then change 'zlibstat'
+Open %AX_ZLIB%\contrib\vstudio\vc10\zlibvc.sln in Visual Studio, say yes to upgrade and then change 'zlibstat'
+
 Properties | Configuration Properties | C/C++ | Code Generation | Runtime Library to:
 "Multi-threaded Debug (/MTd)"
 and
 "Multi-threaded (/MT)"
 for Debug|x64 and Release|x64 configurations respectively.
 
+Also change (for all Configurations and all Platforms)
+
+Properties | General | Platform Toolset to:
+"Visual Studio 2012 - Windows XP (v110_xp)
+
 Open VS2012 x86 Native Tools Command Prompt
 
 cd %AX_ZLIB%\contrib\masmx86
@@ -165,77 +118,8 @@ cd %AX_ZLIB%\contrib\vstudio\vc10
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
 
---- OLD BEGIN ------
-You can also edit zlibstat.vcxproj directly and change 'MultiThreaded*DLL' to 'MultiThreaded*' like this:
-
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-  ...
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-  ...
-  </ItemDefinitionGroup>
-
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-  ...
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-  ...
-  </ItemDefinitionGroup>
-
-Also, due to change in VS 2012, edit zlibstat.vcxproj directly and add <PlatformToolset> below all <ConfigurationType> definitions:
-
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v110_xp</PlatformToolset>
-
-Open a SDK command prompt:
-
-rem *** START VS 2012 ***
-cd vc
-vcvarsall amd64
-pushd %AX_ZLIB%\contrib\masmx64
-cd %AX_ZLIB%\contrib\masmx64
-bld_ml64.bat
-popd
-
-vcvarsall x86
-pushd %AX_ZLIB%\contrib\masmx86
-bld_ml32.bat
-popd
-
-vcvarsall x86
-pushd %AX_ZLIB%\contrib\vstudio\vc10
-msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
-msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
-popd
-
-vcvarsall amd64
-pushd %AX_ZLIB%\contrib\vstudio\vc10
-msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
-msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
-popd
-rem *** END VS 2012 ***
-
-rem *** START Windows SDK 7.1
-setenv /release /x64 /xp
-cd %AX_ZLIB%\contrib\masmx64
-bld_ml64.bat
-
-setenv /release /x86 /xp
-cd %AX_ZLIB%\contrib\masmx86
-bld_ml32.bat
-
-cd %AX_ZLIB%\contrib\vstudio\vc10
-
-setenv /debug /x86 /xp
-msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
-setenv /release /x86 /xp
-msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
-
-setenv /debug /x64 /xp
-msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
-setenv /release /x64 /xp
-msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
-rem *** END Windows SDK 7.1
-
--------------- END OLD ------
 
 WTL
 ===
@@ -267,17 +151,23 @@ The build process is dependent on a few extensions to MSBuild. Get MSBuild.Commu
 Get the MSBuild.Community.Tasks.v1.4.0.56.msi (or later at your own risk) distribution from the list of downloads.
 Double-click to install and follow the instructions.
 
-Visual C++ 2010 Express
-=======================
+Visual Studio 2012 Express for Windows Desktop
+==============================================
 
-It's possible to build AxCrypt with Visual C++ 2010 Express (the free version), although the .MSI installers must be built from the command line in this case.
+It's possible to build AxCrypt with Visual Studio 2012 Express for Desktop (the free version), although the .MSI installers must be built from
+the command line in this case.
 
-If you have Visual Studio 2010 Professional or better, you can build it all from inside Visual Studio.
+If you have Visual Studio 2012 Professional or better, you can build it all from inside Visual Studio.
 
-Get Visual C++ 2010 Express from http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express . Follow the instructions. You do not
-need to install Microsoft SQL Server 2008 unless you want to for reasons of your own.
+Get Visual Studio 2012 Express for Windows Desktop from http://www.microsoft.com/visualstudio/eng/downloads#d-2012-express . Follow the instructions.
 
 Check for updates at Microsoft with Windows Update, and be sure to explicitly search for updates. Install all important updates.
+
+Visual Studio 2012 Update 2
+===========================
+
+It's essential to upgrade Visual Studio to the latest update, because AxCrypt uses features that are not available otherwise, such as
+targeting Windows XP. You'll find this in the Visual Studio 2012 Tools | Extensions and Updates | Updates menu dialog.
 
 Windows Installer XML (WiX) toolset
 ===================================
@@ -293,21 +183,22 @@ Build the Solution
 
 Start Visual Studio and open AxCrypt.sln. 
 
-For Express:
-
 - You may get a warning about only opening projects from a trustworthy source. If you trust your source
   of AxCrypt, click OK and continue.
+
+For Express:
+
 - You'll get a warning about Setup.wixproj not being supported. Click OK and ignore...
 - ...and as a result a warning about not all projects being loaded correctly. Click OK and ignore.
 
-Now you can build the solution.
+Now you can build the solution (except the installer when using Visual Studio Express).
 
 Building from the command line
 ==============================
 
 All is built using MSBuild. Please see Microsoft documentation for details. Briefly:
 
-- Open a SDK Command Prompt
+- Open Microsoft Visual Studio 2012 | Visual Studio Tools |  Developer Command Prompt for VS2012
 - Change current directory to the location of the source code.
 - Use the following to build for various configurations and platforms:
 
@@ -318,14 +209,7 @@ All is built using MSBuild. Please see Microsoft documentation for details. Brie
     MSBuild AxCrypt.sln /p:Configuration=Debug;Platform=x64
     MSBuild AxCrypt.sln /p:Configuration=Release;Platform=x64
 
-    SetEnv /x86 /xp /Debug
-    MSBuild AxCrypt.sln /p:Configuration=Debug;Platform=Win32
-    SetEnv /x64 /xp /Debug
-    MSBuild AxCrypt.sln /p:Configuration=Debug;Platform=x64
-    SetEnv /x86 /xp /Release
-    MSBuild AxCrypt.sln /p:Configuration=Release;Platform=Win32
-    SetEnv /x64 /xp /Release
-    MSBuild AxCrypt.sln /p:Configuration=Release;Platform=x64
+- There is a command file 'Build.cmd' in the AxCrypt solution folder that does this.
 
 You need to build the Win32 Platform in order to build x64, since the installer contains references to executables that are only built
 in for Win32 (i.e. x86 - Microsoft can't decide what name to use...).
