@@ -65,6 +65,10 @@ Download Crypto++ Library 5.6.2 (or possibly later at your own risk) from http:/
 Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\cryptopp562" .
 
 Open %AX_CRYPTOPP%\cryptlib.vcproj in Visual Studio, say yes to upgrade ignore the warnings and then change 'cryptlib'
+(for all Configurations and all Platforms)
+
+Properties | General | Platform Toolset to:
+"Visual Studio 2012 - Windows XP (v110_xp)
 
 Open VS2012 x86 Native Tools Command Prompt
 
