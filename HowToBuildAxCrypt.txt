@@ -122,9 +122,6 @@ cd %AX_ZLIB%\contrib\vstudio\vc10
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
 
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v110_xp</PlatformToolset>
-
 WTL
 ===
 
@@ -153,6 +150,7 @@ MSBuild.Community.Tasks
 The build process is dependent on a few extensions to MSBuild. Get MSBuild.Community.Tasks at https://github.com/loresoft/msbuildtasks .
 
 Get the MSBuild.Community.Tasks.v1.4.0.56.msi (or later at your own risk) distribution from the list of downloads.
+
 Double-click to install and follow the instructions.
 
 Visual Studio 2012 Express for Windows Desktop
