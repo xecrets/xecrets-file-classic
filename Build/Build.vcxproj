@@ -146,6 +146,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)$(TargetName)$(TargetExt)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)$(TargetName)$(TargetExt)</Outputs>
     </ClInclude>
+    <None Include="..\Build.cmd" />
     <None Include="..\HowToBuildAxCrypt.txt" />
     <None Include="AxCrypt.ico" />
     <None Include="Build.targets">
