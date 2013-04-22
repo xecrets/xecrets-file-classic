@@ -59,7 +59,7 @@ public:
     /// \return A pointer to this
     CSourceStdIn *Init(bool fBinary = false, size_t cbChunk = 64*1024) {
         m_cbChunk = cbChunk;
-        ASSCHK(setmode(fileno(stdin), fBinary ? O_BINARY : O_TEXT) != -1, _T("CSourceStdIn::Init() setmode() failed"));
+        ASSCHK(_setmode(_fileno(stdin), fBinary ? O_BINARY : O_TEXT) != -1, _T("CSourceStdIn::Init() setmode() failed"));
         return this;
     }
 
@@ -100,7 +100,7 @@ public:
     /// \param fBinary Set to true for binary mode writing
     /// \return A pointer to this
     CSinkStdOut *Init(bool fBinary = false) {
-        ASSCHK(setmode(fileno(stdout), fBinary ? O_BINARY : O_TEXT) != -1, _T("CSourceStdOut::Init() setmode() failed"));
+        ASSCHK(_setmode(_fileno(stdout), fBinary ? O_BINARY : O_TEXT) != -1, _T("CSourceStdOut::Init() setmode() failed"));
         return this;
     }
 
@@ -115,7 +115,9 @@ public:
     virtual void Out(CSeg *pSeg) {
         size_t cbLen = fwrite(pSeg->PtrRd(), 1, pSeg->Len(), stdout);
         if (cbLen != pSeg->Len()) {
-            SetError(ERROR_CODE_GENERIC, _T("CSinkStdOut::fwrite failed [%s]"), _tcserror(errno));
+			wchar_t buf[200];
+			_wcserror_s(buf, sizeof(buf) / sizeof(buf[0]), errno);
+            SetError(ERROR_CODE_GENERIC, _T("CSinkStdOut::fwrite failed [%s]"), buf);
         }
     }
 };
