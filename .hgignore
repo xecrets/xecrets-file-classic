@@ -10,3 +10,6 @@ Release/*
 ipch/*
 *.bak
 _ReSharper.AxCrypt/*
+_UpgradeReport_Files/*
+UpgradeLog.*
+UpgradeLog2.*

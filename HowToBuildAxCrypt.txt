@@ -30,7 +30,7 @@ Tools and Dependencies Installation
 Executive summary (details in respective section below):
 
 - Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.2 (or later at your own risk)
-- Install, set AX_ZLIB=install-path and build zlib 1.2.7 (or later at your own risk)
+- Install, set AX_ZLIB=install-path and build zlib 1.2.8 (or later at your own risk)
 - Install WTL 8.1.11324 and set AX_WTL=Install-path (or later at your own risk)
 - Install 'Build Environments' from Windows Driver Kit 7.1 (or later at your own risk) and set AX_ATL=Install-path...
 - Install MSBuild.Community.Tasks from http://msbuildtasks.tigris.org/
@@ -85,21 +85,21 @@ msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
 zlib
 ====
 
-Download zlib 1.2.7 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
+Download zlib 1.2.8 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
 
-Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.7" .
+Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.8" .
 
 Due to a bug in zlibstat.vcxproj (and upgrade required for VS2012):
 
-Open %AX_ZLIB%\contrib\vstudio\vc10\zlibvc.sln in Visual Studio, say yes to upgrade and then change 'zlibstat'
+Open %AX_ZLIB%\contrib\vstudio\vc11\zlibvc.sln in Visual Studio, change 'zlibstat'
 
 Properties | Configuration Properties | C/C++ | Code Generation | Runtime Library to:
 "Multi-threaded Debug (/MTd)"
 and
 "Multi-threaded (/MT)"
-for Debug|x64 and Release|x64 configurations respectively.
+for Debug|(Win32|x64) and Release|(Win32|x64) configurations respectively.
 
-Also change (for all Configurations and all Platforms)
+Also change (for all Configurations and Win32 & x64)
 
 Properties | General | Platform Toolset to:
 "Visual Studio 2012 - Windows XP (v110_xp)
@@ -109,7 +109,7 @@ Open VS2012 x86 Native Tools Command Prompt
 cd %AX_ZLIB%\contrib\masmx86
 bld_ml32.bat
 
-cd %AX_ZLIB%\contrib\vstudio\vc10
+cd %AX_ZLIB%\contrib\vstudio\vc11
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
 
@@ -118,7 +118,7 @@ Open VS2012 x64 Native Tools Command Prompt
 cd %AX_ZLIB%\contrib\masmx64
 bld_ml64.bat
 
-cd %AX_ZLIB%\contrib\vstudio\vc10
+cd %AX_ZLIB%\contrib\vstudio\vc11
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
 
