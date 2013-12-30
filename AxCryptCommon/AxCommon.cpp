@@ -490,8 +490,9 @@ CProgressDialog::Create(HINSTANCE hInstance, DWORD dwIDD, HWND hParent, const _T
     if (!CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValServerMode).GetDword(FALSE)) {
         Destroy();
 
-		// Ensure that we actually have either NULL or a valid parent window
-		CAssert(hParent == NULL || IsWindow(hParent)).App(ERR_ARGUMENT, _T("CProgressDialog::Create() [IsWindow()]")).Throw();
+        if (hParent != NULL && !IsWindow(hParent)) {
+            hParent = NULL;
+        }
 
 		m_hDlg = CreateDialog(hInstance, MAKEINTRESOURCE(dwIDD), hParent, dlgProc);
         CAssert(m_hDlg != NULL).Sys(MSG_SYSTEM_CALL, _T("CProgressDialog::Create [CreateDialog]")).Throw();
