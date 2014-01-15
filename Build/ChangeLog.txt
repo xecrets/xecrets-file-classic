@@ -1,4 +1,8 @@
 @(#) $Id$
+1.7.3113.0 Release 2014-01-15
+- Bug: Be more tolerant of invalid parent window for the progress window.
+- New: Finnish language added.
+- Chg: Updates for Visual Studio 2012.
 
 1.7.2976.0 Release 2012-11-12
 - Add: Support for Czech language texts.

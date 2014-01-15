@@ -1,5 +1,9 @@
 @(#) $Id$
 
+1.7.3113 Release 2014-01-15
+Added Finnish translation.
+Minor changes and updates.
+
 1.7.2976 Release 2012-11-12
 Added Czech translation - thank you Miroslav Geisselreiter!
 Minor bug-fixes.
