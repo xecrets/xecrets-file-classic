@@ -1,5 +1,3 @@
-@(#) $Id$
-
 1.7.3153 Release 2014-01-15
 Added Finnish translation.
 Minor changes and updates.
