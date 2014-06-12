@@ -227,7 +227,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_STATUS              "%d file(s) decrypted successfully."
-    IDS_TOOPEN              "To decrypt a file, select it with the Open menu choice, and then press the Decrypt button."
+    IDS_TOOPEN              "To decrypt a file, select it with the File|Open menu choice, and then press the Decrypt button."
 END
 
 STRINGTABLE
