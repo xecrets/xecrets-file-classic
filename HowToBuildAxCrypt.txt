@@ -3,26 +3,28 @@ How to build AxCrypt
 Introduction
 ============
 
-AxCrypt is distributed as an open source software under a GPL license. This is presumably how you came into posession of this file and all the rest.
+AxCrypt is distributed as an open source software under a GPL license. This is presumably how you came into posession of this file
+and all the rest.
 
 There are some things to know about building AxCrypt. While I cannot give support for GPL builds, I still want to give some pointers on the
 requirements. This list may be incomplete, please let me know if this is the case, contact me at software@axantum.com .
 
 - When you first load the solution, you may get a "Security Warning for Setup". Please select "Load project normally". This is by design.
 
-- Because of inconsistencies in various packages included in AxCrypt, there are three platforms actually defined, and Visual Studio may start off
-  with a default of 'Mixed Platforms'. Change this immediately, and only build for 'Win32' and 'x64'. (Not x86 - that's for the Setup project).
+- Because of inconsistencies in various packages included in AxCrypt, there are three platforms actually defined, and Visual Studio may
+  start off with a default of 'Mixed Platforms'. Change this immediately, and only build for 'Win32' and 'x64'. (Not x86 - that's for
+  the Setup project).
   
 - Build the Win32 configuration first, since the x64 configuration depends on it.
   
-- AxCrypt is developed with Visual Studio 2012 Professional Update 2 / Windows DDK 7.1 / MSBuild 4.0. It is possible to build AxCrypt entirely with free
-  tools.
+- AxCrypt is developed with Visual Studio 2013 Professional / Windows DDK 7.1 / MSBuild 4.0. It is possible to build AxCrypt entirely
+  with free tools.
 
 - There are some special tweaks to handle the different build environments for AxCrypt, such as GPL Builds, Axantum developer builds and
   Axantum build server builds. This is why you'll find some conditional code in various MSBuild project files.
   
-- The end-result is not 100% binary identical to the released binaries, since they are timestamped and digitally signed, as well as versioned in
-  the continuous integration build server setup by Axantum Software AB.
+- The end-result is not 100% binary identical to the released binaries, since they are timestamped and digitally signed, as well as
+  versioned in the continuous integration build server setup by Axantum Software AB.
 
 Tools and Dependencies Installation
 ===================================
@@ -31,21 +33,19 @@ Executive summary (details in respective section below):
 
 - Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.2 (or later at your own risk)
 - Install, set AX_ZLIB=install-path and build zlib 1.2.8 (or later at your own risk)
-- Install WTL 8.1.11324 and set AX_WTL=Install-path (or later at your own risk)
-- Install 'Build Environments' from Windows Driver Kit 7.1 (or later at your own risk) and set AX_ATL=Install-path...
-- Install MSBuild.Community.Tasks from http://msbuildtasks.tigris.org/
-- Install Microsoft Visual Studio 2012 Express for Windows Desktop or Microsoft Visual Studio 2012 Professional Edition or better.
-- Install Microsoft Visual Studio 2012 Update 2 or later.
-- Install Windows Installer XML (WiX) toolset v3.7 (or later at your own risk)
-- Start Visual Studio 2012, open the AxCrypt solution, and build.
+- Install WTL 9.0.4140 and set AX_WTL=Install-path (or later at your own risk)
+- Install 'Build Environments' from Windows Driver Kit 7.1 (no later, it is removed) and set AX_ATL=Install-path...
+- Install MSBuild.Community.Tasks from https://github.com/loresoft/msbuildtasks
+- Install Microsoft Visual Studio Express 2013 for Windows or Microsoft Visual Studio 2013 Professional Edition or better.
+- Install Windows Installer XML (WiX) toolset v3.8 (or later at your own risk)
+- Start Visual Studio 2013, open the AxCrypt solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
 
 If you already have some components installed, just follow the list in the above order and skip the ones you already have.
 
-It takes about 2 hours to set the whole thing up from scratch. These procedures have been tested on 32-bit Windows 7 Professional,
-64-bit Windows 7 Ultimate and 64-bit Windows Server 2012 Standard. It should work equally well on all
-current Windows editions, but it has not been tested.
+It takes about 2 hours to set the whole thing up from scratch. These procedures have been tested on 64-bit Windows 8.1 Professional,
+and 64-bit Windows Server 2012 Standard. It should work equally well on all current Windows editions, but it has not been tested.
 
 Details follows.
 
@@ -68,15 +68,17 @@ Open %AX_CRYPTOPP%\cryptlib.vcproj in Visual Studio, say yes to upgrade ignore t
 (for all Configurations and all Platforms)
 
 Properties | General | Platform Toolset to:
-"Visual Studio 2012 - Windows XP (v110_xp)
+"Visual Studio 2013 - Windows XP (v120_xp)"
 
-Open VS2012 x86 Native Tools Command Prompt
+Save the project and solution.
+
+Open VS2013 x86 Native Tools Command Prompt
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open VS2012 x64 Native/Cross Tools Command Prompt
+Open VS2013 x64 Native/Cross Tools Command Prompt
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
@@ -89,7 +91,7 @@ Download zlib 1.2.8 (or possibly later at your own risk) from http://www.zlib.ne
 
 Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.8" .
 
-Due to a bug in zlibstat.vcxproj (and upgrade required for VS2012):
+Due to a bug in zlibstat.vcxproj (and upgrade required for VS2013):
 
 Open %AX_ZLIB%\contrib\vstudio\vc11\zlibvc.sln in Visual Studio, change 'zlibstat'
 
@@ -102,9 +104,11 @@ for Debug|(Win32|x64) and Release|(Win32|x64) configurations respectively.
 Also change (for all Configurations and Win32 & x64)
 
 Properties | General | Platform Toolset to:
-"Visual Studio 2012 - Windows XP (v110_xp)
+"Visual Studio 2013 - Windows XP (v120_xp)"
 
-Open VS2012 x86 Native Tools Command Prompt
+Save the solution and project!
+
+Open VS2013 x86 Native Tools Command Prompt
 
 cd %AX_ZLIB%\contrib\masmx86
 bld_ml32.bat
@@ -113,7 +117,7 @@ cd %AX_ZLIB%\contrib\vstudio\vc11
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open VS2012 x64 Native Tools Command Prompt
+Open VS2013 x64 Native Tools Command Prompt
 
 cd %AX_ZLIB%\contrib\masmx64
 bld_ml64.bat
@@ -125,9 +129,9 @@ msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
 WTL
 ===
 
-Download WTL 8.1 (or possibly later at your own risk) from http://sourceforge.net/projects/wtl/files/ .
+Download WTL 9.0 (or possibly later at your own risk) from http://sourceforge.net/projects/wtl/files/ .
 
-Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\wtl81_12085" .
+Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL90_4140_Final" .
 
 WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is *not* included
 in the SDK or express edition of Visual Studio, but you can get it via the Windows Driver Kit. See more below.
@@ -135,7 +139,7 @@ in the SDK or express edition of Visual Studio, but you can get it via the Windo
 ATL
 ===
 
-Download Windows Driver Kit 7.1 (or possibly later at your own risk) from http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=11800 .
+Download Windows Driver Kit 7.1 (no later, ATL is removed) from http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=11800 .
 Mount the ISO and install the 'Full Development Environment | Build Environments', typically to the standard location C:\WinDDK\7600.16385.1\ .
 If you need software in order to mount the ISO as a DVD, try SlySoft Virtual CloneDrive at http://www.slysoft.com/en/virtual-clonedrive.html .
 If you have disabled Autoplay, it's the 'KitSetup.exe' that you should run.
@@ -149,19 +153,20 @@ MSBuild.Community.Tasks
 
 The build process is dependent on a few extensions to MSBuild. Get MSBuild.Community.Tasks at https://github.com/loresoft/msbuildtasks .
 
-Get the MSBuild.Community.Tasks.v1.4.0.56.msi (or later at your own risk) distribution from the list of downloads.
+Get the MSBuild.Community.Tasks.v1.4.0.74.msi (or later at your own risk) distribution from the list of downloads.
 
 Double-click to install and follow the instructions.
 
-Visual Studio 2012 Express for Windows Desktop
-==============================================
+Visual Studio Express 2013 for Windows
+======================================
 
-It's possible to build AxCrypt with Visual Studio 2012 Express for Desktop (the free version), although the .MSI installers must be built from
-the command line in this case.
+It's possible to build AxCrypt with Visual Studio Express 2013 Express for Windows (the free version), although the .MSI installers must
+be built from the command line in this case.
 
-If you have Visual Studio 2012 Professional or better, you can build it all from inside Visual Studio.
+If you have Visual Studio 2013 Professional or better, you can build it all from inside Visual Studio.
 
-Get Visual Studio 2012 Express for Windows Desktop from http://www.microsoft.com/visualstudio/eng/downloads#d-2012-express . Follow the instructions.
+Get Visual Studio Express 2013 for Windows from http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-8 .
+Follow the instructions.
 
 Check for updates at Microsoft with Windows Update, and be sure to explicitly search for updates. Install all important updates.
 
@@ -169,7 +174,8 @@ Visual Studio 2012 Update 2
 ===========================
 
 It's essential to upgrade Visual Studio to the latest update, because AxCrypt uses features that are not available otherwise, such as
-targeting Windows XP. You'll find this in the Visual Studio 2012 Tools | Extensions and Updates | Updates menu dialog.
+targeting Windows XP. You'll find this in the Visual Studio 2012 Tools | Extensions and Updates | Updates menu dialog. This is not
+required for Visual Studio 2013, which includes the XP headers from start.
 
 Windows Installer XML (WiX) toolset
 ===================================
@@ -177,7 +183,7 @@ Windows Installer XML (WiX) toolset
 WiX is required to build the MSI setup. There is support for building from Visual Studio Professional or better, but not from Express editions so if you're
 using Express you'll have to build from the command line (see below). You still need to install WiX.
 
-Get Windows Installer XML (WiX) toolset v3.7 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
+Get Windows Installer XML (WiX) toolset v3.8 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
 the instructions.
 
 Build the Solution
@@ -200,7 +206,7 @@ Building from the command line
 
 All is built using MSBuild. Please see Microsoft documentation for details. Briefly:
 
-- Open Microsoft Visual Studio 2012 | Visual Studio Tools |  Developer Command Prompt for VS2012
+- Open Microsoft Visual Studio 2013 | Visual Studio Tools |  Developer Command Prompt for VS2013
 - Change current directory to the location of the source code.
 - Use the following to build for various configurations and platforms:
 
