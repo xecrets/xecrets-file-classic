@@ -13,3 +13,5 @@ _ReSharper.AxCrypt/*
 _UpgradeReport_Files/*
 UpgradeLog.*
 UpgradeLog2.*
+AxCrypt.VC.db
+AxCrypt.VC.VC.opendb
