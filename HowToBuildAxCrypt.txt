@@ -17,8 +17,8 @@ requirements. This list may be incomplete, please let me know if this is the cas
   
 - Build the Win32 configuration first, since the x64 configuration depends on it.
   
-- AxCrypt is developed with Visual Studio 2013 Professional / Windows DDK 7.1 / MSBuild 4.0. It is possible to build AxCrypt entirely
-  with free tools.
+- AxCrypt is developed with Visual Studio 2015 Professional. It is possible to build AxCrypt entirely
+  with free tools (Visual Studio 2015 Community and/or MSBuild).
 
 - There are some special tweaks to handle the different build environments for AxCrypt, such as GPL Builds, Axantum developer builds and
   Axantum build server builds. This is why you'll find some conditional code in various MSBuild project files.
@@ -31,20 +31,19 @@ Tools and Dependencies Installation
 
 Executive summary (details in respective section below):
 
-- Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.2 (or later at your own risk)
+- Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.3 (or later at your own risk)
 - Install, set AX_ZLIB=install-path and build zlib 1.2.8 (or later at your own risk)
-- Install WTL 9.0.4140 and set AX_WTL=Install-path (or later at your own risk)
-- Install 'Build Environments' from Windows Driver Kit 7.1 (no later, it is removed) and set AX_ATL=Install-path...
-- Install MSBuild.Community.Tasks from https://github.com/loresoft/msbuildtasks
-- Install Microsoft Visual Studio Express 2013 for Windows or Microsoft Visual Studio 2013 Professional Edition or better.
-- Install Windows Installer XML (WiX) toolset v3.8 (or later at your own risk)
-- Start Visual Studio 2013, open the AxCrypt solution, and build.
+- Install WTL 9.1.5321 and set AX_WTL=Install-path (or later at your own risk)
+- (Install 'Build Environments' from Windows Driver Kit 7.1 (no later, it is removed) and set AX_ATL=Install-path...)
+- Install Microsoft Visual Studio 2015 Community Edition for Windows or Microsoft Visual Studio 2015 Professional Edition or better.
+- Install Windows Installer XML (WiX) toolset v3.10.2.2516 (or later at your own risk)
+- Start Visual Studio 2015, open the AxCrypt solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
 
 If you already have some components installed, just follow the list in the above order and skip the ones you already have.
 
-It takes about 2 hours to set the whole thing up from scratch. These procedures have been tested on 64-bit Windows 8.1 Professional,
+It takes about 2 hours to set the whole thing up from scratch. These procedures have been tested on 64-bit Windows 10 Professional,
 and 64-bit Windows Server 2012 Standard. It should work equally well on all current Windows editions, but it has not been tested.
 
 Details follows.
@@ -54,31 +53,31 @@ DEVELOPER PC VS BUILD SERVER
 
 We typically place contributed dependencies in (except when there is a default installlocation):
 
-Developer PC: "C:\Users\%USERNAME%\Documents\Contrib\[CONTRIBUTION]"
+Developer PC: "C:\Users\[UserName]\Documents\Contrib\[CONTRIBUTION]"
 Build Server: "C:\Lib\[CONTRIBUTION]"
         
 Crypto++
 ========
 
-Download Crypto++ Library 5.6.2 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
+Download Crypto++ Library 5.6.3 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
 
-Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\cryptopp562" .
+Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp563" .
 
 Open %AX_CRYPTOPP%\cryptlib.vcproj in Visual Studio, say yes to upgrade ignore the warnings and then change 'cryptlib'
 (for all Configurations and all Platforms)
 
 Properties | General | Platform Toolset to:
-"Visual Studio 2013 - Windows XP (v120_xp)"
+"Visual Studio 2015 - Windows XP (v140_xp)"
 
 Save the project and solution.
 
-Open VS2013 x86 Native Tools Command Prompt
+Open VS2015 x86 Native Tools Command Prompt
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open VS2013 x64 Native/Cross Tools Command Prompt
+Open VS2015 x64 Native/Cross Tools Command Prompt
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
@@ -91,7 +90,7 @@ Download zlib 1.2.8 (or possibly later at your own risk) from http://www.zlib.ne
 
 Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.8" .
 
-Due to a bug in zlibstat.vcxproj (and upgrade required for VS2013):
+Due to a bug in zlibstat.vcxproj (and upgrade required for VS2015):
 
 Open %AX_ZLIB%\contrib\vstudio\vc11\zlibvc.sln in Visual Studio, change 'zlibstat'
 
@@ -103,12 +102,12 @@ for Debug|(Win32|x64) and Release|(Win32|x64) configurations respectively.
 
 Also change (for all Configurations and Win32 & x64)
 
-Properties | General | Platform Toolset to:
-"Visual Studio 2013 - Windows XP (v120_xp)"
+Properties | Configuration Properties | General | Platform Toolset to:
+"Visual Studio 2015 - Windows XP (v140_xp)"
 
 Save the solution and project!
 
-Open VS2013 x86 Native Tools Command Prompt
+Open VS2015 x86 Native Tools Command Prompt
 
 cd %AX_ZLIB%\contrib\masmx86
 bld_ml32.bat
@@ -129,49 +128,49 @@ msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
 WTL
 ===
 
-Download WTL 9.0 (or possibly later at your own risk) from http://sourceforge.net/projects/wtl/files/ .
+Download WTL 9.1 (or possibly later at your own risk) from http://sourceforge.net/projects/wtl/files/ .
 
-Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL90_4140_Final" .
+Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL91_5321_Final" .
 
 WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is *not* included
 in the SDK or express edition of Visual Studio, but you can get it via the Windows Driver Kit. See more below.
 
 ATL
 ===
+ATL is part of Visual Studio 2015 Professional and claimed to be part of Visual Studio 2015 Community Edition, if this is correct no
+action is needed.
 
+Otherwise...
 Download Windows Driver Kit 7.1 (no later, ATL is removed) from http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=11800 .
 Mount the ISO and install the 'Full Development Environment | Build Environments', typically to the standard location C:\WinDDK\7600.16385.1\ .
 If you need software in order to mount the ISO as a DVD, try SlySoft Virtual CloneDrive at http://www.slysoft.com/en/virtual-clonedrive.html .
 If you have disabled Autoplay, it's the 'KitSetup.exe' that you should run.
 
-Set the environment variable AX_ATL to point to the installation directory, perhaps "C:\WinDDK\7600.16385.1" .
+Set the environment variable AX_ATL to point to the installation directory, perhaps "C:\WinDDK\7600.16385.1\inc\atl71" .
+
+You'll also have to add the libraries to AxCrypt2Go linker properties, and the include directory to the properties so it can build.
 
 ATL needs no building, it's a set of header files and the libraries are pre-built.
 
 MSBuild.Community.Tasks
 =======================
 
-The build process is dependent on a few extensions to MSBuild. Get MSBuild.Community.Tasks at https://github.com/loresoft/msbuildtasks .
-
-Get the MSBuild.Community.Tasks.v1.4.0.74.msi (or later at your own risk) distribution from the list of downloads.
-
-Double-click to install and follow the instructions.
+The build process is dependent on a few extensions to MSBuild. It is included via a nuget package.
 
 Visual Studio Express 2013 for Windows
 ======================================
 
-It's possible to build AxCrypt with Visual Studio Express 2013 Express for Windows (the free version), although the .MSI installers must
-be built from the command line in this case.
+It was possible to build AxCrypt with Visual Studio Express 2013 Express for Windows (the free version), although the .MSI installers must
+be built from the command line in this case. It has not been tested with Visual Studio 2015 Community Edition or the current code base.
 
-If you have Visual Studio 2013 Professional or better, you can build it all from inside Visual Studio.
-
-Get Visual Studio Express 2013 for Windows from http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-8 .
-Follow the instructions.
+If you have Visual Studio 2015 Professional or better, you can build it all from inside Visual Studio.
 
 Check for updates at Microsoft with Windows Update, and be sure to explicitly search for updates. Install all important updates.
 
 Visual Studio 2012 Update 2
 ===========================
+
+It was possible to build AxCrypt with Visual Studio 2012 Update 2, but this has not been regression-tested with the current code base.
 
 It's essential to upgrade Visual Studio to the latest update, because AxCrypt uses features that are not available otherwise, such as
 targeting Windows XP. You'll find this in the Visual Studio 2012 Tools | Extensions and Updates | Updates menu dialog. This is not
@@ -183,7 +182,7 @@ Windows Installer XML (WiX) toolset
 WiX is required to build the MSI setup. There is support for building from Visual Studio Professional or better, but not from Express editions so if you're
 using Express you'll have to build from the command line (see below). You still need to install WiX.
 
-Get Windows Installer XML (WiX) toolset v3.8 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
+Get Windows Installer XML (WiX) toolset v3.10.2.2516 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
 the instructions.
 
 Build the Solution
@@ -206,7 +205,7 @@ Building from the command line
 
 All is built using MSBuild. Please see Microsoft documentation for details. Briefly:
 
-- Open Microsoft Visual Studio 2013 | Visual Studio Tools |  Developer Command Prompt for VS2013
+- Open a Developer Command Prompt for VS2015
 - Change current directory to the location of the source code.
 - Use the following to build for various configurations and platforms:
 
