@@ -46,7 +46,7 @@ namespace AxPipe {
 
             CSourceAxMLite *Init(XNode *pXNode) {
                 m_xml = pXNode->GetXML();
-                CSourceMem::Init(m_xml.size(), m_xml.data());
+                CSourceMem::Init(m_xml.size() * sizeof(m_xml[0]), m_xml.data());
                 return this;
             }
         };
