@@ -146,5 +146,8 @@
     <ClInclude Include="TBits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CPipeUnicodeToAnsi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

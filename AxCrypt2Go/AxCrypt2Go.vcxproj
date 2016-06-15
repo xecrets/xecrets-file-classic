@@ -58,7 +58,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc11\x86\ZlibStat$(Configuration);$(AX_ATLLIB)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc11\x86\ZlibStat$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Version.lib;zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -91,7 +91,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc11\x86\ZlibStat$(Configuration);$(AX_ATLLIB)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc11\x86\ZlibStat$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Version.lib;zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
