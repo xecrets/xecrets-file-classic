@@ -285,6 +285,7 @@
     <ClInclude Include="CPipeHMAC_SHA1.h" />
     <ClInclude Include="CPipeInflate.h" />
     <ClInclude Include="CPipeSHA1.h" />
+    <ClInclude Include="CPipeUnicodeToAnsi.h" />
     <ClInclude Include="CSeg.h" />
     <ClInclude Include="CSinkAxMLite.h" />
     <ClInclude Include="CSourceAxMLite.h" />
