@@ -34,8 +34,7 @@ Executive summary (details in respective section below):
 - Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.3 (or later at your own risk)
 - Install, set AX_ZLIB=install-path and build zlib 1.2.8 (or later at your own risk)
 - Install WTL 9.1.5321 and set AX_WTL=Install-path (or later at your own risk)
-- (Install 'Build Environments' from Windows Driver Kit 7.1 (no later, it is removed) and set AX_ATL=Install-path...)
-- Install Microsoft Visual Studio 2015 Community Edition for Windows or Microsoft Visual Studio 2015 Professional Edition or better.
+- Install Microsoft Visual Studio 2015 Community Edition or Microsoft Visual Studio 2015 Professional Edition or better.
 - Install Windows Installer XML (WiX) toolset v3.10.2.2516 (or later at your own risk)
 - Start Visual Studio 2015, open the AxCrypt solution, and build.
 
@@ -116,7 +115,7 @@ cd %AX_ZLIB%\contrib\vstudio\vc11
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open VS2013 x64 Native Tools Command Prompt
+Open VS2015 x64 Native Tools Command Prompt
 
 cd %AX_ZLIB%\contrib\masmx64
 bld_ml64.bat
@@ -137,18 +136,10 @@ in the SDK or express edition of Visual Studio, but you can get it via the Windo
 
 ATL
 ===
-ATL is part of Visual Studio 2015 Professional and claimed to be part of Visual Studio 2015 Community Edition, if this is correct no
-action is needed.
+
+ATL is part of Visual Studio 2015 Professional and Visual Studio 2015 Community Edition. No further action is needed.
 
 Otherwise...
-Download Windows Driver Kit 7.1 (no later, ATL is removed) from http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=11800 .
-Mount the ISO and install the 'Full Development Environment | Build Environments', typically to the standard location C:\WinDDK\7600.16385.1\ .
-If you need software in order to mount the ISO as a DVD, try SlySoft Virtual CloneDrive at http://www.slysoft.com/en/virtual-clonedrive.html .
-If you have disabled Autoplay, it's the 'KitSetup.exe' that you should run.
-
-Set the environment variable AX_ATL to point to the installation directory, perhaps "C:\WinDDK\7600.16385.1\inc\atl71" .
-
-You'll also have to add the libraries to AxCrypt2Go linker properties, and the include directory to the properties so it can build.
 
 ATL needs no building, it's a set of header files and the libraries are pre-built.
 
@@ -161,7 +152,14 @@ Visual Studio Express 2013 for Windows
 ======================================
 
 It was possible to build AxCrypt with Visual Studio Express 2013 Express for Windows (the free version), although the .MSI installers must
-be built from the command line in this case. It has not been tested with Visual Studio 2015 Community Edition or the current code base.
+be built from the command line in this case. It has not been tested with Visual Studio 2013 Express or the current code base.
+
+Download Windows Driver Kit 7.1 (no later, ATL is removed) from http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=11800 .
+Mount the ISO and install the 'Full Development Environment | Build Environments', typically to the standard location C:\WinDDK\7600.16385.1\ .
+If you need software in order to mount the ISO as a DVD, try SlySoft Virtual CloneDrive at http://www.slysoft.com/en/virtual-clonedrive.html .
+If you have disabled Autoplay, it's the 'KitSetup.exe' that you should run.
+
+You'll also have to add the libraries to AxCrypt2Go linker properties, and then include directory to the properties so it can build.
 
 If you have Visual Studio 2015 Professional or better, you can build it all from inside Visual Studio.
 
@@ -179,8 +177,7 @@ required for Visual Studio 2013, which includes the XP headers from start.
 Windows Installer XML (WiX) toolset
 ===================================
 
-WiX is required to build the MSI setup. There is support for building from Visual Studio Professional or better, but not from Express editions so if you're
-using Express you'll have to build from the command line (see below). You still need to install WiX.
+WiX is required to build the MSI setup. There is support for building from Visual Studio 2015 Community or better. You still need to install WiX.
 
 Get Windows Installer XML (WiX) toolset v3.10.2.2516 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
 the instructions.
