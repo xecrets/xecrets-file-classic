@@ -1,5 +1,5 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -56,11 +56,11 @@
 /// \return true if we should be using the old entropy gathering daemon etc.
 bool
 CEntropy::UseEntropyPool() {
-    if (CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValUseEntropyPool).GetDword(FALSE) ||
-        CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValUseEntropyPool).GetDword(FALSE)) {
-            return true;
-    }
-    return false;
+	if (CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValUseEntropyPool).GetDword(FALSE) ||
+		CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValUseEntropyPool).GetDword(FALSE)) {
+		return true;
+	}
+	return false;
 }
 
 //
@@ -75,27 +75,27 @@ CEntropy::UseEntropyPool() {
 //	These are kick-started as requested separately.
 //
 CEntropy::CEntropy(HKEY hKey, LPCTSTR szRegSubKey) {
-    m_bUseEntropyPool = UseEntropyPool();
+	m_bUseEntropyPool = UseEntropyPool();
 
 	m_pEntropyPool = new BYTE[ENTROPY_POOL_SIZE];
-    ASSPTR(m_pEntropyPool);
+	ASSPTR(m_pEntropyPool);
 
 	m_iReadIndex = m_iWriteIndex = 0;
 
-    // New behavior is to use the Windows API
-    if (!m_bUseEntropyPool) {
-        ASSAPI(CryptAcquireContext(&m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT));
-        return;
-    }
+	// New behavior is to use the Windows API
+	if (!m_bUseEntropyPool) {
+		ASSAPI(CryptAcquireContext(&m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT));
+		return;
+	}
 
-    CAssert(hKey != NULL).App(ERR_ARGUMENT, _T("CEntropy::CEntropy")).Throw();
-    CAssert(szRegSubKey != NULL).App(ERR_ARGUMENT, _T("CEntropy::CEntropy")).Throw();
+	CAssert(hKey != NULL).App(ERR_ARGUMENT, _T("CEntropy::CEntropy")).Throw();
+	CAssert(szRegSubKey != NULL).App(ERR_ARGUMENT, _T("CEntropy::CEntropy")).Throw();
 
 	// Squirrel away the registry key and value.
 	m_hRegKey = hKey;
-    size_t ccRegSubKey = _tcsclen(szRegSubKey) + 1;
+	size_t ccRegSubKey = _tcsclen(szRegSubKey) + 1;
 	m_szRegSubKey = new TCHAR[ccRegSubKey];
-    ASSPTR(m_szRegSubKey);
+	ASSPTR(m_szRegSubKey);
 
 	(void)_tcscpy_s(m_szRegSubKey, ccRegSubKey, szRegSubKey);
 
@@ -107,11 +107,11 @@ CEntropy::CEntropy(HKEY hKey, LPCTSTR szRegSubKey) {
 //  Stop timers etc - Do *not* save - if that must be done, do it with Save()
 //
 CEntropy::~CEntropy() {
-    // New behavior is to use the Windows API
-    if (!m_bUseEntropyPool) {
-        ASSAPI(CryptReleaseContext(m_hCryptProv, 0));
-        return;
-    }
+	// New behavior is to use the Windows API
+	if (!m_bUseEntropyPool) {
+		ASSAPI(CryptReleaseContext(m_hCryptProv, 0));
+		return;
+	}
 	Stop();
 }
 //
@@ -119,13 +119,13 @@ CEntropy::~CEntropy() {
 //
 CEntropy&
 CEntropy::Start() {
-    // New behavior is to use the Windows API
-    if (!m_bUseEntropyPool) {
-        return *this;
-    }
+	// New behavior is to use the Windows API
+	if (!m_bUseEntropyPool) {
+		return *this;
+	}
 
 	// If already started - do nothing.
-    if (!InterlockedExchange((LPLONG)&m_lStopAll, FALSE)) return *this;
+	if (!InterlockedExchange((LPLONG)&m_lStopAll, FALSE)) return *this;
 
 	CMessage().Wrap(0).AppMsg(INF_ENTROPY_START).LogEvent(2);
 
@@ -145,15 +145,15 @@ CEntropy::Start() {
 	CAssert(m_hGatherThread != NULL).Sys(MSG_SYSTEM_CALL, _T("CEntropy::Start [CreateThread(m_hGatherThread)]")).Throw();
 	CAssert(SetThreadPriority(m_hGatherThread, THREAD_PRIORITY_BELOW_NORMAL)).Sys(MSG_SYSTEM_CALL, _T("CEntropy::Start [SetThreadPriority(m_hGatherThread)]")).Throw();
 
-    // Create the User Entropy thread
+	// Create the User Entropy thread
 	m_hUserEntropyEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 	CAssert(m_hUserEntropyEvent != NULL).Sys(MSG_SYSTEM_CALL, _T("CEntropy::Start [CreateEvent(m_hUserEntropyEvent)]")).Throw();
 	m_hUserEntropyThread = CreateThread(NULL, 0, StaticUserEntropyThread, this, 0, &dwThreadId);
 	CAssert(m_hUserEntropyThread != NULL).Sys(MSG_SYSTEM_CALL, _T("CEntropy::Start [CreateThread(m_hUserEntropyThread)]")).Throw();
-    // See [BUG 951378], modified to lower priority to reduce impact on system performance.
+	// See [BUG 951378], modified to lower priority to reduce impact on system performance.
 	CAssert(SetThreadPriority(m_hUserEntropyThread, THREAD_PRIORITY_BELOW_NORMAL)).Sys(MSG_SYSTEM_CALL, _T("CEntropy::Start [SetThreadPriority(m_hUserEntropyThread)]")).Throw();
 
-	GatherBits(ENTROPY_POOL_SIZE<<3);		// Request a new, filled, entropy pool
+	GatherBits(ENTROPY_POOL_SIZE << 3);		// Request a new, filled, entropy pool
 	return *this;
 }
 //
@@ -161,15 +161,15 @@ CEntropy::Start() {
 //
 CEntropy&
 CEntropy::Stop() {
-    // New behavior is to use the Windows API
-    if (!m_bUseEntropyPool) {
-        return *this;
-    }
+	// New behavior is to use the Windows API
+	if (!m_bUseEntropyPool) {
+		return *this;
+	}
 
 	// If already stopped - do nothing
-    if (InterlockedExchange((LPLONG)&m_lStopAll, TRUE)) return *this;
+	if (InterlockedExchange((LPLONG)&m_lStopAll, TRUE)) return *this;
 
-    CMessage().Wrap(0).AppMsg(INF_ENTROPY_STOP).LogEvent(2);
+	CMessage().Wrap(0).AppMsg(INF_ENTROPY_STOP).LogEvent(2);
 
 	// Stop the Gatherer thread...
 	if (m_hGatherThread != NULL) {
@@ -194,7 +194,7 @@ CEntropy::Stop() {
 		m_hFlipperThread = NULL;
 	}
 
-    // ...and stop the User Entropy Thread as well
+	// ...and stop the User Entropy Thread as well
 	if (m_hUserEntropyThread != NULL) {
 		CAssert(SetEvent(m_hUserEntropyEvent)).Sys(MSG_SYSTEM_CALL, _T("CEntropy::Stop [SetEvent(m_hUserEntropyEvent)]")).Throw();
 
@@ -211,12 +211,12 @@ CEntropy::Stop() {
 //
 CEntropy&
 CEntropy::Load() {
-    // New behavior is to use the Windows API
-    if (!m_bUseEntropyPool) {
-        return *this;
-    }
+	// New behavior is to use the Windows API
+	if (!m_bUseEntropyPool) {
+		return *this;
+	}
 
-    DWORD dwRegPoolSize = ENTROPY_POOL_SIZE/2;
+	DWORD dwRegPoolSize = ENTROPY_POOL_SIZE / 2;
 	DWORD dwType = REG_BINARY;
 	if (OpenRegSubKey()) {
 		LONG dwReturn = RegQueryValueEx(m_hRegSubKey, szRegValueEntropyPool, NULL, &dwType, m_pEntropyPool, &dwRegPoolSize);
@@ -233,13 +233,13 @@ CEntropy::Load() {
 //
 CEntropy&
 CEntropy::Save() {
-    // New behavior is to use the Windows API
-    if (!m_bUseEntropyPool) {
-        return *this;
-    }
+	// New behavior is to use the Windows API
+	if (!m_bUseEntropyPool) {
+		return *this;
+	}
 
-    if (OpenRegSubKey()) {
-		CAssert(RegSetValueEx(m_hRegSubKey, szRegValueEntropyPool, 0, REG_BINARY, m_pEntropyPool, ENTROPY_POOL_SIZE/2) == ERROR_SUCCESS).Sys(MSG_SYSTEM_CALL, _T("RegSetValueEx() [CEntropy::Save()]")).Throw();
+	if (OpenRegSubKey()) {
+		CAssert(RegSetValueEx(m_hRegSubKey, szRegValueEntropyPool, 0, REG_BINARY, m_pEntropyPool, ENTROPY_POOL_SIZE / 2) == ERROR_SUCCESS).Sys(MSG_SYSTEM_CALL, _T("RegSetValueEx() [CEntropy::Save()]")).Throw();
 		CMessage().Wrap(0).AppMsg(INF_SAVED_ENTROPY).LogEvent(4);
 	}
 	return *this;
@@ -258,20 +258,20 @@ CEntropy::Save() {
 //
 BYTE *
 CEntropy::Read(BYTE *aoDst, size_t stLen) {
-    // New behavior is to use the Windows API
-    if (!m_bUseEntropyPool) {
-        ASSAPI(CryptGenRandom(m_hCryptProv, (DWORD)stLen, (BYTE *)aoDst));
-        return aoDst;
-    }
+	// New behavior is to use the Windows API
+	if (!m_bUseEntropyPool) {
+		ASSAPI(CryptGenRandom(m_hCryptProv, (DWORD)stLen, (BYTE *)aoDst));
+		return aoDst;
+	}
 
-	CMessage().Wrap(0).AppMsg(INF_USING_ENTROPY, (int)(stLen*8)).LogEvent(4);
-	for (size_t stExLen = stLen<<2; stExLen; stExLen--) {
+	CMessage().Wrap(0).AppMsg(INF_USING_ENTROPY, (int)(stLen * 8)).LogEvent(4);
+	for (size_t stExLen = stLen << 2; stExLen; stExLen--) {
 		// Stricty speaking, aoDst is not initialized. Ok for entropy.
 		// Nor is this truly thread-safe. Ok for entropy though.
 		aoDst[stExLen % stLen] ^= m_pEntropyPool[IncPoolIndex(&m_iReadIndex)];
 	}
 	// We always fill the entire pool after having something read from it.
-	GatherBits(ENTROPY_POOL_SIZE<<3);
+	GatherBits(ENTROPY_POOL_SIZE << 3);
 	return aoDst;
 }
 //
@@ -283,12 +283,12 @@ CEntropy::Add(BYTE *aoSrc, size_t stLen) {
 		m_pEntropyPool[IncPoolIndex(&m_iWriteIndex)] ^= *aoSrc++;
 	}
 
-    // New behavior is to use the Windows API
-    if (!m_bUseEntropyPool) {
-        // This actually seeds the windows API pool
-        (void)Read(m_pEntropyPool, ENTROPY_POOL_SIZE);
-        return;
-    }
+	// New behavior is to use the Windows API
+	if (!m_bUseEntropyPool) {
+		// This actually seeds the windows API pool
+		(void)Read(m_pEntropyPool, ENTROPY_POOL_SIZE);
+		return;
+	}
 }
 //
 //	Request a number of bits from the gatherer,
@@ -298,13 +298,13 @@ void
 CEntropy::GatherBits(long lBits) {
 	CMessage().Wrap(0).AppMsg(INF_GATHERING_ENTROPY, lBits).LogEvent(4);
 	// Fill the entropy pool with bits from the gatherer too.
-    // We maximize at the entropy pool size, which means that we do as
-    // good as we can during activity, and then replenish the entire pool.
-    lBits = InterlockedExchange((LPLONG)&m_lWantedBits, lBits) + lBits;
-    lBits = (lBits > (ENTROPY_POOL_SIZE<<3)) ? (ENTROPY_POOL_SIZE<<3) : lBits;
-    (void)InterlockedExchange((LPLONG)&m_lWantedBits, lBits);
+	// We maximize at the entropy pool size, which means that we do as
+	// good as we can during activity, and then replenish the entire pool.
+	lBits = InterlockedExchange((LPLONG)&m_lWantedBits, lBits) + lBits;
+	lBits = (lBits > (ENTROPY_POOL_SIZE << 3)) ? (ENTROPY_POOL_SIZE << 3) : lBits;
+	(void)InterlockedExchange((LPLONG)&m_lWantedBits, lBits);
 
-    m_fStopFlip = FALSE;
+	m_fStopFlip = FALSE;
 	CAssert(SetEvent(m_hFlipperEvent)).Sys(MSG_SYSTEM_CALL, _T("CEntropy::CEntropy [SetEvent(m_hFlipperEvent)]")).Throw();
 	CAssert(SetEvent(m_hGatherEvent)).Sys(MSG_SYSTEM_CALL, _T("CEntropy::CEntropy [SetEvent(m_hGatherEvent)]")).Throw();
 }
@@ -393,7 +393,7 @@ void
 CEntropy::GatherThread() {
 	// Get timer caps, attempt to go down to 1ms if possible, otherwise as good as it gets.
 	TIMECAPS tc; UINT cbtc = sizeof tc;
-	CAssert(timeGetDevCaps(&tc,  cbtc) == TIMERR_NOERROR).App(ERR_MMTIMER, _T("CEntropy::Gather [timeGetDevCaps]")).Throw();
+	CAssert(timeGetDevCaps(&tc, cbtc) == TIMERR_NOERROR).App(ERR_MMTIMER, _T("CEntropy::Gather [timeGetDevCaps]")).Throw();
 	DWORD dwResolution = min(max(1, tc.wPeriodMin), tc.wPeriodMax);
 	CAssert(timeBeginPeriod(dwResolution) == TIMERR_NOERROR).App(ERR_MMTIMER, _T("CEntropy::Gather [timeBeginPeriod]")).Throw();
 
@@ -446,12 +446,13 @@ CEntropy::GatherThread() {
 				// we not get our 1 ms resolution???
 				//
 				if (uiN == 100) {
-					uiRunFlipSum -= uiRunFlipSum/100;
-				} else {
+					uiRunFlipSum -= uiRunFlipSum / 100;
+				}
+				else {
 					uiN++;
 				}
-				uiRunFlipSum += m_uiBit-uiLastFlip;
-			} while (((m_uiBit-uiLastFlip)/dwResolution < 1000L) && --cMax && !m_lStopAll);
+				uiRunFlipSum += m_uiBit - uiLastFlip;
+			} while (((m_uiBit - uiLastFlip) / dwResolution < 1000L) && --cMax && !m_lStopAll);
 #endif
 			// At this point we do not do anything about low-entropy bits, it happens
 			// sometimes when the system is very loaded, but thre is not much to do,
@@ -481,12 +482,12 @@ CEntropy::GatherThread() {
 		m_fStopFlip = TRUE;
 		(void)WaitForSingleObject(m_hGatherEvent, INFINITE);
 	} while (!m_lStopAll);
-//
-// Currently no running average speed in slowsafe mode
-//
+	//
+	// Currently no running average speed in slowsafe mode
+	//
 #ifndef	SLOWSAFE
 	if (fWasStarted) {
-		CMessage().Wrap(0).AppMsg(MSG_OSCILLATOR, ((uiRunFlipSum/uiN)/dwResolution)/1000L).LogEvent();
+		CMessage().Wrap(0).AppMsg(MSG_OSCILLATOR, ((uiRunFlipSum / uiN) / dwResolution) / 1000L).LogEvent();
 	}
 #endif
 	CAssert(timeKillEvent(uTimerId) == TIMERR_NOERROR).App(ERR_MMTIMER, _T("CEntropy::Gather [timeKillEvent]")).Throw();
@@ -514,47 +515,47 @@ CEntropy::StaticUserEntropyThread(LPVOID lpParameter) {
 //
 void
 CEntropy::UserEntropyThread() {
-    // It appears that 20 is not a good value. See [BUG 951378]
+	// It appears that 20 is not a good value. See [BUG 951378]
 	const int iSamplingFreq = 41;       // Milliseconds >20ms, and a prime to boot!
 
 	BYTE oLastPointHash = 0, oLastWindowsHash = 0;
 	unsigned int utTimeToNext = iSamplingFreq;
 
-    do {
-	    POINT stNewPoint;
-	    BYTE oNewPointHash, oNewWindowsHash;
+	do {
+		POINT stNewPoint;
+		BYTE oNewPointHash, oNewWindowsHash;
 
-	    GetCursorPos(&stNewPoint);
-	    oNewPointHash = ByteSumHash(&stNewPoint, sizeof stNewPoint);
+		GetCursorPos(&stNewPoint);
+		oNewPointHash = ByteSumHash(&stNewPoint, sizeof stNewPoint);
 
-	    oNewWindowsHash = WindowsStateHash();
+		oNewWindowsHash = WindowsStateHash();
 
-	    // Assume all quiet.. Increase idle-time.
-	    utTimeToNext += utTimeToNext;		// If all quiet - double waiting time.
-	    utTimeToNext = Min(utTimeToNext, 1000*10);	// But not longer than 10 seconds...
+		// Assume all quiet.. Increase idle-time.
+		utTimeToNext += utTimeToNext;		// If all quiet - double waiting time.
+		utTimeToNext = Min(utTimeToNext, 1000 * 10);	// But not longer than 10 seconds...
 
-	    //	Add to entropy pool if new value, and also reset timer to frequent value if so.
-	    if (oNewWindowsHash != oLastWindowsHash) {
-		    m_pEntropyPool[IncPoolIndex(&m_iWriteIndex)] ^= oLastWindowsHash = oNewWindowsHash;
-		    utTimeToNext = iSamplingFreq;
+		//	Add to entropy pool if new value, and also reset timer to frequent value if so.
+		if (oNewWindowsHash != oLastWindowsHash) {
+			m_pEntropyPool[IncPoolIndex(&m_iWriteIndex)] ^= oLastWindowsHash = oNewWindowsHash;
+			utTimeToNext = iSamplingFreq;
 #ifndef _DEBUGPLUS
-            HEAP_CHECK_BEGIN(_T("UserEntropyThread [Windows]"), FALSE);
+			HEAP_CHECK_BEGIN(_T("UserEntropyThread [Windows]"), FALSE);
 			CMessage().Wrap(0).AppMsg(INF_WINDOWS_ENTROPY).LogEvent(5);
-            HEAP_CHECK_END
+			HEAP_CHECK_END
 #endif
-	    }
-	    if (oNewPointHash != oLastPointHash) {
-		    m_pEntropyPool[IncPoolIndex(&m_iWriteIndex)] ^= oLastPointHash = oNewPointHash;
-		    utTimeToNext = iSamplingFreq;			// Something happend - back to normal sampling freq
+		}
+		if (oNewPointHash != oLastPointHash) {
+			m_pEntropyPool[IncPoolIndex(&m_iWriteIndex)] ^= oLastPointHash = oNewPointHash;
+			utTimeToNext = iSamplingFreq;			// Something happend - back to normal sampling freq
 #ifndef _DEBUGPLUS
-            HEAP_CHECK_BEGIN(_T("UserEntropyThread [Mouse]"), FALSE);
+			HEAP_CHECK_BEGIN(_T("UserEntropyThread [Mouse]"), FALSE);
 			CMessage().Wrap(0).AppMsg(INF_MOUSE_ENTROPY).LogEvent(5);
-            HEAP_CHECK_END
+			HEAP_CHECK_END
 #endif
-        }
-	    // Get a time-stamp byte too
-	    m_pEntropyPool[IncPoolIndex(&m_iWriteIndex)] ^= GetTimeStampByte();
-    } while (WaitForSingleObject(m_hUserEntropyEvent, utTimeToNext) == WAIT_TIMEOUT);
+		}
+		// Get a time-stamp byte too
+		m_pEntropyPool[IncPoolIndex(&m_iWriteIndex)] ^= GetTimeStampByte();
+	} while (WaitForSingleObject(m_hUserEntropyEvent, utTimeToNext) == WAIT_TIMEOUT);
 }
 //
 //	Called by EnumWindows below, gets the state of one window
@@ -584,7 +585,7 @@ CEntropy::ByteSumHash(void *pvBuf, int iSiz) {
 	for (register int i = 0; i < iSiz; i++) {
 		iHash += ((BYTE *)pvBuf)[i];
 	}
-	return iHash;
+	return (BYTE)iHash;
 }
 //
 //	Increment a PoolIndex, return the old value.
@@ -606,7 +607,8 @@ CEntropy::IncPoolIndex(int *pIndex) {
 	// Even at the bottom, i.e. persistent half.
 	if (iOldIndex & 1) {
 		return ENTROPY_POOL_SIZE - iOldIndex;
-	} else {
+	}
+	else {
 		return iOldIndex;
 	}
 }
@@ -618,7 +620,7 @@ BOOL
 CEntropy::OpenRegSubKey() {
 	if (!m_hRegSubKey.IsValid()) {
 		LONG lReturn;
-		if ((lReturn = RegOpenKeyEx(m_hRegKey, m_szRegSubKey, 0, KEY_QUERY_VALUE|KEY_SET_VALUE, &m_hRegSubKey)) != ERROR_SUCCESS) {
+		if ((lReturn = RegOpenKeyEx(m_hRegKey, m_szRegSubKey, 0, KEY_QUERY_VALUE | KEY_SET_VALUE, &m_hRegSubKey)) != ERROR_SUCCESS) {
 			SetLastError(lReturn);
 			CAssert(lReturn == ERROR_FILE_NOT_FOUND).Sys(MSG_SYSTEM_CALL, _T("CEntropy::OpenRegSubKey [RegOpenKeyEx]")).Throw();
 			return FALSE;
@@ -640,14 +642,14 @@ CEntropy::GetTimeStampBit() {
 		BYTE ubTimeStampBit;
 		// This code derived from MSDN
 		__asm {
-			push eax      ; Save registers we will overwrite (eax, ebx, edx).
+			push eax; Save registers we will overwrite(eax, ebx, edx).
 			push ebx
 			push edx
-			_emit 0x0F    ; The RDTSC instruction consists of these two bytes.
+			_emit 0x0F; The RDTSC instruction consists of these two bytes.
 			_emit 0x31
-			or	eax, eax	; Set parity bit
-			setpo ubTimeStampBit	; Set the byte to 1 or 0
-			pop edx         ; Restore overwritten registers.
+			or eax, eax; Set parity bit
+			setpo ubTimeStampBit; Set the byte to 1 or 0
+			pop edx; Restore overwritten registers.
 			pop ebx
 			pop eax
 		}
@@ -671,14 +673,14 @@ CEntropy::GetTimeStampByte() {
 		BYTE ubTimeStampByte;
 		// This code derived from MSDN
 		__asm {
-			push eax      ; Save registers we will overwrite (eax, ebx, edx).
+			push eax; Save registers we will overwrite(eax, ebx, edx).
 			push ebx
 			push edx
-			_emit 0x0F    ; The RDTSC instruction consists of these two bytes.
+			_emit 0x0F; The RDTSC instruction consists of these two bytes.
 			_emit 0x31
 			lea ebx, ubTimeStampByte
-			mov [ebx], al	; Get the lsb of the counter
-			pop edx         ; Restore overwritten registers.
+			mov[ebx], al; Get the lsb of the counter
+			pop edx; Restore overwritten registers.
 			pop ebx
 			pop eax
 		}

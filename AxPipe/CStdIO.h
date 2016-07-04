@@ -58,7 +58,7 @@ namespace AxPipe {
 		/// \return A pointer to this
 		CSourceStdIn *Init(bool fBinary = false, size_t cbChunk = 64 * 1024) {
 			m_cbChunk = cbChunk;
-			ASSCHK(_setmode(_fileno(stdin), fBinary ? O_BINARY : O_TEXT) != -1, _T("CSourceStdIn::Init() setmode() failed"));
+			ASSCHK(_setmode(_fileno(stdin), fBinary ? _O_BINARY : _O_TEXT) != -1, _T("CSourceStdIn::Init() setmode() failed"));
 			return this;
 		}
 
@@ -99,7 +99,7 @@ namespace AxPipe {
 		/// \param fBinary Set to true for binary mode writing
 		/// \return A pointer to this
 		CSinkStdOut *Init(bool fBinary = false) {
-			ASSCHK(_setmode(_fileno(stdout), fBinary ? O_BINARY : O_TEXT) != -1, _T("CSourceStdOut::Init() setmode() failed"));
+			ASSCHK(_setmode(_fileno(stdout), fBinary ? _O_BINARY : _O_TEXT) != -1, _T("CSourceStdOut::Init() setmode() failed"));
 			return this;
 		}
 

@@ -1,9 +1,9 @@
 /*! \file
 	\brief AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
 
-    @(#) $Id$
+	@(#) $Id$
 
-    Ax Crypt/AxDecrypt et. al - Common definitions for passphrase handling
+	Ax Crypt/AxDecrypt et. al - Common definitions for passphrase handling
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -40,18 +40,18 @@
 /// \return TRUE if we processed the message
 LRESULT CALLBACK
 CSafeEdit::SafeEdit(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-    #pragma warning ( push )
-    #pragma warning ( disable : 4312 )
+	// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
+#pragma warning ( push )
+#pragma warning ( disable : 4312 )
 	CSafeEdit* pThis = (CSafeEdit*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-    #pragma warning ( pop )
+#pragma warning ( pop )
 
-    switch (uMsg) {
+	switch (uMsg) {
 	case WM_DESTROY:
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
+#pragma warning ( push )
+#pragma warning ( disable : 4244 )
 		(void)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)(pThis->m_lpfnOldWndProc));
-        #pragma warning ( pop )
+#pragma warning ( pop )
 		break;
 	case WM_PASTE:
 	case WM_CLEAR:
@@ -66,42 +66,42 @@ CSafeEdit::SafeEdit(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		return TRUE;
 	case WM_KEYDOWN:
 		switch ((int)wParam) {
-            // Quick and dirty way to make Ctrl-V work. It's hard to make
-            // accelerators work in dialog-boxes, so lets forget it for now.
-            // I (think...) it's pretty universal to use Ctrl+V as Paste...
-        case 'V':
-            if (GetKeyState(VK_CONTROL) < 0) {
-                if (IsClipboardFormatAvailable(CF_TEXT)) {
-                    if (OpenClipboard(hwnd)) {
-                        HANDLE hClipData = GetClipboardData(CF_TEXT);
-                        if (hClipData) {
-                            const char *szClipData = (const char *)GlobalLock(hClipData);
-                            if (szClipData) {
-                                const char *cp = szClipData;
-                                while (*cp) {
-                                    if (strchr((const char *)szPassphraseChars, *cp++) == NULL) {
-                                        (void)MessageBeep(MB_OK);
-                                        break;
-                                    }
-                                }
-                                // If we successfully scanned the whole string
-                                if (!*cp) {
-                                    cp = szClipData;
-                                    PostMessage(hwnd, WM_USER, TRUE, 0);
-                                    while (*cp) {
-                                        PostMessage(hwnd, WM_CHAR, *cp++, 0);
-                                    }
-                                    PostMessage(hwnd, WM_USER, FALSE, 0);
-                                }
-                                GlobalUnlock(hClipData);
-                            }
-                        }
-                        CloseClipboard();
-                    }
-                }
-                return TRUE;
-            }
-            break;
+			// Quick and dirty way to make Ctrl-V work. It's hard to make
+			// accelerators work in dialog-boxes, so lets forget it for now.
+			// I (think...) it's pretty universal to use Ctrl+V as Paste...
+		case 'V':
+			if (GetKeyState(VK_CONTROL) < 0) {
+				if (IsClipboardFormatAvailable(CF_TEXT)) {
+					if (OpenClipboard(hwnd)) {
+						HANDLE hClipData = GetClipboardData(CF_TEXT);
+						if (hClipData) {
+							const char *szClipData = (const char *)GlobalLock(hClipData);
+							if (szClipData) {
+								const char *cp = szClipData;
+								while (*cp) {
+									if (strchr((const char *)szPassphraseChars, *cp++) == NULL) {
+										(void)MessageBeep(MB_OK);
+										break;
+									}
+								}
+								// If we successfully scanned the whole string
+								if (!*cp) {
+									cp = szClipData;
+									PostMessage(hwnd, WM_USER, TRUE, 0);
+									while (*cp) {
+										PostMessage(hwnd, WM_CHAR, *cp++, 0);
+									}
+									PostMessage(hwnd, WM_USER, FALSE, 0);
+								}
+								GlobalUnlock(hClipData);
+							}
+						}
+						CloseClipboard();
+					}
+				}
+				return TRUE;
+			}
+			break;
 		case VK_PRIOR:
 		case VK_NEXT:
 		case VK_HOME:
@@ -114,68 +114,70 @@ CSafeEdit::SafeEdit(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			return TRUE;
 		}
 		break;
-    case WM_USER:
-        pThis->m_fIsPasting = wParam != 0;
-        return TRUE;
-        break;
+	case WM_USER:
+		pThis->m_fIsPasting = wParam != 0;
+		return TRUE;
+		break;
 	case WM_CHAR:
 		switch ((int)wParam) {
-		// We only handle back-space of the non-printables.
+			// We only handle back-space of the non-printables.
 		case 0x08:
 			if (lstrlenA(pThis->m_szPassphrase) > 0) {
 				pThis->m_szPassphrase[lstrlenA(pThis->m_szPassphrase) - 1] = '\0';
-			} else {
+			}
+			else {
 				(void)MessageBeep(MB_OK);
 				return TRUE;
 			}
 			break;
-		// Ignore other non-printables
+			// Ignore other non-printables
 		case 0x0a:
 		case 0x0d:
-        case 0x16: // Ctrl-V... We might just catch it here too... Now we ignore it.
+		case 0x16: // Ctrl-V... We might just catch it here too... Now we ignore it.
 		case 0x1b:
 		case 0x09:
 			break;
-		// Now we have a printable character.
+			// Now we have a printable character.
 		default:
 			char cChar[2];	// Yes, really a character + nul. Nothing else but...
 			// If the char is Unicode, we first translate it to Ansi.
-            // If we're pasting, we already know the char is in Ansi.
+			// If we're pasting, we already know the char is in Ansi.
 			if (pThis->m_fIsWindowUnicode && !pThis->m_fIsPasting) {
 				BOOL fUsedDefault;
 				if (!WideCharToMultiByte(CP_ACP,
-									     WC_COMPOSITECHECK|WC_DEFAULTCHAR,
-										 (LPCWSTR)&wParam,
-										 1,
-										 cChar,
-										 2,
-										 NULL,
-										 &fUsedDefault) || fUsedDefault) {
+					WC_COMPOSITECHECK | WC_DEFAULTCHAR,
+					(LPCWSTR)&wParam,
+					1,
+					cChar,
+					2,
+					NULL,
+					&fUsedDefault) || fUsedDefault) {
 					(void)MessageBeep(MB_OK);
 					return TRUE;
 				}
-			} else {
+			}
+			else {
 				cChar[0] = (char)wParam;
 			}
-            if (strchr(szPassphraseChars, cChar[0]) == NULL) {
+			if (strchr(szPassphraseChars, cChar[0]) == NULL) {
 				(void)MessageBeep(MB_OK);
 				return TRUE;
 			}
-            // If we need to grow the passphrase buffer...
-            if (lstrlenA(pThis->m_szPassphrase) == (int)(pThis->m_cbLen - 1)) {
-                char *p = new char[pThis->m_cbLen += pThis->m_cbLen];
-                ASSPTR(p);
-                lstrcpyA(p, pThis->m_szPassphrase);
-                delete pThis->m_szPassphrase;
-                pThis->m_szPassphrase = p;
-            }
-            lstrcpynA(&pThis->m_szPassphrase[lstrlenA(pThis->m_szPassphrase)], cChar, 2);
+			// If we need to grow the passphrase buffer...
+			if (lstrlenA(pThis->m_szPassphrase) == (int)(pThis->m_cbLen - 1)) {
+				char *p = new char[pThis->m_cbLen += pThis->m_cbLen];
+				ASSPTR(p);
+				lstrcpyA(p, pThis->m_szPassphrase);
+				delete pThis->m_szPassphrase;
+				pThis->m_szPassphrase = p;
+			}
+			lstrcpynA(&pThis->m_szPassphrase[lstrlenA(pThis->m_szPassphrase)], cChar, 2);
 			//strncat(pThis->m_szPassphrase, cChar, 1);
-            // Get the default password char, if any.
-            //LRESULT lChar = SendMessage(hwnd, EM_GETPASSWORDCHAR, 0, 0);
-            //SendMessage(hwnd, EM_SETPASSWORDCHAR, lChar, 0);
-            //wParam = (lChar == NULL) ? '*' : (DWORD)lChar;
-            wParam = _T('*');
+			// Get the default password char, if any.
+			//LRESULT lChar = SendMessage(hwnd, EM_GETPASSWORDCHAR, 0, 0);
+			//SendMessage(hwnd, EM_SETPASSWORDCHAR, lChar, 0);
+			//wParam = (lChar == NULL) ? '*' : (DWORD)lChar;
+			wParam = _T('*');
 		}
 		// Fall thru
 	default:
@@ -192,55 +194,56 @@ CSafeEdit::SafeEdit(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 /// \return An allocated string with the name, or NULL. Do remember to delete.
 _TCHAR *
 AGetOpenFileNameDialog(HWND hWnd, _TCHAR *szDefault) {
-    // Build the filter string, i.e. for example "*.txt\0*.txt\0\0"
-    // They don't make it easy by using nul chars...
-    _TCHAR *szPathExt = PathFindExtension(szDefault);
-    _TCHAR szFilter[1024 + 1024];    // wsprintf guarantee (but we call it twice, so...)
-    if (szPathExt[0]) {
-        _TCHAR *cpNextPart = szFilter;
-        wsprintf(cpNextPart, _T("*%s"), szPathExt);
-        cpNextPart = &cpNextPart[lstrlen(cpNextPart) + 1];
-        wsprintf(cpNextPart, _T("*%s"), szPathExt);
-        cpNextPart = &cpNextPart[lstrlen(cpNextPart) + 1];
-        // Add default filter, after extension filter.
-        CopyMemory(cpNextPart, _T("*.*\0*.*\0"), sizeof _T("*.*\0*.*\0"));
-    } else {
-        // Copy default filter, if no extension.
-        CopyMemory(szFilter, _T("*.*\0*.*\0"), sizeof _T("*.*\0*.*\0"));
-    }
+	// Build the filter string, i.e. for example "*.txt\0*.txt\0\0"
+	// They don't make it easy by using nul chars...
+	_TCHAR *szPathExt = PathFindExtension(szDefault);
+	_TCHAR szFilter[1024 + 1024];    // wsprintf guarantee (but we call it twice, so...)
+	if (szPathExt[0]) {
+		_TCHAR *cpNextPart = szFilter;
+		wsprintf(cpNextPart, _T("*%s"), szPathExt);
+		cpNextPart = &cpNextPart[lstrlen(cpNextPart) + 1];
+		wsprintf(cpNextPart, _T("*%s"), szPathExt);
+		cpNextPart = &cpNextPart[lstrlen(cpNextPart) + 1];
+		// Add default filter, after extension filter.
+		CopyMemory(cpNextPart, _T("*.*\0*.*\0"), sizeof _T("*.*\0*.*\0"));
+	}
+	else {
+		// Copy default filter, if no extension.
+		CopyMemory(szFilter, _T("*.*\0*.*\0"), sizeof _T("*.*\0*.*\0"));
+	}
 
-    auto_ptr<_TCHAR> szFileName(new _TCHAR[_MAX_PATH]);
-    lstrcpyn(szFileName.get(), szDefault, _MAX_PATH);
+	auto_ptr<_TCHAR> szFileName(new _TCHAR[_MAX_PATH]);
+	lstrcpyn(szFileName.get(), szDefault, _MAX_PATH);
 
-    OPENFILENAME ofn;
-    ZeroMemory(&ofn, sizeof ofn);
-    ofn.lStructSize = sizeof ofn;
-    ofn.hwndOwner = hWnd;
-    ofn.lpstrFilter = szFilter;
-    ofn.nFilterIndex  = 1;
-    ofn.lpstrDefExt = szPathExt[0] ? szPathExt + 1 : NULL;
-    ofn.lpstrFile = szFileName.get();
-    ofn.nMaxFile = _MAX_PATH;
-    ofn.Flags = OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
-    if (!GetOpenFileName(&ofn)) {
-        return NULL;
-    }
-    return szFileName.release();
+	OPENFILENAME ofn;
+	ZeroMemory(&ofn, sizeof ofn);
+	ofn.lStructSize = sizeof ofn;
+	ofn.hwndOwner = hWnd;
+	ofn.lpstrFilter = szFilter;
+	ofn.nFilterIndex = 1;
+	ofn.lpstrDefExt = szPathExt[0] ? szPathExt + 1 : NULL;
+	ofn.lpstrFile = szFileName.get();
+	ofn.nMaxFile = _MAX_PATH;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+	if (!GetOpenFileName(&ofn)) {
+		return NULL;
+	}
+	return szFileName.release();
 }
 
 #ifdef UNICODE
 static _TCHAR *
 AStrTch(const char *sz) {
-    if (!sz) {
-        return NULL;
-    }
-    int cc = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sz, -1, NULL, 0);
-    TCHAR *wz = new TCHAR[cc];
-    if (!MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sz, -1, wz, cc)) {
-        delete[] wz;
-        return NULL;
-    }
-    return wz;
+	if (!sz) {
+		return NULL;
+	}
+	int cc = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sz, -1, NULL, 0);
+	TCHAR *wz = new TCHAR[cc];
+	if (!MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sz, -1, wz, cc)) {
+		delete[] wz;
+		return NULL;
+	}
+	return wz;
 }
 #endif
 
@@ -253,130 +256,132 @@ AStrTch(const char *sz) {
 /// \return TRUE if we processed the message
 INT_PTR
 CAxPassphrase::DialogProc(HWND hWndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    CAxPassphrase *pThis;
-    switch (uMsg) {
-    // Return TRUE to have the default control selected with SetFocus
-    case WM_INITDIALOG: {
-        pThis = (CAxPassphrase *)lParam;
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )  // Compiler problem, reports 'possible loss of data' in error
-        SetWindowLongPtr(hWndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
-        #pragma warning ( pop )
+	CAxPassphrase *pThis;
+	switch (uMsg) {
+		// Return TRUE to have the default control selected with SetFocus
+	case WM_INITDIALOG: {
+		pThis = (CAxPassphrase *)lParam;
+#pragma warning ( push )
+#pragma warning ( disable : 4244 )  // Compiler problem, reports 'possible loss of data' in error
+		SetWindowLongPtr(hWndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
+#pragma warning ( pop )
 
-        if (!pThis->m_pSafeEdit) {
-            pThis->m_pSafeEdit = new CSafeEdit;
-            ASSPTR(pThis->m_pSafeEdit);
-        }
-        // (renew) Subclassing
-        pThis->m_pSafeEdit->Init(GetDlgItem(hWndDlg, IDC_EDIT_PASSPHRASE));
+		if (!pThis->m_pSafeEdit) {
+			pThis->m_pSafeEdit = new CSafeEdit;
+			ASSPTR(pThis->m_pSafeEdit);
+		}
+		// (renew) Subclassing
+		pThis->m_pSafeEdit->Init(GetDlgItem(hWndDlg, IDC_EDIT_PASSPHRASE));
 
-        // Load the current passphrase if any into the control as default
-        // This is not 'safe' - change if you _really_ want to keep the chars
-        // out of windows memory to just dummy chars of the same number. They
-        // are never used, they are just place-holders.
-        if (pThis->m_pSafeEdit->Passphrase()) {
-            #ifdef UNICODE
-            SetDlgItemText(hWndDlg, IDC_EDIT_PASSPHRASE, auto_ptr<_TCHAR>(AStrTch(pThis->m_pSafeEdit->Passphrase())).get());
-            #else
-            SetDlgItemText(hWndDlg, IDC_EDIT_PASSPHRASE, pThis->m_pSafeEdit->Passphrase());
-            #endif
-        }
+		// Load the current passphrase if any into the control as default
+		// This is not 'safe' - change if you _really_ want to keep the chars
+		// out of windows memory to just dummy chars of the same number. They
+		// are never used, they are just place-holders.
+		if (pThis->m_pSafeEdit->Passphrase()) {
+#ifdef UNICODE
+			SetDlgItemText(hWndDlg, IDC_EDIT_PASSPHRASE, auto_ptr<_TCHAR>(AStrTch(pThis->m_pSafeEdit->Passphrase())).get());
+#else
+			SetDlgItemText(hWndDlg, IDC_EDIT_PASSPHRASE, pThis->m_pSafeEdit->Passphrase());
+#endif
+		}
 
-        if (pThis->m_szKeyFileName.get()) {
-            SetDlgItemText(hWndDlg, IDC_EDIT_KEYFILE, pThis->m_szKeyFileName.get());
-        }
+		if (pThis->m_szKeyFileName.get()) {
+			SetDlgItemText(hWndDlg, IDC_EDIT_KEYFILE, pThis->m_szKeyFileName.get());
+		}
 
-        // Set to use system font.
-        SendMessage(hWndDlg, WM_SETFONT, 0, 0);
+		// Set to use system font.
+		SendMessage(hWndDlg, WM_SETFONT, 0, 0);
 
-        SetFocus(GetDlgItem(hWndDlg, IDC_EDIT_PASSPHRASE));
+		SetFocus(GetDlgItem(hWndDlg, IDC_EDIT_PASSPHRASE));
 
-        _TCHAR *sz = ALoadString(IDS_AXDECRYPT);
-        SetWindowText(hWndDlg, sz);
-        delete sz;
+		_TCHAR *sz = ALoadString(IDS_AXDECRYPT);
+		SetWindowText(hWndDlg, sz);
+		delete sz;
 
-        LRESULT lTextLen = SendDlgItemMessage(hWndDlg, IDC_EDIT_PASSPHRASE,  WM_GETTEXTLENGTH, 0, 0);
-        SendDlgItemMessage(hWndDlg, IDC_EDIT_PASSPHRASE, EM_SETSEL, (DWORD)lTextLen, lTextLen);
+		LRESULT lTextLen = SendDlgItemMessage(hWndDlg, IDC_EDIT_PASSPHRASE, WM_GETTEXTLENGTH, 0, 0);
+		SendDlgItemMessage(hWndDlg, IDC_EDIT_PASSPHRASE, EM_SETSEL, (DWORD)lTextLen, lTextLen);
 
-        // Default button is 'Cancel'
-        SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDCANCEL, (LPARAM)0);
+		// Default button is 'Cancel'
+		SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDCANCEL, (LPARAM)0);
 
-        // If we're showing the 'More...' button instead of 'Cancel'
-        if (pThis->m_fMoreCancel) {
-            ShowWindow(GetDlgItem(hWndDlg, IDCANCEL), SW_HIDE);
-            ShowWindow(GetDlgItem(hWndDlg, IDC_BTN_MORE), SW_SHOW);
-            // Initial default button in this case is 'More'
-            SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDC_BTN_MORE, (LPARAM)0);
-        }
-        if (*pThis->m_pSafeEdit->Passphrase() || pThis->m_szKeyFileName.get()) {
-            // Default button is always 'OK' if we have a passphrase
-            SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDOK, (LPARAM)0);
-        }
-        return FALSE;
-    }
-    case WM_COMMAND:
-        // This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4312 )
-        pThis = (CAxPassphrase *)GetWindowLongPtr(hWndDlg, GWLP_USERDATA);
-        #pragma warning ( pop )
+		// If we're showing the 'More...' button instead of 'Cancel'
+		if (pThis->m_fMoreCancel) {
+			ShowWindow(GetDlgItem(hWndDlg, IDCANCEL), SW_HIDE);
+			ShowWindow(GetDlgItem(hWndDlg, IDC_BTN_MORE), SW_SHOW);
+			// Initial default button in this case is 'More'
+			SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDC_BTN_MORE, (LPARAM)0);
+		}
+		if (*pThis->m_pSafeEdit->Passphrase() || pThis->m_szKeyFileName.get()) {
+			// Default button is always 'OK' if we have a passphrase
+			SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDOK, (LPARAM)0);
+		}
+		return FALSE;
+	}
+	case WM_COMMAND:
+		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
+#pragma warning ( push )
+#pragma warning ( disable : 4312 )
+		pThis = (CAxPassphrase *)GetWindowLongPtr(hWndDlg, GWLP_USERDATA);
+#pragma warning ( pop )
 
-        // Change default when text is entered
-        if (HIWORD(wParam) == EN_CHANGE && LOWORD(wParam) == IDC_EDIT_PASSPHRASE) {
-            if (*pThis->m_pSafeEdit->Passphrase() || pThis->m_szKeyFileName.get()) {
-                SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDOK, (LPARAM)0);
-            } else {
-                SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)(pThis->m_fMoreCancel ? IDC_BTN_MORE : IDOK), (LPARAM)0);
-            }
-        }
-        switch (wParam) {
-        case IDC_BTN_KEYFILE:
-            // Display a Open File dialog, and get a file name
-            pThis->m_szKeyFileName = auto_ptr<_TCHAR>(AGetOpenFileNameDialog(hWndDlg, auto_ptr<_TCHAR>(ALoadString(IDS_DEFKEYFILE)).get()));
-            if (pThis->m_szKeyFileName.get()) {
-                SetDlgItemText(hWndDlg, IDC_EDIT_KEYFILE, pThis->m_szKeyFileName.get());
-                SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDOK, (LPARAM)0);
-            } else {
-                SetDlgItemText(hWndDlg, IDC_EDIT_KEYFILE, _T(""));
-                if (!*pThis->m_pSafeEdit->Passphrase()) {
-                    SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)(pThis->m_fMoreCancel ? IDC_BTN_MORE : IDOK), (LPARAM)0);
-                }
-            }
-            // Set the user back at the passphrase edit box
-            SetFocus(GetDlgItem(hWndDlg, IDC_EDIT_PASSPHRASE));
-            {
-                LRESULT lTextLen = SendDlgItemMessage(hWndDlg, IDC_EDIT_PASSPHRASE,  WM_GETTEXTLENGTH, 0, 0);
-                SendDlgItemMessage(hWndDlg, IDC_EDIT_PASSPHRASE, EM_SETSEL, (DWORD)lTextLen, lTextLen);
-            }
-            return TRUE;
-        case IDC_BTN_MORE:
-            EndDialog(hWndDlg, IDYES);
-            return TRUE;
-        case IDOK:
-            EndDialog(hWndDlg, IDOK);
-            return TRUE;
-        case IDCANCEL:
-            EndDialog(hWndDlg, IDCANCEL);
-            return TRUE;
-        default:
-            break;
-        }
-    }
-    return FALSE;
+		// Change default when text is entered
+		if (HIWORD(wParam) == EN_CHANGE && LOWORD(wParam) == IDC_EDIT_PASSPHRASE) {
+			if (*pThis->m_pSafeEdit->Passphrase() || pThis->m_szKeyFileName.get()) {
+				SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDOK, (LPARAM)0);
+			}
+			else {
+				SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)(pThis->m_fMoreCancel ? IDC_BTN_MORE : IDOK), (LPARAM)0);
+			}
+		}
+		switch (wParam) {
+		case IDC_BTN_KEYFILE:
+			// Display a Open File dialog, and get a file name
+			pThis->m_szKeyFileName = auto_ptr<_TCHAR>(AGetOpenFileNameDialog(hWndDlg, auto_ptr<_TCHAR>(ALoadString(IDS_DEFKEYFILE)).get()));
+			if (pThis->m_szKeyFileName.get()) {
+				SetDlgItemText(hWndDlg, IDC_EDIT_KEYFILE, pThis->m_szKeyFileName.get());
+				SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)IDOK, (LPARAM)0);
+			}
+			else {
+				SetDlgItemText(hWndDlg, IDC_EDIT_KEYFILE, _T(""));
+				if (!*pThis->m_pSafeEdit->Passphrase()) {
+					SendMessage(hWndDlg, DM_SETDEFID, (WPARAM)(pThis->m_fMoreCancel ? IDC_BTN_MORE : IDOK), (LPARAM)0);
+				}
+			}
+			// Set the user back at the passphrase edit box
+			SetFocus(GetDlgItem(hWndDlg, IDC_EDIT_PASSPHRASE));
+			{
+				LRESULT lTextLen = SendDlgItemMessage(hWndDlg, IDC_EDIT_PASSPHRASE, WM_GETTEXTLENGTH, 0, 0);
+				SendDlgItemMessage(hWndDlg, IDC_EDIT_PASSPHRASE, EM_SETSEL, (DWORD)lTextLen, lTextLen);
+			}
+			return TRUE;
+		case IDC_BTN_MORE:
+			EndDialog(hWndDlg, IDYES);
+			return TRUE;
+		case IDOK:
+			EndDialog(hWndDlg, IDOK);
+			return TRUE;
+		case IDCANCEL:
+			EndDialog(hWndDlg, IDCANCEL);
+			return TRUE;
+		default:
+			break;
+		}
+	}
+	return FALSE;
 }
 
 INT_PTR CAxPassphrase::Show() {
-    switch (DialogBoxParam(m_hInstance, MAKEINTRESOURCE(IDD_PASSPHRASE), m_hWndParent, DialogProc, (LPARAM)this)) {
-    case IDOK:
-        return IDOK;
-    case IDCANCEL:
-        return IDCANCEL;
-    case IDYES:
-        return IDYES;
-    default:
-        break;
-    }
-    return IDCANCEL;
+	switch (DialogBoxParam(m_hInstance, MAKEINTRESOURCE(IDD_PASSPHRASE), m_hWndParent, DialogProc, (LPARAM)this)) {
+	case IDOK:
+		return IDOK;
+	case IDCANCEL:
+		return IDCANCEL;
+	case IDYES:
+		return IDYES;
+	default:
+		break;
+	}
+	return IDCANCEL;
 }
 
 /// \brief Allowable password characters
@@ -396,7 +401,9 @@ INT_PTR CAxPassphrase::Show() {
 ///
 /// Disable warning C4305: 'initializing' : truncation from 'const int' to 'const char'
 /// Disable warning C4309: 'initializing' : truncation of constant value
-#pragma warning(disable:4305 4309)
+/// Disable warning C4838: conversion from 'int' to 'const char' requires a narrowing conversion
+
+#pragma warning(disable:4305 4309 4838)
 const char szPassphraseChars[] = {
 	0x20, // 0x0020, ' '			space Basic Latin
 	0x21, // 0x0021, !				exclamation mark Basic Latin
@@ -622,6 +629,6 @@ const char szPassphraseChars[] = {
 	0xFD, // 0x00FD, ý   &yacute;	Latin small letter y with acute Latin-1 Supplement
 	0xFE, // 0x00FE, þ   &thorn;	Latin small letter thorn Latin-1 Supplement
 	0xFF, // 0x00FF, ÿ   &yuml;		Latin small letter y with diaeresis Latin-1 Supplement
-	0
+	0x00,
 };
-#pragma warning(default:4305 4309)
+#pragma warning(default:4305 4309 4838)
