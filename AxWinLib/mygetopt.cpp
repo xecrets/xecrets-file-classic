@@ -1,33 +1,33 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
-    Server or Web Storage of Document Files.
+	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Server or Web Storage of Document Files.
 
-    Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
 
-    This program is free software; you can redistribute it and/or modify it under the terms
-    of the GNU General Public License as published by the Free Software Foundation;
-    either version 2 of the License, or (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify it under the terms
+	of the GNU General Public License as published by the Free Software Foundation;
+	either version 2 of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	See the GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License along with this program;
-    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-    Boston, MA 02111-1307 USA
+	You should have received a copy of the GNU General Public License along with this program;
+	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+	Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
-    GetOption.cpp                   Parse the command line, standard stuff. This is taken
-                                    from Hans Dietrich XGetopt. Thank you Hans!
+	GetOption.cpp                   Parse the command line, standard stuff. This is taken
+									from Hans Dietrich XGetopt. Thank you Hans!
 
-    E-mail                          YYYY-MM-DD              Reason
-    software@axantum.com             2001                    Initial
-                                    2003-05-26              Switch to XGetopt. It's better.
-                                                            Minor changes, return -1 instead of EOF
-                                                            Allow optional arguments
+	E-mail                          YYYY-MM-DD              Reason
+	software@axantum.com             2001                    Initial
+									2003-05-26              Switch to XGetopt. It's better.
+															Minor changes, return -1 instead of EOF
+															Allow optional arguments
 
 */
 // XGetopt.cpp  Version 1.2
@@ -184,52 +184,53 @@
 TCHAR   *optarg;        // global argument pointer
 int     optind = 0;     // global argv index
 
-int mygetopt(int argc, TCHAR *argv[], TCHAR *optstring) {
-    static TCHAR *next = NULL;
-    if (optind == 0) next = NULL;
+TCHAR mygetopt(int argc, TCHAR *argv[], TCHAR *optstring) {
+	static TCHAR *next = NULL;
+	if (optind == 0) next = NULL;
 
-    optarg = NULL;
+	optarg = NULL;
 
-    if (next == NULL || *next == _T('\0'))  {
-        if (optind == 0) optind++;
+	if (next == NULL || *next == _T('\0')) {
+		if (optind == 0) optind++;
 
-        if (optind >= argc || argv[optind][0] != _T('-') || argv[optind][1] == _T('\0')) {
-            optarg = NULL;
-            if (optind < argc)
-                optarg = argv[optind];
-            return -1;
-        }
+		if (optind >= argc || argv[optind][0] != _T('-') || argv[optind][1] == _T('\0')) {
+			optarg = NULL;
+			if (optind < argc)
+				optarg = argv[optind];
+			return -1;
+		}
 
-        if (_tcscmp(argv[optind], _T("--")) == 0) {
-            optind++;
-            optarg = NULL;
-            if (optind < argc)
-                optarg = argv[optind];
-            return -1;
-        }
+		if (_tcscmp(argv[optind], _T("--")) == 0) {
+			optind++;
+			optarg = NULL;
+			if (optind < argc)
+				optarg = argv[optind];
+			return -1;
+		}
 
-        next = argv[optind];
-        next++;     // skip past -
-        optind++;
-    }
+		next = argv[optind];
+		next++;     // skip past -
+		optind++;
+	}
 
-    TCHAR c = *next++;
-    TCHAR *cp = _tcschr(optstring, c);
+	TCHAR c = *next++;
+	TCHAR *cp = _tcschr(optstring, c);
 
-    if (cp == NULL || c == _T(':')) {
-        return _T('?');
-    }
+	if (cp == NULL || c == _T(':')) {
+		return _T('?');
+	}
 
-    cp++;
-    if (*cp == _T(':')) {
-        if (*next != _T('\0')) {
-            optarg = next;
-            next = NULL;
-        } else if (optind < argc) {
-            optarg = argv[optind];
-            optind++;
-        }
-    }
+	cp++;
+	if (*cp == _T(':')) {
+		if (*next != _T('\0')) {
+			optarg = next;
+			next = NULL;
+		}
+		else if (optind < argc) {
+			optarg = argv[optind];
+			optind++;
+		}
+	}
 
-    return c;
+	return c;
 }

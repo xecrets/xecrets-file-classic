@@ -1,7 +1,7 @@
 #ifndef	_GETOPT
 #define	_GETOPT
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -26,7 +26,7 @@
 
 	E-mail							YYYY-MM-DD				Reason
 	software@axantum.com 			2001					Initial
-                                    2003-05-26              Switch to Hans Dietrich XGetopt. Thanks!
+									2003-05-26              Switch to Hans Dietrich XGetopt. Thanks!
 
 */
 // XGetopt.h  Version 1.2
@@ -73,6 +73,6 @@
 extern int optind, opterr;
 extern TCHAR *optarg;
 
-int mygetopt(int argc, TCHAR *argv[], TCHAR *optstring);
+TCHAR mygetopt(int argc, TCHAR *argv[], TCHAR *optstring);
 
 #endif
