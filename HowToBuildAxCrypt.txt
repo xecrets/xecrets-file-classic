@@ -85,19 +85,19 @@ msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
 zlib
 ====
 
-Download zlib 1.2.8 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
+Download zlib 1.2.11 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
 
-Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.8" .
+Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.11" .
 
-Due to a bug in zlibstat.vcxproj (and upgrade required for VS2015):
+Due to a bug in zlibstat.vcxproj:
 
-Open %AX_ZLIB%\contrib\vstudio\vc11\zlibvc.sln in Visual Studio, change 'zlibstat'
+Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio, change 'zlibstat'
 
 Properties | Configuration Properties | C/C++ | Code Generation | Runtime Library to:
 "Multi-threaded Debug (/MTd)"
 and
 "Multi-threaded (/MT)"
-for Debug|(Win32|x64) and Release|(Win32|x64) configurations respectively.
+for Debug|(Win32|x64) and Release|x64 configurations respectively.
 
 Also change (for all Configurations and Win32 & x64)
 
@@ -111,7 +111,7 @@ Open VS2015 x86 Native Tools Command Prompt
 cd %AX_ZLIB%\contrib\masmx86
 bld_ml32.bat
 
-cd %AX_ZLIB%\contrib\vstudio\vc11
+cd %AX_ZLIB%\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
 
@@ -120,7 +120,7 @@ Open VS2015 x64 Native Tools Command Prompt
 cd %AX_ZLIB%\contrib\masmx64
 bld_ml64.bat
 
-cd %AX_ZLIB%\contrib\vstudio\vc11
+cd %AX_ZLIB%\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
 
