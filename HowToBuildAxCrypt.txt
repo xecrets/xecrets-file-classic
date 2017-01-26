@@ -58,11 +58,11 @@ Build Server: "C:\Lib\[CONTRIBUTION]"
 Crypto++
 ========
 
-Download Crypto++ Library 5.6.3 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
+Download Crypto++ Library 5.6.5 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
 
-Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp563" .
+Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp565" .
 
-Open %AX_CRYPTOPP%\cryptlib.vcproj in Visual Studio, say yes to upgrade ignore the warnings and then change 'cryptlib'
+Open %AX_CRYPTOPP%\cryptlib.vcxproj in Visual Studio, say yes to upgrade ignore the warnings and then change 'cryptlib'
 (for all Configurations and all Platforms)
 
 Properties | General | Platform Toolset to:

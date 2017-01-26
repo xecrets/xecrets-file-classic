@@ -31,6 +31,7 @@
 */
 
 #include "stdafx.h"
+#include <assert.h>
 #include "BaseMDec.h"
 #include "integer.h"
 
@@ -73,7 +74,7 @@ BaseM_Decoder::Put2(const byte *begin, size_t length, int messageEnd, bool block
     if (messageEnd) {
         v = 0;
         s = 1;
-        for (size_t i = 0; i < lBufferSize; i++ ) {
+        for (size_t i = 0; i < lBufferSize; i++) {
             unsigned int value = m_lookup[m_buffer[i]];
             if (value >= 256) {
                 continue;
@@ -86,7 +87,8 @@ BaseM_Decoder::Put2(const byte *begin, size_t length, int messageEnd, bool block
         }
         if (m_bits) {
             outBuf.New((m_bits - 1) / 8 + 1);
-        } else {
+        }
+        else {
             // Now v is the value, but possibly too short. s is the magnitude expressed as an even
             // power of m_base;
             // We know that the binary representation of s-1 will require exactly the maximum length
@@ -104,15 +106,16 @@ BaseM_Decoder::Put2(const byte *begin, size_t length, int messageEnd, bool block
 }
 
 void BaseM_Decoder::InitializeDecodingLookupArray(int *lookup, const byte *alphabet, unsigned int base, bool caseInsensitive) {
-    std::fill(lookup, lookup+256, -1);
+    std::fill(lookup, lookup + 256, -1);
 
-    for (unsigned int i=0; i<base; i++) {
+    for (unsigned int i = 0; i < base; i++) {
         if (caseInsensitive && isalpha(alphabet[i])) {
             assert(lookup[toupper(alphabet[i])] == -1);
             lookup[toupper(alphabet[i])] = i;
             assert(lookup[tolower(alphabet[i])] == -1);
             lookup[tolower(alphabet[i])] = i;
-        } else {
+        }
+        else {
             assert(lookup[alphabet[i]] == -1);
             lookup[alphabet[i]] = i;
         }

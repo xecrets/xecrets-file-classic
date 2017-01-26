@@ -25,6 +25,7 @@
 ---
 */
 
+#include <assert.h>
 #include "cryptlib.h"
 #include "eccrypto.h"
 
@@ -61,11 +62,11 @@ public:
         Hash.Update(bi2.get(), i2.MinEncodedSize());
 
         // Get the topmost bytes necessary to contain RBITS
-        auto_ptr<byte> bh(new byte[(RBITS-1)/8 + 1]);
-        Hash.TruncatedFinal(bh.get(), (RBITS-1)/8 + 1);
+        auto_ptr<byte> bh(new byte[(RBITS - 1) / 8 + 1]);
+        Hash.TruncatedFinal(bh.get(), (RBITS - 1) / 8 + 1);
 
         // Decode the hash and interpret as an Integer, h
-        Integer h(bh.get(), (RBITS-1)/8 + 1);
+        Integer h(bh.get(), (RBITS - 1) / 8 + 1);
 
         // Remove the last few bits, if any.
         h >>= 8 - RBITS % 8 > 7 ? 0 : 8 - RBITS % 8;
@@ -73,7 +74,7 @@ public:
         return h;
     }
 
-    static const char * StaticAlgorithmName() {return "SECDSA";}
+    static const char * StaticAlgorithmName() { return "SECDSA"; }
 
     /// \param r kG in Zheng and Imai notation
     /// \param e hash(m)
