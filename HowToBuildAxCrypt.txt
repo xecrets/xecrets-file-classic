@@ -31,11 +31,11 @@ Tools and Dependencies Installation
 
 Executive summary (details in respective section below):
 
-- Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.3 (or later at your own risk)
-- Install, set AX_ZLIB=install-path and build zlib 1.2.8 (or later at your own risk)
+- Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.5 (or later at your own risk)
+- Install, set AX_ZLIB=install-path and build zlib 1.2.11 (or later at your own risk)
 - Install WTL 9.1.5321 and set AX_WTL=Install-path (or later at your own risk)
 - Install Microsoft Visual Studio 2015 Community Edition or Microsoft Visual Studio 2015 Professional Edition or better.
-- Install Windows Installer XML (WiX) toolset v3.10.2.2516 (or later at your own risk)
+- Install Windows Installer XML (WiX) toolset v3.10.3 (or later at your own risk)
 - Start Visual Studio 2015, open the AxCrypt solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
@@ -62,7 +62,9 @@ Download Crypto++ Library 5.6.5 (or possibly later at your own risk) from http:/
 
 Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp565" .
 
-Open %AX_CRYPTOPP%\cryptlib.vcxproj in Visual Studio, say yes to upgrade ignore the warnings and then change 'cryptlib'
+Open %AX_CRYPTOPP%\cryptlib.vcxproj in Visual Studio, say yes to upgrade ignore the warnings.
+
+Change 'cryptlib'
 (for all Configurations and all Platforms)
 
 Properties | General | Platform Toolset to:
@@ -91,13 +93,21 @@ Set the environment variable AX_ZLIB to point to the installation directory, per
 
 Due to a bug in zlibstat.vcxproj:
 
-Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio, change 'zlibstat'
+Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio, say yes to upgrade ignore the warnings.
 
-Properties | Configuration Properties | C/C++ | Code Generation | Runtime Library to:
+Change 'zlibstat'
+(for all Configurations and Win32|x64)
+
+Properties | General | Platform Toolset to:
+"Visual Studio 2015 - Windows XP (v140_xp)"
+
+Change Properties | Configuration Properties | C/C++ | Code Generation | Runtime Library
+
+Debug and All Platforms to:
 "Multi-threaded Debug (/MTd)"
-and
+
+Release and x64 (and Win32 - but it's ok in 1.2.11) to:
 "Multi-threaded (/MT)"
-for Debug|(Win32|x64) and Release|x64 configurations respectively.
 
 Also change (for all Configurations and Win32 & x64)
 
