@@ -1,3 +1,8 @@
+1.7.3180.0 Release 2016-07-04
+- Chg: Remove OpenCandy.
+- Chg: Updates for Visual Studio 2015.
+- Fix: Issues caused by VS 2015 upgrade.
+
 1.7.3156.0 Release 2014-01-16
 - Fix: Build-server problems caused 3153 to be equivalent to 2976.
 - Bug: Be more tolerant of invalid parent window for the progress window.

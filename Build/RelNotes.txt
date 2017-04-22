@@ -1,3 +1,8 @@
+1.7.3180 Release 2016-07-04
+Remove OpenCandy since it is discontinued. Update to Visual Studio 2015,
+and some fixes as a result of new compiler warnings etc. Use SHA256
+for Authenticode certificate.
+
 1.7.3156 Release 2014-01-16
 A build sever problem caused the wrong version of some files to be included
 in the distribution.
