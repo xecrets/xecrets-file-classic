@@ -61,6 +61,7 @@ Crypto++
 Download Crypto++ Library 5.6.5 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
 
 Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp565" .
+You may need to restart Windows Explorer for the setting to take effect.
 
 Open %AX_CRYPTOPP%\cryptlib.vcxproj in Visual Studio, say yes to upgrade ignore the warnings.
 
@@ -90,29 +91,26 @@ zlib
 Download zlib 1.2.11 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
 
 Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.11" .
+You may need to restart Windows Explorer for the setting to take effect.
 
 Due to a bug in zlibstat.vcxproj:
 
 Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio, say yes to upgrade ignore the warnings.
 
 Change 'zlibstat'
-(for all Configurations and Win32|x64)
 
-Properties | General | Platform Toolset to:
+Properties | General | Platform Toolset:
+
+[All Configurations and Win32|x64]
 "Visual Studio 2015 - Windows XP (v140_xp)"
 
-Change Properties | Configuration Properties | C/C++ | Code Generation | Runtime Library
+Properties | C/C++ | Code Generation | Runtime Library:
 
-Debug and All Platforms to:
+[Configuration Debug and All Platforms]
 "Multi-threaded Debug (/MTd)"
 
-Release and x64 (and Win32 - but it's ok in 1.2.11) to:
+[Configuration Release and x64 (and Win32 - but it's ok in 1.2.11)]
 "Multi-threaded (/MT)"
-
-Also change (for all Configurations and Win32 & x64)
-
-Properties | Configuration Properties | General | Platform Toolset to:
-"Visual Studio 2015 - Windows XP (v140_xp)"
 
 Save the solution and project!
 
@@ -140,9 +138,10 @@ WTL
 Download WTL 9.1 (or possibly later at your own risk) from http://sourceforge.net/projects/wtl/files/ .
 
 Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL91_5321_Final" .
+You may need to restart Windows Explorer for the setting to take effect.
 
-WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is *not* included
-in the SDK or express edition of Visual Studio, but you can get it via the Windows Driver Kit. See more below.
+WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is currently included
+in Visual Studio 2015 all versions, but if not you can get it via the Windows Driver Kit. See more below.
 
 ATL
 ===
