@@ -102,6 +102,11 @@ Properties | C/C++ | Code Generation | Runtime Library:
 [Configuration Release and x64 (and Win32 - but it's ok in 1.2.11)]
 "Multi-threaded (/MT)"
 
+Librarian | All Options
+
+[All Configurations and All Platforms]
+(Empty)
+
 Save the solution and project!
 
 Open x86 Native Tools Command Prompt for VS 2017
