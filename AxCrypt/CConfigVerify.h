@@ -43,7 +43,7 @@ using namespace CryptoPP;
 /// information about the application that is static after release (since it
 /// is signed).
 class CConfigVerify : public CConfig {
-    ECDSA<ECP, SHA>::Verifier m_PublicKey;  ///< The actual public key, loaded from an encoded format.
+    ECDSA<ECP, SHA1>::Verifier m_PublicKey;  ///< The actual public key, loaded from an encoded format.
 
 public:
     // Point to the signature XML to use

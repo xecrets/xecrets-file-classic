@@ -16,5 +16,5 @@
 #endif
 
 #ifndef _WIN32_IE
-#define _WIN32_IE 0x0550        // Specifies that the minimum required platform is Internet Explorer 5.5.
+#define _WIN32_IE 0x0600        // Specifies that the minimum required platform is Internet Explorer 6.0.
 #endif

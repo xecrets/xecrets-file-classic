@@ -62,7 +62,7 @@ CLicMgr::AddChkType(const axpl::ttstring &sType, const axpl::ttstring &sLicensee
 	        signatureSource.Get(signature, signature.size());
 
 	        // Make us a filter, taking both a signature and a message as input
-            VerifierFilter *verifierFilter = new VerifierFilter(m_Verifier);
+			SignatureVerificationFilter *verifierFilter = new SignatureVerificationFilter(m_Verifier);
             // First we put the signature to the filter
 	        verifierFilter->Put(signature, m_Verifier.SignatureLength());
             // Then we send the message to it

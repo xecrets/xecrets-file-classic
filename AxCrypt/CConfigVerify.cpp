@@ -99,7 +99,7 @@ CConfigVerify::VerifyFile(const axpl::ttstring &sFile, const axpl::ttstring &sSi
         SecByteBlock signature(m_PublicKey.SignatureLength());
         publicKey.Get(signature, m_PublicKey.SignatureLength());
 
-        VerifierFilter *pVerifierFilter(new VerifierFilter(m_PublicKey));
+		SignatureVerificationFilter *pVerifierFilter(new SignatureVerificationFilter(m_PublicKey));
 	    pVerifierFilter->Put(signature, m_PublicKey.SignatureLength());
         FileSource f(axpl::t2s((sPath.empty() ? sFile : sPath + _TT("/") + sFile)).c_str(), true, pVerifierFilter);
 
