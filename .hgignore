@@ -15,3 +15,4 @@ UpgradeLog.*
 UpgradeLog2.*
 AxCrypt.VC.db
 AxCrypt.VC.VC.opendb
+.vs

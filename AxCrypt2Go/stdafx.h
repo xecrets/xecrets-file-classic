@@ -21,10 +21,10 @@
 #endif
 
 #ifndef _WIN32_IE
-#define _WIN32_IE 0x0550        // Specifies that the minimum required platform is Internet Explorer 5.5.
+#define _WIN32_IE 0x0600        // Specifies that the minimum required platform is Internet Explorer 6.0.
 #endif
 
-#define _RICHEDIT_VER	0x0100
+#define _RICHEDIT_VER	0x0300
 //#define _SECURE_ATL 1
 #define _CRT_RAND_S
 

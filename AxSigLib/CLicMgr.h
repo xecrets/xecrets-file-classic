@@ -36,7 +36,7 @@ class CLicMgr {
     // live in a common header file, but...
     static const unsigned int ShortRbits = 55;// The shortened hash
     static const int SBits = 128;           // The size of the s parameter from the elliptic curve used
-    SHORTVERIFY<SECDSA<ECP, SHA, ShortRbits> > m_Verifier;
+    SHORTVERIFY<SECDSA<ECP, SHA1, ShortRbits> > m_Verifier;
 
     map<axpl::ttstring, axpl::ttstringpair> m_smspValidLic; // A map of validated license types along with the info
     axpl::ttstring m_sLastErrorMsg;                 // The last error message...

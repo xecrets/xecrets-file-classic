@@ -31,7 +31,7 @@ Tools and Dependencies Installation
 
 Executive summary (details in respective section below):
 
-- Install, set AX_CRYPTOPP=install-path and build Crypto++ 5.6.5 (or later at your own risk)
+- Install, set AX_CRYPTOPP=install-path and build Crypto++ 7.0.0 (or later at your own risk)
 - Install, set AX_ZLIB=install-path and build zlib 1.2.11 (or later at your own risk)
 - Install WTL 9.1.5321 and set AX_WTL=Install-path (or later at your own risk)
 - Install Microsoft Visual Studio 2015 Community Edition or Microsoft Visual Studio 2015 Professional Edition or better.
@@ -58,28 +58,18 @@ Build Server: "C:\Lib\[CONTRIBUTION]"
 Crypto++
 ========
 
-Download Crypto++ Library 5.6.5 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
+Download Crypto++ Library 7.0.0 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
 
 Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp565" .
 You may need to restart Windows Explorer for the setting to take effect.
 
-Open %AX_CRYPTOPP%\cryptlib.vcxproj in Visual Studio, say yes to upgrade ignore the warnings.
-
-Change 'cryptlib'
-(for all Configurations and all Platforms)
-
-Properties | General | Platform Toolset to:
-"Visual Studio 2015 - Windows XP (v140_xp)"
-
-Save the project and solution.
-
-Open VS2015 x86 Native Tools Command Prompt
+Open x86 Native Tools Command Prompt for VS 2017
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open VS2015 x64 Native/Cross Tools Command Prompt
+Open x64_x86 Cross Tools Command Prompt for VS 2017
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
@@ -95,7 +85,7 @@ You may need to restart Windows Explorer for the setting to take effect.
 
 Due to a bug in zlibstat.vcxproj:
 
-Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio, say yes to upgrade ignore the warnings.
+Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio, Upgrade to toolset v141 and SDK 8.1 (probably not later if you want it to run on Vista and above).
 
 Change 'zlibstat'
 
@@ -114,7 +104,7 @@ Properties | C/C++ | Code Generation | Runtime Library:
 
 Save the solution and project!
 
-Open VS2015 x86 Native Tools Command Prompt
+Open x86 Native Tools Command Prompt for VS 2017
 
 cd %AX_ZLIB%\contrib\masmx86
 bld_ml32.bat
@@ -123,7 +113,7 @@ cd %AX_ZLIB%\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open VS2015 x64 Native Tools Command Prompt
+Open x64_x86 Cross Tools Command Prompt for VS 2017
 
 cd %AX_ZLIB%\contrib\masmx64
 bld_ml64.bat
@@ -135,9 +125,9 @@ msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
 WTL
 ===
 
-Download WTL 9.1 (or possibly later at your own risk) from http://sourceforge.net/projects/wtl/files/ .
+Download WTL 10.7336 (or possibly later at your own risk) from http://sourceforge.net/projects/wtl/files/ .
 
-Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL91_5321_Final" .
+Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL10_7336" .
 You may need to restart Windows Explorer for the setting to take effect.
 
 WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is currently included
@@ -146,7 +136,7 @@ in Visual Studio 2015 all versions, but if not you can get it via the Windows Dr
 ATL
 ===
 
-ATL is part of Visual Studio 2015 Professional and Visual Studio 2015 Community Edition. No further action is needed.
+ATL is part of Visual Studio 2017 Professional and Visual Studio 2017 Community Edition. No further action is needed.
 
 Otherwise...
 
@@ -156,6 +146,11 @@ MSBuild.Community.Tasks
 =======================
 
 The build process is dependent on a few extensions to MSBuild. It is included via a nuget package.
+
+Visual Studio 2015 Community and Professional
+=============================================
+
+It was possible to build with Visual Studio 2015, but we have not regression tested this after upgrading to 2017.
 
 Visual Studio Express 2013 for Windows
 ======================================
@@ -188,7 +183,7 @@ Windows Installer XML (WiX) toolset
 
 WiX is required to build the MSI setup. There is support for building from Visual Studio 2015 Community or better. You still need to install WiX.
 
-Get Windows Installer XML (WiX) toolset v3.10.2.2516 (or later at your own risk) from http://wix.codeplex.com/ . Double-click to install after download and follow
+Get Windows Installer XML (WiX) toolset v3.11.1 (or later at your own risk) from http://wixtoolset.org/releases/ . Double-click to install after download and follow
 the instructions.
 
 Build the Solution
