@@ -98,6 +98,7 @@
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4254,4078 %(AdditionalOptions)</AdditionalOptions>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(TargetDir);$(AX_WTL)\Include</AdditionalIncludeDirectories>
