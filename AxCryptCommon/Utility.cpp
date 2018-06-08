@@ -32,10 +32,6 @@
 //#include    <stdio.h>
 #include    <stdarg.h>
 
-// Include and compile the multi-monitor stubs here.
-#define COMPILE_MULTIMON_STUBS
-#include "multimon.h"
-
 #include    "../AxWinLib/AxAssert.h"
 #define     AXLIB_ASSERT_FILE "Utility.cpp"
 

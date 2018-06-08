@@ -90,20 +90,4 @@ public:
     wstring GenericVersionString(); ///< A fixed-format version string with all 4 elements and dot between.
 	LPCTSTR String(bool fShowNoVersion = false); ///< Formatted string with External product name + product version info
 };
-//
-//	Some helpers to find out the OS version as well.
-//
-class COsVersion {
-	OSVERSIONINFO m_stOsVersion;
-public:
-	COsVersion();
-	BOOL IsWin95();
-	BOOL IsWin98();
-	BOOL IsWinME();
-	BOOL IsWin2000();
-	BOOL IsWinNT();
-	BOOL IsWinXP();
-	BOOL IsWin9x();
-	BOOL IsWinNx();
-};
 #endif	_CVERSION

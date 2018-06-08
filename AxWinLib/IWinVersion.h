@@ -42,6 +42,10 @@ namespace AxLib {
 		WIN2008,
 		WIN7,
 		WINHS,
+		WIN8,
+		WIN2012,
+		WIN10,
+		WIN2016,
 		X64 = 128,
 	};
 

@@ -33,7 +33,7 @@ AxAssert.cpp
 #include "StdAfx.h"
 #define WIN32_LEAN_AND_MEAN		            ///< Exclude rarely-used stuff from Windows headers
 #include <windows.h>
-
+#include <VersionHelpers.h>
 #include "IWinVersion.h"
 
 // This should be done for every source file to ensure correct reference in the assert
@@ -53,89 +53,41 @@ namespace AxLib {
     }
 
     int CWinVersion::GetVersion() {
-        OSVERSIONINFOEX osvix;
+		// See https://msdn.microsoft.com/en-us/library/windows/desktop/dn424972(v=vs.85).aspx
+        int version;
+		if (IsWindows8OrGreater()) {
+			version = WINXX;
+		}
+		else if (IsWindows7OrGreater()) {
+			version = IsWindowsServer() ? WIN2008 : WIN7;
+		}
+		else if (IsWindowsVistaOrGreater()) {
+			version = IsWindowsServer() ? WIN2008 : WINVISTA;
+		}
+		else {
+			version = WINXX;
+		}
 
-        ZeroMemory(&osvix, sizeof osvix);
-        osvix.dwOSVersionInfoSize = sizeof osvix;
-        ASSAPI(GetVersionEx((LPOSVERSIONINFO)&osvix));
+		typedef void (WINAPI *PFGETNATIVESYSTEMINFO)(LPSYSTEM_INFO lpSystemInfo);
+		HMODULE hKernel32;
+		PFGETNATIVESYSTEMINFO pfGetNativeSystemInfo;
 
-        SYSTEM_INFO si;
-        ZeroMemory(&si, sizeof si);
-        typedef void (WINAPI *PFGETNATIVESYSTEMINFO)(LPSYSTEM_INFO lpSystemInfo);
+		if (hKernel32 = GetModuleHandle(_T("kernel32.dll"))) {
+			pfGetNativeSystemInfo = (PFGETNATIVESYSTEMINFO)GetProcAddress(hKernel32, "GetNativeSystemInfo");
+		}
 
-        HMODULE hKernel32;
-        PFGETNATIVESYSTEMINFO pfGetNativeSystemInfo;
-        if (hKernel32 = GetModuleHandle(_T("kernel32.dll"))) {
-            pfGetNativeSystemInfo = (PFGETNATIVESYSTEMINFO)GetProcAddress(hKernel32, "GetNativeSystemInfo");
-        }
-        if (pfGetNativeSystemInfo != NULL) {
-            (*pfGetNativeSystemInfo)(&si);
-        } else {
-            GetSystemInfo(&si);
-        }
+		SYSTEM_INFO si;
+		ZeroMemory(&si, sizeof si);
 
-        int version = WINXX;
+		if (pfGetNativeSystemInfo != NULL) {
+			(*pfGetNativeSystemInfo)(&si);
+		}
+		else {
+			GetSystemInfo(&si);
+		}
 
-        // See http://msdn.microsoft.com/en-us/library/ms724833(VS.85).aspx for background info
-        switch (osvix.dwMajorVersion) {
-            case 6:
-                switch (osvix.dwMinorVersion) {
-                    case 1:
-                        if (osvix.wProductType == VER_NT_WORKSTATION) {
-                            version = WIN7;
-                        } else {
-                            version = WIN2008;
-                        }
-                        break;
-                    case 0:
-                        if (osvix.wProductType != VER_NT_WORKSTATION) {
-                            version = WIN2008;
-                        } else {
-                            version = WINVISTA;
-                        }
-                        break;
-                    default:
-                        version = WINXX;
-                        break;
-                }
-                break;
-            case 5:
-                switch (osvix.dwMinorVersion) {
-                    case 2:
-// WH is not relevant, nor defined for 64-bit system
-#ifdef VER_SUITE_WH_SERVER
-                        if (osvix.wSuiteMask == VER_SUITE_WH_SERVER) {
-                            version = WINHS;
-                        } else
-#endif
-                        if (osvix.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64) {
-                            version = WINXP | X64;
-                        } else if (GetSystemMetrics(SM_SERVERR2) != 0) {
-                            version = W2003; // R2
-                        } else {
-                            version = W2003;
-                        }
-                        break;
-                    case 1:
-                        version = WINXP;
-                        break;
-                    case 0:
-                        version = WIN2K;
-                        break;
-                    default:
-                        version = WINXX;
-                        break;
-                }
-                break;
-            default:
-                version = WINXX;
-                break;
-        }
-        // If we have not already determined bitness, let's check the system info
-        if ((version & X64) != X64) {
-            if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64) {
-                version |= X64;
-            }
+		if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64) {
+            version |= X64;
         }
 
         return version;

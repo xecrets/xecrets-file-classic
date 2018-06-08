@@ -530,21 +530,9 @@ PrimaryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		return 0;   // Dummy
 
 	case WM_QUERYENDSESSION:
-		//
-		// This is a case of difference between Windows NT/2K/XP etc on
-		// the one hand and Windows 95/98/ME on the other.
-		//
 		// If there are no active apps, there is no problem, we always
 		// allow shutdown.
 		//
-		// For Windows 95/98/ME:
-		// We cannot allow the session to end with active sessions left,
-		// since we will wind up waiting for other apps indefinitely,
-		// unless we happen to be the last app to be asked. We cannot
-		// depend on knowing, or arranging that order either. Thus we
-		// inform the user of the fact, and refuse shutdown.
-		//
-		// For Windows NT/2K/XP etc:
 		// If there are active apps, we ask if we should allow system shutdown,
 		// as in this case the user can switch to the other apps and terminate
 		// them before killing the dialog.
@@ -552,12 +540,7 @@ PrimaryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		PurgeThreadList(0);     // Clean out any abandoned threads
 		if (gpCActiveThreadsRoot == NULL) return TRUE;
 
-		if (!COsVersion().IsWin9x()) {
-			return CMessage().AppMsg(WRN_ACTIVE_APPS).ShowDialog(MB_OKCANCEL | MB_ICONWARNING) == IDOK;
-		}
-		else {
-			CMessage().AppMsg(ERR_CANT_STOP).ShowError(MB_OK);
-		}
+		return CMessage().AppMsg(WRN_ACTIVE_APPS).ShowDialog(MB_OKCANCEL | MB_ICONWARNING) == IDOK;
 		break;
 
 	case WM_ENDSESSION:
@@ -567,13 +550,11 @@ PrimaryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		// can only delay it.
 		//
 		if ((BOOL)wParam) {
-			// If we are in NT-style os, we need to warn about active other programs.
-			if (!COsVersion().IsWin9x()) {
+			// We need to warn about active other programs.
+			PurgeThreadList(0);     // Clean out any abandoned threads
+			while (gpCActiveThreadsRoot != NULL) {
+				CMessage().AppMsg(WRN_SHUT_DOWN).ShowWarning(MB_OK);
 				PurgeThreadList(0);     // Clean out any abandoned threads
-				while (gpCActiveThreadsRoot != NULL) {
-					CMessage().AppMsg(WRN_SHUT_DOWN).ShowWarning(MB_OK);
-					PurgeThreadList(0);     // Clean out any abandoned threads
-				}
 			}
 			PrimaryPrepareForExit();
 			pgEntropyPool->Save();  // Always save entropy when asked to exit by system.
@@ -1195,13 +1176,10 @@ PrimaryInit(int nCmdShow) {
 	pgEntropyPool->Stop().Save();
 
 	// Create new tempdirectory and ensure that it is not compressed
-	// These calls and the need for it only exists in NT and later
-	if (COsVersion().IsWinNx()) {
-		CFileIO utTmpDir;
-		utTmpDir.OpenDir(CFileName().SetPath2TempDir().GetDir());
-		utTmpDir.SetNotCompressed();
-		utTmpDir.Close();
-	}
+	CFileIO utTmpDir;
+	utTmpDir.OpenDir(CFileName().SetPath2TempDir().GetDir());
+	utTmpDir.SetNotCompressed();
+	utTmpDir.Close();
 
 	// We do this before initializing the global heap, but we destroy the
 	// objects before removing the global heap too. This is because std::streams
