@@ -42,6 +42,7 @@
 #include <shellapi.h>
 
 #include <memory>
+#include <VersionHelpers.h>
 
 #include "VistaOrLater.h"
 #include "GetModuleFilename.h"
@@ -49,14 +50,7 @@
     /// \brief Determine if we're running Vista or later
     /// \return true if we're running Vista or later
 bool awl::IsVistaOrLater() {
-    OSVERSIONINFO osver = { 0 };
-
-    osver.dwOSVersionInfoSize = sizeof OSVERSIONINFO;
-    
-    if (::GetVersionEx(&osver)) {
-        return (osver.dwPlatformId == VER_PLATFORM_WIN32_NT) && (osver.dwMajorVersion >= 6);
-    }
-    return false;
+	return IsWindowsVistaOrGreater();
 }
 
 bool awl::NeedsAndCanElevateOnVista() {

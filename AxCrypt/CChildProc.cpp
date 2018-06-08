@@ -267,23 +267,6 @@ CChildProc::WaitForThread() {
 //
 bool
 CChildProc::NeedPsapi() {
-	// Check if the toolhelp library seems to be implemented, if so we don't care
-	// about os-versions etc!
-	if (pfCreateToolhelp32Snapshot) return false;
-
-	OSVERSIONINFO stOsVersion;
-	stOsVersion.dwOSVersionInfoSize = sizeof stOsVersion;
-	// check if we are running Windows NT < 5. The call will probably fail (i can't test this)
-	// on NT 3.1.
-	if (GetVersionEx(&stOsVersion)) {
-		if (stOsVersion.dwPlatformId == VER_PLATFORM_WIN32_NT) {
-			if (stOsVersion.dwMajorVersion < 5) {
-				CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::NeedPsapi [NT4 detected]"), GetCurrentThreadId()).LogEvent();
-				// Couldn't load the library, need it! -> return true
-				return m_hPSAPI == NULL;
-			}
-		}
-	}
 	return false;
 }
 //
