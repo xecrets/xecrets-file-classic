@@ -52,6 +52,12 @@
         <Condition Message="!(loc.Win2KNotSupported)">
             <![CDATA[NOT VersionNT = 500]]>
         </Condition>
+        <Condition Message="!(loc.WinXPNotSupported)">
+          <![CDATA[NOT VersionNT = 501]]>
+        </Condition>
+        <Condition Message="!(loc.Win2003NotSupported)">
+          <![CDATA[NOT VersionNT = 502]]>
+        </Condition>
         <Condition Message="!(loc.WinNTNotSupported)">
             <![CDATA[NOT VersionNT < 500]]>
         </Condition>

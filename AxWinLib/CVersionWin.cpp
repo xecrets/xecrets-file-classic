@@ -33,11 +33,11 @@
 #include "stdafx.h"
 
 #ifndef WINVER
-#define WINVER 0x0501           // Allow use of features specific to Windows XP, Windows Server 2003 or later.
+#define WINVER 0x0600           // Allow use of features specific to Windows Vista or later.
 #endif
 
 #ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0501     // Allow use of features specific to Windows XP, Windows Server 2003 or later.
+#define _WIN32_WINNT 0x0600     // Allow use of features specific to Windows Vista or later.
 #endif
 
 #ifndef _WIN32_IE
