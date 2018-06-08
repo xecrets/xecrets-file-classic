@@ -10,6 +10,8 @@
     <String Id="WinMENotSupported">Windows ME is not supported! Version 1.6.3 is the last to do so.</String>
     <String Id="WinNTNotSupported">Windows NT is not supported! Version 1.6.3 is the last to do so.</String>
     <String Id="Win2KNotSupported">Windows 2000 is not supported! Version 1.7.2126 is the last to do so.</String>
+    <String Id="WinXPNotSupported">Windows XP is not supported! Version 1.7.3156 is the last to do so.</String>
+    <String Id="Win2003NotSupported">Windows 2003 is not supported! Version 1.7.3156 is the last to do so.</String>
     <String Id="DoNotInstall32BitOn64Bit">This is a 32 bit MSI installer. You have 64-bit Windows. Get the MSI with 'x64' in the filename instead of 'Win32'.</String>
     <String Id="MainExecutablesTitle">AxCrypt Program Files</String>
     <String Id="ShellExtensionTitle">Windows Right-Click Integration</String>

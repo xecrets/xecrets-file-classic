@@ -36,7 +36,7 @@ Executive summary (details in respective section below):
 - Install WTL 9.1.5321 and set AX_WTL=Install-path (or later at your own risk)
 - Install Microsoft Visual Studio 2015 Community Edition or Microsoft Visual Studio 2015 Professional Edition or better.
 - Install Windows Installer XML (WiX) toolset v3.10.3 (or later at your own risk)
-- Start Visual Studio 2015, open the AxCrypt solution, and build.
+- Start Visual Studio 2017, open the AxCrypt solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
 
@@ -85,14 +85,9 @@ You may need to restart Windows Explorer for the setting to take effect.
 
 Due to a bug in zlibstat.vcxproj:
 
-Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio, Upgrade to toolset v141 and SDK 8.1 (probably not later if you want it to run on Vista and above).
+Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio 2017, Upgrade to toolset v141 and SDK 8.1 (probably not later if you want it to run on Vista and above).
 
 Change 'zlibstat'
-
-Properties | General | Platform Toolset:
-
-[All Configurations and Win32|x64]
-"Visual Studio 2015 - Windows XP (v140_xp)"
 
 Properties | C/C++ | Code Generation | Runtime Library:
 
@@ -155,7 +150,8 @@ The build process is dependent on a few extensions to MSBuild. It is included vi
 Visual Studio 2015 Community and Professional
 =============================================
 
-It was possible to build with Visual Studio 2015, but we have not regression tested this after upgrading to 2017.
+It was possible to build with Visual Studio 2015, but we have not regression tested this after upgrading to 2017. You'll probably have
+to change toolset and target SDK. Possibly more.
 
 Visual Studio Express 2013 for Windows
 ======================================
@@ -211,7 +207,7 @@ Building from the command line
 
 All is built using MSBuild. Please see Microsoft documentation for details. Briefly:
 
-- Open a Developer Command Prompt for VS2015
+- Open a Developer Command Prompt for VS2017
 - Change current directory to the location of the source code.
 - Use the following to build for various configurations and platforms:
 
