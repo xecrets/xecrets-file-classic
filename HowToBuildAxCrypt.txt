@@ -63,13 +63,13 @@ Download Crypto++ Library 7.0.0 (or possibly later at your own risk) from http:/
 Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp565" .
 You may need to restart Windows Explorer for the setting to take effect.
 
-Open x86 Native Tools Command Prompt for VS 2017
+Open x64 x86 Cross Tools Command Prompt for VS 2017 (on X64 build host)
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open x64_x86 Cross Tools Command Prompt for VS 2017
+Open x64 Native Tools Command Prompt for VS 2017 (on X64 build host)
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
@@ -94,33 +94,32 @@ Properties | C/C++ | Code Generation | Runtime Library:
 [Configuration Debug and All Platforms]
 "Multi-threaded Debug (/MTd)"
 
-[Configuration Release and x64 (and Win32 - but it's ok in 1.2.11)]
+[Configuration ReleaseWithoutAsm and All Platforms (Win32 is actually ok in 1.2.11)]
 "Multi-threaded (/MT)"
 
-Librarian | All Options
+Librarian | All Options | Additional Options
 
 [All Configurations and All Platforms]
 (Empty)
 
+Librarian | General | Target Machine
+
+[All Configurations and Win32]
+MachineX86 (/MACHINE:X86)
+
 Save the solution and project!
 
-Open x86 Native Tools Command Prompt for VS 2017
-
-cd %AX_ZLIB%\contrib\masmx86
-bld_ml32.bat
+Open x64 x86 Cross Tools Command Prompt for VS 2017 (on X64 build host)
 
 cd %AX_ZLIB%\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
-msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=Win32
+msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm;Platform=Win32
 
-Open x64_x86 Cross Tools Command Prompt for VS 2017
-
-cd %AX_ZLIB%\contrib\masmx64
-bld_ml64.bat
+Open x64 Native Tools Command Prompt for VS 2017 (on X64 build host)
 
 cd %AX_ZLIB%\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
-msbuild zlibstat.vcxproj /p:Configuration=Release;Platform=x64
+msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm;Platform=x64
 
 WTL
 ===

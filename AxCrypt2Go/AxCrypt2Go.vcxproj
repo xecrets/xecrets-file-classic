@@ -92,7 +92,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc14\x86\ZlibStat$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc14\x86\ZlibStat$(Configuration)WithoutAsm</AdditionalLibraryDirectories>
       <AdditionalDependencies>Version.lib;zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
