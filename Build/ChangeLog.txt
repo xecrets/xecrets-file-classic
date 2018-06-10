@@ -1,3 +1,12 @@
+1.7.3201.0 Release 2018-06-11
+- Chg: Upgrade tooling to VS 2017.
+- Chg: Upgrade Crypto++ to 7.0.
+- Chg: Upgrade WTL to 10.7336.
+- Chg: Retarget for minimum Windows 7, IE 6.0
+- Chg: Do not use obsolete Win32 GetVersionEx().
+- Chg: Do not use Zlib assembly code.
+- Chg: Update manifests to include 8.0, 8.1 and 10
+
 1.7.3180.0 Release 2016-07-04
 - Chg: Remove OpenCandy.
 - Chg: Updates for Visual Studio 2015.
