@@ -241,10 +241,10 @@ Register(axpl::ttstring& email, std::wstring& sVersion) {
     //         new, needs update in service: Win2008, WinXPx64, W2003x64, Win2008x64, Win7, Win7x64
     // Language=
     if (hSession) {
-        hConnect = WinHttpConnect(hSession, L"notify.axondata.se", INTERNET_DEFAULT_HTTP_PORT, 0);
+        hConnect = WinHttpConnect(hSession, L"account.axcrypt.net", INTERNET_DEFAULT_HTTPS_PORT, 0);
     }
 
-    wstring urlPathPart = L"/index.html?Program=" AXPRODUCTFILENAME;
+    wstring urlPathPart = L"/RegisterLegacyAxCrypt?Program=" AXPRODUCTFILENAME;
     urlPathPart += L"&Windows=" + GetWindowsVersionString();
     urlPathPart += L"&email=" + email;
     if (!sVersion.empty()) {
@@ -262,7 +262,7 @@ Register(axpl::ttstring& email, std::wstring& sVersion) {
 
     // Create an HTTP request handle.
     if (hConnect) {
-        hRequest = WinHttpOpenRequest(hConnect, L"GET", urlPathPart.c_str(), NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_REFRESH);
+        hRequest = WinHttpOpenRequest(hConnect, L"GET", urlPathPart.c_str(), NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_REFRESH|WINHTTP_FLAG_SECURE);
     }
 
     // Send a request.
