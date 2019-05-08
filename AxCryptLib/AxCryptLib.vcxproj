@@ -14,7 +14,7 @@
     <ProjectGuid>{00A16519-8201-41CF-B8AF-7AA5A5A8F153}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AxCryptLib</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
