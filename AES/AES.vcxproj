@@ -22,7 +22,7 @@
     <ProjectGuid>{034F7C5A-2E7A-4AEC-B6DF-E0DDE187A76D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AES</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

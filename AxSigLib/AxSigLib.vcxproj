@@ -22,7 +22,7 @@
     <ProjectGuid>{CF9442D9-C9D4-47C7-9597-958F87DAD967}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AxSigLib</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -14,7 +14,7 @@
     <ProjectGuid>{275454C5-0907-41EF-A6A1-3E75DD231C03}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AxCrypt2Go</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
