@@ -24,6 +24,7 @@
 */
 
 #include <string>
+#include <locale>
 
 namespace axpl {
     /// \brief Convert a wide Unicode string to a narrow Ansi string

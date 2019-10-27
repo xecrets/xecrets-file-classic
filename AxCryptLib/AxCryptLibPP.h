@@ -26,6 +26,7 @@
 */
 
 #include <string>
+#include <locale>
 #include <string.h>
 
 #include "Assert.h"
