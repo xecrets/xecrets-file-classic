@@ -85,7 +85,7 @@ You may need to restart Windows Explorer for the setting to take effect.
 
 Due to a bug in zlibstat.vcxproj:
 
-Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio 2017, Upgrade to toolset v141 and SDK 8.1 (probably not later if you want it to run on Vista and above).
+Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio 2017, Upgrade to toolset v141 and SDK 10.0.17134.0 (or later at your own risk).
 
 Change 'zlibstat'
 
