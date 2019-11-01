@@ -17,8 +17,8 @@ requirements. This list may be incomplete, please let me know if this is the cas
   
 - Build the Win32 configuration first, since the x64 configuration depends on it.
   
-- AxCrypt is developed with Visual Studio 2015 Professional. It is possible to build AxCrypt entirely
-  with free tools (Visual Studio 2015 Community and/or MSBuild).
+- AxCrypt is developed with Visual Studio 2019 Professional. It should be possible to build AxCrypt entirely
+  with free tools (Visual Studio 2019 Community and/or MSBuild).
 
 - There are some special tweaks to handle the different build environments for AxCrypt, such as GPL Builds, Axantum developer builds and
   Axantum build server builds. This is why you'll find some conditional code in various MSBuild project files.
@@ -31,19 +31,19 @@ Tools and Dependencies Installation
 
 Executive summary (details in respective section below):
 
-- Install, set AX_CRYPTOPP=install-path and build Crypto++ 7.0.0 (or later at your own risk)
+- Install, set AX_CRYPTOPP=install-path and build Crypto++ 8.2.0 (or later at your own risk)
 - Install, set AX_ZLIB=install-path and build zlib 1.2.11 (or later at your own risk)
 - Install WTL 9.1.5321 and set AX_WTL=Install-path (or later at your own risk)
 - Install Microsoft Visual Studio 2015 Community Edition or Microsoft Visual Studio 2015 Professional Edition or better.
 - Install Windows Installer XML (WiX) toolset v3.10.3 (or later at your own risk)
-- Start Visual Studio 2017, open the AxCrypt solution, and build.
+- Start Visual Studio 2019, open the AxCrypt solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
 
 If you already have some components installed, just follow the list in the above order and skip the ones you already have.
 
 It takes about 2 hours to set the whole thing up from scratch. These procedures have been tested on 64-bit Windows 10 Professional,
-and 64-bit Windows Server 2012 Standard. It should work equally well on all current Windows editions, but it has not been tested.
+and 64-bit Windows Server 2012 R2 Standard. It should work equally well on all current Windows editions, but it has not been tested.
 
 Details follows.
 
@@ -58,18 +58,18 @@ Build Server: "C:\Lib\[CONTRIBUTION]"
 Crypto++
 ========
 
-Download Crypto++ Library 7.0.0 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
+Download Crypto++ Library 8.2.0 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
 
-Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp565" .
+Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp820" .
 You may need to restart Windows Explorer for the setting to take effect.
 
-Open x64 x86 Cross Tools Command Prompt for VS 2017 (on X64 build host)
+Open x64_x86 Cross Tools Command Prompt for VS 2019 (on X64 build host)
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open x64 Native Tools Command Prompt for VS 2017 (on X64 build host)
+Open x64 Native Tools Command Prompt for VS 2019 (on X64 build host)
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
@@ -146,6 +146,12 @@ MSBuild.Community.Tasks
 
 The build process is dependent on a few extensions to MSBuild. It is included via a nuget package.
 
+Visual Studio 2017 Community and Professional
+=============================================
+
+It was possible to build with Visual Studio 2017, but we have not regression tested this after upgrading to 2019. You'll probably have
+to change toolset and target SDK. Possibly more.
+
 Visual Studio 2015 Community and Professional
 =============================================
 
@@ -183,7 +189,7 @@ Windows Installer XML (WiX) toolset
 
 WiX is required to build the MSI setup. There is support for building from Visual Studio 2015 Community or better. You still need to install WiX.
 
-Get Windows Installer XML (WiX) toolset v3.11.1 (or later at your own risk) from http://wixtoolset.org/releases/ . Double-click to install after download and follow
+Get Windows Installer XML (WiX) toolset v3.11.2 (or later at your own risk) from https://wixtoolset.org/releases/ . Double-click to install after download and follow
 the instructions.
 
 Build the Solution
@@ -206,14 +212,14 @@ Building from the command line
 
 All is built using MSBuild. Please see Microsoft documentation for details. Briefly:
 
-- Open a Developer Command Prompt for VS2017
+- Open a Developer Command Prompt for VS2019
 - Change current directory to the location of the source code.
 - Use the following to build for various configurations and platforms:
 
-    "%VSINSTALLDIR%vc\vcvarsall" x86
+    "%VSINSTALLDIR%vc\Auxiliary\Build\vcvarsall" x86
     MSBuild AxCrypt.sln /p:Configuration=Debug;Platform=Win32
     MSBuild AxCrypt.sln /p:Configuration=Release;Platform=Win32
-    "%VSINSTALLDIR%vc\vcvarsall" amd64
+    "%VSINSTALLDIR%vc\Auxiliary\Build\vcvarsall" amd64
     MSBuild AxCrypt.sln /p:Configuration=Debug;Platform=x64
     MSBuild AxCrypt.sln /p:Configuration=Release;Platform=x64
 
