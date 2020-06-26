@@ -359,14 +359,6 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\AxCryptCommon\AxCryptCommon.vcxproj">
-      <Project>{b022a61b-b8dd-4200-9cd4-93bdb48137ea}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
     <ProjectReference Include="..\AxCryptMessages\AxCryptMessages.vcxproj">
       <Project>{19193893-878c-4cb1-9400-de8fcef7ca45}</Project>
       <Private>false</Private>
@@ -422,6 +414,9 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\XecretsFileCommon\AxCryptCommon.vcxproj">
+      <Project>{b022a61b-b8dd-4200-9cd4-93bdb48137ea}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

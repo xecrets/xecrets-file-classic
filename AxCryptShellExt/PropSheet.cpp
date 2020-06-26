@@ -1,5 +1,5 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -27,8 +27,8 @@
 
 */
 #include	"StdAfx.h"
-#include	"../AxCryptCommon/CAssert.h"
-#include	"../AxCryptCommon/CVersion.h"
+#include	"../XecretsFileCommon/CAssert.h"
+#include	"../XecretsFileCommon/CVersion.h"
 //
 //	Specifies an application-defined callback function that a property sheet
 //	calls when a page is created and when it is about to be destroyed.
@@ -50,13 +50,13 @@
 //
 UINT CALLBACK
 PropPageCallback(HWND hWnd, UINT uMsg, LPPROPSHEETPAGE  ppsp) {
-	switch(uMsg) {
+	switch (uMsg) {
 	case PSPCB_CREATE:
 		return TRUE;
 
 	case PSPCB_RELEASE:
 		if (ppsp->lParam) {
-		   ((LPCSHELLEXT)(ppsp->lParam))->Release();
+			((LPCSHELLEXT)(ppsp->lParam))->Release();
 		}
 		return TRUE;
 	}
@@ -85,10 +85,10 @@ PropPageDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		// Save lParam, i.e. PROPSHEETPAGE structure ptr provided by
 		// the shell.
 		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
-        #pragma warning ( push )
-        #pragma warning ( disable : 4244 )
+#pragma warning ( push )
+#pragma warning ( disable : 4244 )
 		SetWindowLongPtr(hDlg, DWLP_USER, lParam);
-        #pragma warning ( pop )
+#pragma warning ( pop )
 
 		// These may be needed, are normally setup at the top, but we are too early.
 		psp = (LPPROPSHEETPAGE)lParam;
@@ -117,7 +117,7 @@ PropPageDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		break;
 
 	case WM_NOTIFY:
-		switch (((NMHDR FAR *)lParam)->code) {
+		switch (((NMHDR FAR*)lParam)->code) {
 		case PSN_SETACTIVE:
 			break;
 
@@ -161,34 +161,35 @@ CShellExt::AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam) {
 	HPROPSHEETPAGE hPage;
 
 	HRESULT hRes = S_OK;
-    try {
-        if (m_pSelection->ShowPropertySheet()) {
-            // Create the property sheet page
-            psp.dwSize = sizeof psp;// no extra data.
-		    psp.dwFlags = PSP_USEREFPARENT | PSP_USETITLE | PSP_USECALLBACK;
-		    psp.hInstance = ghInstance;
-		    psp.pszTemplate = MAKEINTRESOURCE(IDD_DIALOG1);
-		    psp.hIcon = 0;
-		    psp.pszTitle = gszAxCryptExternalName;
-		    psp.pfnDlgProc = PropPageDlgProc;
-		    psp.pcRefParent = (UINT *)&glRefThisDLL;
-		    psp.pfnCallback = PropPageCallback;
-		    psp.lParam = (LPARAM)this;
+	try {
+		if (m_pSelection->ShowPropertySheet()) {
+			// Create the property sheet page
+			psp.dwSize = sizeof psp;// no extra data.
+			psp.dwFlags = PSP_USEREFPARENT | PSP_USETITLE | PSP_USECALLBACK;
+			psp.hInstance = ghInstance;
+			psp.pszTemplate = MAKEINTRESOURCE(IDD_DIALOG1);
+			psp.hIcon = 0;
+			psp.pszTitle = gszAxCryptExternalName;
+			psp.pfnDlgProc = PropPageDlgProc;
+			psp.pcRefParent = (UINT*)&glRefThisDLL;
+			psp.pfnCallback = PropPageCallback;
+			psp.lParam = (LPARAM)this;
 
-		    AddRef();
-		    hPage = CreatePropertySheetPage(&psp);
-		    if (hPage) {
-			    if (!lpfnAddPage(hPage, lParam)) {
-				    DestroyPropertySheetPage(hPage);
-				    Release();
-                    hRes = E_FAIL;
-			    }
-		    }
-	    }
-    } catch (TAssert utErr) {
-        utErr.Show();
-        hRes = E_FAIL;
-    }
+			AddRef();
+			hPage = CreatePropertySheetPage(&psp);
+			if (hPage) {
+				if (!lpfnAddPage(hPage, lParam)) {
+					DestroyPropertySheetPage(hPage);
+					Release();
+					hRes = E_FAIL;
+				}
+			}
+		}
+	}
+	catch (TAssert utErr) {
+		utErr.Show();
+		hRes = E_FAIL;
+	}
 	return hRes;
 }
 //

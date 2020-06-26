@@ -41,10 +41,10 @@
 #include	"CFileTemp.h"
 #include	"CChildProc.h"
 #include	"Dialog.h"
-#include	"../AxCryptCommon/CVersion.h"
+#include	"../XecretsFileCommon/CVersion.h"
 #include    "FileCmd.h"
-#include	"../AxCryptCommon/Utility.h"
-#include    "../AxCryptCommon/CRegistry.h"
+#include	"../XecretsFileCommon/Utility.h"
+#include    "../XecretsFileCommon/CRegistry.h"
 #include    "../AxSigLib/CTrialMgr.h"
 #include    "../AxSigLib/CRestrictMgr.h"
 #include    "DlgLicense.h"
@@ -107,7 +107,7 @@ class CReadOnlyMgr {
 	}
 public:
 	// Find out what we can about the file.
-	CReadOnlyMgr(const TCHAR *szFileName) {
+	CReadOnlyMgr(const TCHAR* szFileName) {
 		// Save a local copy of the file-name
 		m_szFileName = szFileName;
 		m_isReadOnly = CheckIfReadOnly();
@@ -179,7 +179,7 @@ public:
 
 		// If we could interpret the name as a remote name, use the UNC notation instead for the next step
 		if (status == NO_ERROR) {
-			resourceName = reinterpret_cast<UNIVERSAL_NAME_INFO *>(&buffer[0])->lpUniversalName;
+			resourceName = reinterpret_cast<UNIVERSAL_NAME_INFO*>(&buffer[0])->lpUniversalName;
 			CChkAss(resourceName.length() < 1024, L"Buffer was overrun!");
 		}
 
@@ -187,7 +187,7 @@ public:
 		ZeroMemory(&nr, sizeof(nr));
 
 		nr.dwType = RESOURCETYPE_DISK;
-		nr.lpRemoteName = const_cast<wchar_t *>(resourceName.c_str());
+		nr.lpRemoteName = const_cast<wchar_t*>(resourceName.c_str());
 
 		LPTSTR pszSystem = 0;
 
@@ -246,7 +246,7 @@ public:
 //  since it's done the same in all places.
 //
 static DWORD
-HandleCmdException(TAssert& utErr, CCmdParam *pCmdParam, DWORD dwMsgId, const TCHAR *szFileName) {
+HandleCmdException(TAssert& utErr, CCmdParam* pCmdParam, DWORD dwMsgId, const TCHAR* szFileName) {
 	// Hide progress window, if any.
 	if (pCmdParam->hProgressWnd) {
 		SendMessage(GetParent(pCmdParam->hProgressWnd), WM_APP, 0, 0);
@@ -274,7 +274,7 @@ HandleCmdException(TAssert& utErr, CCmdParam *pCmdParam, DWORD dwMsgId, const TC
 /// \param hWnd Owner of the dialog
 /// \param fAlwaysAsk Always present the dialog before open.
 static void
-CreateSaveFile(CFileIO *putFile, CFileName& fnFile, DWORD dwOpenMode, HWND hWnd, bool fAlwaysAsk = false) throw(TAssert) {
+CreateSaveFile(CFileIO* putFile, CFileName& fnFile, DWORD dwOpenMode, HWND hWnd, bool fAlwaysAsk = false) throw(TAssert) {
 	while (true) {
 		// Try to open, unless we want to ask first.
 		if (fAlwaysAsk) {
@@ -293,7 +293,7 @@ CreateSaveFile(CFileIO *putFile, CFileName& fnFile, DWORD dwOpenMode, HWND hWnd,
 			// They don't make it easy by using nul chars...
 			TCHAR szFilter[MAX_PATH + MAX_PATH + 3];
 			_stprintf_s(szFilter, sizeof szFilter / sizeof szFilter[0], _T("*%s"), fnFile.GetExt());
-			_TCHAR *szFilterPart2 = &szFilter[_tcslen(szFilter) + 1];
+			_TCHAR* szFilterPart2 = &szFilter[_tcslen(szFilter) + 1];
 			_stprintf_s(szFilterPart2, _tcslen(szFilter) + 1, _T("*%s"), fnFile.GetExt());
 			szFilterPart2[_tcslen(szFilterPart2) + 1] = _T('\0');
 
@@ -306,7 +306,7 @@ CreateSaveFile(CFileIO *putFile, CFileName& fnFile, DWORD dwOpenMode, HWND hWnd,
 			ofn.lpstrInitialDir = szDir.get();
 			ofn.lpstrFile = szFileName;
 			ofn.lpstrDefExt = fnFile.GetExt() + 1; // Skip dot
-			ofn.nMaxFile = sizeof szFileName / sizeof *szFileName;
+			ofn.nMaxFile = sizeof szFileName / sizeof * szFileName;
 			ofn.Flags = OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_NOREADONLYRETURN | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 			if (!GetSaveFileName(&ofn)) {
 				CAssert(FALSE).App(WRN_CANCEL).Throw();
@@ -387,7 +387,7 @@ IncrementTrialCtr() {
 //  that if we're recursing.
 //
 DWORD
-FileExpand(pfCmdT pfCmd, CCmdParam *pCmdParam, const TCHAR *szDir, const TCHAR *szPattern) {
+FileExpand(pfCmdT pfCmd, CCmdParam* pCmdParam, const TCHAR* szDir, const TCHAR* szPattern) {
 	if (!szDir || !szPattern || !*szPattern) return WRN_IGNORED;
 
 	// Build searchPattern to be 'Directory\*'
@@ -496,7 +496,7 @@ IsEncrypted(LPCTSTR szPath) {
 //  "Primary Execute Request Thread"
 //
 DWORD
-CmdEncryptZCFile(CCmdParam *pCmdParam) {
+CmdEncryptZCFile(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -553,8 +553,8 @@ CmdEncryptZCFile(CCmdParam *pCmdParam) {
 		}
 
 		CKeyPrompt utKeyPrompt; // we need this for the duration
-		CCryptoKey *pCryptoKey = pgKeyList->FindEncKey(pCmdParam->dwBatch);
-		TKey *pKey = NULL;
+		CCryptoKey* pCryptoKey = pgKeyList->FindEncKey(pCmdParam->dwBatch);
+		TKey* pKey = NULL;
 		if (pCryptoKey != NULL) {
 			pKey = pCryptoKey->Key();
 		}
@@ -659,7 +659,7 @@ CmdEncryptZCFile(CCmdParam *pCmdParam) {
 			else {
 				dwReturn = WRN_CANCEL;
 			}
-			HEAP_CHECK_END
+		HEAP_CHECK_END
 	}
 	catch (TAssert utErr) {
 		// No error message on simple cancel request.
@@ -674,7 +674,7 @@ CmdEncryptZCFile(CCmdParam *pCmdParam) {
 class CSinkFoundSync : public AxPipe::CSink {
 public:
 	// If we ever get here - we found data after a sync!
-	void Out(AxPipe::CSeg *pSeg) {
+	void Out(AxPipe::CSeg* pSeg) {
 		pSeg->Release();
 		SetError(AxPipe::ERROR_CODE_DERIVED, _T(""));
 	}
@@ -690,7 +690,7 @@ public:
 	}
 
 protected:
-	void Out(AxPipe::CSeg *pSeg) {
+	void Out(AxPipe::CSeg* pSeg) {
 		size_t lThisSeg = lRead + pSeg->Len() > lMax ? lMax - lRead : pSeg->Len();
 		pSeg->Len(lThisSeg);
 		Pump(pSeg);
@@ -714,7 +714,7 @@ protected:
 /// \param szFileName The full path or relative to current directory of the file
 /// \return true if it appears to be an Ax Crypt SFX-file
 static bool
-IsAlreadySfx(const _TCHAR *szFileName) {
+IsAlreadySfx(const _TCHAR* szFileName) {
 	// We probably don't need a sfi, for this call, but the docs are unclear.
 	SHFILEINFO sfi;
 	ZeroMemory(&sfi, sizeof sfi);
@@ -748,7 +748,7 @@ IsAlreadySfx(const _TCHAR *szFileName) {
 //  "Primary Execute Request Thread"
 //
 DWORD
-CmdSfxEncNewFile(CCmdParam *pCmdParam) {
+CmdSfxEncNewFile(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -841,7 +841,7 @@ CmdSfxEncNewFile(CCmdParam *pCmdParam) {
 // "Primary Execute Request Thread"
 //
 DWORD
-CmdEncryptZFile(CCmdParam *pCmdParam) {
+CmdEncryptZFile(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -893,7 +893,7 @@ CmdEncryptZFile(CCmdParam *pCmdParam) {
 //  by caller.
 //
 static BOOL
-TryCacheAndPromptOpen(CHeaders *pHeaders, TKey **ppKeyEncKey, DWORD dwBatch, LPCTSTR szFileName, HWND hProgressWnd) {
+TryCacheAndPromptOpen(CHeaders* pHeaders, TKey** ppKeyEncKey, DWORD dwBatch, LPCTSTR szFileName, HWND hProgressWnd) {
 	if (pgKeyList->TryOpen(pHeaders, ppKeyEncKey, dwBatch)) {
 		return TRUE;
 	}
@@ -934,7 +934,7 @@ TryCacheAndPromptOpen(CHeaders *pHeaders, TKey **ppKeyEncKey, DWORD dwBatch, LPC
 // Decrypt a file. Retain the original.
 //
 DWORD
-CmdDecryptCFile(CCmdParam *pCmdParam) {
+CmdDecryptCFile(CCmdParam* pCmdParam) {
 	bool fTryBrokenFile = CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValTryBrokenFile).GetDword(FALSE) == TRUE;
 
 	if (pCmdParam->szParam1.empty()) {
@@ -1030,7 +1030,7 @@ CmdDecryptCFile(CCmdParam *pCmdParam) {
 //  Decrypt a file, and wipe the original
 //
 DWORD
-CmdDecryptFile(CCmdParam *pCmdParam) {
+CmdDecryptFile(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -1183,8 +1183,8 @@ WaitForLockThenUnlock(LPCTSTR szFileName, DWORD dwMaxWaitForLock, DWORD dwIncrem
 /// \param szPath A path or a file name
 /// \return true if the name appears to represent a temporary
 static bool
-IsTempFile(const TCHAR *szPath) {
-	TCHAR *szFileTitle = PathFindFileName(szPath);
+IsTempFile(const TCHAR* szPath) {
+	TCHAR* szFileTitle = PathFindFileName(szPath);
 
 	if (PathMatchSpec(szFileTitle, _T("*.tmp"))) return true;
 	if (PathMatchSpec(szFileTitle, _T("*.bak"))) return true;
@@ -1199,7 +1199,7 @@ IsTempFile(const TCHAR *szPath) {
 /// \param szPath The full path to the file
 /// \return true if no other files or directories were found
 static bool
-OnlyThisFileInDir(const TCHAR *szPath) {
+OnlyThisFileInDir(const TCHAR* szPath) {
 	// We do this by doing two searches, that way we are less dependent on various
 	// strategies for naming files in Windows.
 	WIN32_FIND_DATA findData;
@@ -1298,7 +1298,7 @@ Is16BitExe(const TCHAR *szFileName) {
 //  for wisdom to arrive.
 //
 static bool
-MyShellExecute(const TCHAR *szDocumentName, const TCHAR *szDir, const TCHAR *szApp2Use = NULL) {
+MyShellExecute(const TCHAR* szDocumentName, const TCHAR* szDir, const TCHAR* szApp2Use = NULL) {
 	SHELLEXECUTEINFO sei;
 	ZeroMemory(&sei, sizeof sei);
 
@@ -1397,7 +1397,7 @@ MyShellExecute(const TCHAR *szDocumentName, const TCHAR *szDir, const TCHAR *szA
 }
 
 bool
-CheckIfNotObviouslyDangerous(const wchar_t *szFileName) {
+CheckIfNotObviouslyDangerous(const wchar_t* szFileName) {
 	DWORD dwAllowPrograms = CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValAllowPrograms).GetDword(-1);
 	if (dwAllowPrograms == -1) {
 		dwAllowPrograms = CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValAllowPrograms).GetDword(0);
@@ -1499,7 +1499,7 @@ CheckIfNotObviouslyDangerous(const wchar_t *szFileName) {
 //
 /// \param szApp2Use The application to use instead of the associated one.
 void
-LaunchApp(LPCTSTR szFileName, const TCHAR *szDir, HWND hForegroundWnd, LPCTSTR szApp2Use) {
+LaunchApp(LPCTSTR szFileName, const TCHAR* szDir, HWND hForegroundWnd, LPCTSTR szApp2Use) {
 	CCriticalSection utLaunchAppCritical(&gLaunchAppCritical);
 	utLaunchAppCritical.Enter();
 	//BringWindowToTop(hForegroundWnd);
@@ -1739,7 +1739,7 @@ LaunchApp(LPCTSTR szFileName, const TCHAR *szDir, HWND hForegroundWnd, LPCTSTR s
 /// Here we assume that we don't have to worry about
 /// progress windows.
 static DWORD
-LocalCmdSaveExtraFilesNoProgress(CCmdParam *pCmdParam) {
+LocalCmdSaveExtraFilesNoProgress(CCmdParam* pCmdParam) {
 	// Filter out names that we classify as temporaries
 	if (IsTempFile(pCmdParam->szParam1.c_str())) {
 		return 0;
@@ -1758,7 +1758,7 @@ LocalCmdSaveExtraFilesNoProgress(CCmdParam *pCmdParam) {
 	szzFrom.get()[_tcslen(szzFrom.get()) + 1] = _T('\0');
 
 	// Build a double-nul-terminated to
-	TCHAR *szFileTitle = PathFindFileName(pCmdParam->szParam1.c_str());
+	TCHAR* szFileTitle = PathFindFileName(pCmdParam->szParam1.c_str());
 	size_t ccTo = _tcslen(pCmdParam->szParam2.c_str()) + 1 + _tcslen(szFileTitle) + 2;
 	auto_ptr<TCHAR> szzTo(new TCHAR[ccTo]);
 	ASSPTR(szzTo.get());
@@ -1806,12 +1806,12 @@ LocalCmdSaveExtraFilesNoProgress(CCmdParam *pCmdParam) {
 			// Build the filter string, i.e. for example "*.txt\0*.txt\0\0"
 			// They don't make it easy by using nul chars...
 			TCHAR szFilter[MAX_PATH + MAX_PATH + 3];
-			TCHAR *szPathExt = PathFindExtension(szFileName.get());
+			TCHAR* szPathExt = PathFindExtension(szFileName.get());
 			if (szPathExt[0]) {
 				_stprintf_s(szFilter, sizeof szFilter / sizeof szFilter[0], _T("*%s"), szPathExt);
 				size_t offFilterPart2 = _tcslen(szFilter) + 1;
 				size_t ccFilterPart2 = (sizeof szFilter / sizeof szFilter[0]) - offFilterPart2;
-				_TCHAR *szFilterPart2 = &szFilter[offFilterPart2];
+				_TCHAR* szFilterPart2 = &szFilter[offFilterPart2];
 				_stprintf_s(szFilterPart2, ccFilterPart2, _T("*%s"), szPathExt);
 				szFilterPart2[_tcslen(szFilterPart2) + 1] = _T('\0');
 			}
@@ -1857,7 +1857,7 @@ LocalCmdSaveExtraFilesNoProgress(CCmdParam *pCmdParam) {
 //  We filter out known temporary file names etc.
 //
 static DWORD
-LocalCmdSaveExtraFiles(CCmdParam *pCmdParam) {
+LocalCmdSaveExtraFiles(CCmdParam* pCmdParam) {
 	// Ensure that we shut of progress window
 	if (pCmdParam->hProgressWnd != NULL) {
 		SendMessage(GetParent(pCmdParam->hProgressWnd), WM_APP, 0, 0);
@@ -1926,7 +1926,7 @@ WrapFileErrMsgStatus(CWrapper& utWrap, CFileIO& fPlain, CFileIO& fCipher, CFileN
 //  to ask the user where to save them.
 //
 DWORD
-SaveExtraFiles(const TCHAR *szDirToScan, const TCHAR *szDirToSaveTo, HWND hWnd, HWND hProgressWnd) {
+SaveExtraFiles(const TCHAR* szDirToScan, const TCHAR* szDirToSaveTo, HWND hWnd, HWND hProgressWnd) {
 	CCmdParam cmdParam;
 	cmdParam.hForegroundWnd = hWnd;
 	cmdParam.hProgressWnd = hProgressWnd;
@@ -1944,7 +1944,7 @@ SaveExtraFiles(const TCHAR *szDirToScan, const TCHAR *szDirToSaveTo, HWND hWnd, 
 //	Return status code of the thread.
 //
 DWORD
-CmdDecryptOpenLaunch(CCmdParam *pCmdParam) {
+CmdDecryptOpenLaunch(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -2122,7 +2122,7 @@ CmdDecryptOpenLaunch(CCmdParam *pCmdParam) {
 //	Securely wipe the file and then delete it. No confirmation question.
 //
 DWORD
-CmdWipeSilent(CCmdParam *pCmdParam) {
+CmdWipeSilent(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -2179,7 +2179,7 @@ CmdWipeSilent(CCmdParam *pCmdParam) {
 /// If there is a batch-id, a no results in a return of WRN_CANCEL since that is
 /// more appropriate
 DWORD
-CmdWipe(CCmdParam *pCmdParam) {
+CmdWipe(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -2237,7 +2237,7 @@ CmdWipe(CCmdParam *pCmdParam) {
 //  otherwise all.
 //
 DWORD
-CmdClearKeys(CCmdParam *pCmdParam) {
+CmdClearKeys(CCmdParam* pCmdParam) {
 	pgKeyList->ClearKeys(pCmdParam->dwBatch);
 	return 0;
 }
@@ -2248,7 +2248,7 @@ CmdClearKeys(CCmdParam *pCmdParam) {
 //  Careful... Here we should be working in ANSI to maintain key
 //  compatibility...
 //
-DWORD CmdAddKey(CCmdParam *pCmdParam) {
+DWORD CmdAddKey(CCmdParam* pCmdParam) {
 	// Just ignore empty key requests.
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
@@ -2259,17 +2259,17 @@ DWORD CmdAddKey(CCmdParam *pCmdParam) {
 	//  dialog. Remember about Unicode and Ansi...
 	//
 	std::string s = axpl::t2s(std::wstring(pCmdParam->szParam1));
-	const char *pNxtInChar = s.c_str();
+	const char* pNxtInChar = s.c_str();
 
 	// Ensure that szFilterKey is deallocated on exit of this function.
 	CPtrTo<char> szFilterKey;
 	szFilterKey = new char[strlen(pNxtInChar) + 1];
 	ASSPTR(szFilterKey);
 
-	char *pNxtOutChar = szFilterKey;
+	char* pNxtOutChar = szFilterKey;
 
 	while (*pNxtInChar) {
-		if (strchr((const char *)szPassphraseChars, *pNxtInChar) != NULL) {
+		if (strchr((const char*)szPassphraseChars, *pNxtInChar) != NULL) {
 			*pNxtOutChar++ = *pNxtInChar;
 		}
 		pNxtInChar++;
@@ -2277,7 +2277,7 @@ DWORD CmdAddKey(CCmdParam *pCmdParam) {
 	*pNxtOutChar = '\0';
 
 	// We are responsible for ensuring the deletion of the returned key hash pointer
-	CPtrTo<TKey> utKey = CSha1().GetKeyHash((BYTE *)(char *)szFilterKey, strlen(szFilterKey));
+	CPtrTo<TKey> utKey = CSha1().GetKeyHash((BYTE*)(char*)szFilterKey, strlen(szFilterKey));
 
 	if (pCmdParam->fIsEncKey) {
 		// AddEncKey checks with find key first...
@@ -2325,10 +2325,10 @@ inline size_t Base64EncodeGetRequiredLength(size_t nSrcLen, DWORD dwFlags = ATL_
 
 /// \brief Encode Base64 data.
 inline BOOL Base64Encode(
-	const BYTE *pbSrcData,
+	const BYTE* pbSrcData,
 	size_t nSrcLen,
 	LPSTR szDest,
-	size_t *pnDestLen,
+	size_t* pnDestLen,
 	DWORD dwFlags = ATL_BASE64_FLAG_NONE) throw()
 {
 	static const char s_chBase64EncodingTable[64] = {
@@ -2420,7 +2420,7 @@ inline BOOL Base64Encode(
 /// \brief Generate and save a key-file
 /// \param pCmdParam ->szParam1 contains a file name, or not. If not, ask with save-as.
 DWORD
-CmdMakeKeyFile(CCmdParam *pCmdParam) {
+CmdMakeKeyFile(CCmdParam* pCmdParam) {
 	DWORD dwReturn = 0;
 	CFileName keyFileName;
 
@@ -2496,7 +2496,7 @@ CmdMakeKeyFile(CCmdParam *pCmdParam) {
 				cBase64Key[j - 1] = ' ';
 			}
 			size_t iLen = 4;
-			if (!Base64Encode((BYTE *)&ucKey[i], i + 3 >= sizeof ucKey ? sizeof ucKey - i : 3, &cBase64Key[j], &iLen, ATL_BASE64_FLAG_NOCRLF)) {
+			if (!Base64Encode((BYTE*)&ucKey[i], i + 3 >= sizeof ucKey ? sizeof ucKey - i : 3, &cBase64Key[j], &iLen, ATL_BASE64_FLAG_NOCRLF)) {
 				CAssert(FALSE, ERROR_INVALID_FUNCTION).Sys().Throw();
 			}
 		}
@@ -2521,7 +2521,7 @@ CmdMakeKeyFile(CCmdParam *pCmdParam) {
 //  to enter keys into the cache.
 //
 DWORD
-CmdPromptKey(CCmdParam *pCmdParam) {
+CmdPromptKey(CCmdParam* pCmdParam) {
 	CKeyPrompt utKeyPrompt;
 	DWORD dwReturn = 0;
 
@@ -2581,7 +2581,7 @@ CmdPromptKey(CCmdParam *pCmdParam) {
 //  Rename the input file to a unique, anonymous name.
 //
 DWORD
-CmdAnonRename(CCmdParam *pCmdParam) {
+CmdAnonRename(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -2599,7 +2599,7 @@ CmdAnonRename(CCmdParam *pCmdParam) {
 		utHeaders.Load(utFileCipher);
 
 		// Get the low 32 bits of the HMAC.
-		DWORD dwHmacLow = (DWORD)((DQWORD *)utHeaders.GetHMAC())->Lsb64();
+		DWORD dwHmacLow = (DWORD)((DQWORD*)utHeaders.GetHMAC())->Lsb64();
 		utFileCipher.Close();
 
 		BOOL fOk;
@@ -2620,7 +2620,7 @@ CmdAnonRename(CCmdParam *pCmdParam) {
 }
 
 DWORD
-CmdTestHaveKey(CCmdParam *pCmdParam) {
+CmdTestHaveKey(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -2643,7 +2643,7 @@ CmdTestHaveKey(CCmdParam *pCmdParam) {
 //	Output the id-tag, if any on standard output.
 //
 DWORD
-CmdShowIdTag(CCmdParam *pCmdParam) {
+CmdShowIdTag(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -2662,8 +2662,8 @@ CmdShowIdTag(CCmdParam *pCmdParam) {
 				CAssert(FALSE, ERR_NO_STDOUT).App(ERR_NO_STDOUT).Throw();
 			}
 			int fd = _open_osfhandle((intptr_t)(pCmdParam->hStdOut), _O_TEXT | _O_APPEND);
-			FILE *fp = _fdopen(fd, "w+t");
-			(void)fprintf(fp, "%ls\n", (wchar_t *)szIdTag);
+			FILE* fp = _fdopen(fd, "w+t");
+			(void)fprintf(fp, "%ls\n", (wchar_t*)szIdTag);
 			(void)fflush(fp);
 			// I don't think we should do any close here...
 			//(void)fclose(fp);
@@ -2721,7 +2721,7 @@ CmdShowIdTag(CCmdParam *pCmdParam) {
 //      constructed, I *may* attempt to write a custom key-try-generator for you, at a price.
 //
 DWORD
-CmdBruteForce(CCmdParam *pCmdParam) {
+CmdBruteForce(CCmdParam* pCmdParam) {
 	if (pCmdParam->szParam1.empty()) {
 		return 0;
 	}
@@ -2738,18 +2738,18 @@ CmdBruteForce(CCmdParam *pCmdParam) {
 	// A new instance, init with try and state
 #pragma warning(push)
 #pragma warning(disable:4191)
-	void *(*pfNew)(char *szTry, int *state) = (void *(*)(char *, int *))GetProcAddress(hAxBruteDll, "New");
+	void* (*pfNew)(char* szTry, int* state) = (void* (*)(char*, int*))GetProcAddress(hAxBruteDll, "New");
 	// Step to next state in brute force strategy
-	int(*pfStep)(void *) = (int(*)(void *))GetProcAddress(hAxBruteDll, "Step");
+	int(*pfStep)(void*) = (int(*)(void*))GetProcAddress(hAxBruteDll, "Step");
 	// Get the current attempted string
-	const char *(*pfTry)(void *ctx) = (const char *(*)(void *))GetProcAddress(hAxBruteDll, "Try");
+	const char* (*pfTry)(void* ctx) = (const char* (*)(void*))GetProcAddress(hAxBruteDll, "Try");
 	// Increment to the next string.
-	int(*pfNext)(void *ctx) = (int(*)(void *))GetProcAddress(hAxBruteDll, "Next");
+	int(*pfNext)(void* ctx) = (int(*)(void*))GetProcAddress(hAxBruteDll, "Next");
 	// Free the context.
-	void(*pfFree)(void *ctx) = (void(*)(void *))GetProcAddress(hAxBruteDll, "Free");
+	void(*pfFree)(void* ctx) = (void(*)(void*))GetProcAddress(hAxBruteDll, "Free");
 #pragma warning(pop)
 
-	void *pCtx;
+	void* pCtx;
 	auto_ptr<char> szCheckPoint;
 	try {
 		if (!pfNew || !pfStep || !pfTry || !pfNext || !pfFree) {
@@ -2767,7 +2767,7 @@ CmdBruteForce(CCmdParam *pCmdParam) {
 		int state;
 		if (!pCmdParam->szParam2.empty()) {
 			std::string s = axpl::t2s(std::wstring(pCmdParam->szParam2));
-			const char *szParamTry = s.c_str();
+			const char* szParamTry = s.c_str();
 			unsigned checkPointSize = strlen(szParamTry) + 1;
 			auto_ptr<char> szCheckPointTry(new char[checkPointSize]);
 			ASSPTR(szCheckPointTry.get());
@@ -2798,7 +2798,7 @@ CmdBruteForce(CCmdParam *pCmdParam) {
 		}
 		int iPercent = 0;
 		do {
-			const char *szTry = pfTry(pCtx);
+			const char* szTry = pfTry(pCtx);
 			if (!szTry) {
 				break; // Unexpected end of state or error.
 			}
@@ -2824,7 +2824,7 @@ CmdBruteForce(CCmdParam *pCmdParam) {
 			}
 
 			// Now generate the key, and try to open.
-			CPtrTo<TKey> pKey = CSha1().GetKeyHash((unsigned char *)szTry, strlen(szTry));
+			CPtrTo<TKey> pKey = CSha1().GetKeyHash((unsigned char*)szTry, strlen(szTry));
 			if (utHeaders.Open(pKey)) {
 				MessageBox(NULL, axpl::s2t(szTry).c_str(), gszAxCryptExternalName, MB_OK);
 				break;
@@ -2880,7 +2880,7 @@ AesSpeedTestThreadProc(LPVOID lpParameter) {
 			// Increase precision by yielding every now and then
 			Sleep(1);
 		}
-	} while (InterlockedIncrement((volatile long *)lpParameter) > 0);
+	} while (InterlockedIncrement((volatile long*)lpParameter) > 0);
 	// We terminate on negative or zero. Negative means overflow - are
 	// really that fast? Zero means the caller has had enough.
 	return 0;
@@ -2981,7 +2981,7 @@ DWORD AesSpeedTest(DWORD dwMilliseconds) {
 // "SaveDecKey" = 1			; TRUE => Do save dec passphrases in the cache.
 //
 DWORD
-CmdInstallInRegistry(CCmdParam *pCmdParam) {
+CmdInstallInRegistry(CCmdParam* pCmdParam) {
 	const bool fOverwrite = false;          // Prepare for optional forced overwrite
 
 	CFileName szPath2Exe; szPath2Exe.SetPath2ExeName();
@@ -3272,7 +3272,7 @@ static LPCTSTR szValues[] = {
 };
 
 DWORD
-CmdRemoveFromRegistry(CCmdParam *pCmdParam) {
+CmdRemoveFromRegistry(CCmdParam* pCmdParam) {
 	DWORD dwLastError = ERROR_SUCCESS;
 	try {
 		// [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
@@ -3388,7 +3388,7 @@ CmdRemoveFromRegistry(CCmdParam *pCmdParam) {
 	return dwLastError;
 }
 
-DWORD CmdLicenseMgr(CCmdParam *pCmdParam) {
+DWORD CmdLicenseMgr(CCmdParam* pCmdParam) {
 	// We know that hProgressWnd is part of a dialogue, and thus the parent of that
 	// is what we want to have as the parent for the dialogue. This is not
 	// neat, it's ugly, but the whole window handling needs massive clean-up anyway.
@@ -3401,7 +3401,7 @@ DWORD CmdLicenseMgr(CCmdParam *pCmdParam) {
 	return ERROR_SUCCESS;
 }
 
-DWORD CmdRegistration(CCmdParam *pCmdParam) {
+DWORD CmdRegistration(CCmdParam* pCmdParam) {
 	// We know that hProgressWnd is part of a dialogue, and thus the parent of that
 	// is what we want to have as the parent for the dialogue. This is not
 	// neat, it's ugly, but the whole window handling needs massive clean-up anyway.

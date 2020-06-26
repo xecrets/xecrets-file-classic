@@ -55,7 +55,7 @@
 
 #include <map>
 
-#include "..\AxCryptCommon\Oem.h"
+#include "..\XecretsFileCommon\Oem.h"
 #include "Axgettext.h"
 #include "CConfigWin.h"
 
@@ -66,20 +66,20 @@
 #define N_(String) String
 
 enum {
-    MENU_DUMMY,
-    MENU_FILE_OPEN,
-    MENU_FILE_ENCRYPT,
-    MENU_FILE_DECRYPT,
-    MENU_FILE_EXIT,
-    MENU_VIEW_LARGEICONS,
-    MENU_VIEW_SMALLICONS,
-    MENU_VIEW_LIST,
-    MENU_VIEW_DETAILS,
-    MENU_VIEW_REFRESH,
-    MENU_HELP_ABOUT,
+	MENU_DUMMY,
+	MENU_FILE_OPEN,
+	MENU_FILE_ENCRYPT,
+	MENU_FILE_DECRYPT,
+	MENU_FILE_EXIT,
+	MENU_VIEW_LARGEICONS,
+	MENU_VIEW_SMALLICONS,
+	MENU_VIEW_LIST,
+	MENU_VIEW_DETAILS,
+	MENU_VIEW_REFRESH,
+	MENU_HELP_ABOUT,
 };
 
-extern const _TCHAR *GetComMsg(HRESULT hr);
+extern const _TCHAR* GetComMsg(HRESULT hr);
 #ifndef ASSCOM
 /// \brief Assert the HRESULT from a COM operation
 /// }param hResult A HRESULT from a COM operation

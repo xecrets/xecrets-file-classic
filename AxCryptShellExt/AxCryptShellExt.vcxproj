@@ -231,24 +231,8 @@
     <None Include="CtxMenu.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AxCryptCommon\AxCryptCommon.vcxproj">
-      <Project>{b022a61b-b8dd-4200-9cd4-93bdb48137ea}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
     <ProjectReference Include="..\AxCryptMessages\AxCryptMessages.vcxproj">
       <Project>{19193893-878c-4cb1-9400-de8fcef7ca45}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-    <ProjectReference Include="..\AxCrypt\AxCrypt.vcxproj">
-      <Project>{41bd6bdc-24b2-4dd9-b47b-86fbd1751387}</Project>
       <Private>false</Private>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
@@ -286,6 +270,12 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\XecretsFileCommon\AxCryptCommon.vcxproj">
+      <Project>{b022a61b-b8dd-4200-9cd4-93bdb48137ea}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XecretsFile\XecretsFile.vcxproj">
+      <Project>{41bd6bdc-24b2-4dd9-b47b-86fbd1751387}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

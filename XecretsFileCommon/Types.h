@@ -1,7 +1,7 @@
 #ifndef _TYPES
 #define	_TYPES
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -28,7 +28,7 @@
 	software@axantum.com 			2001					Initial
 
 */
-#include "../AxCryptCommon/DQWORD.h"
+#include "../XecretsFileCommon/DQWORD.h"
 
 #pragma warning(disable:4786)           // debug info truncated to 255 chars
 #include <algorithm>
@@ -88,7 +88,7 @@ private:
 	BYTE aoH[20];
 public:
 	THash();								// Zero-initialized
-	THash(BYTE *bpInit, int i);				// Byte-string initialized
+	THash(BYTE* bpInit, int i);				// Byte-string initialized
 	THash(QWORD qwV);						// QWORD initialized
 	THmac* Hmac();							// Get HMAC (subset) of hash
 	TKey* KeyHash();						// Get Key (subset) of hash
@@ -99,9 +99,9 @@ public:
 //	Note that byte arrays in these contexts are presumed stored big-endian!
 //
 inline void
-VLongAdd(BYTE *opSum, BYTE *opTerm, int iLen) {
+VLongAdd(BYTE* opSum, BYTE* opTerm, int iLen) {
 	BYTE oCarry = 0;
-	for (int i = iLen-1; i >= 0; i--) {
+	for (int i = iLen - 1; i >= 0; i--) {
 		oCarry = (opSum[i] += opTerm[i] + oCarry) < opTerm[i];
 	}
 }

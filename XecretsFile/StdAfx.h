@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -69,14 +69,14 @@
 //
 // Ax Crypt common includes
 //
-#include "../AxCryptCommon/Oem.h"
-#include "../AxCryptCommon/Types.h"
+#include "../XecretsFileCommon/Oem.h"
+#include "../XecretsFileCommon/Types.h"
 #include "AxCryptTexts.h"
-#include "../AxCryptCommon/AxCommon.h"
+#include "../XecretsFileCommon/AxCommon.h"
 #include "AxCrypt.h"
 #include "AxConfig.h"
-#include "../AxCryptCommon/Utility.h"
-#include "../AxCryptCommon/CAssert.h"
-#include "../AxCryptCommon/CStrPtr.h"
+#include "../XecretsFileCommon/Utility.h"
+#include "../XecretsFileCommon/CAssert.h"
+#include "../XecretsFileCommon/CStrPtr.h"
 
 #include "../AxPipe/AxPipe.h"

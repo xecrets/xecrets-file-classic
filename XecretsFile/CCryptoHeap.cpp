@@ -1,5 +1,5 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -65,11 +65,11 @@
 #include	"memory.h"
 #include	"CCryptoHeap.h"
 #include	"CFileTemp.h"
-#include    "../AxCryptCommon/CRegistry.h"
+#include    "../XecretsFileCommon/CRegistry.h"
 //
 //	The actual heap implementation - fairly standard stuff.
 //
-CCryptoHeap::CCryptoHeap(size_t len, BOOL *pfHeapValid) : CFileIO() {
+CCryptoHeap::CCryptoHeap(size_t len, BOOL* pfHeapValid) : CFileIO() {
 	// We use an external, static, variable initialized to zero to ensure proper
 	// stack usage. It get's tricky what with the complex order of things during
 	// C++ startup. What we do know is that statics initialized to zero will
@@ -79,8 +79,8 @@ CCryptoHeap::CCryptoHeap(size_t len, BOOL *pfHeapValid) : CFileIO() {
 	// allocated.
 	m_pfHeapValid = pfHeapValid;
 	m_stHeapLen = len;
-    m_hMapping = 0;
-    m_nWipePasses = 1;
+	m_hMapping = 0;
+	m_nWipePasses = 1;
 }
 
 void
@@ -90,39 +90,40 @@ CCryptoHeap::Init() {
 	heap = 0;					// ensure that no allocs call the heap before it is ready...
 	try {
 		// Create the temporary file holding the protected heap.
-        // This is debateable, it's not 100% clear from the documentation what FILE_FLAG_WRITE_THROUGH
-        // really does, but it should be ok. Caching is still ok, but flushing should really flush.
+		// This is debateable, it's not 100% clear from the documentation what FILE_FLAG_WRITE_THROUGH
+		// really does, but it should be ok. Caching is still ok, but flushing should really flush.
 		MakeTmp(CFileTemp().New().Get(), TRUE);
 
 		// Initialize and enter critical section now
 		InitializeCriticalSection(&csThreadLock);
 		EnterCriticalSection(&csThreadLock);
 
-        m_hMapping = CreateFileMapping(m_hFile,	0, PAGE_READWRITE, 0, m_stHeapLen, 0);
-        // To enable debugging of this
-        if (m_hMapping == 0) {
-		    CAssert(m_hMapping != 0).Sys(MSG_MAP_VIEW).Throw();
-        }
+		m_hMapping = CreateFileMapping(m_hFile, 0, PAGE_READWRITE, 0, m_stHeapLen, 0);
+		// To enable debugging of this
+		if (m_hMapping == 0) {
+			CAssert(m_hMapping != 0).Sys(MSG_MAP_VIEW).Throw();
+		}
 
-        free = heap = (UNIT *)MapViewOfFile(m_hMapping, FILE_MAP_WRITE, 0, 0, m_stHeapLen);
-        // To enable debugging of this
-        if (heap == 0) {
-	        CAssert(heap != 0).Sys(MSG_MAP_VIEW).Throw();
-        }
+		free = heap = (UNIT*)MapViewOfFile(m_hMapping, FILE_MAP_WRITE, 0, 0, m_stHeapLen);
+		// To enable debugging of this
+		if (heap == 0) {
+			CAssert(heap != 0).Sys(MSG_MAP_VIEW).Throw();
+		}
 
-        // Set file size for wiping later. This should really be fixed - it's not a good idea to keep track
-        // of the file size separately, it's a left over from previous versions.
-        m_qwFileSize = m_stHeapLen;
+		// Set file size for wiping later. This should really be fixed - it's not a good idea to keep track
+		// of the file size separately, it's a left over from previous versions.
+		m_qwFileSize = m_stHeapLen;
 
 		// One-big, free block, but save space for endmarker.
 		free->size = heap->size = (DWORD)m_stHeapLen - sizeof UNIT;
 		// Endmarker.
-		((UNIT *)((char *)heap + heap->size))->size = 0;
+		((UNIT*)((char*)heap + heap->size))->size = 0;
 
-        LeaveCriticalSection(&csThreadLock);
+		LeaveCriticalSection(&csThreadLock);
 
-        m_nWipePasses = CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValWipePasses).GetDword(1);
-	} catch (TAssert utErr) {
+		m_nWipePasses = CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValWipePasses).GetDword(1);
+	}
+	catch (TAssert utErr) {
 		utErr.App(MSG_CRYPTO_HEAP_CONSTRUCT);
 		FatalAppExit(0, utErr.GetMsg());
 	}
@@ -137,20 +138,21 @@ CCryptoHeap::~CCryptoHeap() {
 	if (*m_pfHeapValid) {
 		try {
 			EnterCriticalSection(&csThreadLock);		// Rather defensive...
-            if (m_hMapping) {
-			    *m_pfHeapValid = FALSE;
-			    (void)memset(heap, 0, m_stHeapLen);		// Set heap to all zeroes
-			    // Then flush it to disk
-			    CAssert(FlushViewOfFile(heap, (DWORD)m_stHeapLen)).App(MSG_SYSTEM_CALL, _T("FlushViewOfFile() in ~CCryptoHeap()")).Throw();
-                CAssert(UnmapViewOfFile(heap)).App(MSG_SYSTEM_CALL, _T("UnmapViewOfFile() in ~CCryptoHeap()")).Throw();
-                CAssert(CloseHandle(m_hMapping)).App(MSG_SYSTEM_CALL, _T("CloseHandle() in ~CCryptoHeap()")).Throw();
-                m_hMapping = 0;
-            }
+			if (m_hMapping) {
+				*m_pfHeapValid = FALSE;
+				(void)memset(heap, 0, m_stHeapLen);		// Set heap to all zeroes
+				// Then flush it to disk
+				CAssert(FlushViewOfFile(heap, (DWORD)m_stHeapLen)).App(MSG_SYSTEM_CALL, _T("FlushViewOfFile() in ~CCryptoHeap()")).Throw();
+				CAssert(UnmapViewOfFile(heap)).App(MSG_SYSTEM_CALL, _T("UnmapViewOfFile() in ~CCryptoHeap()")).Throw();
+				CAssert(CloseHandle(m_hMapping)).App(MSG_SYSTEM_CALL, _T("CloseHandle() in ~CCryptoHeap()")).Throw();
+				m_hMapping = 0;
+			}
 			heap = free = 0;
 			LeaveCriticalSection(&csThreadLock);
-            // We can't pick up the wipe passes from the registry, because the registry name strings have already been destructed...
-            WipeTemp(0, m_nWipePasses);
-		} catch (TAssert utErr) {
+			// We can't pick up the wipe passes from the registry, because the registry name strings have already been destructed...
+			WipeTemp(0, m_nWipePasses);
+		}
+		catch (TAssert utErr) {
 			utErr.App(MSG_CRYPTO_HEAP_DESTRUCT);
 			FatalAppExit(0, utErr.GetMsg());
 		}
@@ -159,149 +161,152 @@ CCryptoHeap::~CCryptoHeap() {
 //
 // Must only be executed in a critical section.
 //
-UNIT* CCryptoHeap::compact(UNIT *p, size_t nsize) {
-	UNIT *best = 0;
+UNIT* CCryptoHeap::compact(UNIT* p, size_t nsize) {
+	UNIT* best = 0;
 	while (p->size) {
 		if (p->size & USED) {
 			best = 0;
-		} else {
+		}
+		else {
 			if (best == 0) {
 				best = p;
-			} else {
-				best->size += p->size;
-                if (best->size < sizeof UNIT) {
-                    OutputDebugString(L"CCryptoHeap::compact() Attempt to set invalid size of free.");
-                    DebugBreak();
-                }
 			}
-            if (best->size & USED) {
-                OutputDebugString(L"CCryptoHeap::compact() Invalid heap state.");
-                DebugBreak();
-            }
+			else {
+				best->size += p->size;
+				if (best->size < sizeof UNIT) {
+					OutputDebugString(L"CCryptoHeap::compact() Attempt to set invalid size of free.");
+					DebugBreak();
+				}
+			}
+			if (best->size & USED) {
+				OutputDebugString(L"CCryptoHeap::compact() Invalid heap state.");
+				DebugBreak();
+			}
 			if (best->size >= nsize) {
 				return best;
 			}
 		}
-        if ((p->size & ~USED) < sizeof UNIT) {
-            OutputDebugString(L"CCryptoHeap::compact() Found invalid block in heap.");
-            DebugBreak();
-        }
-        p = (UNIT *)((char *)p + (p->size & ~USED));
+		if ((p->size & ~USED) < sizeof UNIT) {
+			OutputDebugString(L"CCryptoHeap::compact() Found invalid block in heap.");
+			DebugBreak();
+		}
+		p = (UNIT*)((char*)p + (p->size & ~USED));
 	}
 	return 0;
 }
 
 /// \brief Try to find an exact free block to reuse
-UNIT* CCryptoHeap::reuse(UNIT *p, size_t nsize) {
-    while (p->size) {
-        if ((p->size & USED) == 0) {
-            if (p->size == nsize) {
-            	p->size |= USED;
-                if ((p->size & ~USED) < sizeof UNIT) {
-                    OutputDebugString(L"CCryptoHeap::reuse() Attempt to set invalid size.");
-                    DebugBreak();
-                }
-                if (p == free) {
-                    free = 0;
-                }
-                return (UNIT *)((char *)p + sizeof UNIT);
-            }
-        }
-        if ((p->size & ~USED) < sizeof UNIT) {
-            OutputDebugString(L"CCryptoHeap::reuse() Found invalid block in heap.");
-            DebugBreak();
-        }
-        p = (UNIT *)((char *)p + (p->size & ~USED));
-    }
-    return 0;
+UNIT* CCryptoHeap::reuse(UNIT* p, size_t nsize) {
+	while (p->size) {
+		if ((p->size & USED) == 0) {
+			if (p->size == nsize) {
+				p->size |= USED;
+				if ((p->size & ~USED) < sizeof UNIT) {
+					OutputDebugString(L"CCryptoHeap::reuse() Attempt to set invalid size.");
+					DebugBreak();
+				}
+				if (p == free) {
+					free = 0;
+				}
+				return (UNIT*)((char*)p + sizeof UNIT);
+			}
+		}
+		if ((p->size & ~USED) < sizeof UNIT) {
+			OutputDebugString(L"CCryptoHeap::reuse() Found invalid block in heap.");
+			DebugBreak();
+		}
+		p = (UNIT*)((char*)p + (p->size & ~USED));
+	}
+	return 0;
 }
 
-void CCryptoHeap::Free(void *ptr) {
+void CCryptoHeap::Free(void* ptr) {
 	if (ptr != 0) {
-        if (!(ptr >= heap && ptr < (void *)((char *)heap + m_stHeapLen))) {
-            OutputDebugString(L"CCryptoHeap::Free() Attempt to free memory not from this heap.");
-            DebugBreak();
-        }
+		if (!(ptr >= heap && ptr < (void*)((char*)heap + m_stHeapLen))) {
+			OutputDebugString(L"CCryptoHeap::Free() Attempt to free memory not from this heap.");
+			DebugBreak();
+		}
 
-        UNIT *p;
+		UNIT* p;
 
 		EnterCriticalSection(&csThreadLock);
 
-        p = (UNIT *)((char *)ptr - sizeof UNIT);
-        if ((p->size & USED) == 0) {
-            OutputDebugString(L"CCryptoHeap::Free() Attempt to free with an invalid memory pointer.");
-    		LeaveCriticalSection(&csThreadLock);
-            DebugBreak();
-        }
+		p = (UNIT*)((char*)ptr - sizeof UNIT);
+		if ((p->size & USED) == 0) {
+			OutputDebugString(L"CCryptoHeap::Free() Attempt to free with an invalid memory pointer.");
+			LeaveCriticalSection(&csThreadLock);
+			DebugBreak();
+		}
 		p->size &= ~USED;
-        if (p->size < sizeof UNIT) {
-            OutputDebugString(L"CCryptoHeap::Free() Attempt to free with invalid size.");
-    		LeaveCriticalSection(&csThreadLock);
-            DebugBreak();
-        }
+		if (p->size < sizeof UNIT) {
+			OutputDebugString(L"CCryptoHeap::Free() Attempt to free with invalid size.");
+			LeaveCriticalSection(&csThreadLock);
+			DebugBreak();
+		}
 		memset(ptr, 0, p->size - sizeof UNIT); // Clear memory asap!
 
 		LeaveCriticalSection(&csThreadLock);
 	}
 }
 
-void *CCryptoHeap::Alloc(size_t size) {
+void* CCryptoHeap::Alloc(size_t size) {
 	size_t fsize;
-	UNIT *p;
+	UNIT* p;
 
-    // I give up - let's do this here!
+	// I give up - let's do this here!
 	if (size == 0) return 0;
 	if (size >= 0x8000000) return 0;
 
-    size_t st = CurrentAlloc();
+	size_t st = CurrentAlloc();
 
 	// Add size of the overhead block, and align to even multiple of such block.
-	size  += sizeof UNIT + sizeof UNIT - 1;
+	size += sizeof UNIT + sizeof UNIT - 1;
 	size &= ~(sizeof UNIT - 1);
 
 	EnterCriticalSection(&csThreadLock);
-    p = reuse(heap, size);
-    if (p != 0) {
-        LeaveCriticalSection(&csThreadLock);
-        return p;
-    }
-    if (free != 0 && (free->size & USED)) {
-        OutputDebugString(L"CCryptoHeap::Alloc() Free is invalid.");
-	    LeaveCriticalSection(&csThreadLock);
-        DebugBreak();
-    }
-    if (free == 0 || size > free->size) {
-	    free = compact(heap, size);
-	    if (free == 0) {
-		    LeaveCriticalSection(&csThreadLock);
-		    return 0;
-	    }
-    }
-    p = free;
+	p = reuse(heap, size);
+	if (p != 0) {
+		LeaveCriticalSection(&csThreadLock);
+		return p;
+	}
+	if (free != 0 && (free->size & USED)) {
+		OutputDebugString(L"CCryptoHeap::Alloc() Free is invalid.");
+		LeaveCriticalSection(&csThreadLock);
+		DebugBreak();
+	}
+	if (free == 0 || size > free->size) {
+		free = compact(heap, size);
+		if (free == 0) {
+			LeaveCriticalSection(&csThreadLock);
+			return 0;
+		}
+	}
+	p = free;
 	fsize = free->size;
 	(void)memset(p, 0, size);	// Clear buffer
 	if (fsize > size) {	// All allocs is in multiples of sizeof UNIT
-		free = (UNIT *)((char *)p + size);
-        if ((fsize - size) < sizeof UNIT) {
-            OutputDebugString(L"CCryptoHeap::Alloc() Attempt to set invalid free size.");
-		    LeaveCriticalSection(&csThreadLock);
-            DebugBreak();
-        }
-        free->size = fsize - size;
-	} else {
+		free = (UNIT*)((char*)p + size);
+		if ((fsize - size) < sizeof UNIT) {
+			OutputDebugString(L"CCryptoHeap::Alloc() Attempt to set invalid free size.");
+			LeaveCriticalSection(&csThreadLock);
+			DebugBreak();
+		}
+		free->size = fsize - size;
+	}
+	else {
 		free = 0;
 		size = fsize;
 	}
 
-    if (size < sizeof UNIT) {
-        OutputDebugString(L"CCryptoHeap::Free() Attempt to alloc with invalid size.");
+	if (size < sizeof UNIT) {
+		OutputDebugString(L"CCryptoHeap::Free() Attempt to alloc with invalid size.");
 		LeaveCriticalSection(&csThreadLock);
-        DebugBreak();
-    }
+		DebugBreak();
+	}
 	p->size = size | USED;
 	LeaveCriticalSection(&csThreadLock);
 
-	return (void *)((char *)p + sizeof UNIT);
+	return (void*)((char*)p + sizeof UNIT);
 }
 
 void CCryptoHeap::Compact(void) {
@@ -313,17 +318,17 @@ void CCryptoHeap::Compact(void) {
 size_t
 CCryptoHeap::CurrentAlloc() {
 	EnterCriticalSection(&csThreadLock);
-	UNIT *p = heap;
+	UNIT* p = heap;
 	size_t stCurrentAlloc = 0;
 	while (p->size) {
 		if (p->size & USED) {
 			stCurrentAlloc += p->size & ~USED;
 		}
-        if ((p->size & ~USED) < sizeof UNIT) {
-            OutputDebugString(L"CCryptoHeap::compact() Found invalid block in heap.");
-            DebugBreak();
-        }
-        p = (UNIT *)((char *)p + (p->size & ~USED));
+		if ((p->size & ~USED) < sizeof UNIT) {
+			OutputDebugString(L"CCryptoHeap::compact() Found invalid block in heap.");
+			DebugBreak();
+		}
+		p = (UNIT*)((char*)p + (p->size & ~USED));
 	}
 	LeaveCriticalSection(&csThreadLock);
 	return stCurrentAlloc;
@@ -336,19 +341,19 @@ __declspec(thread) size_t stAcceptedLeak = 0;
 CHeapCheck::CHeapCheck(LPTSTR szFunc, BOOL fLeakOk) {
 	m_szFunc = szFunc;
 	// Save amount of alloc'd memory that is not already marked as permanent.
-    m_stAlloc = tguiAlloc - stAcceptedLeak;
+	m_stAlloc = tguiAlloc - stAcceptedLeak;
 	m_fLeakOk = fLeakOk;
 }
 
 CHeapCheck::~CHeapCheck() {
-    // Calculate (tguiAlloc - m_stAlloc) - (old m_stAcceptedLeak + new m_stAcceptedLeak)
+	// Calculate (tguiAlloc - m_stAlloc) - (old m_stAcceptedLeak + new m_stAcceptedLeak)
 	int stLeak = (int)(tguiAlloc - stAcceptedLeak - m_stAlloc);
 	if (!m_fLeakOk && (stLeak > 0)) {
 		TCHAR szLeak[20];
 		(void)_stprintf_s(szLeak, sizeof szLeak / sizeof szLeak[0], _T("%d"), stLeak);
 		CMessage().AppMsg(MSG_MEMORY_LEAK, szLeak, m_szFunc).ShowWarning(MB_OK);
-    }
-    stAcceptedLeak += stLeak; // Do not cascade leaks
+	}
+	stAcceptedLeak += stLeak; // Do not cascade leaks
 }
 #endif	_DEBUG
 #endif	_DEBUGHEAP

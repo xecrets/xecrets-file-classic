@@ -1,7 +1,7 @@
 #ifndef	_CENTROPY
 #define	_CENTROPY
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -41,20 +41,20 @@
 	install a keyboard sniffer...
 */
 #include <wincrypt.h>
-#include	"../AxCryptCommon/Utility.h"
+#include	"../XecretsFileCommon/Utility.h"
 //
 #define	ENTROPY_POOL_SIZE	256				// +1 must be prime
 //
 class CEntropy {
-    CHKey m_hRegKey, m_hRegSubKey;			// HKEYs to the registry. Auto-closing.
-    CPtrTo<BYTE> m_pEntropyPool;			// Auto-deleting.
+	CHKey m_hRegKey, m_hRegSubKey;			// HKEYs to the registry. Auto-closing.
+	CPtrTo<BYTE> m_pEntropyPool;			// Auto-deleting.
 	CPtrTo<TCHAR> m_szRegSubKey;			// Auto-deleting
 	int m_iReadIndex, m_iWriteIndex;
 
 	// Three threads and corresponding event objects
 	HANDLE m_hGatherThread, m_hGatherEvent;
-    HANDLE m_hFlipperThread, m_hFlipperEvent;
-    HANDLE m_hUserEntropyThread, m_hUserEntropyEvent;
+	HANDLE m_hFlipperThread, m_hFlipperEvent;
+	HANDLE m_hUserEntropyThread, m_hUserEntropyEvent;
 
 	// These are used between threads - thus need volatile
 	volatile unsigned int m_uiBit;		// Use native int for speed
@@ -62,8 +62,8 @@ class CEntropy {
 	volatile BOOL m_fStopFlip;			// Done gathering - goto sleep.
 	volatile long m_lStopAll;			// Stop all entropy gathering
 
-    bool m_bUseEntropyPool;                 ///< Set to true if we're using the old style
-    HCRYPTPROV m_hCryptProv;                ///< The random number generator context
+	bool m_bUseEntropyPool;                 ///< Set to true if we're using the old style
+	HCRYPTPROV m_hCryptProv;                ///< The random number generator context
 public:
 	CEntropy(HKEY hKey, LPCTSTR szRegSubKey);
 	~CEntropy();
@@ -72,10 +72,10 @@ public:
 	CEntropy& Load();					// Load saved entropy from registry
 	CEntropy& Save();					// Save some entropy to the registry
 
-	BYTE *Read(BYTE *aoDst, size_t stLen);
-	void Add(BYTE *aoSrc, size_t stLen);
+	BYTE* Read(BYTE* aoDst, size_t stLen);
+	void Add(BYTE* aoSrc, size_t stLen);
 private:
-    bool UseEntropyPool();                  ///< false if we are to use the CryptoAPI instead.
+	bool UseEntropyPool();                  ///< false if we are to use the CryptoAPI instead.
 	void GatherBits(long lBits);		// Get as many as these bits into the pool
 //
 	static DWORD WINAPI StaticFlipperThread(LPVOID lpParameter);
@@ -84,14 +84,14 @@ private:
 	static DWORD WINAPI StaticGatherThread(LPVOID lpParameter);
 	void GatherThread();				// A thread that gathers requested bits into the pool
 //
-    static DWORD WINAPI StaticUserEntropyThread(LPVOID lpParameter);
-    void UserEntropyThread();			// A thread that collects some user entropy
+	static DWORD WINAPI StaticUserEntropyThread(LPVOID lpParameter);
+	void UserEntropyThread();			// A thread that collects some user entropy
 //
-    static BOOL CALLBACK WindowsStateHashEnumProc(HWND hwnd, LPARAM lParam);
-    BYTE WindowsStateHash();
-//
-    static BYTE ByteSumHash(void *pvBuf, int iSiz);
-	int IncPoolIndex(int *pIndex);
+	static BOOL CALLBACK WindowsStateHashEnumProc(HWND hwnd, LPARAM lParam);
+	BYTE WindowsStateHash();
+	//
+	static BYTE ByteSumHash(void* pvBuf, int iSiz);
+	int IncPoolIndex(int* pIndex);
 	BOOL OpenRegSubKey();
 	BYTE GetTimeStampBit();
 	BYTE GetTimeStampByte();

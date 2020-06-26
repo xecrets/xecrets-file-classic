@@ -1,7 +1,7 @@
 #ifndef	_CFILETEMP
 #define	_CFILETEMP
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -29,7 +29,7 @@
 									2001-12-01				Added CTempDir
 
 */
-#include	"../AxCryptCommon/CFileName.h"
+#include	"../XecretsFileCommon/CFileName.h"
 //
 //	Create temporary file
 //
@@ -45,8 +45,8 @@ class CTempDir : public CFileName {
 public:
 
 	CTempDir(DWORD nWipePasses) : CFileName() {
-        m_nWipePasses = nWipePasses;
-    }
+		m_nWipePasses = nWipePasses;
+	}
 	~CTempDir();
 
 	CTempDir& New();				// Make a new temp-file.
@@ -55,6 +55,6 @@ public:
 private:
 	DWORD RemoveDir();			    // Empty a directory and delete it.
 	DWORD RmDir(LPCTSTR szDir);		// Helper to recursively delete a directory.
-    DWORD m_nWipePasses;                    ///< The number of passes to wipe the temps
+	DWORD m_nWipePasses;                    ///< The number of passes to wipe the temps
 };
 #endif	_CFILETEMP

@@ -2,11 +2,11 @@
 /*! \file
 	\brief AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
 
-    @(#) $Id$
+	@(#) $Id$
 
-    AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
+	AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
 
-    Copyright (C) 2004 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2004 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;
@@ -38,13 +38,13 @@ using namespace std;
 #include "../AxPipe/CPipeHMAC_SHA1.h"
 #include "../AxPipe/CPipeFindSync.h"
 #include "../AxPipe/CPipeInflate.h"
-#include "../AxCryptCommon/Types.h"
-#include "../AxCryptCommon/CAes.h"
-#include "../AxCryptCommon/CSubKey.h"
+#include "../XecretsFileCommon/Types.h"
+#include "../XecretsFileCommon/CAes.h"
+#include "../XecretsFileCommon/CSubKey.h"
 using namespace AxPipe;
 
 /// \brief Load a string resource into an allocated string. Do delete.
-extern _TCHAR * ALoadString(UINT uId, HMODULE hModule = NULL);
+extern _TCHAR* ALoadString(UINT uId, HMODULE hModule = NULL);
 
 /// \brief Simple helper to XOR two memory blocks to a third.
 /// Destination may be a separate block, or one of the two
@@ -54,6 +54,6 @@ extern _TCHAR * ALoadString(UINT uId, HMODULE hModule = NULL);
 /// \param src2 The other of the source memory blocks
 /// \param len The length to XOR (all three buffers must be at least this large)
 inline void
-XorMemory(void *dst, void *src1, void *src2, size_t len) {
-	while (len--) *((char *&)(dst))++ = *((char *&)src1)++ ^ *((char *&)src2)++;
+XorMemory(void* dst, void* src1, void* src2, size_t len) {
+	while (len--) *((char*&)(dst))++ = *((char*&)src1)++ ^ *((char*&)src2)++;
 }

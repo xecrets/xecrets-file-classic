@@ -1,7 +1,7 @@
 #ifndef	_CCRYPTOKEY
 #define	_CCRYPTOKEY
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -51,9 +51,9 @@
 //
 //	Helper mini-class, contains the cache of keys.
 //
-#include	"../AxCryptCommon/Types.h"
+#include	"../XecretsFileCommon/Types.h"
 #include	"CHeader.h"
-#include    "../AxCryptCommon/Utility.h"
+#include    "../XecretsFileCommon/Utility.h"
 
 class CKeyList;						// Forward declare for friend usage.
 
@@ -62,27 +62,27 @@ class CCryptoKey {
 	CCryptoKey();
 	~CCryptoKey();
 
-	CCryptoKey *m_pNext;			// Simple linked list...
-	TKey *m_putKey;					// The actual key, formed by hashing the string.
-    DWORD m_dwBatch;                // Batch identifier that is valid for this key
-    BOOL m_fEncKey;                 // True if is a default encrypting key.
+	CCryptoKey* m_pNext;			// Simple linked list...
+	TKey* m_putKey;					// The actual key, formed by hashing the string.
+	DWORD m_dwBatch;                // Batch identifier that is valid for this key
+	BOOL m_fEncKey;                 // True if is a default encrypting key.
 public:
-    TKey *Key() { return m_putKey; }
-    DWORD Batch() { return m_dwBatch; }
+	TKey* Key() { return m_putKey; }
+	DWORD Batch() { return m_dwBatch; }
 };
 
 class CKeyList {
-	CCryptoKey *m_pKeyRoot;				// Pointer to the root of the cache chain in the safe heap
-    CRITICAL_SECTION m_CritSect;
+	CCryptoKey* m_pKeyRoot;				// Pointer to the root of the cache chain in the safe heap
+	CRITICAL_SECTION m_CritSect;
 public:
 	CKeyList();
 	~CKeyList();
-	BOOL TryOpen(CHeaders *pHeaders, TKey **ppKeyEncKey, DWORD dwBatch);	// Try to open using all keys in cache.
-	CCryptoKey *FindKey(TKey* putKeyBits, DWORD dwBatch, BOOL fEncKey);       // Find this key in the cache, if it is there.
-    CCryptoKey *FindEncKey(DWORD dwBatch);                      // Find default encryption key, if there is one.
-	CCryptoKey *AddKey(TKey* putKeyBits, BOOL fEncKey, DWORD dwBatch);		// Add a new key to the cache.
-    CCryptoKey *AddEncKey(TKey* putKeyBits, DWORD dwBatch);     // Add a new default encryption key to the cache.
-    void ClearKeys(DWORD dwBatch);
+	BOOL TryOpen(CHeaders* pHeaders, TKey** ppKeyEncKey, DWORD dwBatch);	// Try to open using all keys in cache.
+	CCryptoKey* FindKey(TKey* putKeyBits, DWORD dwBatch, BOOL fEncKey);       // Find this key in the cache, if it is there.
+	CCryptoKey* FindEncKey(DWORD dwBatch);                      // Find default encryption key, if there is one.
+	CCryptoKey* AddKey(TKey* putKeyBits, BOOL fEncKey, DWORD dwBatch);		// Add a new key to the cache.
+	CCryptoKey* AddEncKey(TKey* putKeyBits, DWORD dwBatch);     // Add a new default encryption key to the cache.
+	void ClearKeys(DWORD dwBatch);
 };
 //
 //	Prompt for keys, new or old. The TKey* returned is only valid for
@@ -90,11 +90,11 @@ public:
 //	longer
 //
 class CKeyPrompt {
-	TKey *m_pKey;						// The key entered.
+	TKey* m_pKey;						// The key entered.
 public:
 	CKeyPrompt();
 	~CKeyPrompt();
-	CKeyPrompt& Old(int iPrompt, LPCTSTR szFileName, HWND hWnd = NULL );		// Prompt for an existing key
+	CKeyPrompt& Old(int iPrompt, LPCTSTR szFileName, HWND hWnd = NULL);		// Prompt for an existing key
 	CKeyPrompt& New(HWND hWnd = NULL);					// Prompt for a new, with verification
 	TKey* Get();						// Get actual key, if any.
 };

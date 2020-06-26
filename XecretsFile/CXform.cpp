@@ -1,5 +1,5 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -25,13 +25,13 @@
 	E-mail							YYYY-MM-DD				Reason
 	software@axantum.com 			2001					Initial
 									2001-11-27				Fixed loop in CWipe with partial wipe > 1K
-                                    2002-08-02              Rev 1.2
+									2002-08-02              Rev 1.2
 
 */
 #include	"StdAfx.h"
 #include	"CXform.h"
-#include    "../AxCryptCommon/CVersion.h"
-#include    "../AxCryptCommon/CRegistry.h"
+#include    "../XecretsFileCommon/CVersion.h"
+#include    "../XecretsFileCommon/CRegistry.h"
 #include    "commctrl.h"
 
 #include    "../AxWinLib/AxAssert.h"
@@ -41,33 +41,33 @@
 //	for the other derived classes as well.
 //
 CXform::CXform(HWND hProgressWnd) {
-    m_hProgressWnd = hProgressWnd;
+	m_hProgressWnd = hProgressWnd;
 
 	utZstream.zalloc = (alloc_func)0;
 	utZstream.zfree = (free_func)0;
 	utZstream.opaque = (voidpf)0;
 
-    // Allocate these, potentially large, buffers directly from the OS. There is a slight risk
-    // that clear-text data will through these migrate to the swapfile, but we run that risk
-    // anyway if we're editing or whatever. The important thing is to keep key-material off the
-    // disk and the swap file, and for that we have the "secure" heap.
-    m_pInBuf = (BYTE *)VirtualAlloc(NULL, MAX_VIEW_SIZE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-    ASSAPI(m_pInBuf != NULL);
+	// Allocate these, potentially large, buffers directly from the OS. There is a slight risk
+	// that clear-text data will through these migrate to the swapfile, but we run that risk
+	// anyway if we're editing or whatever. The important thing is to keep key-material off the
+	// disk and the swap file, and for that we have the "secure" heap.
+	m_pInBuf = (BYTE*)VirtualAlloc(NULL, MAX_VIEW_SIZE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+	ASSAPI(m_pInBuf != NULL);
 
-    m_pOutBuf = (BYTE *)VirtualAlloc(NULL, MAX_VIEW_SIZE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-    ASSAPI(m_pOutBuf != NULL);
+	m_pOutBuf = (BYTE*)VirtualAlloc(NULL, MAX_VIEW_SIZE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+	ASSAPI(m_pOutBuf != NULL);
 
-    ClearBuffers();
+	ClearBuffers();
 }
 /// \brief Clean up buffer
 CXform::~CXform() {
-    // Clearing the memory immediately before a release may well be a no-op, but it's fairly quick
-    // and will do no harm, hopefully.
-    ZeroMemory(m_pInBuf, MAX_VIEW_SIZE);
-    ASSAPI(VirtualFree(m_pInBuf, 0, MEM_RELEASE));
+	// Clearing the memory immediately before a release may well be a no-op, but it's fairly quick
+	// and will do no harm, hopefully.
+	ZeroMemory(m_pInBuf, MAX_VIEW_SIZE);
+	ASSAPI(VirtualFree(m_pInBuf, 0, MEM_RELEASE));
 
-    ZeroMemory(m_pOutBuf, MAX_VIEW_SIZE);
-    ASSAPI(VirtualFree(m_pOutBuf, 0, MEM_RELEASE));
+	ZeroMemory(m_pOutBuf, MAX_VIEW_SIZE);
+	ASSAPI(VirtualFree(m_pOutBuf, 0, MEM_RELEASE));
 }
 
 void
@@ -77,13 +77,13 @@ CXform::ClearBuffers() {
 	utZstream.total_in = 0;
 	utZstream.total_out = 0;
 
-    m_cbTotalIn = m_cbTotalOut = 0;
-    m_cbLastTotal_in = m_cbLastTotal_out = 0;
+	m_cbTotalIn = m_cbTotalOut = 0;
+	m_cbLastTotal_in = m_cbLastTotal_out = 0;
 
-    // Initialize the output buffer so that it's ready for use. The FlushOutStream() code gets confused
-    // otherwise and thinks it has something to write, which it doesn't.
-    utZstream.avail_out = MAX_VIEW_SIZE;
-    utZstream.next_out = m_pOutBuf;
+	// Initialize the output buffer so that it's ready for use. The FlushOutStream() code gets confused
+	// otherwise and thinks it has something to write, which it doesn't.
+	utZstream.avail_out = MAX_VIEW_SIZE;
+	utZstream.next_out = m_pOutBuf;
 }
 
 //
@@ -91,7 +91,7 @@ CXform::ClearBuffers() {
 //
 /*virtual*/ QWORD
 CXform::Init(CFileIO& utInFile) {
-    return utInFile.m_qwFileSize - utInFile.GetFilePointer();
+	return utInFile.m_qwFileSize - utInFile.GetFilePointer();
 }
 //
 //	Generic data transformation using a stream to control in and out. It will
@@ -108,57 +108,58 @@ CXform::XformData(CFileIO& utInFile, CFileIO& utOutFile) {
 	QWORD qwTotalInputSize = Init(utInFile);
 	CAssert(qwTotalInputSize >= 0).File(MSG_FILE_LENGTH, utInFile.FileName()).Throw();
 
-    // Set the name of the operation in the progress window, if any
-    StartProgress();
+	// Set the name of the operation in the progress window, if any
+	StartProgress();
 
-    // Do the transformation, in multiple segments if necessary.
-    QWORD cbRemaining;
+	// Do the transformation, in multiple segments if necessary.
+	QWORD cbRemaining;
 	while (cbRemaining = qwTotalInputSize - m_cbTotalIn) {
-        // Don't try to read more than we're supposed to.
-        size_t avail_in = cbRemaining > MAX_VIEW_SIZE ? MAX_VIEW_SIZE : (unsigned int)cbRemaining;
-        utInFile.ReadData(utZstream.next_in = m_pInBuf, &avail_in);
+		// Don't try to read more than we're supposed to.
+		size_t avail_in = cbRemaining > MAX_VIEW_SIZE ? MAX_VIEW_SIZE : (unsigned int)cbRemaining;
+		utInFile.ReadData(utZstream.next_in = m_pInBuf, &avail_in);
 		utZstream.avail_in = (uInt)avail_in;
 
-        // Now consume all input to be compressed in this segment.
+		// Now consume all input to be compressed in this segment.
 		while (utZstream.avail_in > 0) {
-            // Update progress bar, use different strategies for cases where
-            // times 100 risks an overflow, and when it does not.
-            if (qwTotalInputSize < 0x80000000) {
-                QWORD qwConsumedTimes100 = m_cbTotalIn * 100;
-                Progress((unsigned int)(qwConsumedTimes100 / qwTotalInputSize));
-            } else {
-                QWORD qwSizeDiv100 = qwTotalInputSize / 100;
-                Progress((unsigned int)(m_cbTotalIn / qwSizeDiv100));
-            }
-            FlushOutStream(utOutFile);
+			// Update progress bar, use different strategies for cases where
+			// times 100 risks an overflow, and when it does not.
+			if (qwTotalInputSize < 0x80000000) {
+				QWORD qwConsumedTimes100 = m_cbTotalIn * 100;
+				Progress((unsigned int)(qwConsumedTimes100 / qwTotalInputSize));
+			}
+			else {
+				QWORD qwSizeDiv100 = qwTotalInputSize / 100;
+				Progress((unsigned int)(m_cbTotalIn / qwSizeDiv100));
+			}
+			FlushOutStream(utOutFile);
 			Xform();
 		}
 	}
 	// Flush the final stuff. If necessary, make room for possible last squirt.
 	do {
-        FlushOutStream(utOutFile);
+		FlushOutStream(utOutFile);
 	} while (Finish(utOutFile));
-    FlushOutStream(utOutFile);
+	FlushOutStream(utOutFile);
 	End(utOutFile);
 	utOutFile.SetEndOfFile();
 	utOutFile.FlushBuffers();
-    utOutFile.m_qwFileSize = utOutFile.GetFileSize();
+	utOutFile.m_qwFileSize = utOutFile.GetFileSize();
 
-    // If we re-use the transform, re-initalize it so we can use it without constructing it again.
-    ClearBuffers();
+	// If we re-use the transform, re-initalize it so we can use it without constructing it again.
+	ClearBuffers();
 
-    HEAP_CHECK_END
-	return;
+	HEAP_CHECK_END
+		return;
 }
 
 void
 CXform::FlushOutStream(CFileIO& utOutFile) {
-    // Actually write the buffer
-    size_t cb = MAX_VIEW_SIZE - utZstream.avail_out;
-    if (cb) {
-        utOutFile.WriteData(utZstream.next_out = m_pOutBuf, &cb);
-        utZstream.avail_out = MAX_VIEW_SIZE;
-    }
+	// Actually write the buffer
+	size_t cb = MAX_VIEW_SIZE - utZstream.avail_out;
+	if (cb) {
+		utOutFile.WriteData(utZstream.next_out = m_pOutBuf, &cb);
+		utZstream.avail_out = MAX_VIEW_SIZE;
+	}
 }
 
 void
@@ -182,17 +183,17 @@ CXform::ConsumedInOut(DWORD dwIn, DWORD dwOut) {
 /// \brief Update our long total-counters with the short zlib ones
 void
 CXform::UpdateZTotalInOut() {
-    // We need to keep our own large counters of processed bytes as zlib does not,
-    // apparently will not - I did submit diffs and all... But it appears that they
-    // want it done this way, so we'll do it that way to avoid the need to keep
-    // patching each new version.
+	// We need to keep our own large counters of processed bytes as zlib does not,
+	// apparently will not - I did submit diffs and all... But it appears that they
+	// want it done this way, so we'll do it that way to avoid the need to keep
+	// patching each new version.
 
-    // It appears we're not allowed to modify the total_in, total_out counters...
-    m_cbTotalIn += utZstream.total_in - m_cbLastTotal_in;
-    m_cbTotalOut += utZstream.total_out - m_cbLastTotal_out;
+	// It appears we're not allowed to modify the total_in, total_out counters...
+	m_cbTotalIn += utZstream.total_in - m_cbLastTotal_in;
+	m_cbTotalOut += utZstream.total_out - m_cbLastTotal_out;
 
-    m_cbLastTotal_in = utZstream.total_in;
-    m_cbLastTotal_out = utZstream.total_out;
+	m_cbLastTotal_in = utZstream.total_in;
+	m_cbLastTotal_out = utZstream.total_out;
 }
 
 //
@@ -200,30 +201,30 @@ CXform::UpdateZTotalInOut() {
 //
 void
 CXform::Progress(unsigned int iPercent) {
-    if (m_hProgressWnd != NULL) {
-        if (!GetWindowLongPtr(GetParent(m_hProgressWnd), GWLP_USERDATA)) {
-            CAssert(GetLastError() == ERROR_SUCCESS).Sys(MSG_SYSTEM_CALL, _T("CXform::Progress() [GetWindowLong()]")).Throw();
-            // Stop and hide the window, restoring to normal, since we've detected one cancel. If the caller doesn't re-initialize
-            // properly, we may get into an infinite cancel-loop otherwise, since we'll think it's always cancelled, even if the
-            // user gets to retry after cancel.
-            SendMessage(GetParent(m_hProgressWnd), WM_APP, 0, 0);
-            CAssert(FALSE).App(WRN_CANCEL).Throw();
-        }
-        PostMessage(m_hProgressWnd, PBM_SETPOS, (WPARAM)(iPercent > 100 ? 100 : iPercent), 0);
-    }
+	if (m_hProgressWnd != NULL) {
+		if (!GetWindowLongPtr(GetParent(m_hProgressWnd), GWLP_USERDATA)) {
+			CAssert(GetLastError() == ERROR_SUCCESS).Sys(MSG_SYSTEM_CALL, _T("CXform::Progress() [GetWindowLong()]")).Throw();
+			// Stop and hide the window, restoring to normal, since we've detected one cancel. If the caller doesn't re-initialize
+			// properly, we may get into an infinite cancel-loop otherwise, since we'll think it's always cancelled, even if the
+			// user gets to retry after cancel.
+			SendMessage(GetParent(m_hProgressWnd), WM_APP, 0, 0);
+			CAssert(FALSE).App(WRN_CANCEL).Throw();
+		}
+		PostMessage(m_hProgressWnd, PBM_SETPOS, (WPARAM)(iPercent > 100 ? 100 : iPercent), 0);
+	}
 }
 //
 // Name the operation for the progress window
 //
 /*virtual*/ void
 CXform::StartProgress() {
-    if (m_hProgressWnd != NULL) {
-        // Clear the operation text. Need to use SendMessage to cross process boundary
-        SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)_T(""));
+	if (m_hProgressWnd != NULL) {
+		// Clear the operation text. Need to use SendMessage to cross process boundary
+		SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)_T(""));
 
-        // Start the visual wait timer, use send message to ensure sequence.
-        SendMessage(GetParent(m_hProgressWnd), WM_APP + 2, 0, 0);
-    }
+		// Start the visual wait timer, use send message to ensure sequence.
+		SendMessage(GetParent(m_hProgressWnd), WM_APP + 2, 0, 0);
+	}
 }
 
 //
@@ -232,36 +233,36 @@ CXform::StartProgress() {
 /*virtual*/ QWORD
 CCompress::Init(CFileIO& utInFile) {
 	CAssert(deflateInit(&utZstream, Z_DEFAULT_COMPRESSION) == Z_OK).App(MSG_DEFLATE_INIT).Throw();
-    return utInFile.m_qwFileSize - utInFile.GetFilePointer();
+	return utInFile.m_qwFileSize - utInFile.GetFilePointer();
 }
 //
 //	Call deflate for each section of data from the input file as it appears.
 //
 /*virtual*/ void CCompress::Xform() {
-    do {
-        unsigned long cb = 0;
+	do {
+		unsigned long cb = 0;
 
-        if (utZstream.avail_in > ZLIB_FULL_FLUSH_SIZE) {
-            cb = utZstream.avail_in - ZLIB_FULL_FLUSH_SIZE;
-            utZstream.avail_in = ZLIB_FULL_FLUSH_SIZE;
-        }
+		if (utZstream.avail_in > ZLIB_FULL_FLUSH_SIZE) {
+			cb = utZstream.avail_in - ZLIB_FULL_FLUSH_SIZE;
+			utZstream.avail_in = ZLIB_FULL_FLUSH_SIZE;
+		}
 
-        int iRet = deflate(&utZstream, Z_FULL_FLUSH);
-        utZstream.avail_in += cb;
+		int iRet = deflate(&utZstream, Z_FULL_FLUSH);
+		utZstream.avail_in += cb;
 
-        UpdateZTotalInOut();
-	    CAssert(iRet == Z_OK).App(MSG_DEFLATE_SYNC).Throw();
-    } while (utZstream.avail_in && utZstream.avail_out);
+		UpdateZTotalInOut();
+		CAssert(iRet == Z_OK).App(MSG_DEFLATE_SYNC).Throw();
+	} while (utZstream.avail_in && utZstream.avail_out);
 }
 //
 //	Flush all buffers and write the last output to the output buffer
 //
 /*virtual*/ int
 CCompress::Finish(CFileIO& utOutFile) {
-    int iReturn = deflate(&utZstream, Z_FINISH);
-    UpdateZTotalInOut();
+	int iReturn = deflate(&utZstream, Z_FINISH);
+	UpdateZTotalInOut();
 
-    if (iReturn == Z_OK) return TRUE;
+	if (iReturn == Z_OK) return TRUE;
 
 	CAssert(iReturn == Z_STREAM_END).App(MSG_COMPRESS_FINISH).Throw();
 	return FALSE;
@@ -278,11 +279,11 @@ CCompress::End(CFileIO& utOutFile) {
 //
 /*virtual*/ void
 CCompress::StartProgress() {
-    CXform::StartProgress();
-    if (ProgressWnd() != NULL) {
-        // Need to use SendMessage to cross process boundary
-        SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_COMPRESS).GetMsg());
-    }
+	CXform::StartProgress();
+	if (ProgressWnd() != NULL) {
+		// Need to use SendMessage to cross process boundary
+		SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_COMPRESS).GetMsg());
+	}
 }
 //
 //	Wrap ZLib Init(), and limit reading of the file to the start for this purpose.
@@ -290,19 +291,20 @@ CCompress::StartProgress() {
 /*virtual*/ QWORD
 CCompressRatio::Init(CFileIO& utInFile) {
 	CAssert(deflateInit(&utZstream, Z_DEFAULT_COMPRESSION) == Z_OK).App(MSG_DEFLATE_INIT).Throw();
-    if (CXform::Init(utInFile) < COMPRESS_TEST_SIZE) {
-        return CXform::Init(utInFile);
-    } else {
-        return COMPRESS_TEST_SIZE;
-    }
+	if (CXform::Init(utInFile) < COMPRESS_TEST_SIZE) {
+		return CXform::Init(utInFile);
+	}
+	else {
+		return COMPRESS_TEST_SIZE;
+	}
 }
 //
 //	Call deflate for each section of data from the input file as it appears.
 //
 /*virtual*/ void
 CCompressRatio::Xform() {
-    int iRet = deflate(&utZstream, Z_SYNC_FLUSH);
-    UpdateZTotalInOut();
+	int iRet = deflate(&utZstream, Z_SYNC_FLUSH);
+	UpdateZTotalInOut();
 	CAssert(iRet == Z_OK).App(MSG_DEFLATE_SYNC).Throw();
 }
 
@@ -312,7 +314,7 @@ CCompressRatio::Xform() {
 /*virtual*/ int
 CCompressRatio::Finish(CFileIO& utOutFile) {
 	int iReturn = deflate(&utZstream, Z_FINISH);
-    UpdateZTotalInOut();
+	UpdateZTotalInOut();
 	if (iReturn == Z_OK) return TRUE;
 
 	CAssert(iReturn == Z_STREAM_END).App(MSG_COMPRESS_FINISH).Throw();
@@ -324,34 +326,36 @@ CCompressRatio::Finish(CFileIO& utOutFile) {
 /*virtual*/ void
 CCompressRatio::End(CFileIO& utOutFile) {
 	CAssert(deflateEnd(&utZstream) == Z_OK).App(MSG_COMPRESS_FINISH).Throw();
-    //
-    // Some tricks to keep to integer arithmetic without risk of overflow etc,
-    // calculate the ratio between the diference of out and in.
-    // 100 is perfect compress, 0 is no compression.
-    //
-    QWORD qwTemp = m_cbTotalIn / 100;
-    if (qwTemp > 0) {
-        m_iRatio =  (int)(100 - m_cbTotalOut / qwTemp);
-    } else if (m_cbTotalIn > 0) {
-        m_iRatio =  (int)(100 - m_cbTotalOut * 100 / m_cbTotalIn);
-    } else {
-        m_iRatio = 0;
-    }
+	//
+	// Some tricks to keep to integer arithmetic without risk of overflow etc,
+	// calculate the ratio between the diference of out and in.
+	// 100 is perfect compress, 0 is no compression.
+	//
+	QWORD qwTemp = m_cbTotalIn / 100;
+	if (qwTemp > 0) {
+		m_iRatio = (int)(100 - m_cbTotalOut / qwTemp);
+	}
+	else if (m_cbTotalIn > 0) {
+		m_iRatio = (int)(100 - m_cbTotalOut * 100 / m_cbTotalIn);
+	}
+	else {
+		m_iRatio = 0;
+	}
 
-    if (m_iRatio < 0) {
-        m_iRatio = 0;
-    }
+	if (m_iRatio < 0) {
+		m_iRatio = 0;
+	}
 
-    if (m_iRatio > 100) {
-        m_iRatio = 100;
-    }
+	if (m_iRatio > 100) {
+		m_iRatio = 100;
+	}
 }
 //
 //  Return the calculated compression ratio.
 //
 int
 CCompressRatio::GetRatio() {
-    return m_iRatio;
+	return m_iRatio;
 }
 //
 //	Decompress transformer class begins here
@@ -362,15 +366,15 @@ CCompressRatio::GetRatio() {
 CDecompress::Init(CFileIO& utInFile) {
 	utZstream.next_in = Z_NULL;	// Defer check to first call to inflate
 	CAssert(inflateInit(&utZstream) == Z_OK).App(MSG_INFLATE_INIT).Throw();
-    return utInFile.m_qwFileSize - utInFile.GetFilePointer();
+	return utInFile.m_qwFileSize - utInFile.GetFilePointer();
 }
 //
 //	Wrap ZLib call to inflate() for each segment as it arrives from the input
 //
 /*virtual*/ void
 CDecompress::Xform() {
-    int iReturn = inflate(&utZstream, 0);
-    UpdateZTotalInOut();
+	int iReturn = inflate(&utZstream, 0);
+	UpdateZTotalInOut();
 	CAssert((iReturn == Z_OK) || (iReturn == Z_STREAM_END)).App(MSG_INFLATE_ERROR).Throw();
 }
 //
@@ -379,10 +383,10 @@ CDecompress::Xform() {
 /*virtual*/ int
 CDecompress::Finish(CFileIO& utOutFile) {
 	int iReturn = inflate(&utZstream, 0);
-    UpdateZTotalInOut();
+	UpdateZTotalInOut();
 	if (iReturn == Z_OK) return TRUE;
 
-    CAssert(iReturn == Z_STREAM_END).App(MSG_INFLATE_FINISH).Throw();
+	CAssert(iReturn == Z_STREAM_END).App(MSG_INFLATE_FINISH).Throw();
 	return FALSE;
 }
 //
@@ -397,16 +401,16 @@ CDecompress::End(CFileIO& utOutFile) {
 //
 /*virtual*/ void
 CDecompress::StartProgress() {
-    CXform::StartProgress();
-    if (ProgressWnd() != NULL) {
-        // Need to use SendMessage to cross process boundary
-        SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_DECOMPRESS).GetMsg());
-    }
+	CXform::StartProgress();
+	if (ProgressWnd() != NULL) {
+		// Need to use SendMessage to cross process boundary
+		SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_DECOMPRESS).GetMsg());
+	}
 }
 
 /*virtual*/ QWORD
 CNoXform::Init(CFileIO& utInFile) {
-    return utInFile.m_qwFileSize - utInFile.GetFilePointer();
+	return utInFile.m_qwFileSize - utInFile.GetFilePointer();
 }
 //
 //	Fill all available out-space with pseudo-random data.
@@ -415,7 +419,7 @@ CNoXform::Init(CFileIO& utInFile) {
 CNoXform::Xform() {
 	// it is the in-file which determines how much to copy, as we are doing a pseudo-transformation.
 	DWORD dwLen = Min(utZstream.avail_in, utZstream.avail_out);
-    CopyMemory(utZstream.next_out, utZstream.next_in, dwLen);
+	CopyMemory(utZstream.next_out, utZstream.next_in, dwLen);
 	ConsumedInOut(dwLen, dwLen);
 }
 //
@@ -437,19 +441,20 @@ CNoXform::End(CFileIO& utOutFile) {
 //
 /*virtual*/ void
 CWipeXform::StartProgress() {
-    CXform::StartProgress();
-    if (ProgressWnd() != NULL) {
-        TCHAR szMsg[200];
-        if (m_nWipePasses == 0 || m_nWipePasses == 1) {
-            _sntprintf_s(szMsg, sizeof szMsg / sizeof szMsg[0], sizeof szMsg / sizeof szMsg[0], _T("%s"), (LPTSTR)CMessage().AppMsg(m_dwMsgId).GetMsg());
-        } else {
-            _sntprintf_s(szMsg, sizeof szMsg / sizeof szMsg[0], sizeof szMsg / sizeof szMsg[0], _T("%s (%d/%d)"), (LPTSTR)CMessage().AppMsg(m_dwMsgId).GetMsg(), m_nPassCurrent, m_nWipePasses);
-            m_nPassCurrent++;
-        }
-        szMsg[sizeof szMsg / sizeof szMsg[0] - 1] = _T('\0');
-        // Need to use SendMessage to cross process boundary
-        SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)szMsg);
-    }
+	CXform::StartProgress();
+	if (ProgressWnd() != NULL) {
+		TCHAR szMsg[200];
+		if (m_nWipePasses == 0 || m_nWipePasses == 1) {
+			_sntprintf_s(szMsg, sizeof szMsg / sizeof szMsg[0], sizeof szMsg / sizeof szMsg[0], _T("%s"), (LPTSTR)CMessage().AppMsg(m_dwMsgId).GetMsg());
+		}
+		else {
+			_sntprintf_s(szMsg, sizeof szMsg / sizeof szMsg[0], sizeof szMsg / sizeof szMsg[0], _T("%s (%d/%d)"), (LPTSTR)CMessage().AppMsg(m_dwMsgId).GetMsg(), m_nPassCurrent, m_nWipePasses);
+			m_nPassCurrent++;
+		}
+		szMsg[sizeof szMsg / sizeof szMsg[0] - 1] = _T('\0');
+		// Need to use SendMessage to cross process boundary
+		SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)szMsg);
+	}
 }
 //
 //	CBlockXform
@@ -466,10 +471,10 @@ CBlockXform::CBlockXform(HWND hProgressWnd, DWORD dwBlkSiz) : CXform(hProgressWn
 	// Initialize the stream temp block
 	m_utBlkBuf.dwBlkSiz = dwBlkSiz;				// Set-up block size
 	m_utBlkBuf.poIn = new BYTE[m_utBlkBuf.dwBlkSiz];	// need to be secure, as they may contain cleartext.
-    ASSPTR(m_utBlkBuf.poIn);
+	ASSPTR(m_utBlkBuf.poIn);
 
-    m_utBlkBuf.poOut = new BYTE[m_utBlkBuf.dwBlkSiz];
-    ASSPTR(m_utBlkBuf.poOut);
+	m_utBlkBuf.poOut = new BYTE[m_utBlkBuf.dwBlkSiz];
+	ASSPTR(m_utBlkBuf.poOut);
 
 	m_utBlkBuf.iIn = m_utBlkBuf.iOut = 0;
 }
@@ -518,31 +523,32 @@ CBlockXform::Xform() {
 		ConsumedInOut(i, 0);
 		// Check to see if we have a full block ready for encryption/decryption
 		if (m_utBlkBuf.iIn == m_utBlkBuf.dwBlkSiz) {
-			Xblock((TBlock *)m_utBlkBuf.poIn, (TBlock *)m_utBlkBuf.poOut);
+			Xblock((TBlock*)m_utBlkBuf.poIn, (TBlock*)m_utBlkBuf.poOut);
 			m_utBlkBuf.iOut = m_utBlkBuf.dwBlkSiz;
 			m_utBlkBuf.iIn = 0;
 		}
 		return;								// Enough so far, we'll be back shortly at the top...
-	} else {
+	}
+	else {
 		// This is a slight optimization - if one relaxes the first constraint above, all data
 		// will go through that part of the code, one block at a time. But most data will be
 		// in large chunks, so we do it in one call here, and have the loop deeper down instead
 		// saving some overhead/block as well as bypassing the block-buffer.
 		// No partial blocks remain, and we have at least one full block in the instream.
-		Xblock((TBlock *)utZstream.next_in, (TBlock *)utZstream.next_out, j);
+		Xblock((TBlock*)utZstream.next_in, (TBlock*)utZstream.next_out, j);
 		ConsumedInOut(j * m_utBlkBuf.dwBlkSiz, j * m_utBlkBuf.dwBlkSiz);
 	}
 	// Happy so far. If there is a partial in-block left, next round will handle it.
 }
 // Constructor
-CEncrypt::CEncrypt(TKey *putKey, TBlock *putIV, HWND hProgressWnd) : CBlockXform(hProgressWnd) {
+CEncrypt::CEncrypt(TKey* putKey, TBlock* putIV, HWND hProgressWnd) : CBlockXform(hProgressWnd) {
 	m_utAesCryptCBC.Init(putKey, CAes::eCBC, CAes::eEncrypt);
 	m_utAesCryptCBC.SetIV(putIV);
 	m_bLast = FALSE;
 }
 
 /*virtual*/ void
-CEncrypt::Xblock(TBlock *putSrc, TBlock *putDst, DWORD dwN) {
+CEncrypt::Xblock(TBlock* putSrc, TBlock* putDst, DWORD dwN) {
 	m_utAesCryptCBC.Xblock(putSrc, putDst, dwN);
 }
 //
@@ -568,7 +574,7 @@ CEncrypt::Finish(CFileIO& utOutFile) {
 			m_utBlkBuf.poIn[i] = (BYTE)(m_utBlkBuf.dwBlkSiz - m_utBlkBuf.iIn);
 		}
 		// Encrypt the block, and make it ready for output.
-		Xblock((TBlock *)m_utBlkBuf.poIn, (TBlock *)m_utBlkBuf.poOut);
+		Xblock((TBlock*)m_utBlkBuf.poIn, (TBlock*)m_utBlkBuf.poOut);
 		m_utBlkBuf.iIn = 0;
 		m_utBlkBuf.iOut = m_utBlkBuf.dwBlkSiz;
 		m_bLast = TRUE;
@@ -593,20 +599,20 @@ CEncrypt::GetPadSize(QWORD qwIn) {
 //
 /*virtual*/ void
 CEncrypt::StartProgress() {
-    CXform::StartProgress();
-    if (ProgressWnd() != NULL) {
-        // Need to use SendMessage to cross process boundary
-        SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_ENCRYPT).GetMsg());
-    }
+	CXform::StartProgress();
+	if (ProgressWnd() != NULL) {
+		// Need to use SendMessage to cross process boundary
+		SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_ENCRYPT).GetMsg());
+	}
 }
 // Constructor
-CDecrypt::CDecrypt(TKey *putKey, TBlock *putIV, HWND hProgressWnd) : CBlockXform(hProgressWnd) {
+CDecrypt::CDecrypt(TKey* putKey, TBlock* putIV, HWND hProgressWnd) : CBlockXform(hProgressWnd) {
 	m_utAesCryptCBC.Init(putKey, CAes::eCBC, CAes::eDecrypt);
 	m_utAesCryptCBC.SetIV(putIV);
 }
 
 /*virtual*/ void
-CDecrypt::Xblock(TBlock *putSrc, TBlock *putDst, DWORD dwN) {
+CDecrypt::Xblock(TBlock* putSrc, TBlock* putDst, DWORD dwN) {
 	m_utAesCryptCBC.Xblock(putSrc, putDst, dwN);
 }
 //
@@ -624,33 +630,33 @@ CDecrypt::Xblock(TBlock *putSrc, TBlock *putDst, DWORD dwN) {
 //
 int
 CDecrypt::Finish(CFileIO& utOutFile) {
-    // Since we know at the start that avail_in is zero when we're called, we can at most
-    // have one block we need to flush out - which will always be the padding block. It may
-    // also already be written.
+	// Since we know at the start that avail_in is zero when we're called, we can at most
+	// have one block we need to flush out - which will always be the padding block. It may
+	// also already be written.
 	Xform();							// Flush (possibly full) outbuffer block.
 	if (m_utBlkBuf.iOut) return TRUE;	// Need more outbuffer before proceeding
 
-    // Ensure that we've actually written all to the file
-    FlushOutStream(utOutFile);
+	// Ensure that we've actually written all to the file
+	FlushOutStream(utOutFile);
 
-    // At this point we know that we've written one block with padding - but we don't really
-    // know what it is...
-    utOutFile.SetFilePointer(utOutFile.GetFilePointer() - m_utBlkBuf.dwBlkSiz);
-    size_t cb = m_utBlkBuf.dwBlkSiz;
-    utOutFile.ReadData(m_utBlkBuf.poOut, &cb);
-    CAssert(cb == m_utBlkBuf.dwBlkSiz).App(MSG_PAD_ERROR).Throw();
+	// At this point we know that we've written one block with padding - but we don't really
+	// know what it is...
+	utOutFile.SetFilePointer(utOutFile.GetFilePointer() - m_utBlkBuf.dwBlkSiz);
+	size_t cb = m_utBlkBuf.dwBlkSiz;
+	utOutFile.ReadData(m_utBlkBuf.poOut, &cb);
+	CAssert(cb == m_utBlkBuf.dwBlkSiz).App(MSG_PAD_ERROR).Throw();
 
-    // At this point, we should only have padding left as output data, assuming
+	// At this point, we should only have padding left as output data, assuming
 	// there was enough space in the output buffer to contain it.
 	unsigned int iPad = m_utBlkBuf.poOut[m_utBlkBuf.dwBlkSiz - 1];
 
-    // Before finally ending - check that the padding is correct.
+	// Before finally ending - check that the padding is correct.
 	for (unsigned int i = m_utBlkBuf.dwBlkSiz - iPad; i < m_utBlkBuf.dwBlkSiz; i++) {
 		CAssert(m_utBlkBuf.poOut[i] == iPad).App(MSG_PAD_ERROR).Throw();
 	}
 
-    // Rewind to not persist the padding
-    utOutFile.SetFilePointer(utOutFile.GetFilePointer() - iPad);
+	// Rewind to not persist the padding
+	utOutFile.SetFilePointer(utOutFile.GetFilePointer() - iPad);
 	return FALSE;
 }
 //
@@ -658,21 +664,21 @@ CDecrypt::Finish(CFileIO& utOutFile) {
 //
 /*virtual*/ void
 CDecrypt::StartProgress() {
-    CXform::StartProgress();
-    if (ProgressWnd() != NULL) {
-        // Need to use SendMessage to cross process boundary
-        SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_DECRYPT).GetMsg());
-    }
+	CXform::StartProgress();
+	if (ProgressWnd() != NULL) {
+		// Need to use SendMessage to cross process boundary
+		SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_DECRYPT).GetMsg());
+	}
 }
 //
 //	Calculate the RFC2104 HMAC
 //
-CHmac::CHmac(TKey *pDataEncKey, HWND hProgressWnd) : CXform(hProgressWnd) {
+CHmac::CHmac(TKey* pDataEncKey, HWND hProgressWnd) : CXform(hProgressWnd) {
 	m_putContext = new SHA1_CTX;
-    ASSPTR(m_putContext);
+	ASSPTR(m_putContext);
 
 	m_putHMAC = new THash;
-    ASSPTR(m_putHMAC);
+	ASSPTR(m_putHMAC);
 
 	// Generate the sub key
 	m_utHMACKey.Set(pDataEncKey, CSubKey::eHMAC);
@@ -693,8 +699,8 @@ CHmac::Init(CFileIO& utInFile) {
 
 	// K xor ipad
 	XorPad(0x36);
-	SHA1Update(m_putContext, (BYTE *)m_putHMAC, sizeof *m_putHMAC);
-    return utInFile.m_qwFileSize - utInFile.GetFilePointer();
+	SHA1Update(m_putContext, (BYTE*)m_putHMAC, sizeof * m_putHMAC);
+	return utInFile.m_qwFileSize - utInFile.GetFilePointer();
 }
 //
 //	Hash all data in the inner 'loop'.
@@ -711,25 +717,25 @@ CHmac::Xform() {
 //
 /*virtual*/ int
 CHmac::Finish(CFileIO& utOutFile) {
-	THash *putHash = new THash;
-    ASSPTR(putHash);
+	THash* putHash = new THash;
+	ASSPTR(putHash);
 
-	SHA1Final((BYTE *)putHash, m_putContext);
+	SHA1Final((BYTE*)putHash, m_putContext);
 
 	// K xor opad
 	XorPad(0x5c);
 	// Now do the outer hash.
 	SHA1Init(m_putContext);
-	SHA1Update(m_putContext, (BYTE *)m_putHMAC, sizeof *m_putHMAC);
-	SHA1Update(m_putContext, (BYTE *)putHash, sizeof *putHash);
-	SHA1Final((BYTE *)m_putHMAC, m_putContext);
+	SHA1Update(m_putContext, (BYTE*)m_putHMAC, sizeof * m_putHMAC);
+	SHA1Update(m_putContext, (BYTE*)putHash, sizeof * putHash);
+	SHA1Final((BYTE*)m_putHMAC, m_putContext);
 	delete putHash;
 	return FALSE;
 }
 //
 //	Return the result. The Hmac() call may truncate.
 //
-THmac *
+THmac*
 CHmac::GetHMAC() {
 	return m_putHMAC->Hmac();
 }
@@ -737,10 +743,10 @@ CHmac::GetHMAC() {
 //	Helper for the inner and outer padding and Xor
 //
 void CHmac::XorPad(BYTE oPad) {
-	for  (int i=0; i < sizeof *m_putHMAC; i++) {
-		((BYTE *)m_putHMAC)[i] = oPad;
-		if (i < sizeof *m_utHMACKey.Get()) {
-			((BYTE *)m_putHMAC)[i] ^= ((BYTE *)m_utHMACKey.Get())[i];
+	for (int i = 0; i < sizeof * m_putHMAC; i++) {
+		((BYTE*)m_putHMAC)[i] = oPad;
+		if (i < sizeof * m_utHMACKey.Get()) {
+			((BYTE*)m_putHMAC)[i] ^= ((BYTE*)m_utHMACKey.Get())[i];
 		}
 	}
 }
@@ -749,9 +755,9 @@ void CHmac::XorPad(BYTE oPad) {
 //
 /*virtual*/ void
 CHmac::StartProgress() {
-    CXform::StartProgress();
-    if (ProgressWnd() != NULL) {
-        // Need to use SendMessage to cross process boundary
-        SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_HMAC).GetMsg());
-    }
+	CXform::StartProgress();
+	if (ProgressWnd() != NULL) {
+		// Need to use SendMessage to cross process boundary
+		SendMessage(GetDlgItem(GetParent(ProgressWnd()), IDS_OPERATION), WM_SETTEXT, 0, (LPARAM)(LPTSTR)CMessage().AppMsg(INF_OPNAME_HMAC).GetMsg());
+	}
 }

@@ -1,7 +1,7 @@
 How to build Xecrets File Encryption
 
 This is the file encryption software previously known as AxCrypt 1.x.
-["AxCrypt" is now a trademark of AxCrypt AB. Xecrets File Encryption is in no way endorsed by, or connected except by history to, AxCrypt AB.]
+["AxCrypt" is now a trademark of AxCrypt AB. Xecrets File Encryption is in no way endorsed by, or connected except by history to, AxCrypt AB or their products.]
 
 Introduction
 ============

@@ -27,7 +27,7 @@
 */
 #include	"StdAfx.h"
 #include	"CEntropy.h"
-#include    "../AxCryptCommon/CRegistry.h"
+#include    "../XecretsFileCommon/CRegistry.h"
 #include	<mmsystem.h>
 
 #include    "../AxWinLib/AxAssert.h"
@@ -256,11 +256,11 @@ CEntropy::Save() {
 //  There is no checking or handling of the case where more entropy
 //  is requested than actually exist. We have no clue, actually... ;-)
 //
-BYTE *
-CEntropy::Read(BYTE *aoDst, size_t stLen) {
+BYTE*
+CEntropy::Read(BYTE* aoDst, size_t stLen) {
 	// New behavior is to use the Windows API
 	if (!m_bUseEntropyPool) {
-		ASSAPI(CryptGenRandom(m_hCryptProv, (DWORD)stLen, (BYTE *)aoDst));
+		ASSAPI(CryptGenRandom(m_hCryptProv, (DWORD)stLen, (BYTE*)aoDst));
 		return aoDst;
 	}
 
@@ -278,7 +278,7 @@ CEntropy::Read(BYTE *aoDst, size_t stLen) {
 //	Add entropy if we happen to get it externally...
 //
 void
-CEntropy::Add(BYTE *aoSrc, size_t stLen) {
+CEntropy::Add(BYTE* aoSrc, size_t stLen) {
 	while (stLen--) {
 		m_pEntropyPool[IncPoolIndex(&m_iWriteIndex)] ^= *aoSrc++;
 	}
@@ -315,7 +315,7 @@ CEntropy::GatherBits(long lBits) {
 DWORD WINAPI
 CEntropy::StaticFlipperThread(LPVOID lpParameter) {
 	CAssert(lpParameter != NULL).App(ERR_ARGUMENT, _T("CEntropy::StaticFlipperThread")).Throw();
-	((CEntropy *)lpParameter)->FlipperThread();
+	((CEntropy*)lpParameter)->FlipperThread();
 	return 0;
 }
 //
@@ -351,7 +351,7 @@ DWORD WINAPI
 CEntropy::StaticGatherThread(LPVOID lpParameter) {
 	CAssert(lpParameter != NULL).App(ERR_ARGUMENT, _T("CEntropy::StaticCounterThread")).Throw();
 
-	((CEntropy *)lpParameter)->GatherThread();
+	((CEntropy*)lpParameter)->GatherThread();
 	return 0;
 }
 //
@@ -499,7 +499,7 @@ DWORD WINAPI
 CEntropy::StaticUserEntropyThread(LPVOID lpParameter) {
 	CAssert(lpParameter != NULL).App(ERR_ARGUMENT, _T("CEntropy::StaticUserEntropyThread")).Throw();
 
-	((CEntropy *)lpParameter)->UserEntropyThread();
+	((CEntropy*)lpParameter)->UserEntropyThread();
 	return 0;
 }
 //
@@ -565,7 +565,7 @@ BOOL CALLBACK
 CEntropy::WindowsStateHashEnumProc(HWND hwnd, LPARAM lParam) {
 	RECT stRect;
 	GetWindowRect(hwnd, &stRect);
-	*(BYTE *)lParam += ByteSumHash(&stRect, sizeof stRect);
+	*(BYTE*)lParam += ByteSumHash(&stRect, sizeof stRect);
 	return TRUE;
 }
 //
@@ -580,10 +580,10 @@ CEntropy::WindowsStateHash() {
 }
 //
 BYTE
-CEntropy::ByteSumHash(void *pvBuf, int iSiz) {
+CEntropy::ByteSumHash(void* pvBuf, int iSiz) {
 	register int iHash = 0;
 	for (register int i = 0; i < iSiz; i++) {
-		iHash += ((BYTE *)pvBuf)[i];
+		iHash += ((BYTE*)pvBuf)[i];
 	}
 	return (BYTE)iHash;
 }
@@ -598,7 +598,7 @@ CEntropy::ByteSumHash(void *pvBuf, int iSiz) {
 //	No check if the read index runs 'ahead'.
 //
 int
-CEntropy::IncPoolIndex(int *pIndex) {
+CEntropy::IncPoolIndex(int* pIndex) {
 	//	We are multithreaded, and no critical section here, so
 	//	guard with an extra modulo...
 	int iOldIndex = (*pIndex)++ % ENTROPY_POOL_SIZE;

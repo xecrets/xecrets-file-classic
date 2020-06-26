@@ -151,14 +151,6 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\AxCryptCommon\AxCryptCommon.vcxproj">
-      <Project>{b022a61b-b8dd-4200-9cd4-93bdb48137ea}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
     <ProjectReference Include="..\AxPipe\AxPipe.vcxproj">
       <Project>{08c6fb2d-dc3c-49b9-bda8-a9e521ac09bf}</Project>
       <Private>false</Private>
@@ -182,6 +174,9 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\XecretsFileCommon\AxCryptCommon.vcxproj">
+      <Project>{b022a61b-b8dd-4200-9cd4-93bdb48137ea}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

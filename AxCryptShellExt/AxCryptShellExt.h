@@ -60,11 +60,11 @@ software@axantum.com	    		2001					Initial
 //
 #include "resource.h"
 
-#include "../AxCryptCommon/Oem.h"
-#include "../AxCryptCommon/Types.h"
-#include "../AxCryptCommon/Utility.h"
-#include "../AxCryptCommon/AxCommon.h"
-#include "../AxCryptCommon/CAssert.h"
+#include "../XecretsFileCommon/Oem.h"
+#include "../XecretsFileCommon/Types.h"
+#include "../XecretsFileCommon/Utility.h"
+#include "../XecretsFileCommon/AxCommon.h"
+#include "../XecretsFileCommon/CAssert.h"
 #include "AxCryptTexts.h"
 
 #include "../AxPipe/AxPipe.h"
@@ -78,7 +78,7 @@ software@axantum.com	    		2001					Initial
 extern long glRefThisDLL;					// Reference count of this DLL.
 extern HINSTANCE ghInstance;				// Handle to this DLL itself.
 extern HBITMAP ghBitmap;					// Handle to the menu bit-map
-extern IMalloc *gpMalloc;
+extern IMalloc* gpMalloc;
 //
 //  Helpers
 //
@@ -95,15 +95,15 @@ public:
 	virtual ~CShellExtClassFactory();
 
 	// IUnknown
-	STDMETHODIMP QueryInterface(REFIID iid, void **ppvObject);
+	STDMETHODIMP QueryInterface(REFIID iid, void** ppvObject);
 	STDMETHODIMP_(ULONG) AddRef();
 	STDMETHODIMP_(ULONG) Release();
 
 	// IClassFactory
-	STDMETHODIMP CreateInstance(IUnknown * pUnkOuter, REFIID riid, void ** ppvObject);
+	STDMETHODIMP CreateInstance(IUnknown* pUnkOuter, REFIID riid, void** ppvObject);
 	STDMETHODIMP LockServer(BOOL fLock);
 };
-typedef CShellExtClassFactory *LPCSHELLEXTCLASSFACTORY;
+typedef CShellExtClassFactory* LPCSHELLEXTCLASSFACTORY;
 //
 //  Parameter class for verbs. Needs a class with a virtual destructor
 //  to handle deletion properly by caller.
@@ -127,7 +127,7 @@ typedef enum {
 //	Forward declaration: Cmd Handler function type
 //
 class CShellExt;
-typedef DWORD (CShellExt::*pfCmdHandlerT)(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
+typedef DWORD(CShellExt::* pfCmdHandlerT)(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
 
 //
 //  Support class to handle all interaction with the list of files
@@ -138,7 +138,7 @@ public:
 	CFileObjectList();
 	~CFileObjectList();
 
-	void SetObject(IDataObject *pdobj);
+	void SetObject(IDataObject* pdobj);
 	// void SetActiveShellView(HWND hWnd);
 
 	int ItemsSelected();
@@ -153,30 +153,30 @@ public:
 	BOOL ShowRenameMenu();
 	BOOL ShowBruteForceMenu();
 	BOOL ShowHexCopyMenu();
-	BOOL ShowReEncryptMenu() { return FALSE;}
+	BOOL ShowReEncryptMenu() { return FALSE; }
 	BOOL ShowNotifyMeMenu();
 	BOOL ShowDocsMenu();
 	BOOL ShowBugReportMenu();
 	BOOL ShowActivationMenu();
 	LPTSTR GetTitle();                      ///< Get the name of one selected item, or NULL;
 
-	void IterateAll(CShellExt *pShellExt, pfCmdHandlerT pfCmdHandler);
+	void IterateAll(CShellExt* pShellExt, pfCmdHandlerT pfCmdHandler);
 
 private:
 	void InitIteration();
 	LPCITEMIDLIST Iterate();
-	DWORD IteratePidl(IShellFolder *pShellFolder, LPCITEMIDLIST pidl, CShellExt *pShellExt, pfCmdHandlerT pfCmdHandler, CParam **ppParam);
+	DWORD IteratePidl(IShellFolder* pShellFolder, LPCITEMIDLIST pidl, CShellExt* pShellExt, pfCmdHandlerT pfCmdHandler, CParam** ppParam);
 	void EndIteration();
-	void ShellNotify(IShellFolder *pShellFolder, LPCITEMIDLIST pidl, LONG lEvent);
+	void ShellNotify(IShellFolder* pShellFolder, LPCITEMIDLIST pidl, LONG lEvent);
 
-	IShellFolder *m_pDesktopFolder;
+	IShellFolder* m_pDesktopFolder;
 	//    IShellBrowser *m_pShellBrowser;
-	IDataObject *m_pDataObj;
-	IShellFolder *m_pShellFolder;
+	IDataObject* m_pDataObj;
+	IShellFolder* m_pShellFolder;
 	LPITEMIDLIST m_pidlShellFolder;
 	//    IShellView *m_pShellView;
 
-	CIDA *m_pCIDA;
+	CIDA* m_pCIDA;
 	STGMEDIUM m_StgMedium;
 
 public:
@@ -195,17 +195,17 @@ public:
 	virtual ~CShellExt();
 
 	// IUnknown
-	STDMETHODIMP QueryInterface(REFIID iid, void **ppvObject);
+	STDMETHODIMP QueryInterface(REFIID iid, void** ppvObject);
 	STDMETHODIMP_(ULONG) AddRef();
 	STDMETHODIMP_(ULONG) Release();
 
 	// IShellExtInit
-	STDMETHODIMP Initialize(LPCITEMIDLIST pidlFolder, IDataObject *pdobj, HKEY hkeyProgID);
+	STDMETHODIMP Initialize(LPCITEMIDLIST pidlFolder, IDataObject* pdobj, HKEY hkeyProgID);
 
 	// IContextMenu
 	STDMETHODIMP QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags);
 	STDMETHODIMP InvokeCommand(LPCMINVOKECOMMANDINFO lpici);
-	STDMETHODIMP GetCommandString(UINT_PTR idCmd, UINT uFlags, UINT *pwReserved, LPSTR pszName, UINT cchMax);
+	STDMETHODIMP GetCommandString(UINT_PTR idCmd, UINT uFlags, UINT* pwReserved, LPSTR pszName, UINT cchMax);
 
 	// IShellPropSheetExt
 	STDMETHODIMP AddPages(LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam);
@@ -217,7 +217,7 @@ private:
 	ULONG m_cRef;               // The object reference counter
 	HMENU m_hMenu;              // Handle to the context menu, when relevant.
 public:
-	CFileObjectList *m_pSelection;// The list of selected object,and iteration context etc
+	CFileObjectList* m_pSelection;// The list of selected object,and iteration context etc
 	pfCmdHandlerT m_pfCmdHandler;
 private:
 	//
@@ -225,69 +225,69 @@ private:
 	//	convert to Unicode when necessary.
 	//
 	static struct SVerbs {
-		char *szVerb;
+		char* szVerb;
 		DWORD dwCmd;
 		DWORD dwHlp;
 		int iCmd;
 		pfCmdHandlerT pfCmdHandler;
 	} m_Verbs[];
 
-	void InitVerbs(SVerbs *pVerbs);
-	void SetVerb(SVerbs *pVerbs, char *szVerb, int iCmd);
-	BOOL IsValidCmd(SVerbs *pVerbs, UINT_PTR iCmd);
-	DWORD GetMenuMsgId(SVerbs *pVerbs, int iCmd);
-	SVerbs *GetVerbByCmd(SVerbs *pVerbs, UINT_PTR iCmd);
-	pfCmdHandlerT DoVerbByCmd(SVerbs *pVerbs, int iCmd);
-	pfCmdHandlerT DoVerbByVerb(SVerbs *pVerbs, const char *szVerb);
+	void InitVerbs(SVerbs* pVerbs);
+	void SetVerb(SVerbs* pVerbs, char* szVerb, int iCmd);
+	BOOL IsValidCmd(SVerbs* pVerbs, UINT_PTR iCmd);
+	DWORD GetMenuMsgId(SVerbs* pVerbs, int iCmd);
+	SVerbs* GetVerbByCmd(SVerbs* pVerbs, UINT_PTR iCmd);
+	pfCmdHandlerT DoVerbByCmd(SVerbs* pVerbs, int iCmd);
+	pfCmdHandlerT DoVerbByVerb(SVerbs* pVerbs, const char* szVerb);
 
 	static DWORD WINAPI CommandThread(LPVOID lParam);
 	void IterateSelection();
 
-	DWORD DoEncryptCompress(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoEncryptCompressCopy(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoSfxEncDef(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoSfxEncName(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoDecrypt(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoWipe(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoOpen(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoDebug(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoClearKeys(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoRename(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoNothing(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoEncryptOnly(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoBruteForce(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoHexCopy(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoKeyFile(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoNotifyMe(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoDocs(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoAbout(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoBugReport(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoLicenseMgr(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoEnglish(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoDanish(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoGerman(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoDutch(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoHungarian(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoSpanish(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoFrench(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoItalian(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoNorwegian(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoSwedish(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoBrazilPortuguese(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoPolish(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoRussian(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoCzech(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
-	DWORD DoFinnish(itEventT eventId, HWND hProgressWnd, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile, CParam **ppParam);
+	DWORD DoEncryptCompress(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoEncryptCompressCopy(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoSfxEncDef(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoSfxEncName(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoDecrypt(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoWipe(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoOpen(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoDebug(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoClearKeys(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoRename(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoNothing(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoEncryptOnly(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoBruteForce(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoHexCopy(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoKeyFile(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoNotifyMe(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoDocs(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoAbout(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoBugReport(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoLicenseMgr(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoEnglish(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoDanish(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoGerman(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoDutch(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoHungarian(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoSpanish(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoFrench(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoItalian(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoNorwegian(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoSwedish(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoBrazilPortuguese(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoPolish(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoRussian(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoCzech(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
+	DWORD DoFinnish(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam);
 
-	DWORD DoKeyFileHelper(HWND hProgressWnd, const TCHAR *szFolder);
+	DWORD DoKeyFileHelper(HWND hProgressWnd, const TCHAR* szFolder);
 public:
 	DWORD CallAxCrypt(HWND hProgressWnd, LPTSTR szParams);
 private:
-	DWORD DoAxCrypt(HWND hProgressWnd, LPTSTR szOption, IShellFolder *pShellFolder, LPCITEMIDLIST pidlFile);
+	DWORD DoAxCrypt(HWND hProgressWnd, LPTSTR szOption, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile);
 public:
 	void SetBatch(int iBatch = -1);
 private:
 	LPTSTR GetBatchStr();
 };
 
-typedef CShellExt *LPCSHELLEXT;
+typedef CShellExt* LPCSHELLEXT;

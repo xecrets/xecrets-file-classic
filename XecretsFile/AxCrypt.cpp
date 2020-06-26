@@ -137,22 +137,22 @@
 //
 #include    "stdlib.h"
 #include    "shlobj.h"
-#include    "../AxCryptCommon/CRegistry.h"
+#include    "../XecretsFileCommon/CRegistry.h"
 //
 // This is to actually define the GUID in AxCryptGUID.h.
 //
 #define     INITGUID
 #include    <initguid.h>
-#include    "../AxCryptCommon/AxCryptGUID.h"
+#include    "../XecretsFileCommon/AxCryptGUID.h"
 //
 #include    "CActiveThreads.h"
 #include    "../AxWinLib/mygetopt.h"
 #include    "CCryptoKey.h"
-#include    "../AxCryptCommon/CFileName.h"
+#include    "../XecretsFileCommon/CFileName.h"
 #include    "FileCmd.h"
 #include    "CChildProc.h"
 #include    "CCryptoHeap.h"
-#include    "../AxCryptCommon/CVersion.h"
+#include    "../XecretsFileCommon/CVersion.h"
 #include    "Dialog.h"
 #include    "CEntropy.h"
 #include    "CFileTemp.h"
@@ -190,10 +190,10 @@
 //
 // Command Line Parameters
 //
-LPTSTR *tArgv;
+LPTSTR* tArgv;
 int tArgc;
 
-extern char **__argv;
+extern char** __argv;
 extern int __argc;
 //
 // Type/Struct/Class declarations
@@ -218,7 +218,7 @@ struct SRequest {
 	// Out from primary to secondary
 	DWORD dwWorkerThreadId;
 	DWORD dwWorkerUniqueInternalId;
-	CProgressDialog *pDlgProgress;
+	CProgressDialog* pDlgProgress;
 	DWORD dwPrimaryProcessId;       // Primary process Id
 	DWORD dwExitCode;
 };
@@ -232,7 +232,7 @@ static HANDLE ghMutex = NULL, ghSendEvent = NULL, ghReceiveEvent = NULL;
 // Here we store a set of null security attributes to apply to the interprocess objects
 // since the case may be that they are created impersonating an administrator during installation
 // and then need to be used by an instance running as the original user.
-static SECURITY_ATTRIBUTES *gpNullSecurityAttributes = NULL;
+static SECURITY_ATTRIBUTES* gpNullSecurityAttributes = NULL;
 
 //static CProgressDialog dlgProgress;
 //
@@ -284,16 +284,16 @@ CPtrTo<CCryptoRand> pgPRNG;
 // the others, or std::auto_ptr.
 
 // The global configuration tracker, loaded at run-time startup - ready to use!
-CConfigVerify *gpConfig(NULL);
+CConfigVerify* gpConfig(NULL);
 
 // The global trial counter tracker
-CTrialMgr *gpTrialMgr(NULL);
+CTrialMgr* gpTrialMgr(NULL);
 
 // The global license manager
-CLicMgr *gpLicMgr(NULL);
+CLicMgr* gpLicMgr(NULL);
 
 // The global restriction manager
-CRestrictMgr *gpRestrictMgr(NULL);
+CRestrictMgr* gpRestrictMgr(NULL);
 
 //
 #ifndef _DEBUGHEAP
@@ -310,7 +310,7 @@ __declspec(thread) size_t tguiAlloc = 0;
 static size_t cbDbgAllocs = 0;
 #endif
 
-void *
+void*
 basenew(size_t stOctets) {
 	if (gfHeapValid && pgHeap->heap != NULL) {
 #ifdef  _DEBUG
@@ -347,12 +347,12 @@ void operator delete(void* vpMem) {
 	if (!gfHeapValid ||
 		pgHeap->heap == NULL ||
 		vpMem < pgHeap->heap ||
-		vpMem >= (void *)((char *)pgHeap->heap + pgHeap->m_stHeapLen)) {
+		vpMem >= (void*)((char*)pgHeap->heap + pgHeap->m_stHeapLen)) {
 		free(vpMem);
 	}
 	else {
 #ifdef  _DEBUG
-		UNIT *p = (UNIT *)((size_t)vpMem - sizeof UNIT);
+		UNIT* p = (UNIT*)((size_t)vpMem - sizeof UNIT);
 		if ((p->size & ~USED) == 24) {
 			cbDbgAllocs--;
 		}
@@ -368,7 +368,7 @@ void operator delete(void* vpMem) {
 ///
 /// new/new[]/delete/delete[] are all compatible in this mini-implementation
 /// \param p Pointer to a memory block, or NULL (ignored)
-void operator delete[](void *p) {
+void operator delete[](void* p) {
 	delete p;
 }
 
@@ -393,7 +393,7 @@ PurgeThreadList(DWORD dwTimeOut) {
 	CCriticalSection utThreadListCritical(&gThreadListCritical);
 
 	utThreadListCritical.Enter();       // Destructor will ensure we leave the critical section
-	CActiveThreads *pActiveThread = gpCActiveThreadsRoot;
+	CActiveThreads* pActiveThread = gpCActiveThreadsRoot;
 	while (pActiveThread != NULL) {
 		HANDLE hThread = pActiveThread->Thread();
 		utThreadListCritical.Leave();
@@ -618,7 +618,7 @@ PrimaryInitApplication(HINSTANCE hInstance) {
 // "Primary Window Proc Main Thread"
 //
 static BOOL
-PrimaryInitInstance(HINSTANCE hInstance, int nCmdShow, HWND *phWnd) {
+PrimaryInitInstance(HINSTANCE hInstance, int nCmdShow, HWND* phWnd) {
 	CVersion utVersion;
 	*phWnd = CreateWindow(
 		gszAxCryptInternalName,// name of window class
@@ -656,7 +656,7 @@ struct FindProgressWndS {
 
 static BOOL CALLBACK
 EnumProgressProc(HWND hWnd, LPARAM lParam) {
-	struct FindProgressWndS *pFindProgressWnd = (struct FindProgressWndS *)lParam;
+	struct FindProgressWndS* pFindProgressWnd = (struct FindProgressWndS*)lParam;
 	if (GetClassLongPtr(hWnd, GCW_ATOM) == (ULONG_PTR)WC_DIALOG) {
 		// We used to specify a window name here to further narrow it down, but in Vista you can't set a window name
 		// on a progress window it appears. Since we anyway ascertain that it's the right progress window by checking
@@ -684,7 +684,7 @@ FindProgressWnd(DWORD dwProcID) {
 	return sFindProgressWnd.hProgressWnd;
 }
 DWORD
-DoCmdFileExpand(pfCmdT pfCmd, CCmdParam *pCmdParam) {
+DoCmdFileExpand(pfCmdT pfCmd, CCmdParam* pCmdParam) {
 	CFileName fn;
 	if (PathIsRelative(pCmdParam->szParam1.c_str())) {
 		TCHAR path[MAX_PATH];
@@ -749,7 +749,7 @@ static DWORD CmdExit(DWORD dwPrimaryThreadId) {
 static DWORD WINAPI
 PrimaryCommandThreadInternal(LPVOID lpParam) {
 	CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
-	struct SRequest *lpSRequest = (SRequest *)lpParam;
+	struct SRequest* lpSRequest = (SRequest*)lpParam;
 	DWORD dwReturn = 0;
 
 	// We used to need this, just keeping it as a neat trick
@@ -928,7 +928,7 @@ PrimaryCommandThreadInternal(LPVOID lpParam) {
 				0,
 				(LPTSTR)&szCmd,
 				0,
-				(va_list *)&utCmdParam.szParam1)).Sys(MSG_SYSTEM_CALL, _T("PrimaryCommandThread() [FormatMessage()]")).Throw();
+				(va_list*)&utCmdParam.szParam1)).Sys(MSG_SYSTEM_CALL, _T("PrimaryCommandThread() [FormatMessage()]")).Throw();
 
 			STARTUPINFO StartupInfo;
 			ZeroMemory(&StartupInfo, sizeof StartupInfo);
@@ -983,7 +983,7 @@ PrimaryCommandThread(LPVOID lpParam) {
 }
 
 void
-ApplyTerm(const XNode *pTerms) {
+ApplyTerm(const XNode* pTerms) {
 	for (XAttrs::const_iterator it = pTerms->attrs.begin(); it != pTerms->attrs.end(); it++) {
 		// If the license is valid, apply these restrictions - possibly clearing them.
 		if (gpLicMgr->ChkType(pTerms->value)) {
@@ -997,7 +997,7 @@ ApplyTerm(const XNode *pTerms) {
 	}
 }
 void
-ApplyTerms(const XNode *pRestrictXML) {
+ApplyTerms(const XNode* pRestrictXML) {
 	// Now iterate through the terms, and see if we should modify the initial restrictions
 	for (XNodes::const_iterator it = pRestrictXML->childs.begin(); it != pRestrictXML->childs.end(); it++) {
 		// If these are terms, to apply if the license is valid...
@@ -1016,7 +1016,7 @@ ValidateSigsEtc() {
 	// Find the path to the exectuable folder.
 	auto_ptr<_TCHAR> szModulePath(MyGetModuleFileName(NULL));
 	ASSPTR(szModulePath.get());
-	_TCHAR *szModuleName = PathFindFileName(szModulePath.get());
+	_TCHAR* szModuleName = PathFindFileName(szModulePath.get());
 	ASSAPI(PathRemoveFileSpec(szModulePath.get()));
 
 	gpConfig = new CConfigVerify(szSigsXML, szModulePath.get());
@@ -1062,7 +1062,7 @@ ValidateSigsEtc() {
 	}
 
 	// Find the name of the restrictions as we want to refer to them
-	const XNode *pRestrictXML = gpConfig->GetElementXML(gpConfig->GetConfigXML(), _TT("restrictions"));
+	const XNode* pRestrictXML = gpConfig->GetElementXML(gpConfig->GetConfigXML(), _TT("restrictions"));
 	if (pRestrictXML) {
 		const axpl::ttstring sRestrictName = pRestrictXML->value;
 		// If we have an appropriate restritions section, we make a trial manager - otherwise not, it doesn't
@@ -1095,7 +1095,7 @@ ValidateSigsEtc() {
 					}
 					else {
 						// If no Local machine "Full" license found, check the Sigs XML
-						const XNode *pLicensesXML = gpConfig->GetElementXML(gpConfig->GetSigsXML(), _TT("licenses"));
+						const XNode* pLicensesXML = gpConfig->GetElementXML(gpConfig->GetSigsXML(), _TT("licenses"));
 						if (pLicensesXML) {
 							for (XNodes::const_iterator it = pLicensesXML->childs.begin(); it != pLicensesXML->childs.end(); it++) {
 								axpl::ttstring sType, sLicensee, sLicense;
@@ -1254,7 +1254,7 @@ PrimaryEvent() {
 		CCriticalSection utThreadListCritical(&gThreadListCritical);
 		utThreadListCritical.Enter();
 
-		CActiveThreads *pActiveThread = gpCActiveThreadsRoot;
+		CActiveThreads* pActiveThread = gpCActiveThreadsRoot;
 		glpSRequest->dwExitCode = MSG_INTERNAL_ERROR;
 		while (pActiveThread != NULL) {
 			if (pActiveThread->UniqueInternalId() == glpSRequest->dwWorkerUniqueInternalId) {
@@ -1296,7 +1296,7 @@ PrimaryEvent() {
 	// Copy the command structure, start a new thread for the real action
 	// and abandon it to it's own devices. Unless it's an exit event we
 	// don't wait for it to finish.
-	SRequest *lpSRequestCopy = new SRequest;
+	SRequest* lpSRequestCopy = new SRequest;
 	ASSPTR(lpSRequestCopy);
 
 	DWORD dwThreadID;
@@ -1335,16 +1335,16 @@ PrimaryEvent() {
 	// Start the worker thread suspended so we can add it to the active
 	// list first. It cannot be done in that thread, as the process may
 	// terminate before it actually starts execution. Tried that ;-(.
-	typedef unsigned(__stdcall *PTHREAD_START)(void *);
+	typedef unsigned(__stdcall* PTHREAD_START)(void*);
 	HANDLE hWorkerThread;
-	hWorkerThread = (HANDLE)_beginthreadex(NULL, 0, (PTHREAD_START)PrimaryCommandThread, lpSRequestCopy, CREATE_SUSPENDED, (unsigned *)&dwThreadID);
+	hWorkerThread = (HANDLE)_beginthreadex(NULL, 0, (PTHREAD_START)PrimaryCommandThread, lpSRequestCopy, CREATE_SUSPENDED, (unsigned*)&dwThreadID);
 	CAssert(hWorkerThread != NULL).Sys(MSG_SYSTEM_CALL, _T("CreateThread()")).Throw();
 
 	// Add the new thread to the active list.
 	if (eRequest != EN_EXIT) {
 		CCriticalSection utThreadListCritical(&gThreadListCritical);
 		utThreadListCritical.Enter();
-		CActiveThreads *pactiveThread = new CActiveThreads(gpCActiveThreadsRoot, hWorkerThread, dwThreadID);
+		CActiveThreads* pactiveThread = new CActiveThreads(gpCActiveThreadsRoot, hWorkerThread, dwThreadID);
 		ASSPTR(pactiveThread);
 		glpSRequest->dwWorkerUniqueInternalId = pactiveThread->UniqueInternalId();
 		utThreadListCritical.Leave();
@@ -1538,8 +1538,8 @@ PrimaryProcess(int nCmdShow) {
 					TCHAR szAlloc[100];
 					sprintf(szAlloc, "New max alloc=%d", stMaxAlloc);
 					MessageBox(NULL, szAlloc, CVersion().String(), MB_OK);
-	}
-}
+				}
+			}
 #endif  _DEBUGPLUS
 		}
 	}
@@ -1564,7 +1564,7 @@ static void ReleaseMutex() {
 //  Secondary Main Thread
 //
 static BOOL
-SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
+SecondaryExecuteRequest(SRequest* pRequest, DWORD* pdwExitCode) {
 	*pdwExitCode = 0;
 	try {
 		// Get exclusive access to the request buffer. We actually do not assert here, since this is the secondary instance
@@ -1580,7 +1580,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
 		}
 
 		// Now get the primary process id.
-		ZeroMemory(glpSRequest, sizeof *glpSRequest);
+		ZeroMemory(glpSRequest, sizeof * glpSRequest);
 		glpSRequest->eRequest = EN_GETPROCID;
 		CAssert(SetEvent(ghSendEvent)).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [SetEvent(ghSendEvent)]")).Throw();
 		CAssert(MessageWaitForSingleObject(ghReceiveEvent, MAX_WAIT_EVENT) == WAIT_OBJECT_0).Sys(MSG_SYSTEM_CALL, _T("SecondaryExecuteRequest [EN_GETPROCID]")).Throw();
@@ -1735,7 +1735,7 @@ SecondaryExecuteRequest(SRequest *pRequest, DWORD *pdwExitCode) {
 /// The immediate commands are 'PSP test', 'Install' and 'Uninstall'.
 /// \param dwExitCode The exit code to return is returned here.
 static bool
-ParseImmediateCommand(int nCmdShow, DWORD *pdwExitCode) {
+ParseImmediateCommand(int nCmdShow, DWORD* pdwExitCode) {
 	TCHAR chOpt;
 	optind = 0;
 	optarg = NULL;
@@ -2253,7 +2253,7 @@ WinMainInternal(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, i
 	CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
 
 	// Set up for messages and logging
-	const _TCHAR *szMsg = InitGlobalStrings(ghInstance = hInstance);
+	const _TCHAR* szMsg = InitGlobalStrings(ghInstance = hInstance);
 	if (szMsg != NULL) {
 		ASSCHK(FALSE, szMsg);
 	}
@@ -2280,7 +2280,7 @@ WinMainInternal(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, i
 			0,
 			sizeof SRequest,
 			gszAxCryptFileMap)) != NULL).App(MSG_CREATE_REQUEST_MAP, gszAxCryptFileMap).Throw();
-		CAssert((glpSRequest = (SRequest *)MapViewOfFile(hRequestFileMap,
+		CAssert((glpSRequest = (SRequest*)MapViewOfFile(hRequestFileMap,
 			FILE_MAP_WRITE,
 			0, 0,
 			sizeof SRequest)) != NULL).App(MSG_CREATE_REQUEST_MAP, gszAxCryptFileMap).Throw();

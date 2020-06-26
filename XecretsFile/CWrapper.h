@@ -1,7 +1,7 @@
 #ifndef	_CWRAPPER
 #define	_CWRAPPER
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -26,26 +26,26 @@
 
 	E-mail							YYYY-MM-DD				Reason
 	software@axantum.com 			2001					Initial
-                                    2002-08-02              Ver 1.2
+									2002-08-02              Ver 1.2
 
 */
 #include	"CCryptoKey.h"
 #include	"CFile.h"
-#include	"../AxCryptCommon/CFileName.h"
+#include	"../XecretsFileCommon/CFileName.h"
 
 //
 //	Utility base class with various useful routines for
 //	wrapping, unwrapping, and unwrap-launch-wrap etc.
 //
 class CWrapper {
-    HWND m_hProgressWnd;
-    bool m_fEnableProgress;
+	HWND m_hProgressWnd;
+	bool m_fEnableProgress;
 
 protected:
-	CHeaders *m_pHeaders;
+	CHeaders* m_pHeaders;
 
 public:
-	CWrapper(CHeaders *pHeaders, HWND hProgressWnd);
+	CWrapper(CHeaders* pHeaders, HWND hProgressWnd);
 	void Wrap(CFileIO& rFilePlain, CFileIO& rFileCipher, DWORD nWipePasses, BOOL fSlowSafe = TRUE, BOOL fEnableProgress = TRUE);
 	void Unwrap(CFileIO& rFileCipher, CFileIO& rFilePlain, DWORD nWipePasses, BOOL fSlowSafe = TRUE, BOOL fEnableProgress = TRUE);
 
