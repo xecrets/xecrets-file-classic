@@ -34,7 +34,6 @@
     <None Include="Sigs.template.xml">
       <Filter>AxCryptConfig</Filter>
     </None>
-    <None Include="..\HowToBuildAxCrypt.txt" />
     <None Include="README.txt" />
     <None Include="..\Build.cmd" />
   </ItemGroup>
@@ -60,5 +59,8 @@
     <ClInclude Include="..\Version.txt">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\HowToBuildXecretsFile.txt" />
   </ItemGroup>
 </Project>
