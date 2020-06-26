@@ -60,7 +60,7 @@ or folder window will re-create the terminated process.
 #include	"Shellapi.h"
 #include	"../XecretsFileCommon/CFileName.h"
 #include	"process.h"
-#include	"AxCryptTexts.h"
+#include	"XecretsFileTexts.h"
 #include	"../XecretsFileCommon/CVersion.h"
 #include	"../XecretsFileCommon/Utility.h"
 #include	"stdio.h"

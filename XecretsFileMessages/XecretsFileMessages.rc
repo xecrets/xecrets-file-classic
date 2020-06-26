@@ -1,0 +1,69 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "Windows.h"
+
+#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE "Xecrets File Encryption Messages"
+#define VERSION_PROJECT_INTERNAL_NAME_VALUE "Messages"
+#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE "Messages.dll"
+#define VERSION_PROJECT_FILETYPE VFT_DLL
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE
+BEGIN
+"resource.h\0"
+END
+
+2 TEXTINCLUDE
+BEGIN
+"#include ""Windows.h""\r\r\n"
+"#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""Xecrets File Encryption Messages""\r\n"
+"#define VERSION_PROJECT_INTERNAL_NAME_VALUE ""Messages""\r\n"
+"#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE ""Messages.dll""\r\n"
+"#define VERSION_PROJECT_FILETYPE VFT_DLL\r\n"
+"\0"
+END
+
+3 TEXTINCLUDE
+BEGIN
+"#include ""Version.h""\r\n"
+"#include ""Version.rc""\r\n"
+"#include ""XecretsFileTexts.rc""\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "Version.h"
+#include "Version.rc"
+#include "XecretsFileTexts.rc"
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

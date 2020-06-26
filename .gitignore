@@ -9,3 +9,4 @@ bin
 /Build/Version.txt
 /AxCrypt2Go/AxCrypt2Go.vcxproj.user
 *.user
+*.aps

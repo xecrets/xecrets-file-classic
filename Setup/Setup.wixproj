@@ -66,8 +66,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AxCryptMessages\AxCryptMessages.vcxproj">
-      <Name>AxCryptMessages</Name>
+    <ProjectReference Include="..\XecretsFileMessages\XecretsFileMessages.vcxproj">
+      <Name>XecretsFileMessages</Name>
       <Project>{19193893-878c-4cb1-9400-de8fcef7ca45}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>

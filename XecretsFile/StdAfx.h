@@ -71,7 +71,7 @@
 //
 #include "../XecretsFileCommon/Oem.h"
 #include "../XecretsFileCommon/Types.h"
-#include "AxCryptTexts.h"
+#include "XecretsFileTexts.h"
 #include "../XecretsFileCommon/AxCommon.h"
 #include "AxCrypt.h"
 #include "AxConfig.h"

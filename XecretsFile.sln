@@ -15,7 +15,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AES", "AES\AES.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Build", "Build\Build.vcxproj", "{932C95CC-A3E3-43E7-9DCD-9A02F537CF88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AxCryptMessages", "AxCryptMessages\AxCryptMessages.vcxproj", "{19193893-878C-4CB1-9400-DE8FCEF7CA45}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XecretsFileMessages", "XecretsFileMessages\XecretsFileMessages.vcxproj", "{19193893-878C-4CB1-9400-DE8FCEF7CA45}"
 	ProjectSection(ProjectDependencies) = postProject
 		{932C95CC-A3E3-43E7-9DCD-9A02F537CF88} = {932C95CC-A3E3-43E7-9DCD-9A02F537CF88}
 	EndProjectSection

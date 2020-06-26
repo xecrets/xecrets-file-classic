@@ -359,7 +359,7 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\AxCryptMessages\AxCryptMessages.vcxproj">
+    <ProjectReference Include="..\XecretsFileMessages\XecretsFileMessages.vcxproj">
       <Project>{19193893-878c-4cb1-9400-de8fcef7ca45}</Project>
       <Private>false</Private>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

@@ -65,7 +65,7 @@ software@axantum.com	    		2001					Initial
 #include "../XecretsFileCommon/Utility.h"
 #include "../XecretsFileCommon/AxCommon.h"
 #include "../XecretsFileCommon/CAssert.h"
-#include "AxCryptTexts.h"
+#include "XecretsFileTexts.h"
 
 #include "../AxPipe/AxPipe.h"
 
