@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{00A16519-8201-41CF-B8AF-7AA5A5A8F153}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>AxCryptLib</RootNamespace>
+    <RootNamespace>XecretsFileLib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

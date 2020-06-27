@@ -75,15 +75,15 @@ namespace axcl {
 	/// the underlying XecretsFileLib-functionality. These in turn, will at the appropriate
 	/// times call these callbacks.
 	///
-	class CAxCryptLibWin : public CAxCryptLib {
-		typedef CAxCryptLib base;
+	class CXecretsFileLibWin : public CXecretsFileLib {
+		typedef CXecretsFileLib base;
 
 	protected:
 		HWND m_hWnd;
 		CDlgProgress* m_pDlgProgress;
 
 	public:
-		CAxCryptLibWin(HWND hWnd, CDlgProgress* pDlgProgress = NULL) : base() {
+		CXecretsFileLibWin(HWND hWnd, CDlgProgress* pDlgProgress = NULL) : base() {
 			m_hWnd = hWnd;
 			m_pDlgProgress = pDlgProgress;
 		}

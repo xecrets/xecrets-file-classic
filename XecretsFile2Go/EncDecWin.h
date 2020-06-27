@@ -40,8 +40,8 @@
 
 extern axcl::tstring g_sAxCryptExtension;   ///< The extension, if any, to use for encrypted files
 
-class CAxCryptDecryptWin2Go : public axcl::CAxCryptLibWin {
-	typedef CAxCryptLibWin base;
+class CAxCryptDecryptWin2Go : public axcl::CXecretsFileLibWin {
+	typedef CXecretsFileLibWin base;
 
 public:
 	CAxCryptDecryptWin2Go(HWND hWnd, CDlgProgress* pDlgProgress = NULL) : base(hWnd, pDlgProgress) {
@@ -115,8 +115,8 @@ public:
 	}
 };
 
-class CAxCryptEncryptWin2Go : public axcl::CAxCryptLibWin {
-	typedef CAxCryptLibWin base;
+class CAxCryptEncryptWin2Go : public axcl::CXecretsFileLibWin {
+	typedef CXecretsFileLibWin base;
 
 public:
 	CAxCryptEncryptWin2Go(HWND hWnd, CDlgProgress* pDlgProgress = NULL) : base(hWnd, pDlgProgress) {

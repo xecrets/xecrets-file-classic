@@ -117,7 +117,7 @@ namespace axcl {
 		/// The Worker/GUI interface is referenced via it's base-class, so
 		/// as to virtualize the references, making this code also independent
 		/// of details in the GUI.
-		/// \param pCAxCryptLib The library class connecting it all
+		/// \param pCXecretsFileLib The library class connecting it all
 		/// \return A pointer to this.
 		CPipeAxCryptDecryptMeta* Init(CDecryptMeta* pDecryptMeta) {
 			m_pDecryptMeta = pDecryptMeta;

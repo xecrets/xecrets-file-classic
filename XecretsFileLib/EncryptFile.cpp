@@ -472,7 +472,7 @@ namespace axcl {
 	/// the blocks will tend to arrive in nice chunks anyway.
 	/// This is the actual encryptor, it expects to only see
 	/// a stream of plain-text blocks to encrypt.
-	/// The key comes from m_pCAxCryptLib->m_pCAxCryptMeta which must be prepared for encryption
+	/// The key comes from m_pCXecretsFileLib->m_pCAxCryptMeta which must be prepared for encryption
 	class CPipeEncrypt : public AxPipe::CPipeBlock {
 		typedef AxPipe::CPipeBlock base;
 

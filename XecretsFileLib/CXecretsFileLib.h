@@ -46,7 +46,7 @@ namespace axcl {
 	///     virtual const std::string Tchar2Ansi(axcl::tstring sTchar)  = 0;
 	///     virtual const axcl::tstring Ansi2Tchar(std::string sAnsi) = 0;
 	///
-	class CAxCryptLib {
+	class CXecretsFileLib {
 	protected:
 		AXCL_PARAM* m_pParam;
 		axcl::tstring m_sOutputFolder;          ///< The default output folder
@@ -57,13 +57,13 @@ namespace axcl {
 		std::wstring m_sUnicodeBuf;             ///< A specifically Unicode-buffer for conversion to-from
 
 	public:
-		CAxCryptLib() {
+		CXecretsFileLib() {
 			m_pParam = Open(StaticCallback, this);
 			ASSPTR(m_pParam);
 		}
 
 	public:
-		~CAxCryptLib() {
+		~CXecretsFileLib() {
 			if (m_pParam != NULL) {
 				Close();
 			}
@@ -71,7 +71,7 @@ namespace axcl {
 
 	public:
 		static const void* StaticCallback(const AXCL_PARAM* pParam, int iCallbackAction, const void* p, size_t cb, int* piResult) {
-			return static_cast<CAxCryptLib*>(pParam->pCallbackContext)->InstanceCallback(pParam, iCallbackAction, p, cb, piResult);
+			return static_cast<CXecretsFileLib*>(pParam->pCallbackContext)->InstanceCallback(pParam, iCallbackAction, p, cb, piResult);
 		}
 
 	public:

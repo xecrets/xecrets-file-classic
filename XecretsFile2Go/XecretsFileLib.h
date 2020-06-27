@@ -22,7 +22,7 @@
 
 	The library is OS and environment independent, and uses callbacks as it's mechanism to implement
 	specifics and dependencies of such nature. The user of the library must specify the address of
-	a callback function, with the signature typedef void *AxCryptLibCallbackT(AXCL_PARAM *, int iCallbackAction) .
+	a callback function, with the signature typedef void *XecretsFileLibCallbackT(AXCL_PARAM *, int iCallbackAction) .
 
 	Typical actions are AXCL_A_PROGRESS to report progress and check for cancel, AXCL_A_GET_CIPHER_PATH to get
 	the full path to encipher to, possibly via a user dialog, AXCL_A_GET_PLAIN_PATH to get the full path

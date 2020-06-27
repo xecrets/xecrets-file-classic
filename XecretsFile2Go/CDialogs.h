@@ -32,19 +32,19 @@
 
 class CPassphraseChars {
 protected:
-    axcl::CAxCryptLib *m_pAxCryptLib;
+    axcl::CXecretsFileLib *m_pXecretsFileLib;
 
 protected:
     static const char m_szPassphraseChars[];
 
 public:
-    CPassphraseChars(axcl::CAxCryptLib *pAxCryptLib) {
-        m_pAxCryptLib = pAxCryptLib;
+    CPassphraseChars(axcl::CXecretsFileLib *pXecretsFileLib) {
+        m_pXecretsFileLib = pXecretsFileLib;
     }
 
 public:
     CPassphraseChars() {
-        m_pAxCryptLib = NULL;
+        m_pXecretsFileLib = NULL;
     }
 };
 
