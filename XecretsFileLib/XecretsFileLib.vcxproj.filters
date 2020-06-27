@@ -18,13 +18,13 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AxCryptLibPP.cpp">
+    <ClCompile Include="XecretsFileLibPP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CAxCryptAES.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CAxCryptLib.cpp">
+    <ClCompile Include="CXecretsFileLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DecryptFile.cpp">
@@ -47,10 +47,10 @@
     <ClInclude Include="Assert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AxCryptLib.h">
+    <ClInclude Include="XecretsFileLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AxCryptLibPP.h">
+    <ClInclude Include="XecretsFileLibPP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BlockTypes.h">
@@ -59,10 +59,10 @@
     <ClInclude Include="CAxCryptAES.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAxCryptLib.h">
+    <ClInclude Include="CXecretsFileLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAxCryptLibMisc.h">
+    <ClInclude Include="CXecretsFileLibMisc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CAxCryptMeta.h">

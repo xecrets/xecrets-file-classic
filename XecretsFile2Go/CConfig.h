@@ -48,7 +48,7 @@
 #include <locale>
 #include <cctype>
 
-#include "../XecretsFileLib/AxCryptLibPP.h"
+#include "../XecretsFileLib/XecretsFileLibPP.h"
 
 #include "../AxWinLib/AxAssert.h"
 #define AXLIB_ASSERT_FILE "CConfig.h"

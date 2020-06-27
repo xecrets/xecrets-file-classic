@@ -1,9 +1,9 @@
 /*! \file
-    \brief CAxCryptLib.cpp - The private implementation class of the non-GUI Ax Crypt library
+    \brief CXecretsFileLib.cpp - The private implementation class of the non-GUI Ax Crypt library
 
     @(#) $Id$
 
-    CAxCryptLib - Common non-GUI implementation class of the AxCryptLib library for Ax Crypt.
+    CXecretsFileLib - Common non-GUI implementation class of the XecretsFileLib library for Ax Crypt.
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -31,10 +31,10 @@
 */
 #include "stdafx.h"
 
-#include "CAxCryptLibMisc.h"
+#include "CXecretsFileLibMisc.h"
 
 #include "Assert.h"
-#define ASSERT_FILE "CAxCryptLib.cpp"
+#define ASSERT_FILE "CXecretsFileLib.cpp"
 
 /// \brief The Ax Crypt GUID
 /// Define the guid here xor 0xff, i.e. inverted, so we won't trig on it

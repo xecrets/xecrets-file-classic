@@ -1,5 +1,5 @@
 /*! \file
-    \brief AxCryptLibPP.cpp - C++ useage of AxCryptLib, common declarations namespace axcl
+    \brief XecretsFileLibPP.cpp - C++ useage of XecretsFileLib, common declarations namespace axcl
 
     @(#) $Id$
 
@@ -31,7 +31,7 @@
 */
 #include "stdafx.h"
 
-#include "AxCryptLibPP.h"
+#include "XecretsFileLibPP.h"
 
 namespace axcl {
     char *strdup(const char *s) { return strcpy(new char[strlen(s) + 1], s); }

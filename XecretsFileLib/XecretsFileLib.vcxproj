@@ -79,7 +79,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AxCryptLibPP.cpp">
+    <ClCompile Include="XecretsFileLibPP.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
@@ -87,7 +87,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="CAxCryptLib.cpp">
+    <ClCompile Include="CXecretsFileLib.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
@@ -114,12 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assert.h" />
-    <ClInclude Include="AxCryptLib.h" />
-    <ClInclude Include="AxCryptLibPP.h" />
+    <ClInclude Include="XecretsFileLib.h" />
+    <ClInclude Include="XecretsFileLibPP.h" />
     <ClInclude Include="BlockTypes.h" />
     <ClInclude Include="CAxCryptAES.h" />
-    <ClInclude Include="CAxCryptLib.h" />
-    <ClInclude Include="CAxCryptLibMisc.h" />
+    <ClInclude Include="CXecretsFileLib.h" />
+    <ClInclude Include="CXecretsFileLibMisc.h" />
     <ClInclude Include="CAxCryptMeta.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

@@ -44,7 +44,7 @@
     <ClInclude Include="XecretsFile2GoWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AxCryptLib.h">
+    <ClInclude Include="XecretsFileLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Axgettext.h">

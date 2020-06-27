@@ -47,11 +47,11 @@
 
 #include <strsafe.h>
 
-#include "../XecretsFileLib/CAxCryptLib.h"
+#include "../XecretsFileLib/CXecretsFileLib.h"
 //#include "DynLoadString.h"
 
 #include "../AxWinLib/AxAssert.h"
-#define AXLIB_ASSERT_FILE "CAxCryptLibWin.h"
+#define AXLIB_ASSERT_FILE "CXecretsFileLibWin.h"
 
 extern axcl::tstring g_sAxCryptExtension;
 
