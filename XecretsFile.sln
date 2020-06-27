@@ -20,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XecretsFileMessages", "Xecr
 		{932C95CC-A3E3-43E7-9DCD-9A02F537CF88} = {932C95CC-A3E3-43E7-9DCD-9A02F537CF88}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AxCryptShellExt", "AxCryptShellExt\AxCryptShellExt.vcxproj", "{C0E98467-99CD-49E0-A1A7-E3BF95DFF5AD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XecretsFileShellExt", "XecretsFileShellExt\XecretsFileShellExt.vcxproj", "{C0E98467-99CD-49E0-A1A7-E3BF95DFF5AD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AxDecrypt", "AxDecrypt\AxDecrypt.vcxproj", "{76D7E7D3-464B-490A-B3A6-B2F8637700FD}"
 EndProject

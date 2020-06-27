@@ -74,8 +74,8 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLLOCATION</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\AxCryptShellExt\AxCryptShellExt.vcxproj">
-      <Name>AxCryptShellExt</Name>
+    <ProjectReference Include="..\XecretsFileShellExt\XecretsFileShellExt.vcxproj">
+      <Name>XecretsFileShellExt</Name>
       <Project>{c0e98467-99cd-49e0-a1a7-e3bf95dff5ad}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
