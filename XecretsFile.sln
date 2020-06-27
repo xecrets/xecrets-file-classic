@@ -24,7 +24,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XecretsFileShellExt", "Xecr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AxDecrypt", "AxDecrypt\AxDecrypt.vcxproj", "{76D7E7D3-464B-490A-B3A6-B2F8637700FD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AxCrypt2Go", "AxCrypt2Go\AxCrypt2Go.vcxproj", "{275454C5-0907-41EF-A6A1-3E75DD231C03}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XecretsFile2Go", "XecretsFile2Go\XecretsFile2Go.vcxproj", "{275454C5-0907-41EF-A6A1-3E75DD231C03}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XecretsFileLib", "XecretsFileLib\XecretsFileLib.vcxproj", "{00A16519-8201-41CF-B8AF-7AA5A5A8F153}"
 EndProject

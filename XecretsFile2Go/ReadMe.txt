@@ -1,25 +1,25 @@
 ========================================================================
-    WIN32 APPLICATION : AxCrypt2Go Project Overview
+    WIN32 APPLICATION : XecretsFile2Go Project Overview
 ========================================================================
 
-AppWizard has created this AxCrypt2Go application for you.  
+AppWizard has created this XecretsFile2Go application for you.  
 This file contains a summary of what you will find in each of the files that
-make up your AxCrypt2Go application.
+make up your XecretsFile2Go application.
 
 
-AxCrypt2Go.vcproj
+XecretsFile2Go.vcproj
     This is the main project file for VC++ projects generated using an Application Wizard. 
     It contains information about the version of Visual C++ that generated the file, and 
     information about the platforms, configurations, and project features selected with the
     Application Wizard.
 
-AxCrypt2Go.cpp
+XecretsFile2Go.cpp
     This is the main application source file.
 
 /////////////////////////////////////////////////////////////////////////////
 AppWizard has created the following resources:
 
-AxCrypt2Go.rc
+XecretsFile2Go.rc
     This is a listing of all of the Microsoft Windows resources that the
     program uses.  It includes the icons, bitmaps, and cursors that are stored
     in the RES subdirectory.  This file can be directly edited in Microsoft

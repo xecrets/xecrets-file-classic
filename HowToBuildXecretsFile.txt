@@ -173,7 +173,7 @@ Mount the ISO and install the 'Full Development Environment | Build Environments
 If you need software in order to mount the ISO as a DVD, try SlySoft Virtual CloneDrive at http://www.slysoft.com/en/virtual-clonedrive.html .
 If you have disabled Autoplay, it's the 'KitSetup.exe' that you should run.
 
-You'll also have to add the libraries to AxCrypt2Go linker properties, and then include directory to the properties so it can build.
+You'll also have to add the libraries to XecretsFile2Go linker properties, and then include directory to the properties so it can build.
 
 If you have Visual Studio 2015 Professional or better, you can build it all from inside Visual Studio.
 
