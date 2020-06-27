@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AxCryptMessages.rc">
+    <ResourceCompile Include="XecretsFileMessages.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
