@@ -28,21 +28,21 @@ XecretsFile2Go.rc
 Resource.h
     This is the standard header file, which defines new resource IDs.
     Microsoft Visual C++ reads and updates this file.
-AxCrypt2Go.ico
+XecretsFile2Go.ico
     This is an icon file, which is used as the application's icon (32x32).
-    This icon is included by the main resource file AxCrypt2Go.rc.
+    This icon is included by the main resource file XecretsFile2Go.rc.
 
 small.ico
     This is an icon file, which contains a smaller version (16x16)
     of the application's icon. This icon is included by the main resource
-    file AxCrypt2Go.rc.
+    file XecretsFile2Go.rc.
 
 /////////////////////////////////////////////////////////////////////////////
 Other standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
-    named AxCrypt2Go.pch and a precompiled types file named StdAfx.obj.
+    named XecretsFile2Go.pch and a precompiled types file named StdAfx.obj.
 
 /////////////////////////////////////////////////////////////////////////////
 Other notes:

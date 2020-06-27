@@ -1,11 +1,11 @@
 #ifndef CCONFIGWIN_H
 #define CCONFIGWIN_H
 /*! \file
-    \brief CConfigWin.h - Configuration information for AxCrypt2Go, Windows-specific
+    \brief CConfigWin.h - Configuration information for XecretsFile2Go, Windows-specific
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
+    XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     Windows specific additions to configuration data that may not have an exact equivalent in another
     environment, such as the concept of file extensions and version resource information.

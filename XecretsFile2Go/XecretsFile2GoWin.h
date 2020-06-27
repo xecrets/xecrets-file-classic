@@ -1,13 +1,13 @@
 #ifndef AXCRYPT2GOWIN_H
 #define AXCRYPT2GOWIN_H
 /*! \file
-    \brief AxCrypt2GoWin.h - The Windows implementation of AxCrypt2Go
+    \brief XecretsFile2GoWin.h - The Windows implementation of XecretsFile2Go
 
     Windows-specific global stuff, there should be no internal other include-dependencies for this data
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
+    XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -35,7 +35,7 @@
 */
 
 #include "../AxWinLib/AxAssert.h"
-#define AXLIB_ASSERT_FILE "AxCrypt2GoWin.h"
+#define AXLIB_ASSERT_FILE "XecretsFile2GoWin.h"
 
 /// \brief Windows messages used by the application. WM_USER is reserved.
 enum {

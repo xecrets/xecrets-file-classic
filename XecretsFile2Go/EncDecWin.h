@@ -1,11 +1,11 @@
 #ifndef ENCDECWIN_H
 #define ENCDECWIN_H
 /*! \file
-	\brief EncDecWin.h - The Windows implementation of Encryption/Decryption for AxCrypt2Go
+	\brief EncDecWin.h - The Windows implementation of Encryption/Decryption for XecretsFile2Go
 
 	@(#) $Id$
 
-	AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
+	XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
 
 	Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 

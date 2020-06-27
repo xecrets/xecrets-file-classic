@@ -72,7 +72,7 @@
       <AdditionalIncludeDirectories>$(TargetDir);$(AX_WTL)\Include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Manifest>
-      <AdditionalManifestFiles>AxCrypt2Go.manifest.Win32 %(AdditionalManifestFiles)</AdditionalManifestFiles>
+      <AdditionalManifestFiles>XecretsFile2Go.manifest.Win32 %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -104,15 +104,15 @@
       <AdditionalIncludeDirectories>$(TargetDir);$(AX_WTL)\Include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Manifest>
-      <AdditionalManifestFiles>AxCrypt2Go.manifest.Win32 %(AdditionalManifestFiles)</AdditionalManifestFiles>
+      <AdditionalManifestFiles>XecretsFile2Go.manifest.Win32 %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AxCrypt2Go.cpp">
+    <ClCompile Include="XecretsFile2Go.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="AxCrypt2GoWin.cpp">
+    <ClCompile Include="XecretsFile2GoWin.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
@@ -142,7 +142,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AxCrypt2GoWin.h" />
+    <ClInclude Include="XecretsFile2GoWin.h" />
     <ClInclude Include="AxCryptLib.h" />
     <ClInclude Include="Axgettext.h" />
     <ClInclude Include="CConfig.h" />
@@ -157,11 +157,11 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AxCrypt2GoWin.rc" />
+    <ResourceCompile Include="XecretsFile2GoWin.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AxCrypt2Go.ico" />
-    <None Include="AxCrypt2Go.manifest.Win32" />
+    <None Include="XecretsFile2Go.ico" />
+    <None Include="XecretsFile2Go.manifest.Win32" />
     <None Include="GoGreen.bmp" />
     <None Include="GoGrey.bmp" />
     <None Include="Toolbar.bmp" />

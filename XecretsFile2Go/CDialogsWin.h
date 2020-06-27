@@ -1,12 +1,12 @@
 #ifndef CDIALOGSWIN_H
 #define CDIALOGSWIN_H
 /*! \file
-    \brief CDialogsWin.h - Various dialogs for AxCrypt2Go
+    \brief CDialogsWin.h - Various dialogs for XecretsFile2Go
 
     @(#) $Id$
 
 */
-/*! \page License CDialogsWin.h - Various dialogs for AxCrypt2Go
+/*! \page License CDialogsWin.h - Various dialogs for XecretsFile2Go
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -25,7 +25,7 @@
     The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
-/*! \mainpage CDialogsWin.h - Various dialogs for AxCrypt2Go
+/*! \mainpage CDialogsWin.h - Various dialogs for XecretsFile2Go
 
     \author
     Svante Seleborg/Axantum Software AB
@@ -33,7 +33,7 @@
     \par License:
     \ref License "GNU General Public License"
 
-    This is an implementation of various dialogs for AxCrypt2Go, with the following design goals
+    This is an implementation of various dialogs for XecretsFile2Go, with the following design goals
 
     - Use WTL/ATL for the basic implementation
 

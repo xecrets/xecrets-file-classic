@@ -1,7 +1,7 @@
 #ifndef CSHELLMGRWIN_H
 #define CSHELLMGRWIN_H
 /*! \file
-    \brief ShellMgr.h - The Windows implementation of AxCrypt2Go
+    \brief ShellMgr.h - The Windows implementation of XecretsFile2Go
 
     This code builds heavily on the sample code distributed with Windows Template Library,
     which does not name any contributor or author, nor specify any kind of restrictions of
@@ -11,7 +11,7 @@
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
+    XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 

@@ -6,7 +6,7 @@
                       processorArchitecture="x86"
                       name="Axantum.AxCrypt.AxCrypt2Go"
                       type="win32" />
-    <description>AxCrypt2Go - Portable AxCrypt File Encryption</description>
+    <description>XecretsFile2Go - Portable Xecrets File Encryption</description>
 
     <comv1:compatibility xmlns:comv1="urn:schemas-microsoft-com:compatibility.v1">
         <comv1:application>

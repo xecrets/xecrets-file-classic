@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AxCrypt2Go.cpp">
+    <ClCompile Include="XecretsFile2Go.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AxCrypt2GoWin.cpp">
+    <ClCompile Include="XecretsFile2GoWin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Axgettext.cpp">
@@ -41,7 +41,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AxCrypt2GoWin.h">
+    <ClInclude Include="XecretsFile2GoWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AxCryptLib.h">
@@ -82,12 +82,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AxCrypt2GoWin.rc">
+    <ResourceCompile Include="XecretsFile2GoWin.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AxCrypt2Go.ico">
+    <None Include="XecretsFile2Go.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Toolbar.bmp">
@@ -99,7 +99,7 @@
     <None Include="GoGreen.bmp">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="AxCrypt2Go.manifest.Win32">
+    <None Include="XecretsFile2Go.manifest.Win32">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

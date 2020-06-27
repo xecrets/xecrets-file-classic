@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by AxCrypt2GoWin.rc
+// Used by XecretsFile2GoWin.rc
 //
 #define IDD_ABOUTBOX                    100
 #define IDD_DECRYPT_PASSPHRASE          101
@@ -45,7 +45,7 @@
 #define ID_BUTTON32770                  32770
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        203

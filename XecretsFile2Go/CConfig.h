@@ -1,11 +1,11 @@
 #ifndef CCONFIG_H
 #define CCONFIG_H
 /*! \file
-    \brief CConfig.h - Configuration information for AxCrypt2Go
+    \brief CConfig.h - Configuration information for XecretsFile2Go
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
+    XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     This file defines configuration data that might differ for different builds, and provides an
     interface for the rest of the code to fetch strings and other values that might differ between
@@ -85,7 +85,7 @@ public:
     /// This short name will typically be identical to the base-name of the executable file, and will
     /// typically (but not necessarily) be a single word. It will be used to refer to the program itself
     /// in messages to the user. It should not be used for internal identification purposes.
-    /// Example: AxCrypt2Go
+    /// Example: XecretsFile2Go
     static const axcl::tstring& ShortProductName() {
         return m_sShortProductName;
     }

@@ -6,7 +6,7 @@
     @(#) $Id$
 
 */
-/*! \page License CDialogs.h - Various dialogs for AxCrypt2Go
+/*! \page License CDialogs.h - Various dialogs for XecretsFile2Go
 
     Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 

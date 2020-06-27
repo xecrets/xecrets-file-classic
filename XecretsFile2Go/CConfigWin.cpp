@@ -3,7 +3,7 @@
 
     @(#) $Id$
 
-    AxCrypt2Go - Stand-Alone Install-free Ax Crypt for the road.
+    XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
 
     This module initializes all the static members of the CConfig class. It relies heavily on the fact
     that static initializers in a module are executed in the order they appear in the file...
