@@ -122,12 +122,12 @@ public:
         HICON hAxCryptIcon = (HICON)::LoadImage(_Module.GetModuleInstance(), MAKEINTRESOURCE(IDR_MAINFRAME), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR);
         ASSAPI(hAxCryptIcon != NULL);
 
-        int nAxCrypt2GoIconIndex = ::ImageList_ReplaceIcon(m_hMyImageList, -1, hAxCryptIcon);
-        ASSCHK(nAxCrypt2GoIconIndex == n, _T("ImageList_ReplaceIcon() failed"));
+        int nXecretsFile2GoIconIndex = ::ImageList_ReplaceIcon(m_hMyImageList, -1, hAxCryptIcon);
+        ASSCHK(nXecretsFile2GoIconIndex == n, _T("ImageList_ReplaceIcon() failed"));
         ASSAPI(::DestroyIcon(hAxCryptIcon));
 
         // Finally, insert the dummy-mapping of -1 to our index for the Ax Crypt icon
-        mapSystemToMy[-1] = nAxCrypt2GoIconIndex;
+        mapSystemToMy[-1] = nXecretsFile2GoIconIndex;
     }
 
 public:

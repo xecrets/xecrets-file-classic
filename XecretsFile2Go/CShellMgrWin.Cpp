@@ -187,10 +187,10 @@ DWORD CShellMgr::WorkerEncrypt(WorkerThreadParam* pParam) {
 		ASSCHK(SUCCEEDED(StringCbCopy(szFolder, sizeof szFolder, szBuf)), _T("StringCbCopy() failed"));
 		ASSCHK(PathRemoveFileSpec(szFolder), _T("PathRemoveFileSpec() did not find a file name to remove"));
 
-		CAxCryptEncryptWin2Go AxCrypt2Go(hWnd, &pParam->m_DlgProgress);
-		if (!AxCrypt2Go.Encrypt(szBuf, szFolder)) {
-			if (AxCrypt2Go.GetErrorCode() != AXCL_E_CANCEL) {
-				::MessageBox(hWnd, AxCrypt2Go.GetError().c_str(), CConfig::ShortProductName().c_str(), MB_OK);
+		CAxCryptEncryptWin2Go XecretsFile2Go(hWnd, &pParam->m_DlgProgress);
+		if (!XecretsFile2Go.Encrypt(szBuf, szFolder)) {
+			if (XecretsFile2Go.GetErrorCode() != AXCL_E_CANCEL) {
+				::MessageBox(hWnd, XecretsFile2Go.GetError().c_str(), CConfig::ShortProductName().c_str(), MB_OK);
 			}
 		}
 	}
@@ -209,10 +209,10 @@ DWORD CShellMgr::WorkerDecrypt(WorkerThreadParam* pParam) {
 		ASSCHK(SUCCEEDED(StringCbCopy(szFolder, sizeof szFolder, szBuf)), _T("StringCbCopy() failed"));
 		ASSCHK(PathRemoveFileSpec(szFolder), _T("PathRemoveFileSpec() did not find a file name to remove"));
 
-		CAxCryptDecryptWin2Go AxCrypt2Go(hWnd, &pParam->m_DlgProgress);
-		if (!AxCrypt2Go.Decrypt(szBuf, szFolder)) {
-			if (AxCrypt2Go.GetErrorCode() != AXCL_E_CANCEL) {
-				::MessageBox(hWnd, AxCrypt2Go.GetError().c_str(), CConfig::ShortProductName().c_str(), MB_OK);
+		CAxCryptDecryptWin2Go XecretsFile2Go(hWnd, &pParam->m_DlgProgress);
+		if (!XecretsFile2Go.Decrypt(szBuf, szFolder)) {
+			if (XecretsFile2Go.GetErrorCode() != AXCL_E_CANCEL) {
+				::MessageBox(hWnd, XecretsFile2Go.GetError().c_str(), CConfig::ShortProductName().c_str(), MB_OK);
 			}
 		}
 	}

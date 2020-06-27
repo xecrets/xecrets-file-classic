@@ -18,7 +18,7 @@
 #define IDR_MAINFRAME                   113
 #define IDR_MAINFRAME_X                 113
 #define IDS_AXX                         114
-#define IDS_ID_AXCRYPT2GO               115
+#define IDS_ID_XECRETSFILE2GO           115
 #define IDT_GOGREEN                     200
 #define IDT_GOGREY                      201
 #define IDD_PROGRESS                    202
