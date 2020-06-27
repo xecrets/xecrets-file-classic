@@ -415,7 +415,7 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\XecretsFileCommon\AxCryptCommon.vcxproj">
+    <ProjectReference Include="..\XecretsFileCommon\XecretsFileCommon.vcxproj">
       <Project>{b022a61b-b8dd-4200-9cd4-93bdb48137ea}</Project>
     </ProjectReference>
   </ItemGroup>
