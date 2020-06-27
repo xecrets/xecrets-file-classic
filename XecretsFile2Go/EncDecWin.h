@@ -32,7 +32,7 @@
 \endverbatim
 */
 
-#include "../XecretsFileWinLib/CAxCryptWinLib.h"
+#include "../XecretsFileWinLib/CXecretsFileWinLib.h"
 #include "CDialogsWin.h"
 
 #include "../AxWinLib/AxAssert.h"
