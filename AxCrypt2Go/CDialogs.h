@@ -25,7 +25,7 @@
     The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
 */
-#include "../AxCryptLib/CAxCryptLib.h"
+#include "../XecretsFileLib/CAxCryptLib.h"
 
 #include "../AxWinLib/AxAssert.h"
 #define AXLIB_ASSERT_FILE "CDialogs.h"

@@ -175,7 +175,7 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\AxCryptLib\AxCryptLib.vcxproj">
+    <ProjectReference Include="..\XecretsFileLib\XecretsFileLib.vcxproj">
       <Project>{00a16519-8201-41cf-b8af-7aa5a5a8f153}</Project>
       <Private>false</Private>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
