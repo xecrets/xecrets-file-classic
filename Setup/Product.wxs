@@ -9,437 +9,436 @@
 <?include $(var.Version.IncludeDir)\Version.wxi ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-    <!-- Change the UpgradeCode when the major version changes, i.e. it's essentially a new product. -->
-    <Product Id="*"
-             Name="AxCrypt $(var.Version)"
-             Language="1033"
-             Version="$(var.Version)"
-             Manufacturer="Axantum Software AB"
-             UpgradeCode="$(var.UpgradeCode)">
-        <?define AxCryptCLSID="{C3DFC144-30F8-4138-81F9-578DBEB9324A}" ?>
-        <?define AxCryptExtension=".axx" ?>
-        <?define AxCryptInternalName="axcrypt" ?>
-        <?define AxCryptExternalName="AxCrypt" ?>
-        <?define AxCryptProgID="axcrypt.File" ?>
-        <?define AxCryptRegKey="Software\Axantum\AxCrypt" ?>
+  <!-- Change the UpgradeCode when the major version changes, i.e. it's essentially a new product. -->
+  <Product Id="*"
+           Name="AxCrypt $(var.Version)"
+           Language="1033"
+           Version="$(var.Version)"
+           Manufacturer="Axantum Software AB"
+           UpgradeCode="$(var.UpgradeCode)">
+    <?define AxCryptCLSID="{C3DFC144-30F8-4138-81F9-578DBEB9324A}" ?>
+    <?define AxCryptExtension=".axx" ?>
+    <?define AxCryptInternalName="axcrypt" ?>
+    <?define AxCryptExternalName="AxCrypt" ?>
+    <?define AxCryptProgID="axcrypt.File" ?>
+    <?define AxCryptRegKey="Software\Axantum\AxCrypt" ?>
 
-        <Package InstallerVersion="200"
-                 Compressed="yes"
-                 Id="*" />
+    <Package InstallerVersion="200"
+             Compressed="yes"
+             Id="*" />
 
-        <Upgrade Id="$(var.UpgradeCode)">
-            <UpgradeVersion Minimum="$(var.Version)"
-                            IncludeMinimum="no"
-                            OnlyDetect="yes"
-                            Language="1033"
-                            Property="NEWPRODUCTFOUND" />
-            <UpgradeVersion Maximum="$(var.Version)"
-                            IncludeMaximum="no"
-                            OnlyDetect="no"
-                            Language="1033"
-                            Property="UPGRADEFOUND" />
-        </Upgrade>
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.Version)"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"
+                      Language="1033"
+                      Property="NEWPRODUCTFOUND" />
+      <UpgradeVersion Maximum="$(var.Version)"
+                      IncludeMaximum="no"
+                      OnlyDetect="no"
+                      Language="1033"
+                      Property="UPGRADEFOUND" />
+    </Upgrade>
 
-        <Condition Message="!(loc.Win95NotSupported)">
-            <![CDATA[NOT Version9X = 400]]>
-        </Condition>
-        <Condition Message="!(loc.Win98NotSupported)">
-            <![CDATA[NOT Version9X = 410]]>
-        </Condition>
-        <Condition Message="!(loc.WinMENotSupported)">
-            <![CDATA[NOT Version9X = 490]]>
-        </Condition>
-        <Condition Message="!(loc.Win2KNotSupported)">
-            <![CDATA[NOT VersionNT = 500]]>
-        </Condition>
-        <Condition Message="!(loc.WinXPNotSupported)">
-          <![CDATA[NOT VersionNT = 501]]>
-        </Condition>
-        <Condition Message="!(loc.Win2003NotSupported)">
-          <![CDATA[NOT VersionNT = 502]]>
-        </Condition>
-        <Condition Message="!(loc.WinNTNotSupported)">
-            <![CDATA[NOT VersionNT < 500]]>
-        </Condition>
+    <Condition Message="!(loc.Win95NotSupported)">
+      <![CDATA[NOT Version9X = 400]]>
+    </Condition>
+    <Condition Message="!(loc.Win98NotSupported)">
+      <![CDATA[NOT Version9X = 410]]>
+    </Condition>
+    <Condition Message="!(loc.WinMENotSupported)">
+      <![CDATA[NOT Version9X = 490]]>
+    </Condition>
+    <Condition Message="!(loc.Win2KNotSupported)">
+      <![CDATA[NOT VersionNT = 500]]>
+    </Condition>
+    <Condition Message="!(loc.WinXPNotSupported)">
+      <![CDATA[NOT VersionNT = 501]]>
+    </Condition>
+    <Condition Message="!(loc.Win2003NotSupported)">
+      <![CDATA[NOT VersionNT = 502]]>
+    </Condition>
+    <Condition Message="!(loc.WinNTNotSupported)">
+      <![CDATA[NOT VersionNT < 500]]>
+    </Condition>
 
-        <!-- If this installer is a 32-bit version, we require the OS to be not 64 bit. -->
-        <?if $(var.Platform) = "x86" ?>
-        <Condition Message="!(loc.DoNotInstall32BitOn64Bit)">
-            <![CDATA[VersionNT64 = ""]]>
-        </Condition>
-        <?endif?>
+    <!-- If this installer is a 32-bit version, we require the OS to be not 64 bit. -->
+    <?if $(var.Platform) = "x86" ?>
+    <Condition Message="!(loc.DoNotInstall32BitOn64Bit)">
+      <![CDATA[VersionNT64 = ""]]>
+    </Condition>
+    <?endif?>
 
-        <!-- This causes problems where it can't be installed even after several reboots. Unclear why.
+    <!-- This causes problems where it can't be installed even after several reboots. Unclear why.
              The intention was to avoid problems when upgrading from 1.6, which typically will require a reboot. -->
-        <!--<Condition Message="!(loc.RebootFirst)">
+    <!--<Condition Message="!(loc.RebootFirst)">
             <![CDATA[MsiSystemRebootPending <> 1]]>
         </Condition>-->
 
-        <Property Id="LEGACYAXCRYPTEXEPATH">
-            <RegistrySearch Id="LegacyAxCryptInstallDir"
-                            Key="SOFTWARE\Axon Data\AxCrypt"
-                            Name="Install_Dir"
-                            Root="HKLM"
-                            Type="directory"
-                            Win64="no">
-                <FileSearch Id="LegacyAxCryptExe"
-                            Name="AxCryptU.exe" />
-            </RegistrySearch>
-        </Property>
+    <Property Id="LEGACYAXCRYPTEXEPATH">
+      <RegistrySearch Id="LegacyAxCryptInstallDir"
+                      Key="SOFTWARE\Axon Data\AxCrypt"
+                      Name="Install_Dir"
+                      Root="HKLM"
+                      Type="directory"
+                      Win64="no">
+        <FileSearch Id="LegacyAxCryptExe"
+                    Name="AxCryptU.exe" />
+      </RegistrySearch>
+    </Property>
 
-        <Property Id="ALLUSERS"
-                  Value="1" />
-        <Property Id="HIDEEULA"
-                  Value="0"
-                  Secure="yes" />
+    <Property Id="ALLUSERS"
+              Value="1" />
+    <Property Id="HIDEEULA"
+              Value="0"
+              Secure="yes" />
 
-        <Condition Message="!(loc.LegacyAxCrypt)">
-            <![CDATA[LEGACYAXCRYPTEXEPATH = ""]]>
-        </Condition>
+    <Condition Message="!(loc.LegacyAxCrypt)">
+      <![CDATA[LEGACYAXCRYPTEXEPATH = ""]]>
+    </Condition>
 
-        <CustomAction Id="LaunchApplication"
-                      Return="asyncNoWait"
-                      FileKey="AxCrypt.exe"
-                      ExeCommand="-L $(var.Version)"
-                      Impersonate="yes" />
+    <CustomAction Id="LaunchApplication"
+                  Return="asyncNoWait"
+                  FileKey="AxCrypt.exe"
+                  ExeCommand="-L $(var.Version)"
+                  Impersonate="yes" />
 
-        <WixVariable Id="WixUILicenseRtf"
-                     Value="$(var.Package.TargetDir)\License.rtf" />
+    <WixVariable Id="WixUILicenseRtf"
+                 Value="$(var.Package.TargetDir)\License.rtf" />
 
-        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX"
-                  Value="1" />
-        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT"
-                  Value="!(loc.Register)" />
-        <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT"
-                  Value="!(loc.ExitDialogText)" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX"
+              Value="1" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT"
+              Value="!(loc.Register)" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT"
+              Value="!(loc.ExitDialogText)" />
 
-        <UI>
-            <Dialog Id="AxWelcomeDlg"
-                    Width="370"
-                    Height="270"
-                    Title="!(loc.WelcomeDlg_Title)">
-                <Control Id="Next"
-                         Type="PushButton"
-                         X="236"
-                         Y="243"
-                         Width="56"
-                         Height="17"
-                         Default="yes"
-                         Text="!(loc.WixUINext)" >
-                    <Publish Property="WixUI_InstallMode"
-                             Value="Update">Installed AND PATCH</Publish>
-                </Control>
-                <Control Id="Cancel"
-                         Type="PushButton"
-                         X="304"
-                         Y="243"
-                         Width="56"
-                         Height="17"
-                         Cancel="yes"
-                         Text="!(loc.WixUICancel)">
-                    <Publish Event="SpawnDialog"
-                             Value="CancelDlg">1</Publish>
-                </Control>
-                <Control Id="Bitmap"
-                         Type="Bitmap"
-                         X="0"
-                         Y="0"
-                         Width="370"
-                         Height="234"
-                         TabSkip="no"
-                         Text="!(loc.WelcomeDlgBitmap)" />
-                <Control Id="Back"
-                         Type="PushButton"
-                         X="180"
-                         Y="243"
-                         Width="56"
-                         Height="17"
-                         Disabled="yes"
-                         Text="!(loc.WixUIBack)" />
-                <Control Id="BottomLine"
-                         Type="Line"
-                         X="0"
-                         Y="234"
-                         Width="370"
-                         Height="0" />
-                <Control Id="Description"
-                         Type="Text"
-                         X="135"
-                         Y="80"
-                         Width="220"
-                         Height="60"
-                         Transparent="yes"
-                         NoPrefix="yes"
-                         Text="!(loc.WelcomeDlgDescription)" >
-                    <Condition Action="show">NOT Installed OR NOT PATCH</Condition>
-                    <Condition Action="hide">Installed AND PATCH</Condition>
-                </Control>
-                <Control Id="PatchDescription"
-                         Type="Text"
-                         X="135"
-                         Y="80"
-                         Width="220"
-                         Height="60"
-                         Transparent="yes"
-                         NoPrefix="yes"
-                         Text="!(loc.WelcomeUpdateDlgDescriptionUpdate)" >
-                    <Condition Action="show">Installed AND PATCH</Condition>
-                    <Condition Action="hide">NOT Installed OR NOT PATCH</Condition>
-                </Control>
-                <Control Id="Title"
-                         Type="Text"
-                         X="135"
-                         Y="20"
-                         Width="220"
-                         Height="60"
-                         Transparent="yes"
-                         NoPrefix="yes"
-                         Text="!(loc.WelcomeDlgTitle)" />
-            </Dialog>
+    <UI>
+      <Dialog Id="AxWelcomeDlg"
+              Width="370"
+              Height="270"
+              Title="!(loc.WelcomeDlg_Title)">
+        <Control Id="Next"
+                 Type="PushButton"
+                 X="236"
+                 Y="243"
+                 Width="56"
+                 Height="17"
+                 Default="yes"
+                 Text="!(loc.WixUINext)">
+          <Publish Property="WixUI_InstallMode"
+                   Value="Update">Installed AND PATCH</Publish>
+        </Control>
+        <Control Id="Cancel"
+                 Type="PushButton"
+                 X="304"
+                 Y="243"
+                 Width="56"
+                 Height="17"
+                 Cancel="yes"
+                 Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog"
+                   Value="CancelDlg">1</Publish>
+        </Control>
+        <Control Id="Bitmap"
+                 Type="Bitmap"
+                 X="0"
+                 Y="0"
+                 Width="370"
+                 Height="234"
+                 TabSkip="no"
+                 Text="!(loc.WelcomeDlgBitmap)" />
+        <Control Id="Back"
+                 Type="PushButton"
+                 X="180"
+                 Y="243"
+                 Width="56"
+                 Height="17"
+                 Disabled="yes"
+                 Text="!(loc.WixUIBack)" />
+        <Control Id="BottomLine"
+                 Type="Line"
+                 X="0"
+                 Y="234"
+                 Width="370"
+                 Height="0" />
+        <Control Id="Description"
+                 Type="Text"
+                 X="135"
+                 Y="80"
+                 Width="220"
+                 Height="60"
+                 Transparent="yes"
+                 NoPrefix="yes"
+                 Text="!(loc.WelcomeDlgDescription)">
+          <Condition Action="show">NOT Installed OR NOT PATCH</Condition>
+          <Condition Action="hide">Installed AND PATCH</Condition>
+        </Control>
+        <Control Id="PatchDescription"
+                 Type="Text"
+                 X="135"
+                 Y="80"
+                 Width="220"
+                 Height="60"
+                 Transparent="yes"
+                 NoPrefix="yes"
+                 Text="!(loc.WelcomeUpdateDlgDescriptionUpdate)">
+          <Condition Action="show">Installed AND PATCH</Condition>
+          <Condition Action="hide">NOT Installed OR NOT PATCH</Condition>
+        </Control>
+        <Control Id="Title"
+                 Type="Text"
+                 X="135"
+                 Y="20"
+                 Width="220"
+                 Height="60"
+                 Transparent="yes"
+                 NoPrefix="yes"
+                 Text="!(loc.WelcomeDlgTitle)" />
+      </Dialog>
 
-            <Dialog Id="AxWelcomeEulaDlg"
-                    Width="370"
-                    Height="270"
-                    Title="!(loc.WelcomeEulaDlg_Title)">
-                <Control Id="Bitmap"
-                         Type="Bitmap"
-                         X="0"
-                         Y="0"
-                         Width="370"
-                         Height="234"
-                         TabSkip="no"
-                         Text="!(loc.WelcomeEulaDlgBitmap)" />
-                <Control Id="Title"
-                         Type="Text"
-                         X="130"
-                         Y="6"
-                         Width="225"
-                         Height="30"
-                         Transparent="yes"
-                         NoPrefix="yes"
-                         Text="!(loc.WelcomeEulaDlgTitle)" />
-                <Control Id="BottomLine"
-                         Type="Line"
-                         X="0"
-                         Y="234"
-                         Width="370"
-                         Height="0" />
-                <Control Id="LicenseAcceptedCheckBox"
-                         Type="CheckBox"
-                         X="130"
-                         Y="207"
-                         Width="226"
-                         Height="18"
-                         CheckBoxValue="1"
-                         Property="AxLicenseAccepted"
-                         Text="!(loc.WelcomeEulaDlgLicenseAcceptedCheckBox)" />
-                <Control Id="Print"
-                         Type="PushButton"
-                         X="88"
-                         Y="243"
-                         Width="56"
-                         Height="17"
-                         Text="!(loc.WixUIPrint)">
-                    <Publish Event="DoAction"
-                             Value="WixUIPrintEula">1</Publish>
-                </Control>
-                <Control Id="Back"
-                         Type="PushButton"
-                         X="156"
-                         Y="243"
-                         Width="56"
-                         Height="17"
-                         Disabled="yes"
-                         Text="!(loc.WixUIBack)" />
-                <Control Id="Install"
-                         Type="PushButton"
-                         ElevationShield="yes"
-                         X="212"
-                         Y="243"
-                         Width="80"
-                         Height="17"
-                         Default="yes"
-                         Text="!(loc.WelcomeEulaDlgInstall)"
-                         Hidden="yes">
-                    <Publish Event="SpawnWaitDialog"
-                             Value="WaitForCostingDlg">!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1</Publish>
-                    <Publish Event="EndDialog"
-                             Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
-                    <Publish Event="SpawnDialog"
-                             Value="OutOfRbDiskDlg">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
-                    <Publish Event="EndDialog"
-                             Value="Return">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
-                    <Publish Event="EnableRollback"
-                             Value="False">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
-                    <Publish Event="SpawnDialog"
-                             Value="OutOfDiskDlg">(OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST="F")</Publish>
-                    <Condition Action="disable"><![CDATA[AxLicenseAccepted <> "1"]]></Condition>
-                    <Condition Action="enable">AxLicenseAccepted = "1"</Condition>
-                    <Condition Action="show">ALLUSERS</Condition>
-                </Control>
-                <Control Id="InstallNoShield"
-                         Type="PushButton"
-                         ElevationShield="no"
-                         X="212"
-                         Y="243"
-                         Width="80"
-                         Height="17"
-                         Default="yes"
-                         Text="!(loc.WelcomeEulaDlgInstall)"
-                         Hidden="yes">
-                    <Publish Event="SpawnWaitDialog"
-                             Value="WaitForCostingDlg">!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1</Publish>
-                    <Publish Event="EndDialog"
-                             Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
-                    <Publish Event="SpawnDialog"
-                             Value="OutOfRbDiskDlg">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
-                    <Publish Event="EndDialog"
-                             Value="Return">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
-                    <Publish Event="EnableRollback"
-                             Value="False">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
-                    <Publish Event="SpawnDialog"
-                             Value="OutOfDiskDlg">(OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST="F")</Publish>
-                    <Condition Action="disable"><![CDATA[AxLicenseAccepted <> "1"]]></Condition>
-                    <Condition Action="enable">AxLicenseAccepted = "1"</Condition>
-                    <Condition Action="show">NOT ALLUSERS</Condition>
-                </Control>
-                <Control Id="Cancel"
-                         Type="PushButton"
-                         X="304"
-                         Y="243"
-                         Width="56"
-                         Height="17"
-                         Cancel="yes"
-                         Text="!(loc.WixUICancel)">
-                    <Publish Event="SpawnDialog"
-                             Value="CancelDlg">1</Publish>
-                </Control>
-                <Control Id="LicenseText"
-                         Type="ScrollableText"
-                         X="130"
-                         Y="36"
-                         Width="226"
-                         Height="162"
-                         Sunken="yes"
-                         TabSkip="no">
-                    <Text SourceFile="$(var.Package.TargetDir)\License.rtf" />
-                </Control>
-            </Dialog>
+      <Dialog Id="AxWelcomeEulaDlg"
+              Width="370"
+              Height="270"
+              Title="!(loc.WelcomeEulaDlg_Title)">
+        <Control Id="Bitmap"
+                 Type="Bitmap"
+                 X="0"
+                 Y="0"
+                 Width="370"
+                 Height="234"
+                 TabSkip="no"
+                 Text="!(loc.WelcomeEulaDlgBitmap)" />
+        <Control Id="Title"
+                 Type="Text"
+                 X="130"
+                 Y="6"
+                 Width="225"
+                 Height="30"
+                 Transparent="yes"
+                 NoPrefix="yes"
+                 Text="!(loc.WelcomeEulaDlgTitle)" />
+        <Control Id="BottomLine"
+                 Type="Line"
+                 X="0"
+                 Y="234"
+                 Width="370"
+                 Height="0" />
+        <Control Id="LicenseAcceptedCheckBox"
+                 Type="CheckBox"
+                 X="130"
+                 Y="207"
+                 Width="226"
+                 Height="18"
+                 CheckBoxValue="1"
+                 Property="AxLicenseAccepted"
+                 Text="!(loc.WelcomeEulaDlgLicenseAcceptedCheckBox)" />
+        <Control Id="Print"
+                 Type="PushButton"
+                 X="88"
+                 Y="243"
+                 Width="56"
+                 Height="17"
+                 Text="!(loc.WixUIPrint)">
+          <Publish Event="DoAction"
+                   Value="WixUIPrintEula">1</Publish>
+        </Control>
+        <Control Id="Back"
+                 Type="PushButton"
+                 X="156"
+                 Y="243"
+                 Width="56"
+                 Height="17"
+                 Disabled="yes"
+                 Text="!(loc.WixUIBack)" />
+        <Control Id="Install"
+                 Type="PushButton"
+                 ElevationShield="yes"
+                 X="212"
+                 Y="243"
+                 Width="80"
+                 Height="17"
+                 Default="yes"
+                 Text="!(loc.WelcomeEulaDlgInstall)"
+                 Hidden="yes">
+          <Publish Event="SpawnWaitDialog"
+                   Value="WaitForCostingDlg">!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1</Publish>
+          <Publish Event="EndDialog"
+                   Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
+          <Publish Event="SpawnDialog"
+                   Value="OutOfRbDiskDlg">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
+          <Publish Event="EndDialog"
+                   Value="Return">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
+          <Publish Event="EnableRollback"
+                   Value="False">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
+          <Publish Event="SpawnDialog"
+                   Value="OutOfDiskDlg">(OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST="F")</Publish>
+          <Condition Action="disable"><![CDATA[AxLicenseAccepted <> "1"]]></Condition>
+          <Condition Action="enable">AxLicenseAccepted = "1"</Condition>
+          <Condition Action="show">ALLUSERS</Condition>
+        </Control>
+        <Control Id="InstallNoShield"
+                 Type="PushButton"
+                 ElevationShield="no"
+                 X="212"
+                 Y="243"
+                 Width="80"
+                 Height="17"
+                 Default="yes"
+                 Text="!(loc.WelcomeEulaDlgInstall)"
+                 Hidden="yes">
+          <Publish Event="SpawnWaitDialog"
+                   Value="WaitForCostingDlg">!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1</Publish>
+          <Publish Event="EndDialog"
+                   Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
+          <Publish Event="SpawnDialog"
+                   Value="OutOfRbDiskDlg">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
+          <Publish Event="EndDialog"
+                   Value="Return">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
+          <Publish Event="EnableRollback"
+                   Value="False">OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST="D"</Publish>
+          <Publish Event="SpawnDialog"
+                   Value="OutOfDiskDlg">(OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST="F")</Publish>
+          <Condition Action="disable"><![CDATA[AxLicenseAccepted <> "1"]]></Condition>
+          <Condition Action="enable">AxLicenseAccepted = "1"</Condition>
+          <Condition Action="show">NOT ALLUSERS</Condition>
+        </Control>
+        <Control Id="Cancel"
+                 Type="PushButton"
+                 X="304"
+                 Y="243"
+                 Width="56"
+                 Height="17"
+                 Cancel="yes"
+                 Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog"
+                   Value="CancelDlg">1</Publish>
+        </Control>
+        <Control Id="LicenseText"
+                 Type="ScrollableText"
+                 X="130"
+                 Y="36"
+                 Width="226"
+                 Height="162"
+                 Sunken="yes"
+                 TabSkip="no">
+          <Text SourceFile="$(var.Package.TargetDir)\License.rtf" />
+        </Control>
+      </Dialog>
+    </UI>
+    <UI Id="AxUI_Minimal">
+      <TextStyle Id="WixUI_Font_Normal"
+                 FaceName="Tahoma"
+                 Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger"
+                 FaceName="Tahoma"
+                 Size="12" />
+      <TextStyle Id="WixUI_Font_Title"
+                 FaceName="Tahoma"
+                 Size="9"
+                 Bold="yes" />
 
-        </UI>
-        <UI Id="AxUI_Minimal">
-            <TextStyle Id="WixUI_Font_Normal"
-                       FaceName="Tahoma"
-                       Size="8" />
-            <TextStyle Id="WixUI_Font_Bigger"
-                       FaceName="Tahoma"
-                       Size="12" />
-            <TextStyle Id="WixUI_Font_Title"
-                       FaceName="Tahoma"
-                       Size="9"
-                       Bold="yes" />
+      <Property Id="DefaultUIFont"
+                Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode"
+                Value="Minimal" />
 
-            <Property Id="DefaultUIFont"
-                      Value="WixUI_Font_Normal" />
-            <Property Id="WixUI_Mode"
-                      Value="Minimal" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+      <DialogRef Id="AxWelcomeDlg" />
+      <DialogRef Id="AxWelcomeEulaDlg" />
 
-            <DialogRef Id="ErrorDlg" />
-            <DialogRef Id="FatalError" />
-            <DialogRef Id="FilesInUse" />
-            <DialogRef Id="MsiRMFilesInUse" />
-            <DialogRef Id="PrepareDlg" />
-            <DialogRef Id="ProgressDlg" />
-            <DialogRef Id="ResumeDlg" />
-            <DialogRef Id="UserExit" />
-            <DialogRef Id="AxWelcomeDlg" />
-            <DialogRef Id="AxWelcomeEulaDlg" />
+      <Publish Dialog="ExitDialog"
+               Control="Finish"
+               Event="EndDialog"
+               Value="Return">WIXUI_EXITDIALOGOPTIONALCHECKBOX &lt;&gt; 1 OR UILevel &lt;&gt; 5</Publish>
+      <Publish Dialog="ExitDialog"
+               Control="Finish"
+               Event="DoAction"
+               Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND UILevel = 5</Publish>
+      <Publish Dialog="ExitDialog"
+               Control="Finish"
+               Event="EndDialog"
+               Value="Return"
+               Order="999">1</Publish>
 
-            <Publish Dialog="ExitDialog"
-                     Control="Finish"
-                     Event="EndDialog"
-                     Value="Return">WIXUI_EXITDIALOGOPTIONALCHECKBOX &lt;&gt; 1 OR UILevel &lt;&gt; 5</Publish>
-            <Publish Dialog="ExitDialog"
-                     Control="Finish"
-                     Event="DoAction"
-                     Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND UILevel = 5</Publish>
-            <Publish Dialog="ExitDialog"
-                     Control="Finish"
-                     Event="EndDialog"
-                     Value="Return"
-                     Order="999">1</Publish>
+      <Publish Dialog="VerifyReadyDlg"
+               Control="Back"
+               Event="NewDialog"
+               Value="MaintenanceTypeDlg">1</Publish>
 
-            <Publish Dialog="VerifyReadyDlg"
-                     Control="Back"
-                     Event="NewDialog"
-                     Value="MaintenanceTypeDlg">1</Publish>
+      <Publish Dialog="MaintenanceWelcomeDlg"
+               Control="Next"
+               Event="NewDialog"
+               Value="MaintenanceTypeDlg">1</Publish>
 
-            <Publish Dialog="MaintenanceWelcomeDlg"
-                     Control="Next"
-                     Event="NewDialog"
-                     Value="MaintenanceTypeDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg"
+               Control="RepairButton"
+               Event="NewDialog"
+               Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg"
+               Control="RemoveButton"
+               Event="NewDialog"
+               Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg"
+               Control="Back"
+               Event="NewDialog"
+               Value="MaintenanceWelcomeDlg">1</Publish>
 
-            <Publish Dialog="MaintenanceTypeDlg"
-                     Control="RepairButton"
-                     Event="NewDialog"
-                     Value="VerifyReadyDlg">1</Publish>
-            <Publish Dialog="MaintenanceTypeDlg"
-                     Control="RemoveButton"
-                     Event="NewDialog"
-                     Value="VerifyReadyDlg">1</Publish>
-            <Publish Dialog="MaintenanceTypeDlg"
-                     Control="Back"
-                     Event="NewDialog"
-                     Value="MaintenanceWelcomeDlg">1</Publish>
+      <Publish Dialog="AxWelcomeDlg"
+               Control="Next"
+               Event="NewDialog"
+               Value="VerifyReadyDlg">Installed AND PATCH</Publish>
+      <Publish Dialog="VerifyReadyDlg"
+               Control="Back"
+               Event="NewDialog"
+               Value="AxWelcomeDlg"
+               Order="2">Installed AND PATCH</Publish>
 
-            <Publish Dialog="AxWelcomeDlg"
-                     Control="Next"
-                     Event="NewDialog"
-                     Value="VerifyReadyDlg">Installed AND PATCH</Publish>
-            <Publish Dialog="VerifyReadyDlg"
-                     Control="Back"
-                     Event="NewDialog"
-                     Value="AxWelcomeDlg"
-                     Order="2">Installed AND PATCH</Publish>
+      <InstallUISequence>
+        <Show Dialog="AxWelcomeDlg"
+              Before="AxWelcomeEulaDlg">Installed AND PATCH</Show>
+        <Show Dialog="AxWelcomeEulaDlg"
+              Before="ProgressDlg">NOT Installed AND HIDEEULA = 0</Show>
+      </InstallUISequence>
+      <UIRef Id="WixUI_Common" />
+    </UI>
 
-            <InstallUISequence>
-                <Show Dialog="AxWelcomeDlg"
-                      Before="AxWelcomeEulaDlg">Installed AND PATCH</Show>
-                <Show Dialog="AxWelcomeEulaDlg"
-                      Before="ProgressDlg">NOT Installed AND HIDEEULA = 0</Show>
-            </InstallUISequence>
-            <UIRef Id="WixUI_Common" />
-        </UI>
+    <Media Id="1"
+           Cabinet="AxCrypt.cab"
+           EmbedCab="yes" />
 
-        <Media Id="1"
-               Cabinet="AxCrypt.cab"
-               EmbedCab="yes" />
+    <?if $(var.Platform) = "x64" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder"?>
+    <?else?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder"?>
+    <?endif?>
 
-        <?if $(var.Platform) = "x64" ?>
-        <?define PlatformProgramFilesFolder = "ProgramFiles64Folder"?>
-        <?else?>
-        <?define PlatformProgramFilesFolder = "ProgramFilesFolder"?>
-        <?endif?>
+    <Property Id="ARPCOMMENTS">!(loc.ArpComments)</Property>
+    <Property Id="ARPCONTACT">mailto:software@axantum.com</Property>
+    <Property Id="ARPHELPLINK">http://www.axantum.com</Property>
+    <Property Id="ARPURLINFOABOUT">http://www.axantum.com</Property>
+    <Property Id="ARPURLUPDATEINFO">http://www.axantum.com</Property>
+    <Property Id="ARPHELPTELEPHONE">http://www.axantum.com</Property>
+    <Icon Id="axcrypt.ico"
+          SourceFile="..\Build\AxCrypt.ico" />
+    <Property Id="ARPPRODUCTICON">axcrypt.ico</Property>
 
-        <Property Id="ARPCOMMENTS">!(loc.ArpComments)</Property>
-        <Property Id="ARPCONTACT">mailto:software@axantum.com</Property>
-        <Property Id="ARPHELPLINK">http://www.axantum.com</Property>
-        <Property Id="ARPURLINFOABOUT">http://www.axantum.com</Property>
-        <Property Id="ARPURLUPDATEINFO">http://www.axantum.com</Property>
-        <Property Id="ARPHELPTELEPHONE">http://www.axantum.com</Property>
-        <Icon Id="axcrypt.ico"
-              SourceFile="..\Build\AxCrypt.ico" />
-        <Property Id="ARPPRODUCTICON">axcrypt.ico</Property>
+    <CustomAction Id="SetReadmePath"
+                  Property="ARPREADME"
+                  Value="[$ReadMe.html]ReadMe.html" />
+    <InstallExecuteSequence>
+      <Custom Action="SetReadmePath"
+              After="InstallInitialize" />
+    </InstallExecuteSequence>
 
-        <CustomAction Id="SetReadmePath"
-                      Property="ARPREADME"
-                      Value="[$ReadMe.html]ReadMe.html" />
-        <InstallExecuteSequence>
-            <Custom Action="SetReadmePath"
-                    After="InstallInitialize" />
-        </InstallExecuteSequence>
-
-        <!--<CustomAction Id="OverrideWixSetDefaultPerMachineFolder" Property="WixPerMachineFolder" Value="[$(var.PlatformProgramFilesFolder)][ApplicationFolderName]" />
+    <!--<CustomAction Id="OverrideWixSetDefaultPerMachineFolder" Property="WixPerMachineFolder" Value="[$(var.PlatformProgramFilesFolder)][ApplicationFolderName]" />
         <InstallExecuteSequence>
             <Custom Action="OverrideWixSetDefaultPerMachineFolder" After="WixSetDefaultPerMachineFolder" />
         </InstallExecuteSequence>
@@ -447,23 +446,23 @@
             <Custom Action="OverrideWixSetDefaultPerMachineFolder" After="WixSetDefaultPerMachineFolder" />
         </InstallUISequence>-->
 
-        <CustomAction Id="PreventDowngrading"
-                      Error="!(loc.NoDowngrade)" />
-        <InstallExecuteSequence>
-            <Custom Action="PreventDowngrading"
-                    After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
-            <!--<Custom Action="LaunchApplication" Before="InstallFinalize">Not REMOVE="ALL"</Custom>-->
-            <RemoveExistingProducts After="InstallInitialize" />
-        </InstallExecuteSequence>
-        <InstallUISequence>
-            <Custom Action="PreventDowngrading"
-                    After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
-        </InstallUISequence>
-        <!--<InstallUISequence>
+    <CustomAction Id="PreventDowngrading"
+                  Error="!(loc.NoDowngrade)" />
+    <InstallExecuteSequence>
+      <Custom Action="PreventDowngrading"
+              After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+      <!--<Custom Action="LaunchApplication" Before="InstallFinalize">Not REMOVE="ALL"</Custom>-->
+      <RemoveExistingProducts After="InstallInitialize" />
+    </InstallExecuteSequence>
+    <InstallUISequence>
+      <Custom Action="PreventDowngrading"
+              After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+    </InstallUISequence>
+    <!--<InstallUISequence>
             <FindRelatedProducts Suppress="yes" />
         </InstallUISequence>-->
 
-        <!--<Property Id="OLDINSTALLDIR">
+    <!--<Property Id="OLDINSTALLDIR">
             <?if $(var.Platform) = "x64" ?>
             <RegistrySearch Id="AxantumAxCryptRegistryHKCU" Type="raw" Root="HKCU" Key="Software\Axantum\AxCrypt" Name="InstallDir" Win64="yes" />
             <?else?>
@@ -476,7 +475,7 @@
             <?endif?>
         </Property>-->
 
-        <!--<CustomAction Id="OverrideWIXUI_INSTALLDIR" Property="WIXUI_INSTALLDIR" Value="[OLDINSTALLDIR]" />
+    <!--<CustomAction Id="OverrideWIXUI_INSTALLDIR" Property="WIXUI_INSTALLDIR" Value="[OLDINSTALLDIR]" />
         <InstallExecuteSequence>
             <Custom Action="OverrideWIXUI_INSTALLDIR" After="InstallInitialize">OLDINSTALLDIR</Custom>
         </InstallExecuteSequence>
@@ -484,381 +483,381 @@
             <Custom Action="OverrideWIXUI_INSTALLDIR" After="FindRelatedProducts">OLDINSTALLDIR</Custom>
         </InstallUISequence>-->
 
-        <Directory Id="TARGETDIR"
-                   Name="SourceDir">
-            <Directory Id="$(var.PlatformProgramFilesFolder)">
-                <Directory Id="CompanyDir"
-                           Name="Axantum">
-                    <Directory Id="APPLICATIONFOLDER"
-                               Name="AxCrypt" />
-                </Directory>
-            </Directory>
-            <Directory Id="ProgramMenuFolder">
-                <Directory Id="AxantumProgramMenu"
-                           Name="Axantum AxCrypt" />
-            </Directory>
+    <Directory Id="TARGETDIR"
+               Name="SourceDir">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="CompanyDir"
+                   Name="Axantum">
+          <Directory Id="APPLICATIONFOLDER"
+                     Name="AxCrypt" />
         </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="AxantumProgramMenu"
+                   Name="Axantum AxCrypt" />
+      </Directory>
+    </Directory>
 
-        <Property Id="ApplicationFolderName"
-                  Value="Axantum\AxCrypt" />
-        <!--<Property Id="WixAppFolder" Value="WixPerMachineFolder" />-->
+    <Property Id="ApplicationFolderName"
+              Value="Axantum\AxCrypt" />
+    <!--<Property Id="WixAppFolder" Value="WixPerMachineFolder" />-->
 
-        <DirectoryRef Id="CompanyDir">
-            <Component Id="CompanyDir"
-                       Guid="35AFD1FC-BCBC-40c1-AD16-A30228901C42">
-                <RemoveFolder Id="CompanyDir"
-                              On="uninstall" />
-            </Component>
-        </DirectoryRef>
+    <DirectoryRef Id="CompanyDir">
+      <Component Id="CompanyDir"
+                 Guid="35AFD1FC-BCBC-40c1-AD16-A30228901C42">
+        <RemoveFolder Id="CompanyDir"
+                      On="uninstall" />
+      </Component>
+    </DirectoryRef>
 
-        <DirectoryRef Id="APPLICATIONFOLDER">
-            <Component Id="AxCrypt.exe"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="AxCrypt.exe"
-                      Name="AxCrypt.exe"
-                      Source="$(var.Package.TargetDir)\AxCrypt.exe"
-                      KeyPath="yes"
-                      Checksum="yes" />
-            </Component>
-            <Component Id="Messages.dll"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="Messages.dll"
-                      Name="Messages.dll"
-                      Source="$(var.Package.TargetDir)\Messages.dll"
-                      KeyPath="yes"
-                      Checksum="yes" />
-            </Component>
-            <Component Id="ShellExt.dll"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="ShellExt.dll"
-                      Name="ShellExt.dll"
-                      Source="$(var.Package.TargetDir)\ShellExt.dll"
-                      KeyPath="yes"
-                      Checksum="yes" />
-            </Component>
-            <Component Id="Config.xml"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="Config.xml"
-                      Name="Config.xml"
-                      Source="$(var.Package.TargetDir)\Config.xml"
-                      KeyPath="yes" />
-            </Component>
-            <Component Id="Sigs.xml"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="Sigs.xml"
-                      Name="Sigs.xml"
-                      Source="$(var.Package.TargetDir)\Sigs.xml"
-                      KeyPath="yes" />
-            </Component>
-            <Component Id="ReadMe.html"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="ReadMe.html"
-                      Name="ReadMe.html"
-                      Source="$(var.Package.TargetDir)\ReadMe.html"
-                      KeyPath="yes" />
-            </Component>
-            <Component Id="License.rtf"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="License.rtf"
-                      Name="License.rtf"
-                      Source="$(var.Package.TargetDir)\License.rtf"
-                      KeyPath="yes" />
-            </Component>
-            <Component Id="ChangeLog.txt"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="ChangeLog.txt"
-                      Name="ChangeLog.txt"
-                      Source="$(var.Package.TargetDir)\ChangeLog.txt"
-                      KeyPath="yes" />
-            </Component>
-            <Component Id="RelNotes.txt"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="RelNotes.txt"
-                      Name="RelNotes.txt"
-                      Source="$(var.Package.TargetDir)\RelNotes.txt"
-                      KeyPath="yes" />
-            </Component>
-            <Component Id="AxDecrypt.exe"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="AxDecrypt.exe"
-                      Name="AxDecrypt.exe"
-                      Source="$(var.Package.TargetDirWin32)\AxDecrypt.exe"
-                      KeyPath="yes"
-                      Checksum="yes" />
-            </Component>
-            <Component Id="AxCrypt2Go.exe"
-                       Guid="*"
-                       DiskId="1" >
-                <File Id="AxCrypt2Go.exe"
-                      Name="AxCrypt2Go.exe"
-                      Source="$(var.Package.TargetDirWin32)\AxCrypt2Go.exe"
-                      KeyPath="yes"
-                      Checksum="yes" />
-            </Component>
-        </DirectoryRef>
+    <DirectoryRef Id="APPLICATIONFOLDER">
+      <Component Id="AxCrypt.exe"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="AxCrypt.exe"
+              Name="AxCrypt.exe"
+              Source="$(var.Package.TargetDir)\AxCrypt.exe"
+              KeyPath="yes"
+              Checksum="yes" />
+      </Component>
+      <Component Id="Messages.dll"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="Messages.dll"
+              Name="Messages.dll"
+              Source="$(var.Package.TargetDir)\Messages.dll"
+              KeyPath="yes"
+              Checksum="yes" />
+      </Component>
+      <Component Id="ShellExt.dll"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="ShellExt.dll"
+              Name="ShellExt.dll"
+              Source="$(var.Package.TargetDir)\ShellExt.dll"
+              KeyPath="yes"
+              Checksum="yes" />
+      </Component>
+      <Component Id="Config.xml"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="Config.xml"
+              Name="Config.xml"
+              Source="$(var.Package.TargetDir)\Config.xml"
+              KeyPath="yes" />
+      </Component>
+      <Component Id="Sigs.xml"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="Sigs.xml"
+              Name="Sigs.xml"
+              Source="$(var.Package.TargetDir)\Sigs.xml"
+              KeyPath="yes" />
+      </Component>
+      <Component Id="ReadMe.html"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="ReadMe.html"
+              Name="ReadMe.html"
+              Source="$(var.Package.TargetDir)\ReadMe.html"
+              KeyPath="yes" />
+      </Component>
+      <Component Id="License.rtf"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="License.rtf"
+              Name="License.rtf"
+              Source="$(var.Package.TargetDir)\License.rtf"
+              KeyPath="yes" />
+      </Component>
+      <Component Id="ChangeLog.txt"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="ChangeLog.txt"
+              Name="ChangeLog.txt"
+              Source="$(var.Package.TargetDir)\ChangeLog.txt"
+              KeyPath="yes" />
+      </Component>
+      <Component Id="RelNotes.txt"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="RelNotes.txt"
+              Name="RelNotes.txt"
+              Source="$(var.Package.TargetDir)\RelNotes.txt"
+              KeyPath="yes" />
+      </Component>
+      <Component Id="AxDecrypt.exe"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="AxDecrypt.exe"
+              Name="AxDecrypt.exe"
+              Source="$(var.Package.TargetDirWin32)\AxDecrypt.exe"
+              KeyPath="yes"
+              Checksum="yes" />
+      </Component>
+      <Component Id="XecretsFile2Go.exe"
+                 Guid="*"
+                 DiskId="1">
+        <File Id="XecretsFile2Go.exe"
+              Name="XecretsFile2Go.exe"
+              Source="$(var.Package.TargetDirWin32)\XecretsFile2Go.exe"
+              KeyPath="yes"
+              Checksum="yes" />
+      </Component>
+    </DirectoryRef>
 
-        <DirectoryRef Id="AxantumProgramMenu">
-            <Component Id="CompanyApplicationShortcutFolder"
-                       Guid="*">
-                <RegistryValue Root="HKCU"
-                               Key="$(var.AxCryptRegKey)"
-                               Name="installed"
-                               Type="integer"
-                               Value="1"
-                               KeyPath="yes"/>
-                <util:InternetShortcut Id="HomePage"
-                                       Type="url"
-                                       Name="!(loc.HomePageShortcut)"
-                                       Target="http://www.axantum.com/" />
-                <util:InternetShortcut Id="Manual"
-                                       Type="url"
-                                       Name="!(loc.ManualShortcut)"
-                                       Target="http://www.axantum.com/AxCrypt/etc/AxCrypt-Manual.pdf" />
-                <util:InternetShortcut Id="MyAxCryptPreferences"
-                                       Type="url"
-                                       Name="!(loc.RegisterAxCrypt)"
-                                       Target="https://www.axantum.com/Xecrets/LoggedOn/AxCryptPreferences.aspx" />
-                <util:InternetShortcut Id="Xecrets"
-                                       Type="url"
-                                       Name="!(loc.XecretsShortcut)"
-                                       Target="https://www.axantum.com/Xecrets/LogOn.aspx" />
-                <Shortcut Id="UninstallProduct"
-                          Name="!(loc.UninstallAxCrypt)"
-                          Description="!(loc.UninstallAxCryptDescription)"
-                          Target="[System64Folder]msiexec.exe"
-                          Arguments="/x [ProductCode]"/>
-                <RemoveFolder Id="AxantumProgramMenu"
-                              On="uninstall" />
-            </Component>
-        </DirectoryRef>
+    <DirectoryRef Id="AxantumProgramMenu">
+      <Component Id="CompanyApplicationShortcutFolder"
+                 Guid="*">
+        <RegistryValue Root="HKCU"
+                       Key="$(var.AxCryptRegKey)"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+        <util:InternetShortcut Id="HomePage"
+                               Type="url"
+                               Name="!(loc.HomePageShortcut)"
+                               Target="http://www.axantum.com/" />
+        <util:InternetShortcut Id="Manual"
+                               Type="url"
+                               Name="!(loc.ManualShortcut)"
+                               Target="http://www.axantum.com/AxCrypt/etc/AxCrypt-Manual.pdf" />
+        <util:InternetShortcut Id="MyAxCryptPreferences"
+                               Type="url"
+                               Name="!(loc.RegisterAxCrypt)"
+                               Target="https://www.axantum.com/Xecrets/LoggedOn/AxCryptPreferences.aspx" />
+        <util:InternetShortcut Id="Xecrets"
+                               Type="url"
+                               Name="!(loc.XecretsShortcut)"
+                               Target="https://www.axantum.com/Xecrets/LogOn.aspx" />
+        <Shortcut Id="UninstallProduct"
+                  Name="!(loc.UninstallAxCrypt)"
+                  Description="!(loc.UninstallAxCryptDescription)"
+                  Target="[System64Folder]msiexec.exe"
+                  Arguments="/x [ProductCode]" />
+        <RemoveFolder Id="AxantumProgramMenu"
+                      On="uninstall" />
+      </Component>
+    </DirectoryRef>
 
-        <Property Id="SHELLEXTENSIONSECURITYENFORCEDHKCU">
-            <RegistrySearch Id="ShellExtensionSecurityEnforcedHKCU"
-                            Root="HKCU"
-                            Key="Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
-                            Name="EnforceShellExtensionSecurity"
-                            Type="raw" />
-        </Property>
-        <Property Id="SHELLEXTENSIONSECURITYENFORCEDHKLM">
-            <RegistrySearch Id="ShellExtensionSecurityEnforcedHKLM"
-                            Root="HKLM"
-                            Key="Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
-                            Name="EnforceShellExtensionSecurity"
-                            Type="raw" />
-        </Property>
+    <Property Id="SHELLEXTENSIONSECURITYENFORCEDHKCU">
+      <RegistrySearch Id="ShellExtensionSecurityEnforcedHKCU"
+                      Root="HKCU"
+                      Key="Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
+                      Name="EnforceShellExtensionSecurity"
+                      Type="raw" />
+    </Property>
+    <Property Id="SHELLEXTENSIONSECURITYENFORCEDHKLM">
+      <RegistrySearch Id="ShellExtensionSecurityEnforcedHKLM"
+                      Root="HKLM"
+                      Key="Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
+                      Name="EnforceShellExtensionSecurity"
+                      Type="raw" />
+    </Property>
 
-        <DirectoryRef Id="APPLICATIONFOLDER">
-            <Component Id="ShellExtensionRegistryApproved"
-                       Guid="*">
-                <Condition>SHELLEXTENSIONSECURITYENFORCEDHKCU OR SHELLEXTENSIONSECURITYENFORCEDHKLM OR Privileged</Condition>
-                <RegistryKey Root="HKMU"
-                             Key="Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved">
-                    <RegistryValue Type="string"
-                                   Name="$(var.AxCryptCLSID)"
-                                   Value="!(loc.Description)"
-                                   KeyPath="yes" />
-                </RegistryKey>
-            </Component>
+    <DirectoryRef Id="APPLICATIONFOLDER">
+      <Component Id="ShellExtensionRegistryApproved"
+                 Guid="*">
+        <Condition>SHELLEXTENSIONSECURITYENFORCEDHKCU OR SHELLEXTENSIONSECURITYENFORCEDHKLM OR Privileged</Condition>
+        <RegistryKey Root="HKMU"
+                     Key="Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved">
+          <RegistryValue Type="string"
+                         Name="$(var.AxCryptCLSID)"
+                         Value="!(loc.Description)"
+                         KeyPath="yes" />
+        </RegistryKey>
+      </Component>
 
-            <Component Id="ShellExtensionRegistryAssociation"
-                       Guid="*">
-                <RegistryKey Root="HKCR"
-                             Key="$(var.AxCryptExtension)"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="$(var.AxCryptProgID)"
-                                   KeyPath="yes" />
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="*\shellex\ContextMenuHandlers\$(var.AxCryptProgID)"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="$(var.AxCryptCLSID)" />
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="Folder\shellex\ContextMenuHandlers\$(var.AxCryptProgID)"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="$(var.AxCryptCLSID)" />
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="CLSID\$(var.AxCryptCLSID)"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="$(var.AxCryptProgID)" />
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="CLSID\$(var.AxCryptCLSID)\InprocServer32"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="[APPLICATIONFOLDER]ShellExt.dll" />
-                    <RegistryValue Type="string"
-                                   Name="ThreadingModel"
-                                   Value="Apartment" />
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="$(var.AxCryptProgID)"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="!(loc.FileTypeName)" />
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="$(var.AxCryptProgID)\CLSID"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="$(var.AxCryptCLSID)" />
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="$(var.AxCryptProgID)\DefaultIcon"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="[APPLICATIONFOLDER]AxCrypt.exe,0" />
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="$(var.AxCryptProgID)\shellex\PropertySheetHandlers\$(var.AxCryptCLSID)"
-                             ForceDeleteOnUninstall="yes">
-                </RegistryKey>
-                <RegistryKey Root="HKCR"
-                             Key="$(var.AxCryptProgID)\shell\open\command"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Value="&quot;[APPLICATIONFOLDER]AxCrypt.exe&quot; &quot;%1&quot;" />
-                </RegistryKey>
-            </Component>
+      <Component Id="ShellExtensionRegistryAssociation"
+                 Guid="*">
+        <RegistryKey Root="HKCR"
+                     Key="$(var.AxCryptExtension)"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="$(var.AxCryptProgID)"
+                         KeyPath="yes" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="*\shellex\ContextMenuHandlers\$(var.AxCryptProgID)"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="$(var.AxCryptCLSID)" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="Folder\shellex\ContextMenuHandlers\$(var.AxCryptProgID)"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="$(var.AxCryptCLSID)" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="CLSID\$(var.AxCryptCLSID)"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="$(var.AxCryptProgID)" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="CLSID\$(var.AxCryptCLSID)\InprocServer32"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="[APPLICATIONFOLDER]ShellExt.dll" />
+          <RegistryValue Type="string"
+                         Name="ThreadingModel"
+                         Value="Apartment" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="$(var.AxCryptProgID)"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="!(loc.FileTypeName)" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="$(var.AxCryptProgID)\CLSID"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="$(var.AxCryptCLSID)" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="$(var.AxCryptProgID)\DefaultIcon"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="[APPLICATIONFOLDER]AxCrypt.exe,0" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="$(var.AxCryptProgID)\shellex\PropertySheetHandlers\$(var.AxCryptCLSID)"
+                     ForceDeleteOnUninstall="yes">
+        </RegistryKey>
+        <RegistryKey Root="HKCR"
+                     Key="$(var.AxCryptProgID)\shell\open\command"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Value="&quot;[APPLICATIONFOLDER]AxCrypt.exe&quot; &quot;%1&quot;" />
+        </RegistryKey>
+      </Component>
 
-            <Component Id="AxCryptRegistryEntriesMachine"
-                       Guid="*">
-                <RegistryKey Root="HKMU"
-                             Key="$(var.AxCryptRegKey)"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="string"
-                                   Name="FileExtension"
-                                   Value="$(var.AxCryptExtension)" />
-                    <RegistryValue Type="string"
-                                   Name="ProductName"
-                                   Value="$(var.AxCryptExternalName)" />
-                    <RegistryValue Type="string"
-                                   Name="CLSID"
-                                   Value="$(var.AxCryptCLSID)" />
-                    <RegistryValue Type="integer"
-                                   Name="ShowActivationMenu"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="KeyWrapIterations"
-                                   Value="15000" />
-                    <RegistryValue Type="integer"
-                                   Name="AllowPrograms"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="DisableSaveEncryptionKey"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="DisableSaveDecryptionKey"
-                                   Value="0" />
-                </RegistryKey>
-            </Component>
+      <Component Id="AxCryptRegistryEntriesMachine"
+                 Guid="*">
+        <RegistryKey Root="HKMU"
+                     Key="$(var.AxCryptRegKey)"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Name="FileExtension"
+                         Value="$(var.AxCryptExtension)" />
+          <RegistryValue Type="string"
+                         Name="ProductName"
+                         Value="$(var.AxCryptExternalName)" />
+          <RegistryValue Type="string"
+                         Name="CLSID"
+                         Value="$(var.AxCryptCLSID)" />
+          <RegistryValue Type="integer"
+                         Name="ShowActivationMenu"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="KeyWrapIterations"
+                         Value="15000" />
+          <RegistryValue Type="integer"
+                         Name="AllowPrograms"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="DisableSaveEncryptionKey"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="DisableSaveDecryptionKey"
+                         Value="0" />
+        </RegistryKey>
+      </Component>
 
-            <Component Id="AxCryptRegistryEntriesUser"
-                       Guid="*">
-                <RegistryKey Root="HKCU"
-                             Key="$(var.AxCryptRegKey)"
-                             ForceDeleteOnUninstall="yes">
-                    <RegistryValue Type="integer"
-                                   Name="ServerMode"
-                                   Value="0" />
-                    <RegistryValue Type="string"
-                                   Name="ServerErrorShellCmd"
-                                   Value="" />
-                    <RegistryValue Type="integer"
-                                   Name="EventLogLevel"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="NoShowUnsafeWipeWarn"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="SaveEncKey"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="SaveDecKey"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="NoDecryptMenu"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="CompressThreshold"
-                                   Value="20"
-                                   KeyPath="yes" />
-                    <RegistryValue Type="integer"
-                                   Name="DisableRenameMenu"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="TryBrokenFile"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="AllowAnyExtension"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="FastModeDefault"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="KeepTimeStamp"
-                                   Value="0" />
-                    <RegistryValue Type="integer"
-                                   Name="AllowPrograms"
-                                   Value="0" />
-                </RegistryKey>
-            </Component>
-        </DirectoryRef>
+      <Component Id="AxCryptRegistryEntriesUser"
+                 Guid="*">
+        <RegistryKey Root="HKCU"
+                     Key="$(var.AxCryptRegKey)"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="integer"
+                         Name="ServerMode"
+                         Value="0" />
+          <RegistryValue Type="string"
+                         Name="ServerErrorShellCmd"
+                         Value="" />
+          <RegistryValue Type="integer"
+                         Name="EventLogLevel"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="NoShowUnsafeWipeWarn"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="SaveEncKey"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="SaveDecKey"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="NoDecryptMenu"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="CompressThreshold"
+                         Value="20"
+                         KeyPath="yes" />
+          <RegistryValue Type="integer"
+                         Name="DisableRenameMenu"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="TryBrokenFile"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="AllowAnyExtension"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="FastModeDefault"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="KeepTimeStamp"
+                         Value="0" />
+          <RegistryValue Type="integer"
+                         Name="AllowPrograms"
+                         Value="0" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
 
-        <Feature Id="MainExecutables"
-                 Title="!(loc.MainExecutablesTitle)"
-                 Level="1">
-            <ComponentRef Id="AxCrypt.exe" />
-            <ComponentRef Id="Messages.dll" />
-            <ComponentRef Id="Config.xml" />
-            <ComponentRef Id="Sigs.xml" />
-            <ComponentRef Id="ReadMe.html" />
-            <ComponentRef Id="License.rtf" />
-            <ComponentRef Id="ChangeLog.txt" />
-            <ComponentRef Id="RelNotes.txt" />
-            <ComponentRef Id="CompanyApplicationShortcutFolder" />
-            <ComponentRef Id="AxCryptRegistryEntriesMachine" />
-            <ComponentRef Id="AxCryptRegistryEntriesUser" />
-            <ComponentRef Id="CompanyDir" />
-        </Feature>
+    <Feature Id="MainExecutables"
+             Title="!(loc.MainExecutablesTitle)"
+             Level="1">
+      <ComponentRef Id="AxCrypt.exe" />
+      <ComponentRef Id="Messages.dll" />
+      <ComponentRef Id="Config.xml" />
+      <ComponentRef Id="Sigs.xml" />
+      <ComponentRef Id="ReadMe.html" />
+      <ComponentRef Id="License.rtf" />
+      <ComponentRef Id="ChangeLog.txt" />
+      <ComponentRef Id="RelNotes.txt" />
+      <ComponentRef Id="CompanyApplicationShortcutFolder" />
+      <ComponentRef Id="AxCryptRegistryEntriesMachine" />
+      <ComponentRef Id="AxCryptRegistryEntriesUser" />
+      <ComponentRef Id="CompanyDir" />
+    </Feature>
 
-        <Feature Id="ShellExtension"
-                 Title="!(loc.ShellExtensionTitle)"
-                 Level="1">
-            <ComponentRef Id="AxCrypt.exe" />
-            <ComponentRef Id="Messages.dll" />
-            <ComponentRef Id="ShellExt.dll" />
-            <ComponentRef Id="Config.xml" />
-            <ComponentRef Id="Sigs.xml" />
-            <ComponentRef Id="ShellExtensionRegistryApproved" />
-            <ComponentRef Id="ShellExtensionRegistryAssociation" />
-        </Feature>
+    <Feature Id="ShellExtension"
+             Title="!(loc.ShellExtensionTitle)"
+             Level="1">
+      <ComponentRef Id="AxCrypt.exe" />
+      <ComponentRef Id="Messages.dll" />
+      <ComponentRef Id="ShellExt.dll" />
+      <ComponentRef Id="Config.xml" />
+      <ComponentRef Id="Sigs.xml" />
+      <ComponentRef Id="ShellExtensionRegistryApproved" />
+      <ComponentRef Id="ShellExtensionRegistryAssociation" />
+    </Feature>
 
-        <Feature Id="SelfDecryption"
-                 Title="!(loc.SelfDecryptionTitle)"
-                 Level="1">
-            <ComponentRef Id="AxDecrypt.exe" />
-        </Feature>
+    <Feature Id="SelfDecryption"
+             Title="!(loc.SelfDecryptionTitle)"
+             Level="1">
+      <ComponentRef Id="AxDecrypt.exe" />
+    </Feature>
 
-        <Feature Id="PortableApplication"
-                 Title="!(loc.AxCrypt2GoTitle)"
-                 Level="1">
-            <ComponentRef Id="AxCrypt2Go.exe" />
-        </Feature>
-    </Product>
+    <Feature Id="PortableApplication"
+             Title="!(loc.XecretsFile2GoTitle)"
+             Level="1">
+      <ComponentRef Id="XecretsFile2Go.exe" />
+    </Feature>
+  </Product>
 </Wix>

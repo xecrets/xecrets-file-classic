@@ -10,8 +10,8 @@
 #include "atlres.h"
 #define VERSION_PROJECT_COMMENTS_VALUE "This software is experimental in early testing stages"
 #define VERSION_PROJECT_FILE_DESCRIPTION_VALUE "Encryption and Decryption File Explorer"
-#define VERSION_PROJECT_INTERNAL_NAME_VALUE "AxCrypt2Go"
-#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE "AxCrypt2Go.exe"
+#define VERSION_PROJECT_INTERNAL_NAME_VALUE "AxXecretsFile2GoCrypt2Go"
+#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE "XecretsFile2Go.exe"
 #define VERSION_PROJECT_SPECIAL_BUILD_VALUE "Alpha"
 #define VERSION_PROJECT_SPECIAL_BUILD 1
 #define VERSION_PROJECT_FILETYPE VFT_APP
@@ -382,8 +382,8 @@ BEGIN
     "#include ""atlres.h""\r\n"
     "#define VERSION_PROJECT_COMMENTS_VALUE ""This software is experimental in early testing stages""\r\r\n"
     "#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""Encryption and Decryption File Explorer""\r\n"
-    "#define VERSION_PROJECT_INTERNAL_NAME_VALUE ""AxCrypt2Go""\r\n"
-    "#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE ""AxCrypt2Go.exe""\r\n"
+    "#define VERSION_PROJECT_INTERNAL_NAME_VALUE ""XecretsFile2Go""\r\n"
+    "#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE ""XecretsFile2Go.exe""\r\n"
     "#define VERSION_PROJECT_SPECIAL_BUILD_VALUE ""Alpha""\r\n"
     "#define VERSION_PROJECT_SPECIAL_BUILD 1\r\n"
     "#define VERSION_PROJECT_FILETYPE VFT_APP\r\n"

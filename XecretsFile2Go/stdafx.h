@@ -61,7 +61,7 @@
 
 // Gettext definitions
 // This should probably be fetched from a string resource instead for OEM-purposes in the future
-#define GETTEXT_PACKAGE "AxCrypt2Go"
+#define GETTEXT_PACKAGE "XecretsFile2Go"
 #define _(String) AxLib::CGettext::Gettext (String)
 #define N_(String) String
 

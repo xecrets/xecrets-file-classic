@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{275454C5-0907-41EF-A6A1-3E75DD231C03}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>AxCrypt2Go</RootNamespace>
+    <RootNamespace>XecretsFile2Go</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
