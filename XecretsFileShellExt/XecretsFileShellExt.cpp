@@ -27,7 +27,7 @@
 
 */
 #include "stdafx.h"
-#include "AxCryptShellExt.h"
+#include "XecretsFileShellExt.h"
 
 #include <assert.h>
 

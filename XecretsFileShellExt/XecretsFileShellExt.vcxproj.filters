@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AxCryptShellExt.cpp">
+    <ClCompile Include="XecretsFileShellExt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AxCryptShellExtInit.cpp">
+    <ClCompile Include="XecretsFileShellExtInit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CtxMenu.cpp">
@@ -32,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AxCryptShellExt.h">
+    <ClInclude Include="XecretsFileShellExt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -46,7 +46,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AxCryptShellExt.rc">
+    <ResourceCompile Include="XecretsFileShellExt.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -54,13 +54,13 @@
     <None Include="CtxMenu.bmp">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="AxCryptShellExt.manifest.Win32">
+    <None Include="XecretsFileShellExt.manifest.Win32">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="AxCryptShellExt.manifest.x64">
+    <None Include="XecretsFileShellExt.manifest.x64">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="AxCryptShellExt.def">
+    <None Include="XecretsFileShellExt.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
