@@ -32,7 +32,7 @@
 #define IDC_STATIC_GRP_KEYFILE          1007
 #define IDC_STATIC_GRP_PASSPHRASE       1008
 #define IDC_STATIC_VERIFY               1009
-#define IDC_GETAXCRYPT                  1010
+#define IDC_GETXECRETSFILE                  1010
 #define IDC_ABOUTMSG                    1011
 #define IDC_COPYRIGHT                   1012
 #define IDC_PROGRESS1                   1013

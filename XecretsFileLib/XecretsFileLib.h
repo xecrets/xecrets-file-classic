@@ -229,7 +229,7 @@ enum {
 	AXCL_E_ACCESS,                          ///< Some form of access error
 	AXCL_E_CANCEL,                          ///< Cancel requested/performed
 	AXCL_E_IGNORED,                         ///< Requested action/function ignored
-	AXCL_E_AXCRYPT,                         ///< Xecrets File error
+	AXCL_E_XECRETSFILE,                         ///< Xecrets File error
 	AXCL_E_MEMORY,                          ///< Memory allocation error or similar
 	AXCL_E_NOTYET,                          ///< Not Yet Implemented
 	AXCL_E_BADOP,                           ///< Unknown operation requested

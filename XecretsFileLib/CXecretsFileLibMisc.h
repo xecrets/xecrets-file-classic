@@ -46,13 +46,13 @@ namespace axcl {
 
 	/// \brief Custom error codes from ::AxPipe -derived classes.
 	enum {
-		ERROR_CODE_AXCRYPT = AxPipe::ERROR_CODE_DERIVED, ///< Generic custom error
+		ERROR_CODE_XECRETSFILE = AxPipe::ERROR_CODE_DERIVED, ///< Generic custom error
 		ERROR_CODE_CANCEL,                      ///< User cancelled in a dialog box before start
 		ERROR_CODE_HMAC,                        ///< HMAC does not match
 		ERROR_CODE_ABORT,                       ///< User cancelled whilst working
 		ERROR_CODE_MORE,                        ///< Not an error - want a bigger dialog
 		ERROR_CODE_WRONGKEY,                    ///< The key provided does not work for this data
-		AXCRYPT_CODE_DATA,                      ///< Not an error - we found Xecrets File data status
+		XECRETSFILE_CODE_DATA,                      ///< Not an error - we found Xecrets File data status
 	};
 
 	/// \brief Simple helper to XOR two memory blocks to a third.
@@ -114,7 +114,7 @@ namespace axcl {
 					SetError(axcl::ERROR_CODE_ABORT, _T("Processing aborted"));
 				}
 				else {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Unexpected error in AXCL_A_PROGRESS"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Unexpected error in AXCL_A_PROGRESS"));
 				}
 			}
 		}
@@ -149,7 +149,7 @@ namespace axcl {
 				pErrorMsg = GetErrorMsg();
 				break;
 			default:
-				iAxclCode = AXCL_E_AXCRYPT;
+				iAxclCode = AXCL_E_XECRETSFILE;
 				pErrorMsg = GetErrorMsg();
 				break;
 			}

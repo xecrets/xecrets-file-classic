@@ -89,12 +89,12 @@ const int mChunkSize = 0x100000;            ///< The chunk size we work in.
 
 /// \brief Custom error codes from ::AxPipe -derived classes.
 enum {
-	ERROR_CODE_AXCRYPT = AxPipe::ERROR_CODE_DERIVED, ///< Generic custom error
+	ERROR_CODE_XECRETSFILE = AxPipe::ERROR_CODE_DERIVED, ///< Generic custom error
 	ERROR_CODE_CANCEL,                      ///< User cancelled in a dialog box before start
 	ERROR_CODE_HMAC,                        ///< HMAC does not match
 	ERROR_CODE_ABORT,                       ///< User cancelled whilst working
 	ERROR_CODE_MORE,                        ///< Not an error - want a bigger dialog
-	AXCRYPT_CODE_DATA,                      ///< Not an error - we found Xecrets File data status
+	XECRETSFILE_CODE_DATA,                      ///< Not an error - we found Xecrets File data status
 };
 
 /// \brief Xecrets File Header Type Codes.
@@ -275,9 +275,9 @@ CVersion::newNameVersionString(UINT uProductName) {
 /// sent there.
 class CSinkCheckAny : public CSink {
 protected:
-	/// \brief If we get data, we set the error code AXCRYPT_CODE_DATA, and drop the segment.
+	/// \brief If we get data, we set the error code XECRETSFILE_CODE_DATA, and drop the segment.
 	void Out(CSeg* pSeg) {
-		SetError(AXCRYPT_CODE_DATA, _T(""));
+		SetError(XECRETSFILE_CODE_DATA, _T(""));
 		pSeg->Release();
 	}
 };
@@ -1187,11 +1187,11 @@ public:
 				return;
 			}
 			if (!pSeg->Len()) {
-				SetError(ERROR_CODE_AXCRYPT, _T("Internal error, zero-length segment"));
+				SetError(ERROR_CODE_XECRETSFILE, _T("Internal error, zero-length segment"));
 				return;
 			}
 			if (pSeg->Len() != sizeof guidAxCryptFileIdInverse) {
-				SetError(ERROR_CODE_AXCRYPT, _T("Missing GUID"));
+				SetError(ERROR_CODE_XECRETSFILE, _T("Missing GUID"));
 				return;
 			}
 			// Since we're storing the one's complement of the GUID, we can check for
@@ -1202,7 +1202,7 @@ public:
 				s |= pSeg->PtrRd()[i] ^ ((unsigned char*)&guidAxCryptFileIdInverse)[i] ^ 0xff;
 			}
 			if (s) {
-				SetError(ERROR_CODE_AXCRYPT, _T("Missing GUID"));
+				SetError(ERROR_CODE_XECRETSFILE, _T("Missing GUID"));
 				return;
 			}
 
@@ -1214,7 +1214,7 @@ public:
 			do {
 				pSeg = In(sizeof SHeader);
 				if (!pSeg.get() || pSeg->Len() != sizeof SHeader) {
-					SetError(ERROR_CODE_AXCRYPT, _T("Could not read expected header"));
+					SetError(ERROR_CODE_XECRETSFILE, _T("Could not read expected header"));
 					return;
 				}
 				pHeader = (SHeader*)pSeg->PtrRd();
@@ -1225,7 +1225,7 @@ public:
 				// Get extra data - do not ask for zero bytes from In(), it'll get all available.
 				CAutoSeg pSegHeaderData = cbHeaderData ? In(cbHeaderData) : new CSeg(0);
 				if (pSegHeaderData->Len() != cbHeaderData) {
-					SetError(ERROR_CODE_AXCRYPT, _T("Error reading header data"));
+					SetError(ERROR_CODE_XECRETSFILE, _T("Error reading header data"));
 					return;
 				}
 
@@ -1237,7 +1237,7 @@ public:
 				case ePreamble:
 					// Preamble must be first, and only once.
 					if (!m_pMeta->empty()) {
-						SetError(ERROR_CODE_AXCRYPT, _T("Preamble seen out of sequence"));
+						SetError(ERROR_CODE_XECRETSFILE, _T("Preamble seen out of sequence"));
 						return;
 					}
 					cbOffsetHMAC += sizeof SHeader + cbHeaderData;
@@ -1250,7 +1250,7 @@ public:
 				case eVersion:
 					// Ensure that only one of each of these are found.
 					if (m_pMeta->FindType((TBlockType)pHeader->oType) != m_pMeta->end()) {
-						SetError(ERROR_CODE_AXCRYPT, _T("Illegal duplicate section found"));
+						SetError(ERROR_CODE_XECRETSFILE, _T("Illegal duplicate section found"));
 						return;
 					}
 					break;
@@ -1266,12 +1266,12 @@ public:
 			} while ((TBlockType)pHeader->oType != eData);
 			// Check the file version (we only support this one version 3 currently)
 			if (m_pMeta->FileVersionMajor() != m_iFileVersionMajor) {
-				SetError(ERROR_CODE_AXCRYPT, _T("New file version - cannot decrypt"));
+				SetError(ERROR_CODE_XECRETSFILE, _T("New file version - cannot decrypt"));
 				return;
 			}
 			// Check that we have a key
 			if (m_pMeta->FindType(eKeyWrap1) == m_pMeta->end()) {
-				SetError(ERROR_CODE_AXCRYPT, _T("No data encrypting key found"));
+				SetError(ERROR_CODE_XECRETSFILE, _T("No data encrypting key found"));
 				return;
 			}
 
@@ -1366,7 +1366,7 @@ public:
 			}
 			// Verify that we got all we needed.
 			if (cb) {
-				SetError(ERROR_CODE_AXCRYPT, _T("File truncated or format error"));
+				SetError(ERROR_CODE_XECRETSFILE, _T("File truncated or format error"));
 			}
 			Close();                        // Close the output - we're at end of this stream.
 			m_pAxDecrypt->EndProgress(!GetErrorCode());
@@ -1987,12 +1987,12 @@ About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
 		delete sz;
 
 		ASSPTR(sz = ALoadString(IDS_ABOUTMSG));
-		wsprintf(szMsg, sz, auto_ptr<_TCHAR>(ALoadString(IDS_AXCRYPT)).get());
+		wsprintf(szMsg, sz, auto_ptr<_TCHAR>(ALoadString(IDS_XECRETSFILE)).get());
 		SetDlgItemText(hDlg, IDC_ABOUTMSG, szMsg);
 		delete sz;
 
-		ASSPTR(sz = ALoadString(IDS_AXCRYPTURL));
-		SetDlgItemText(hDlg, IDC_GETAXCRYPT, sz);
+		ASSPTR(sz = ALoadString(IDS_XECRETSFILEURL));
+		SetDlgItemText(hDlg, IDC_GETXECRETSFILE, sz);
 		delete sz;
 
 		return TRUE;
@@ -2004,11 +2004,11 @@ About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
 		case IDCANCEL:
 			EndDialog(hDlg, wmId);
 			return TRUE;
-		case IDC_GETAXCRYPT:
+		case IDC_GETXECRETSFILE:
 		{
 			// This is ugly - but it's no problem either, we're defining the string in the dialog
 			_TCHAR szURL[200];
-			GetDlgItemText(hDlg, IDC_GETAXCRYPT, szURL, sizeof szURL / sizeof szURL[0]);
+			GetDlgItemText(hDlg, IDC_GETXECRETSFILE, szURL, sizeof szURL / sizeof szURL[0]);
 			ShellExecute(hDlg, NULL, szURL, NULL, NULL, SW_NORMAL);
 			return TRUE;
 		}
@@ -2086,7 +2086,7 @@ IsAxCryptFile(_TCHAR* szPath) {
 	In.Append((new AxPipe::Stock::CPipeFindSync)->Init(&guidAxCryptFileIdInverse, sizeof guidAxCryptFileIdInverse, true));
 	In.Append(new CSinkCheckAny);
 	int iErrorCode = In.Init(szPath, mChunkSize)->Open()->Drain()->Close()->Plug()->GetErrorCode();
-	return iErrorCode == AXCRYPT_CODE_DATA;
+	return iErrorCode == XECRETSFILE_CODE_DATA;
 }
 
 /// \brief Copy an AxDecrypt file, but not the attached part if any.

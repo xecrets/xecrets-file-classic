@@ -348,7 +348,7 @@ namespace axcl {
 
 				// Placeholder section for the HMAC - will be filled in after encryption
 				if (!m_pEncryptMeta->SetPreamble(NULL)) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set preamble"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set preamble"));
 					return false;
 				}
 
@@ -358,49 +358,49 @@ namespace axcl {
 				// really that useful without an id as well. To be fixed...
 				// TODO: For now, we set the program version 0.0.0 here. Should probably reflect something else.
 				if (!m_pEncryptMeta->SetVersion(0, 0, 0)) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set version"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set version"));
 					return false;
 				}
 
 				// Generate a master key, wrap it using the provided passphrase-derived key
 				if (!m_pEncryptMeta->SetDecryptKey(AXCL_KEY_ENC)) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set passphrase"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set passphrase"));
 					return false;
 				}
 
 				// Store original file times in the headers
 				if (!m_pEncryptMeta->SetFileInfo()) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set file info"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set file info"));
 					return false;
 				}
 
 				// Store the original file name in the headers
 				if (!m_pEncryptMeta->SetFileNameInfo()) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set file name info"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set file name info"));
 					return false;
 				}
 
 				// Set the IV, and a place-holder for the length of the plain-text, which we don't know yet
 				if (!m_pEncryptMeta->SetEncryptionInfo(0)) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set encryption info"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set encryption info"));
 					return false;
 				}
 
 				// Compression flag place-holder
 				if (!m_pEncryptMeta->SetCompressionFlag(false)) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set compression flag"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set compression flag"));
 					return false;
 				}
 
 				// Compression info place-holder
 				if (!m_pEncryptMeta->SetCompressionInfo(0)) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set compression info"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set compression info"));
 					return false;
 				}
 
 				// Set a placeholder for the final size of the encrypted data stream, including padding
 				if (!m_pEncryptMeta->SetDataSize(0)) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Failed to set encrypted data size"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Failed to set encrypted data size"));
 					return false;
 				}
 
@@ -445,19 +445,19 @@ namespace axcl {
 
 				// Remember the number of bytes of the uncompressed data too
 				if (!m_pEncryptMeta->SetCompressionInfo(base::GetInputSize())) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("SetCompressionInfo() failed"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("SetCompressionInfo() failed"));
 					break;
 				}
 
 				// Update to the correct value of the byte count for the plain-text - compressed or not
 				if (!m_pEncryptMeta->SetEncryptionInfo(base::GetOutputSize())) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("SetEncryptionInfo() failed"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("SetEncryptionInfo() failed"));
 					break;
 				}
 
 				// Update to the actual value for compression
 				if (!m_pEncryptMeta->SetCompressionFlag(IsDeflating())) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("SetCompressionFlag() failed"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("SetCompressionFlag() failed"));
 					break;
 				}
 			} while (false);
@@ -500,7 +500,7 @@ namespace axcl {
 
 				// Assert that we do have a valid key
 				if (!m_pEncryptMeta->KeyIsValid()) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Invalid encryption key"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Invalid encryption key"));
 					return false;
 				}
 				// Initialize an AES structure with the Data Encrypting Key and the proper direction.
@@ -543,7 +543,7 @@ namespace axcl {
 
 				// Update to the correct value of the byte count for the data section
 				if (!m_pEncryptMeta->SetDataSize(m_cb)) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _TT("SetDataSize() failed"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("SetDataSize() failed"));
 				}
 			}
 
@@ -640,7 +640,7 @@ namespace axcl {
 				return false;
 			}
 			if (iReturn != AXCL_E_OK) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Unexpected error in AXCL_A_GET_CIPHER_PATH"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Unexpected error in AXCL_A_GET_CIPHER_PATH"));
 				return false;
 			}
 			m_sFilePath = szFilePath;
@@ -651,7 +651,7 @@ namespace axcl {
 			// Allocate a new memory segment just large enough for the place-holder headers.
 			AxPipe::CSeg* pSeg = new AxPipe::CSeg(m_pEncryptMeta->Emit(NULL));
 			if (m_pEncryptMeta->Emit(pSeg->PtrWr()) != pSeg->Len()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
 				return false;
 			}
 			Out(pSeg);
@@ -669,7 +669,7 @@ namespace axcl {
 			}
 
 			if (!m_pEncryptMeta->VerifyHeaderLen()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, header length has been modified - cannot fixup headers!"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Internal error, header length has been modified - cannot fixup headers!"));
 				return;
 			}
 
@@ -682,7 +682,7 @@ namespace axcl {
 			// Allocate a new memory segment just large enough for the freshly re-generated buffers.
 			AxPipe::CSeg* pSeg = new AxPipe::CSeg(m_pEncryptMeta->Emit(NULL));
 			if (m_pEncryptMeta->Emit(pSeg->PtrWr()) != pSeg->Len()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
 				return;
 			}
 			Out(pSeg);
@@ -716,7 +716,7 @@ namespace axcl {
 			// Allocate a new memory segment just large enough for the freshly re-generated buffers.
 			pSeg = new AxPipe::CSeg(m_pEncryptMeta->Emit(NULL));
 			if (m_pEncryptMeta->Emit(pSeg->PtrWr()) != pSeg->Len()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
 				return;
 			}
 			Out(pSeg);

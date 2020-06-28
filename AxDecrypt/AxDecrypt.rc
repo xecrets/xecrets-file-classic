@@ -78,7 +78,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
 CTEXT           "", IDC_COPYRIGHT, 7, 5, 186, 16
 CTEXT           "", IDC_ABOUTMSG, 8, 25, 186, 26
-DEFPUSHBUTTON   "", IDC_GETAXCRYPT, 28, 54, 145, 15
+DEFPUSHBUTTON   "", IDC_GETXECRETSFILE, 28, 54, 145, 15
 PUSHBUTTON      "OK", IDOK, 74, 73, 50, 14
 END
 
@@ -202,7 +202,7 @@ END
 STRINGTABLE
 BEGIN
 IDS_DEFAULTFILENAME     "AxDecrypt.exe"
-IDS_AXCRYPTURL          "http://www.axantum.com"
+IDS_XECRETSFILEURL          "http://www.axantum.com"
 IDS_AXEXT               ".axx"
 IDS_HELPMSG             "To decrypt the contents of an encrypted file, press the ""Decrypt"" button.\n\nFiles will be decrypted to the folder specified in the ""Decrypt to folder"" field.\nThis folder may be created if it does not exist.\n\nIf you would like to start the application associated with the\ndocument type, check that box too."
 IDS_DECRYPTING          "Decrypting: %s"
@@ -228,7 +228,7 @@ END
 STRINGTABLE
 BEGIN
 IDS_AXDECRYPT           "AxDecrypt"
-IDS_AXCRYPT             "XecretsFile"
+IDS_XECRETSFILE             "XecretsFile"
 END
 
 #endif    // English (United States) resources
@@ -262,7 +262,8 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "Version.h"
+
+#include "Version.h"
 #include "Version.rc"
 
 /////////////////////////////////////////////////////////////////////////////

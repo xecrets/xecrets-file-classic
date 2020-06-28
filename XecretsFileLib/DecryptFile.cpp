@@ -138,12 +138,12 @@ namespace axcl {
 			}
 
 			if (!apSeg->Len()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _T("Internal error, zero-length segment"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _T("Internal error, zero-length segment"));
 				return false;
 			}
 
 			if (apSeg->Len() != sizeof axcl::guidAxCryptFileIdInverse) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _T("Missing GUID"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _T("Missing GUID"));
 				return false;
 			}
 
@@ -155,7 +155,7 @@ namespace axcl {
 				s |= apSeg->PtrRd()[i] ^ ((unsigned char*)&axcl::guidAxCryptFileIdInverse)[i] ^ 0xff;
 			}
 			if (s) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _T("Missing GUID"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _T("Missing GUID"));
 				return false;
 			}
 
@@ -164,7 +164,7 @@ namespace axcl {
 			do {
 				apSeg = In(sizeof CXecretsFileMeta::SHeader);
 				if (!apSeg.get() || apSeg->Len() != sizeof CXecretsFileMeta::SHeader) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _T("Could not read expected header"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _T("Could not read expected header"));
 					return false;
 				}
 
@@ -174,13 +174,13 @@ namespace axcl {
 				// Get extra data - do not ask for zero bytes from In(), it'll get all available.
 				pSegHeaderData = cbHeaderData ? In(cbHeaderData) : new AxPipe::CSeg(0);
 				if (pSegHeaderData->Len() != cbHeaderData) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _T("Error reading header data"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _T("Error reading header data"));
 					return false;
 				}
 			} while (m_pDecryptMeta->AddSection((CXecretsFileMeta::SHeader*)apSeg->PtrRd(), pSegHeaderData->PtrRd(), pSegHeaderData->Len()));
 
 			if (!m_pDecryptMeta->GetError().empty()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, m_pDecryptMeta->GetError().c_str());
+				SetError(axcl::ERROR_CODE_XECRETSFILE, m_pDecryptMeta->GetError().c_str());
 				return false;
 			}
 
@@ -323,7 +323,7 @@ namespace axcl {
 				}
 				// Verify that we got all we needed.
 				if (cb) {
-					SetError(axcl::ERROR_CODE_AXCRYPT, _T("File truncated or format error"));
+					SetError(axcl::ERROR_CODE_XECRETSFILE, _T("File truncated or format error"));
 				}
 				Close();                        // Close the output - we're at end of this stream.
 			}
@@ -483,7 +483,7 @@ namespace axcl {
 
 			// Assert that we do have a valid key
 			if (!m_pDecryptMeta->KeyIsValid()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Invalid decryption key"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Invalid decryption key"));
 				return false;
 			}
 
@@ -656,7 +656,7 @@ namespace axcl {
 				return false;
 			}
 			if (iReturn != AXCL_E_OK) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Unexpected error in AXCL_A_GET_PLAIN_PATH"));
+				SetError(axcl::ERROR_CODE_XECRETSFILE, _TT("Unexpected error in AXCL_A_GET_PLAIN_PATH"));
 				return false;
 			}
 			m_sFilePath = szFilePath;

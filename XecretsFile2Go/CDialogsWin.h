@@ -637,7 +637,7 @@ public:
 	BEGIN_MSG_MAP(CAboutDlg)
 		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
 		MESSAGE_HANDLER(WM_CLOSE, OnClose)
-		COMMAND_ID_HANDLER(IDC_GETAXCRYPT, OnGetAxCrypt);
+		COMMAND_ID_HANDLER(IDC_GETXECRETSFILE, OnGetAxCrypt);
 	COMMAND_ID_HANDLER(IDOK, OnOKCancel)
 		COMMAND_ID_HANDLER(IDCANCEL, OnOKCancel)
 	END_MSG_MAP()
@@ -659,7 +659,7 @@ public:
 		StringCbPrintf(szMsg, sizeof szMsg, _("This is an ALPHA-version! Pre-BETA! Enjoy, but be aware, and please report problems and suggestions! Get the full version of %s for one-click encryption, decryption and viewing."), _("GlobalNames|XecretsFile"));
 		SetDlgItemText(IDC_ABOUTMSG, szMsg);
 
-		SetDlgItemText(IDC_GETAXCRYPT, _("http://www.axantum.com"));
+		SetDlgItemText(IDC_GETXECRETSFILE, _("http://www.axantum.com"));
 
 		CenterWindow();
 		return TRUE;    // let the system set the focus
@@ -667,7 +667,7 @@ public:
 
 	LRESULT OnGetAxCrypt(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
 		_TCHAR szURL[200];
-		UINT cc = GetDlgItemText(IDC_GETAXCRYPT, szURL, sizeof szURL / sizeof szURL[0]);
+		UINT cc = GetDlgItemText(IDC_GETXECRETSFILE, szURL, sizeof szURL / sizeof szURL[0]);
 
 		// If the URL for whatever reason is *that* long, let's just silently skip. No real harm done.
 		if (cc < sizeof szURL / sizeof szURL[0]) {

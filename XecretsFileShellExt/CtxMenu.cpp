@@ -909,7 +909,7 @@ CShellExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT i
 
 				// Show a nice little bitmap alongside the Xecrets File menu selection
 				if (ghBitmap == NULL) {
-					ghBitmap = LoadBitmap(ghInstance, MAKEINTRESOURCE(IDB_AXCRYPT));
+					ghBitmap = LoadBitmap(ghInstance, MAKEINTRESOURCE(IDB_XECRETSFILE));
 					CAssert(ghBitmap != NULL).Sys(MSG_SYSTEM_CALL, _T("CShellExt::QueryContextMenu() [LoadBitmap()]")).Throw();
 				}
 				SetMenuItemBitmaps(hMenu, indexMenu - 1, MF_BYPOSITION, ghBitmap, ghBitmap);

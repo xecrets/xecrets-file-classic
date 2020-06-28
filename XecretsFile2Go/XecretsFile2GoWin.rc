@@ -35,10 +35,10 @@ IDD_ABOUTBOX DIALOGEX 0, 0, 258, 122
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,101,100,50,14
-    PUSHBUTTON      "",IDC_GETAXCRYPT,55,81,145,15
-    CTEXT           "",IDC_ABOUTMSG,35,25,186,49
-    CTEXT           "",IDC_COPYRIGHT,35,5,186,16
+DEFPUSHBUTTON   "OK", IDOK, 101, 100, 50, 14
+PUSHBUTTON      "", IDC_GETXECRETSFILE, 55, 81, 145, 15
+CTEXT           "", IDC_ABOUTMSG, 35, 25, 186, 49
+CTEXT           "", IDC_COPYRIGHT, 35, 5, 186, 16
 END
 
 IDD_ENCRYPT_PASSPHRASE DIALOGEX 0, 0, 177, 154
@@ -46,20 +46,20 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "Dialog"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,37,134,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,97,134,50,14
-    EDITTEXT        IDC_EDIT_PASSPHRASE_1,10,25,155,12,ES_PASSWORD | ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_PASSPHRASE_2,10,50,155,12,ES_PASSWORD | ES_AUTOHSCROLL
-    CONTROL         "Session default for Encryption",IDC_STATIC_CHK_CACHE_E,
-                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,5,117,160,12
-    PUSHBUTTON      "...",IDC_BTN_KEYFILE,150,80,15,12,BS_CENTER | BS_VCENTER
-    GROUPBOX        "Passphrase",IDC_STATIC_GRP_PASSPHRASE,5,15,165,55
-    EDITTEXT        IDC_EDIT_KEYFILENAME,10,80,130,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    GROUPBOX        "Keyfile",IDC_STATIC_GRP_KEYFILE,5,70,165,30
-    LTEXT           "Verify",IDC_STATIC_VERIFY,10,40,155,8
-    CONTROL         "Retain for decryption during session",IDC_STATIC_CHK_CACHE_D,
-                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,5,105,160,12
-    LTEXT           "Enter a passphrase and optionally a key-file",IDC_STATIC_ENTER_PASSPHRASE,7,5,163,8
+DEFPUSHBUTTON   "OK", IDOK, 37, 134, 50, 14
+PUSHBUTTON      "Cancel", IDCANCEL, 97, 134, 50, 14
+EDITTEXT        IDC_EDIT_PASSPHRASE_1, 10, 25, 155, 12, ES_PASSWORD | ES_AUTOHSCROLL
+EDITTEXT        IDC_EDIT_PASSPHRASE_2, 10, 50, 155, 12, ES_PASSWORD | ES_AUTOHSCROLL
+CONTROL         "Session default for Encryption", IDC_STATIC_CHK_CACHE_E,
+"Button", BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP, 5, 117, 160, 12
+PUSHBUTTON      "...", IDC_BTN_KEYFILE, 150, 80, 15, 12, BS_CENTER | BS_VCENTER
+GROUPBOX        "Passphrase", IDC_STATIC_GRP_PASSPHRASE, 5, 15, 165, 55
+EDITTEXT        IDC_EDIT_KEYFILENAME, 10, 80, 130, 12, ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+GROUPBOX        "Keyfile", IDC_STATIC_GRP_KEYFILE, 5, 70, 165, 30
+LTEXT           "Verify", IDC_STATIC_VERIFY, 10, 40, 155, 8
+CONTROL         "Retain for decryption during session", IDC_STATIC_CHK_CACHE_D,
+"Button", BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP, 5, 105, 160, 12
+LTEXT           "Enter a passphrase and optionally a key-file", IDC_STATIC_ENTER_PASSPHRASE, 7, 5, 163, 8
 END
 
 IDD_DECRYPT_PASSPHRASE DIALOGEX 0, 0, 177, 130
@@ -67,29 +67,28 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 EXSTYLE WS_EX_APPWINDOW
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    GROUPBOX        "Passphrase",IDC_STATIC_GRP_PASSPHRASE,5,15,165,30
-    EDITTEXT        IDC_EDIT_PASSPHRASE_1,10,25,155,12,ES_PASSWORD | ES_AUTOHSCROLL
-    GROUPBOX        "Keyfile",IDC_STATIC_GRP_KEYFILE,5,45,165,30
-    EDITTEXT        IDC_EDIT_KEYFILENAME,10,55,130,12,ES_AUTOHSCROLL | ES_READONLY
-    PUSHBUTTON      "...",IDC_BTN_KEYFILE,150,55,15,12
-    DEFPUSHBUTTON   "OK",IDOK,41,109,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,97,109,50,14
-    LTEXT           "Enter a passphrase and optionally a key-file",IDC_STATIC_ENTER_PASSPHRASE,7,5,163,8
-    CONTROL         "Retain for decryption during session",IDC_STATIC_CHK_CACHE_D,
-                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,5,80,160,12
-    CONTROL         "Session default for Encryption",IDC_STATIC_CHK_CACHE_E,
-                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,5,92,160,12
+GROUPBOX        "Passphrase", IDC_STATIC_GRP_PASSPHRASE, 5, 15, 165, 30
+EDITTEXT        IDC_EDIT_PASSPHRASE_1, 10, 25, 155, 12, ES_PASSWORD | ES_AUTOHSCROLL
+GROUPBOX        "Keyfile", IDC_STATIC_GRP_KEYFILE, 5, 45, 165, 30
+EDITTEXT        IDC_EDIT_KEYFILENAME, 10, 55, 130, 12, ES_AUTOHSCROLL | ES_READONLY
+PUSHBUTTON      "...", IDC_BTN_KEYFILE, 150, 55, 15, 12
+DEFPUSHBUTTON   "OK", IDOK, 41, 109, 50, 14
+PUSHBUTTON      "Cancel", IDCANCEL, 97, 109, 50, 14
+LTEXT           "Enter a passphrase and optionally a key-file", IDC_STATIC_ENTER_PASSPHRASE, 7, 5, 163, 8
+CONTROL         "Retain for decryption during session", IDC_STATIC_CHK_CACHE_D,
+"Button", BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP, 5, 80, 160, 12
+CONTROL         "Session default for Encryption", IDC_STATIC_CHK_CACHE_E,
+"Button", BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP, 5, 92, 160, 12
 END
 
 IDD_PROGRESS DIALOGEX 0, 0, 186, 63
 STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    PUSHBUTTON      "",IDCANCEL,67,24,50,14
-    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,47,172,9
-    LTEXT           "",IDC_FILENAME,7,7,172,8,SS_PATHELLIPSIS
+PUSHBUTTON      "", IDCANCEL, 67, 24, 50, 14
+CONTROL         "", IDC_PROGRESS, "msctls_progress32", WS_BORDER, 7, 47, 172, 9
+LTEXT           "", IDC_FILENAME, 7, 7, 172, 8, SS_PATHELLIPSIS
 END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -99,40 +98,39 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO
 BEGIN
-    IDD_ABOUTBOX, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 251
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 115
-    END
+IDD_ABOUTBOX, DIALOG
+BEGIN
+LEFTMARGIN, 7
+RIGHTMARGIN, 251
+TOPMARGIN, 7
+BOTTOMMARGIN, 115
+END
 
-    IDD_ENCRYPT_PASSPHRASE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 170
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 147
-    END
+IDD_ENCRYPT_PASSPHRASE, DIALOG
+BEGIN
+LEFTMARGIN, 7
+RIGHTMARGIN, 170
+TOPMARGIN, 7
+BOTTOMMARGIN, 147
+END
 
-    IDD_DECRYPT_PASSPHRASE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 170
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 123
-    END
+IDD_DECRYPT_PASSPHRASE, DIALOG
+BEGIN
+LEFTMARGIN, 7
+RIGHTMARGIN, 170
+TOPMARGIN, 7
+BOTTOMMARGIN, 123
+END
 
-    IDD_PROGRESS, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 179
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 56
-    END
+IDD_PROGRESS, DIALOG
+BEGIN
+LEFTMARGIN, 7
+RIGHTMARGIN, 179
+TOPMARGIN, 7
+BOTTOMMARGIN, 56
+END
 END
 #endif    // APSTUDIO_INVOKED
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -150,41 +148,40 @@ IDR_MAINFRAME           ICON                    "XecretsFile2Go.ico"
 
 IDR_MAINFRAME MENU
 BEGIN
-    POPUP "&File"
-    BEGIN
-        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-        MENUITEM SEPARATOR
-        MENUITEM "New &Window",                 ID_FILE_NEW_WINDOW
-        MENUITEM SEPARATOR
-        MENUITEM "E&xit",                       ID_APP_EXIT
-    END
-    POPUP "&View"
-    BEGIN
-        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
-        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
-        MENUITEM SEPARATOR
-        MENUITEM "Lar&ge Icons",                ID_VIEW_ICONS
-        MENUITEM "S&mall Icons",                ID_VIEW_SMALL_ICONS
-        MENUITEM "&List",                       ID_VIEW_LIST
-        MENUITEM "&Details",                    ID_VIEW_DETAILS
-        MENUITEM SEPARATOR
-        POPUP "Arrange &Icons"
-        BEGIN
-            MENUITEM "by Name",                     ID_VIEW_SORT_NAME
-            MENUITEM "by Size",                     ID_VIEW_SORT_SIZE
-            MENUITEM "by Type",                     ID_VIEW_SORT_TYPE
-            MENUITEM "by Time",                     ID_VIEW_SORT_TIME
-            MENUITEM "by Attr",                     ID_VIEW_SORT_ATTR
-        END
-        MENUITEM SEPARATOR
-        MENUITEM "&Refresh\tF5",                ID_VIEW_REFRESH
-    END
-    POPUP "&Help"
-    BEGIN
-        MENUITEM "&About...",                   ID_APP_ABOUT
-    END
+POPUP "&File"
+BEGIN
+MENUITEM "&Open...\tCtrl+O", ID_FILE_OPEN
+MENUITEM SEPARATOR
+MENUITEM "New &Window", ID_FILE_NEW_WINDOW
+MENUITEM SEPARATOR
+MENUITEM "E&xit", ID_APP_EXIT
 END
-
+POPUP "&View"
+BEGIN
+MENUITEM "&Toolbar", ID_VIEW_TOOLBAR
+MENUITEM "&Status Bar", ID_VIEW_STATUS_BAR
+MENUITEM SEPARATOR
+MENUITEM "Lar&ge Icons", ID_VIEW_ICONS
+MENUITEM "S&mall Icons", ID_VIEW_SMALL_ICONS
+MENUITEM "&List", ID_VIEW_LIST
+MENUITEM "&Details", ID_VIEW_DETAILS
+MENUITEM SEPARATOR
+POPUP "Arrange &Icons"
+BEGIN
+MENUITEM "by Name", ID_VIEW_SORT_NAME
+MENUITEM "by Size", ID_VIEW_SORT_SIZE
+MENUITEM "by Type", ID_VIEW_SORT_TYPE
+MENUITEM "by Time", ID_VIEW_SORT_TIME
+MENUITEM "by Attr", ID_VIEW_SORT_ATTR
+END
+MENUITEM SEPARATOR
+MENUITEM "&Refresh\tF5", ID_VIEW_REFRESH
+END
+POPUP "&Help"
+BEGIN
+MENUITEM "&About...", ID_APP_ABOUT
+END
+END
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -193,24 +190,23 @@ END
 
 IDR_MAINFRAME ACCELERATORS
 BEGIN
-    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
-    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
-    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
-    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
-    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
-    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
-    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
-    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
-    VK_F5,          ID_VIEW_REFRESH,        VIRTKEY, NOINVERT
-    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
-    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
-    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
-    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
-    VK_RETURN,      ID_COMBO_GO,            VIRTKEY, NOINVERT
-    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
-    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+"C", ID_EDIT_COPY, VIRTKEY, CONTROL, NOINVERT
+"N", ID_FILE_NEW, VIRTKEY, CONTROL, NOINVERT
+"O", ID_FILE_OPEN, VIRTKEY, CONTROL, NOINVERT
+"P", ID_FILE_PRINT, VIRTKEY, CONTROL, NOINVERT
+"S", ID_FILE_SAVE, VIRTKEY, CONTROL, NOINVERT
+"V", ID_EDIT_PASTE, VIRTKEY, CONTROL, NOINVERT
+VK_BACK, ID_EDIT_UNDO, VIRTKEY, ALT, NOINVERT
+VK_DELETE, ID_EDIT_CUT, VIRTKEY, SHIFT, NOINVERT
+VK_F5, ID_VIEW_REFRESH, VIRTKEY, NOINVERT
+VK_F6, ID_NEXT_PANE, VIRTKEY, NOINVERT
+VK_F6, ID_PREV_PANE, VIRTKEY, SHIFT, NOINVERT
+VK_INSERT, ID_EDIT_COPY, VIRTKEY, CONTROL, NOINVERT
+VK_INSERT, ID_EDIT_PASTE, VIRTKEY, SHIFT, NOINVERT
+VK_RETURN, ID_COMBO_GO, VIRTKEY, NOINVERT
+"X", ID_EDIT_CUT, VIRTKEY, CONTROL, NOINVERT
+"Z", ID_EDIT_UNDO, VIRTKEY, CONTROL, NOINVERT
 END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -219,23 +215,22 @@ END
 
 IDR_MAINFRAME TOOLBAR 16, 15
 BEGIN
-    BUTTON      ID_FILE_OPEN
-    SEPARATOR
-    BUTTON      ID_VIEW_REFRESH
-    SEPARATOR
-    BUTTON      ID_APP_ABOUT
+BUTTON      ID_FILE_OPEN
+SEPARATOR
+BUTTON      ID_VIEW_REFRESH
+SEPARATOR
+BUTTON      ID_APP_ABOUT
 END
 
 IDT_GOGREY TOOLBAR 16, 15
 BEGIN
-    BUTTON      ID_COMBO_GO
+BUTTON      ID_COMBO_GO
 END
 
 IDT_GOGREEN TOOLBAR 16, 15
 BEGIN
-    BUTTON      ID_COMBO_GO
+BUTTON      ID_COMBO_GO
 END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -253,111 +248,110 @@ IDT_GOGREEN             BITMAP                  "GoGreen.bmp"
 
 STRINGTABLE
 BEGIN
-    IDS_AXX                 ".axx"
+IDS_AXX                 ".axx"
 END
 
 STRINGTABLE
 BEGIN
-    ID_FILE_NEW             "Create a new document\nNew"
-    ID_FILE_OPEN            "Open an existing document\nOpen"
-    ID_FILE_CLOSE           "Close the active document\nClose"
-    ID_FILE_SAVE            "Save the active document\nSave"
-    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
-    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
-    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
-    ID_FILE_PRINT           "Print the active document\nPrint"
-    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+ID_FILE_NEW             "Create a new document\nNew"
+ID_FILE_OPEN            "Open an existing document\nOpen"
+ID_FILE_CLOSE           "Close the active document\nClose"
+ID_FILE_SAVE            "Save the active document\nSave"
+ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+ID_FILE_PRINT           "Print the active document\nPrint"
+ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
 END
 
 STRINGTABLE
 BEGIN
-    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
-    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
 END
 
 STRINGTABLE
 BEGIN
-    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
-    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
 STRINGTABLE
 BEGIN
-    ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
-    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
-    ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
-    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
-    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
-    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
+ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
+ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
+ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
+ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
+ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
 
 STRINGTABLE
 BEGIN
-    ID_EDIT_CLEAR           "Erase the selection\nErase"
-    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
-    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
-    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
-    ID_EDIT_FIND            "Find the specified text\nFind"
-    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
-    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
-    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
-    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
-    ID_EDIT_UNDO            "Undo the last action\nUndo"
-    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+ID_EDIT_CLEAR           "Erase the selection\nErase"
+ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+ID_EDIT_FIND            "Find the specified text\nFind"
+ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+ID_EDIT_UNDO            "Undo the last action\nUndo"
+ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END
 
 STRINGTABLE
 BEGIN
-    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
-    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle Status Bar"
-    ID_VIEW_REFRESH         "Refresh the content of the current view\nRefresh"
+ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle Status Bar"
+ID_VIEW_REFRESH         "Refresh the content of the current view\nRefresh"
 END
 
 STRINGTABLE
 BEGIN
-    ATL_IDS_SCSIZE          "Change the window size"
-    ATL_IDS_SCMOVE          "Change the window position"
-    ATL_IDS_SCMINIMIZE      "Reduce the window to an icon"
-    ATL_IDS_SCMAXIMIZE      "Enlarge the window to full size"
-    ATL_IDS_SCNEXTWINDOW    "Switch to the next document window"
-    ATL_IDS_SCPREVWINDOW    "Switch to the previous document window"
-    ATL_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+ATL_IDS_SCSIZE          "Change the window size"
+ATL_IDS_SCMOVE          "Change the window position"
+ATL_IDS_SCMINIMIZE      "Reduce the window to an icon"
+ATL_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+ATL_IDS_SCNEXTWINDOW    "Switch to the next document window"
+ATL_IDS_SCPREVWINDOW    "Switch to the previous document window"
+ATL_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
 STRINGTABLE
 BEGIN
-    ATL_IDS_SCRESTORE       "Restore the window to normal size"
-    ATL_IDS_SCTASKLIST      "Activate Task List"
-    ATL_IDS_MDICHILD        "Activate this window"
+ATL_IDS_SCRESTORE       "Restore the window to normal size"
+ATL_IDS_SCTASKLIST      "Activate Task List"
+ATL_IDS_MDICHILD        "Activate this window"
 END
 
 STRINGTABLE
 BEGIN
-    ATL_IDS_IDLEMESSAGE     "Ready"
+ATL_IDS_IDLEMESSAGE     "Ready"
 END
 
 STRINGTABLE
 BEGIN
-    ATL_IDS_MRU_FILE        "Open this document"
+ATL_IDS_MRU_FILE        "Open this document"
 END
 
 STRINGTABLE
 BEGIN
-    ID_FILE_NEW_WINDOW      "Open a new window\nNew Window"
-    ID_VIEW_ADDRESS_BAR     "Show or hide the address bar\nToggle Address Bar"
+ID_FILE_NEW_WINDOW      "Open a new window\nNew Window"
+ID_VIEW_ADDRESS_BAR     "Show or hide the address bar\nToggle Address Bar"
 END
 
 STRINGTABLE
 BEGIN
-    ID_VIEW_DETAILS         "Displays information about each item\nDetails"
-    ID_VIEW_ICONS           "Displays items using large icons\nLarge Icons"
-    ID_VIEW_LIST            "Displays items in a list\nList"
-    ID_VIEW_SMALL_ICONS     "Displays items using small icons\nSmall Icons"
+ID_VIEW_DETAILS         "Displays information about each item\nDetails"
+ID_VIEW_ICONS           "Displays items using large icons\nLarge Icons"
+ID_VIEW_LIST            "Displays items in a list\nList"
+ID_VIEW_SMALL_ICONS     "Displays items using small icons\nSmall Icons"
 END
 
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
-
 
 /////////////////////////////////////////////////////////////////////////////
 // English (United States) resources
@@ -372,29 +366,28 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
-    "resource.h\0"
+"resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
-    "#include ""atlres.h""\r\n"
-    "#define VERSION_PROJECT_COMMENTS_VALUE ""This software is experimental in early testing stages""\r\r\n"
-    "#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""Encryption and Decryption File Explorer""\r\n"
-    "#define VERSION_PROJECT_INTERNAL_NAME_VALUE ""XecretsFile2Go""\r\n"
-    "#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE ""XecretsFile2Go.exe""\r\n"
-    "#define VERSION_PROJECT_SPECIAL_BUILD_VALUE ""Alpha""\r\n"
-    "#define VERSION_PROJECT_SPECIAL_BUILD 1\r\n"
-    "#define VERSION_PROJECT_FILETYPE VFT_APP\r\n"
-    "\0"
+"#include ""atlres.h""\r\n"
+"#define VERSION_PROJECT_COMMENTS_VALUE ""This software is experimental in early testing stages""\r\r\n"
+"#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""Encryption and Decryption File Explorer""\r\n"
+"#define VERSION_PROJECT_INTERNAL_NAME_VALUE ""XecretsFile2Go""\r\n"
+"#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE ""XecretsFile2Go.exe""\r\n"
+"#define VERSION_PROJECT_SPECIAL_BUILD_VALUE ""Alpha""\r\n"
+"#define VERSION_PROJECT_SPECIAL_BUILD 1\r\n"
+"#define VERSION_PROJECT_FILETYPE VFT_APP\r\n"
+"\0"
 END
 
 #endif    // APSTUDIO_INVOKED
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Swedish (Sweden) resources
@@ -409,19 +402,17 @@ LANGUAGE LANG_SWEDISH, SUBLANG_SWEDISH
 // TEXTINCLUDE
 //
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
-    "#include ""Version.h""\r\n"
-    "#include ""Version.rc""\r\n"
-    "\0"
+"#include ""Version.h""\r\n"
+"#include ""Version.rc""\r\n"
+"\0"
 END
 
 #endif    // APSTUDIO_INVOKED
 
 #endif    // Swedish (Sweden) resources
 /////////////////////////////////////////////////////////////////////////////
-
-
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -433,4 +424,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

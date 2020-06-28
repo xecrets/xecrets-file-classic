@@ -1,5 +1,5 @@
-#ifndef CAXCRYPTWIN_H
-#define CAXCRYPTWIN_H
+#ifndef CXECRETSFILEWIN_H
+#define CXECRETSFILEWIN_H
 /*! \file
 	\brief CAxCryptWin.cpp - The Windows implementation of CAxCrypt
 
@@ -296,4 +296,4 @@ namespace axcl {
 		}
 	};
 }
-#endif CAXCRYPTWIN_H
+#endif CXECRETSFILEWIN_H

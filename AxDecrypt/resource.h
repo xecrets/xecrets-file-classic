@@ -13,9 +13,9 @@
 #define IDI_AXDECRYPT                   107
 #define IDC_AXDECRYPT                   109
 #define IDS_AXDECRYPT                   110
-#define IDS_AXCRYPT                     111
+#define IDS_XECRETSFILE                     111
 #define IDS_DEFAULTFILENAME             112
-#define IDS_AXCRYPTURL                  113
+#define IDS_XECRETSFILEURL                  113
 #define IDD_AXDECRYPT                   114
 #define IDS_AXEXT                       114
 #define IDS_HELPMSG                     115
@@ -43,7 +43,7 @@
 #define IDC_EDIT_PASSPHRASE             1000
 #define IDC_BUTTON1                     1001
 #define IDS_OPERATION                   1001
-#define IDC_GETAXCRYPT                  1001
+#define IDC_GETXECRETSFILE                  1001
 #define IDC_EDIT_KEYFILE                1001
 #define IDS_FILE                        1002
 #define IDC_PROGRESS                    1003
@@ -68,7 +68,7 @@
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        137

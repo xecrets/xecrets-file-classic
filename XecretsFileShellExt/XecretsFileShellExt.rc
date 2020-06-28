@@ -121,7 +121,7 @@ END
 // Bitmap
 //
 
-IDB_AXCRYPT             BITMAP                  "CtxMenu.bmp"
+IDB_XECRETSFILE             BITMAP                  "CtxMenu.bmp"
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 

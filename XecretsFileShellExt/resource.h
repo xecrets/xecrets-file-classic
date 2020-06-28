@@ -8,7 +8,7 @@
 #define IDD_PROGRESS                    103
 #define IDD_BRUTEFORCE                  104
 #define IDD_ABOUT                       106
-#define IDB_AXCRYPT                     107
+#define IDB_XECRETSFILE                     107
 #define IDC_ABOUT                       1000
 #define IDC_ENC_LEAD                    1001
 #define IDC_COMP_LEAD                   1002
