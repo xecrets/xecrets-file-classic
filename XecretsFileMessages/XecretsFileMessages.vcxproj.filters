@@ -32,7 +32,7 @@
     <None Include="AddLanguage\AddLanguage.vsmacros" />
   </ItemGroup>
   <ItemGroup>
-    <MessageCompiler Include="AxCryptTexts.mc">
+    <MessageCompiler Include="XecretsFileTexts.mc">
       <Filter>Source Files</Filter>
     </MessageCompiler>
   </ItemGroup>
