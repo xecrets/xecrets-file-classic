@@ -2985,7 +2985,7 @@ CmdInstallInRegistry(CCmdParam* pCmdParam) {
 	const bool fOverwrite = false;          // Prepare for optional forced overwrite
 
 	CFileName szPath2Exe; szPath2Exe.SetPath2ExeName();
-	CFileName szPath2Dll(szPath2Exe); szPath2Dll.SetTitle(gszAxCryptShellExtName);
+	CFileName szPath2Dll(szPath2Exe); szPath2Dll.SetTitle(gszXecretsFileShellExtName);
 	CFileName szPath2Ico(szPath2Exe); szPath2Ico.SetTitle(gszAxCryptIconName);
 
 	// Create gszAxCryptCLSID - we need it unless we already have it

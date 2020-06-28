@@ -60,7 +60,7 @@ CPtrTo<TCHAR> gszAxCryptFileExt;
 CPtrTo<TCHAR> gszAxCryptCLSID;
 CPtrTo<TCHAR> gszAxCryptExternalName;
 CPtrTo<TCHAR> gszAxCryptInternalName;
-CPtrTo<TCHAR> gszAxCryptShellExtName;
+CPtrTo<TCHAR> gszXecretsFileShellExtName;
 CPtrTo<TCHAR> gszAxCryptIconName;
 CPtrTo<TCHAR> gszXecretsUrl;
 CPtrTo<TCHAR> gszAxCryptSfxName;
@@ -258,8 +258,8 @@ InitGlobalStrings(HINSTANCE hInstance) {
 		return _T("Could not find config element RegistryPath");
 	}
 
-	gszAxCryptShellExtName = CopySz(pConfig->GetElementConfig(_T("ShellExtName")).c_str());
-	if (!gszAxCryptShellExtName || !*gszAxCryptShellExtName) {
+	gszXecretsFileShellExtName = CopySz(pConfig->GetElementConfig(_T("ShellExtName")).c_str());
+	if (!gszXecretsFileShellExtName || !*gszXecretsFileShellExtName) {
 		return _T("Could not find config element ShellExtName");
 	}
 

@@ -33,10 +33,10 @@ software@axantum.com	    		2001					Initial
 #define		STRICT
 #endif
 
-#ifdef AXCRYPTSHELLEXT_EXPORTS
-#define AXCRYPTSHELLEXT_API __declspec(dllexport)
+#ifdef XECRETSFILESHELLEXT_EXPORTS
+#define XECRETSFILESHELLEXT_API __declspec(dllexport)
 #else
-#define AXCRYPTSHELLEXT_API __declspec(dllimport)
+#define XECRETSFILESHELLEXT_API __declspec(dllimport)
 #endif
 
 #define		INC_OLE2

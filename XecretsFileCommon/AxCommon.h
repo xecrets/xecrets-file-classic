@@ -1,7 +1,7 @@
 #ifndef	_AXCOMMON
 #define	_AXCOMMON
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -26,7 +26,7 @@
 
 	E-mail							YYYY-MM-DD				Reason
 	software@axantum.com 			2001					Initial
-                                    2002-08-02              Rel 1.2
+									2002-08-02              Rel 1.2
 
 */
 #include "Utility.h"
@@ -51,7 +51,7 @@ extern CPtrTo<TCHAR> gszAxCryptFileExt;
 extern CPtrTo<TCHAR> gszAxCryptCLSID;
 extern CPtrTo<TCHAR> gszAxCryptExternalName;
 extern CPtrTo<TCHAR> gszAxCryptInternalName;
-extern CPtrTo<TCHAR> gszAxCryptShellExtName;
+extern CPtrTo<TCHAR> gszXecretsFileShellExtName;
 extern CPtrTo<TCHAR> gszAxCryptIconName;
 extern CPtrTo<TCHAR> gszXecretsUrl;
 extern CPtrTo<TCHAR> gszAxCryptSfxName;
@@ -64,57 +64,57 @@ extern bool gfAxCryptShowNoVersion;
 //	Some string constants.
 //
 extern CPtrTo<TCHAR> gszAxCryptRegKey;
-extern const TCHAR *szAxCryptDefFileExt;
-extern const TCHAR *szAxBruteDLL;
+extern const TCHAR* szAxCryptDefFileExt;
+extern const TCHAR* szAxBruteDLL;
 
-extern const TCHAR *szRegValKeyWrapIterations;
-extern const TCHAR *szRegValDefaultLanguageId;
-extern const TCHAR *szRegValSaveEncKey;
-extern const TCHAR *szRegValSaveDecKey;
-extern const TCHAR *szRegValNoUnsafeWipeWarn;
-extern const TCHAR *szRegValNoDecryptMode;
-extern const TCHAR *szRegValServerMode;
-extern const TCHAR *szRegValServerErrorShell;
-extern const TCHAR *szRegValCompressLevel;
-extern const TCHAR *szRegValNoRenameMenu;
-extern const TCHAR *szRegValBruteForceCheck;
-extern const TCHAR *szRegValTryBrokenFile;
-extern const TCHAR *szRegValAfterNotifyName;
-extern const TCHAR *szRegValAllowAnyExtension;
-extern const TCHAR *szRegValFastModeDefault;
-extern const TCHAR *szRegValKeyFileInfo;
-extern const TCHAR *szRegValKeyFileNotRemovable;
-extern const TCHAR *szRegValKeyFileUseInfo;
-extern const TCHAR *szRegValKeyFileNotEncrypt;
-extern const TCHAR *szRegValSystemFolderWarn;
-extern const TCHAR *szRegValBugReport;
-extern const TCHAR *szRegValDocumentationName;
-extern const TCHAR *szRegValKeepTimeStamp;
-extern const TCHAR *szRegValLicensee;
-extern const TCHAR *szRegValSignature;
-extern const TCHAR *szRegValShowActivationMenu;
-extern const TCHAR *szRegValWipePasses;
+extern const TCHAR* szRegValKeyWrapIterations;
+extern const TCHAR* szRegValDefaultLanguageId;
+extern const TCHAR* szRegValSaveEncKey;
+extern const TCHAR* szRegValSaveDecKey;
+extern const TCHAR* szRegValNoUnsafeWipeWarn;
+extern const TCHAR* szRegValNoDecryptMode;
+extern const TCHAR* szRegValServerMode;
+extern const TCHAR* szRegValServerErrorShell;
+extern const TCHAR* szRegValCompressLevel;
+extern const TCHAR* szRegValNoRenameMenu;
+extern const TCHAR* szRegValBruteForceCheck;
+extern const TCHAR* szRegValTryBrokenFile;
+extern const TCHAR* szRegValAfterNotifyName;
+extern const TCHAR* szRegValAllowAnyExtension;
+extern const TCHAR* szRegValFastModeDefault;
+extern const TCHAR* szRegValKeyFileInfo;
+extern const TCHAR* szRegValKeyFileNotRemovable;
+extern const TCHAR* szRegValKeyFileUseInfo;
+extern const TCHAR* szRegValKeyFileNotEncrypt;
+extern const TCHAR* szRegValSystemFolderWarn;
+extern const TCHAR* szRegValBugReport;
+extern const TCHAR* szRegValDocumentationName;
+extern const TCHAR* szRegValKeepTimeStamp;
+extern const TCHAR* szRegValLicensee;
+extern const TCHAR* szRegValSignature;
+extern const TCHAR* szRegValShowActivationMenu;
+extern const TCHAR* szRegValWipePasses;
 
-extern const TCHAR *szRegValProductName;
-extern const TCHAR *szRegValCLSID;
-extern const TCHAR *szRegValFileExt;
+extern const TCHAR* szRegValProductName;
+extern const TCHAR* szRegValCLSID;
+extern const TCHAR* szRegValFileExt;
 
-extern const TCHAR *szRegValUseEntropyPool;
-extern const TCHAR *szRegValueEntropyPool;
-extern const TCHAR *szRegValEventLogLevel;
-extern const TCHAR *szRegValNotifyEmail;
-extern const TCHAR *szRegValNotifyPreference;
-extern const TCHAR *szRegValStartMenuFolder;
-extern const TCHAR *szRegValExeFolder;
-extern const TCHAR *szRegValInstallDir;
-extern const TCHAR *szRegValInstallerLanguage;
-extern const TCHAR *szRegValVersion;
-extern const TCHAR *szRegValDefault;
-extern const TCHAR *szRegValAllowPrograms;
-extern const TCHAR *szRegValDisableSaveEncryptionKey;
-extern const TCHAR *szRegValDisableSaveDecryptionKey;
+extern const TCHAR* szRegValUseEntropyPool;
+extern const TCHAR* szRegValueEntropyPool;
+extern const TCHAR* szRegValEventLogLevel;
+extern const TCHAR* szRegValNotifyEmail;
+extern const TCHAR* szRegValNotifyPreference;
+extern const TCHAR* szRegValStartMenuFolder;
+extern const TCHAR* szRegValExeFolder;
+extern const TCHAR* szRegValInstallDir;
+extern const TCHAR* szRegValInstallerLanguage;
+extern const TCHAR* szRegValVersion;
+extern const TCHAR* szRegValDefault;
+extern const TCHAR* szRegValAllowPrograms;
+extern const TCHAR* szRegValDisableSaveEncryptionKey;
+extern const TCHAR* szRegValDisableSaveDecryptionKey;
 
-extern const TCHAR *szSigsXML;              ///< Hardcoded name of signature XML in same folde as exe
+extern const TCHAR* szSigsXML;              ///< Hardcoded name of signature XML in same folde as exe
 extern const unsigned char bPublicRootKey[];
 extern const size_t cbPublicRootKey;
 
@@ -148,16 +148,16 @@ extern bool IsParentTopMost(HWND hWnd);
 //      0   => The cancel button has been pressed. The visible state is unknown.
 //
 class CProgressDialog {
-    HWND m_hDlg;
-    HWND m_hProgress;
-    static INT_PTR CALLBACK dlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	HWND m_hDlg;
+	HWND m_hProgress;
+	static INT_PTR CALLBACK dlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 public:
-    CProgressDialog();
-    ~CProgressDialog();
-    void Destroy();
-    HWND Create(HINSTANCE hInstance, DWORD dwIDD, HWND hParent, const _TCHAR *szTitleBar);
-    HWND Wnd();
+	CProgressDialog();
+	~CProgressDialog();
+	void Destroy();
+	HWND Create(HINSTANCE hInstance, DWORD dwIDD, HWND hParent, const _TCHAR* szTitleBar);
+	HWND Wnd();
 };
 
 extern HINSTANCE ghInstance;
