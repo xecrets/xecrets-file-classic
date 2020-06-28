@@ -62,7 +62,7 @@
     <ClInclude Include="AxCommon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AxCryptGUID.h">
+    <ClInclude Include="XecretsFileGUID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CAes.h">

@@ -1,5 +1,5 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -20,20 +20,20 @@
 
 	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
-	AxCryptGUID.h					The name says it all.
+	XecretsFileGUID.h			   The name says it all.
 
 	E-mail							YYYY-MM-DD				Reason
 	software@axantum.com 			2001					Initial
 
 */
 //
-// The AX CRYPT GUID, this is _ONLY_ used to mark the file header!
+// The XECRETS FILE GUID, this is _ONLY_ used to mark the file header!
 //
 // 2E07B9C0-934F-46F1-A015-792CA1D9E821
 //
 DEFINE_GUID(guidAxCryptFileId,
-    0x2e07b9c0,
-    0x934f,
-    0x46f1,
-    0xa0, 0x15, 0x79, 0x2c, 0xa1, 0xd9, 0xe8, 0x21
+	0x2e07b9c0,
+	0x934f,
+	0x46f1,
+	0xa0, 0x15, 0x79, 0x2c, 0xa1, 0xd9, 0xe8, 0x21
 );

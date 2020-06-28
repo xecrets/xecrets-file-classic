@@ -224,7 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AxCommon.h" />
-    <ClInclude Include="AxCryptGUID.h" />
+    <ClInclude Include="XecretsFileGUID.h" />
     <ClInclude Include="CAes.h" />
     <ClInclude Include="CAssert.h" />
     <ClInclude Include="CConfig.h" />

@@ -139,11 +139,11 @@
 #include    "shlobj.h"
 #include    "../XecretsFileCommon/CRegistry.h"
 //
-// This is to actually define the GUID in AxCryptGUID.h.
+// This is to actually define the GUID in XecretsFileGUID.h.
 //
 #define     INITGUID
 #include    <initguid.h>
-#include    "../XecretsFileCommon/AxCryptGUID.h"
+#include    "../XecretsFileCommon/XecretsFileGUID.h"
 //
 #include    "CActiveThreads.h"
 #include    "../AxWinLib/mygetopt.h"

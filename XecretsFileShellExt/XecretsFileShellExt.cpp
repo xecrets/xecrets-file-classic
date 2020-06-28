@@ -38,7 +38,7 @@
 #define INITGUID
 #include <initguid.h>
 #include <shlguid.h>
-#include "../XecretsFileCommon/AxCryptGUID.h"
+#include "../XecretsFileCommon/XecretsFileGUID.h"
 #pragma data_seg()
 
 #include "../XecretsFileCommon/CRegistry.h"
