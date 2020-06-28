@@ -242,7 +242,7 @@ Register(axpl::ttstring& email, std::wstring& sVersion) {
 	//         new, needs update in service: Win2008, WinXPx64, W2003x64, Win2008x64, Win7, Win7x64
 	// Language=
 	if (hSession) {
-		hConnect = WinHttpConnect(hSession, L"account.axcrypt.net", INTERNET_DEFAULT_HTTPS_PORT, 0);
+		hConnect = WinHttpConnect(hSession, L"www.axantum.com", INTERNET_DEFAULT_HTTPS_PORT, 0);
 	}
 
 	wstring urlPathPart = L"/RegisterLegacyAxCrypt?Program=" AXPRODUCTFILENAME;

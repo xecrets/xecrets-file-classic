@@ -3,7 +3,7 @@ of projects.
 
 We have AxDecrypt which references XecretsFileCommon which references XecretsFileMessages.
 
-XecretsFileMessages must be built before XecretsFileCommon, becuase it produces the AxCryptTexts.h
+XecretsFileMessages must be built before XecretsFileCommon, becuase it produces the XecretsFileTexts.h
 header file, needed by XecretsFileCommon.
 
 The problem is that if we reference XecretsFileMessages from XecretsFileCommon, then Visual Studio or MSBuild

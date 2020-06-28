@@ -354,14 +354,14 @@
       <DialogRef Id="AxWelcomeDlg" />
       <DialogRef Id="AxWelcomeEulaDlg" />
 
-      <Publish Dialog="ExitDialog"
+      <!--<Publish Dialog="ExitDialog"
                Control="Finish"
                Event="EndDialog"
                Value="Return">WIXUI_EXITDIALOGOPTIONALCHECKBOX &lt;&gt; 1 OR UILevel &lt;&gt; 5</Publish>
       <Publish Dialog="ExitDialog"
                Control="Finish"
                Event="DoAction"
-               Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND UILevel = 5</Publish>
+               Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND UILevel = 5</Publish>-->
       <Publish Dialog="ExitDialog"
                Control="Finish"
                Event="EndDialog"

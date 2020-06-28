@@ -9,7 +9,7 @@
 
 	Copyright (C) 2001-2020 Svante Seleborg/Axantum Software AB, All rights reserved.
 
-	The author may be reached at mailto:axcrypt@axondata.se and http://axcrypt.sourceforge.net
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ---
 */
 
