@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="AxCryptConfig">
+    <Filter Include="XecretsFileConfig">
       <UniqueIdentifier>{11713887-b16f-4464-93c2-572da08d9fc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -26,13 +26,13 @@
     </None>
     <None Include="Build.targets" />
     <None Include="Sigs.xml">
-      <Filter>AxCryptConfig</Filter>
+      <Filter>XecretsFileConfig</Filter>
     </None>
     <None Include="XecretsFile.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Sigs.template.xml">
-      <Filter>AxCryptConfig</Filter>
+      <Filter>XecretsFileConfig</Filter>
     </None>
     <None Include="README.txt" />
     <None Include="..\Build.cmd" />
@@ -44,7 +44,7 @@
       <Filter>Source Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Config.xml">
-      <Filter>AxCryptConfig</Filter>
+      <Filter>XecretsFileConfig</Filter>
     </CustomBuild>
     <CustomBuild Include="License.rtf" />
     <CustomBuild Include="ReadMe.html" />
