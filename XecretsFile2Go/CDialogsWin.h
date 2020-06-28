@@ -656,7 +656,7 @@ public:
 		SetDlgItemText(IDC_COPYRIGHT, sz);
 		delete[] sz;
 
-		StringCbPrintf(szMsg, sizeof szMsg, _("This is an ALPHA-version! Pre-BETA! Enjoy, but be aware, and please report problems and suggestions! Get the full version of %s for one-click encryption, decryption and viewing."), _("GlobalNames|AxCrypt"));
+		StringCbPrintf(szMsg, sizeof szMsg, _("This is an ALPHA-version! Pre-BETA! Enjoy, but be aware, and please report problems and suggestions! Get the full version of %s for one-click encryption, decryption and viewing."), _("GlobalNames|XecretsFile"));
 		SetDlgItemText(IDC_ABOUTMSG, szMsg);
 
 		SetDlgItemText(IDC_GETAXCRYPT, _("http://www.axantum.com"));

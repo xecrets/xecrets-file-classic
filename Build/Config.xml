@@ -10,6 +10,6 @@
   <MessagesName>Messages.dll</MessagesName>
   <ShellExtName>ShellExt.dll</ShellExtName>
   <ProgramIconName>XecretsFile.ico</ProgramIconName>
-  <XecretsUrl>http://www.axantum.com/Xecrets/AxCrypt.html</XecretsUrl>
+  <XecretsUrl>http://www.axantum.com/</XecretsUrl>
   <Options ShowNoVersion="true" />
 </Configuration>
