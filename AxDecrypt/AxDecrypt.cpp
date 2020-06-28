@@ -410,7 +410,7 @@ public:
 /// The base class is a std::list of CMetaSection. This is where
 /// we define the various instances of CMetaSection in detail,
 /// and interpret them.
-class CAxCryptMeta : public std::list<CMetaSection> {
+class CXecretsFileMeta : public std::list<CMetaSection> {
 	/// \brief Describe a eVersion section
 	struct SVersion {
 		BYTE oFileVersionMajor;             ///< FileMajor - Older versions cannot not read the format.
@@ -504,7 +504,7 @@ class CAxCryptMeta : public std::list<CMetaSection> {
 	}
 public:
 	/// \brief Initialize member variables
-	CAxCryptMeta() {
+	CXecretsFileMeta() {
 		m_cbOffsetData = m_cbOffsetHMAC = 0;
 		m_fKeyIsValid = false;
 		m_szOutFolder = NULL;
@@ -513,13 +513,13 @@ public:
 	}
 
 	/// \brief delete owned buffers
-	~CAxCryptMeta() {
+	~CXecretsFileMeta() {
 		delete m_szOutFolder;
 	}
 
 	/// \brief Find the first section of the given type
 	/// \param eType the type to find
-	/// \return An iterator point to the found block, or CAxCryptMeta::end()
+	/// \return An iterator point to the found block, or CXecretsFileMeta::end()
 	iterator FindType(TBlockType eType) {
 		iterator i;
 		for (i = begin(); i != end(); i++) {
@@ -588,7 +588,7 @@ public:
 		ASSCHK(pSource->GetErrorCode() == 0, pSource->GetErrorMsg());
 
 		iterator i = FindType(eKeyWrap1);
-		ASSCHK(i != end(), _T("CAxCryptMeta::SetDecryptKey() [No eKeyWrap1 found]"));
+		ASSCHK(i != end(), _T("CXecretsFileMeta::SetDecryptKey() [No eKeyWrap1 found]"));
 
 		// Get a pointer to the wrapped key
 		SKeyWrap1* pKeyWrap = (SKeyWrap1*)(i->Data());
@@ -712,12 +712,12 @@ public:
 			if (ccFileName != 0) {
 				szFileName = (char*)new unsigned char[ccFileName];
 				(void)WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK | WC_DEFAULTCHAR, wzUnicodeFileName, -1, szFileName, ccFileName, "_", NULL);
-			}
+	}
 			delete[](unsigned char[])wzUnicodeFileName;
 			wzUnicodeFileName = NULL;
 			return szFileName;
 #endif
-		}
+}
 
 		szFileName = (char*)GetMetaData(eFileNameInfo);
 		if (szFileName == NULL) {
@@ -1077,7 +1077,7 @@ class CPipeAxCryptHeaders : public CFilterBlock {
 		BYTE oType;                         ///< Cast to TBlockType as appropriate.
 	} m_utHeader;
 
-	auto_ptr<CAxCryptMeta> m_pMeta;         ///< All the meta information from the headers.
+	auto_ptr<CXecretsFileMeta> m_pMeta;         ///< All the meta information from the headers.
 	THmac m_HMAC;                           ///< HMAC-SHA1-128 of header and data excl. preamble.
 	CAxDecryptBase* m_pAxDecrypt;           ///< Connection back to controlling window etc
 	CAutoSeg m_pSeg;                        ///< We need to buffer a bit locally too...
@@ -1142,7 +1142,7 @@ public:
 	/// \return A pointer to this.
 	CPipeAxCryptHeaders* Init(CAxDecryptBase* pAxDecrypt) {
 		m_pAxDecrypt = pAxDecrypt;
-		m_pMeta = auto_ptr<CAxCryptMeta>(new CAxCryptMeta);
+		m_pMeta = auto_ptr<CXecretsFileMeta>(new CXecretsFileMeta);
 		_TCHAR* szFolder = new _TCHAR[_MAX_PATH];
 		m_pMeta->SetFolder(pAxDecrypt->GetFolder(szFolder, _MAX_PATH));
 		m_pMeta->SetOverwriteWithoutPrompt(pAxDecrypt->OverwriteWithoutPrompt());
@@ -1327,7 +1327,7 @@ public:
 			Pump(pGUID);
 			pGUID = NULL;                   // Done with this now.
 
-			CAxCryptMeta::iterator i;
+			CXecretsFileMeta::iterator i;
 			for (i = m_pMeta->begin(); i != m_pMeta->end(); i++) {
 				SHeader header;
 				header.oType = (BYTE)i->Type();
@@ -1382,7 +1382,7 @@ public:
 class CPipeAxHMAC_SHA1_128 : public AxPipe::Stock::CPipeHMAC_SHA1<128> {
 	size_t m_cbHMAC;                        ///< The size of the HMAC from the meta data
 	auto_ptr<unsigned char> m_pHMAC;        ///< The HMAC from the meta data
-	CAxCryptMeta* m_pMeta;                  ///< The meta data, passed via Signal() to OutSignal()
+	CXecretsFileMeta* m_pMeta;                  ///< The meta data, passed via Signal() to OutSignal()
 public:
 	/// \brief Initialize member variables
 	CPipeAxHMAC_SHA1_128() {
@@ -1392,11 +1392,11 @@ public:
 
 	/// \brief Receive the meta data from CPipeAxCryptHeaders
 	/// \param vId The class id, expected is CPipeAxCryptHeaders::ClassId()
-	/// \param p The pointer to meta data, CAxCryptMeta
+	/// \param p The pointer to meta data, CXecretsFileMeta
 	/// \return true to pass the signal along downstream
 	bool OutSignal(void* vId, void* p) {
 		if (vId == CPipeAxCryptHeaders::ClassId()) {
-			m_pMeta = (CAxCryptMeta*)p;
+			m_pMeta = (CXecretsFileMeta*)p;
 		}
 		return true;
 	}
@@ -1406,7 +1406,7 @@ public:
 	/// The base class will calculate the HMAC of a data stream, given
 	/// a key and an offset whence to start from via a call to Init().
 	/// What we do here is to call Init() with those parameters, gleaned from
-	/// the meta data CAxCryptMeta pointer we got via OutSignal.
+	/// the meta data CXecretsFileMeta pointer we got via OutSignal.
 	/// \return true to indicate the Close() should be cascaded downstream
 	bool OutOpen() {
 		ASSPTR(m_pMeta);                    // Just ensure that it's non-NULL
@@ -1454,17 +1454,17 @@ public:
 		m_cbSkip = 0;
 	}
 
-	/// \brief Catch signal from CPipeAxCryptHeaders with meta data CAxCryptMeta
+	/// \brief Catch signal from CPipeAxCryptHeaders with meta data CXecretsFileMeta
 	///
 	/// This must be called before any data is sent via Pump() to Out(). Note that
 	/// this may be called in a different thread context than Out().
 	/// \param vId The Id, expected is CPipeAxCryptHeaders::ClassId()
-	/// \param p The pointer, which will point to a CAxCryptMeta where we get the offset to data
+	/// \param p The pointer, which will point to a CXecretsFileMeta where we get the offset to data
 	/// \return true to pass the signal along down the line by the framework
 	bool OutSignal(void* vId, void* p) {
 		// Get how much we want to skip.
 		if (vId == CPipeAxCryptHeaders::ClassId()) {
-			m_cbSkip = ((CAxCryptMeta*)p)->GetOffsetData();
+			m_cbSkip = ((CXecretsFileMeta*)p)->GetOffsetData();
 		}
 		return true;
 	}
@@ -1497,7 +1497,7 @@ public:
 /// It get's the key via a Signal() call, which it expects to
 /// come from CPipeAxCryptHeaders.
 class CPipeAxDecrypt : public CPipeBlock {
-	CAxCryptMeta* m_pMeta;                  ///< The pointer to the meta info, via Signal()
+	CXecretsFileMeta* m_pMeta;                  ///< The pointer to the meta info, via Signal()
 	CAes m_AesCtx;                          ///< Our decryption CBC context
 	::longlong m_cb;                        ///< The number of bytes decrypted (excl. padding).
 
@@ -1511,17 +1511,17 @@ public:
 	/// \brief Receive a signal from upstream
 	///
 	/// We're expecting a call from CPipeAxCryptHeaders with a pointer
-	/// to a CAxCryptMeta, containing the key for the next file, and other
+	/// to a CXecretsFileMeta, containing the key for the next file, and other
 	/// meta information. Care must be taken since this call is made from
 	/// potentially a different thread than the rest of the Out() family
 	/// of functions. A Sync() before the call may be appropriate.
 	/// \param vId The signal id, expected is CPipeAxCryptHeaders::ClassId()
-	/// \param p A pointer to a CAxCryptMeta
+	/// \param p A pointer to a CXecretsFileMeta
 	/// \return true if the signal is to be continued to be passed down the line
 	bool OutSignal(void* vId, void* p) {
 		// Pick up keys and stuff
 		if (vId == CPipeAxCryptHeaders::ClassId()) {
-			m_pMeta = (CAxCryptMeta*)p;
+			m_pMeta = (CXecretsFileMeta*)p;
 
 			// Initialize an AES structure with the Data Encrypting Key and the proper direction.
 			m_AesCtx.Init(CSubKey().Set(m_pMeta->GetMasterDEK(), CSubKey::eData).Get(), CAes::eCBC, CAes::eDecrypt);
@@ -1578,7 +1578,7 @@ public:
 /// Only inflate if the stream was compressed - otherwise
 /// just pass through. Get the compress flag through the
 /// meta information provided via Signal() to OutSignal()
-/// in a pointer to CPipeAxCryptMeta.
+/// in a pointer to CPipeXecretsFileMeta.
 class CPipeAxDecompress : public AxPipe::Stock::CPipeInflate {
 	bool m_fDecompress;                     ///< true if we're to inflate
 public:
@@ -1590,17 +1590,17 @@ public:
 	/// \brief Receive a signal from upstream
 	///
 	/// If the caller is id CPipeAxCryptHeaders::ClassId(), then
-	/// we interpret the argument as a pointer to a CPipeAxCryptMeta
+	/// we interpret the argument as a pointer to a CPipeXecretsFileMeta
 	/// class with the meta info, from which we pick up the 'are we
 	/// compressed flag'.
 	/// \param vId A ClassId, expecting CPipeAxCryptHeaders::ClassId()
-	/// \param p A paramater, will be a CPipeAxCryptMeta.
+	/// \param p A paramater, will be a CPipeXecretsFileMeta.
 	/// \return true to pass the signal down the line.
 	bool OutSignal(void* vId, void* p) {
 		// Check if we need decompression
 		if (vId == CPipeAxCryptHeaders::ClassId()) {
 			// If there's a section with compression info - we're compressed.
-			m_fDecompress = ((CAxCryptMeta*)p)->IsCompressed();
+			m_fDecompress = ((CXecretsFileMeta*)p)->IsCompressed();
 		}
 		return true;
 	}
@@ -1644,7 +1644,7 @@ public:
 
 /// \brief Ax Crypt specific derivation which restores original file times
 ///
-/// Using the file times gotten from the meta data in a CAxCryptMeta
+/// Using the file times gotten from the meta data in a CXecretsFileMeta
 /// structure, passed via CPipe::Signal() to CPipe::OutSignal(), we
 /// restore the original file times after the file is Close()'d.
 /// This is also where we launch after decrytion, if that is a user
@@ -1682,11 +1682,11 @@ public:
 	/// This is were we get the file times and the user preference concering
 	/// launch after decrypt and the file name.
 	/// \param vId The caller id, we're expecting CPipeAxCryptHeaders::ClassId()
-	/// \param p The argument, we're expecting a pointer to a CAxCryptMeta
+	/// \param p The argument, we're expecting a pointer to a CXecretsFileMeta
 	/// \return true to cascade the CPipe::Signal() downstream
 	bool OutSignal(void* vId, void* p) {
 		if (vId == CPipeAxCryptHeaders::ClassId()) {
-			CAxCryptMeta* pMeta = (CAxCryptMeta*)p;
+			CXecretsFileMeta* pMeta = (CXecretsFileMeta*)p;
 			m_FileTimes.ftCT = pMeta->GetCreationTime();
 			m_FileTimes.ftLAT = pMeta->GetLastAccessTime();
 			m_FileTimes.ftLWT = pMeta->GetLastWriteTime();

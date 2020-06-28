@@ -1,11 +1,11 @@
-#ifndef CAXCRYPTMETA_H
-#define CAXCRYPTMETA_H
+#ifndef CXECRETSFILEMETA_H
+#define CXECRETSFILEMETA_H
 /*! \file
-	\brief CAxCryptMeta.h - Handle Ax Crypt meta information in headers
+	\brief CXecretsFileMeta.h - Handle Ax Crypt meta information in headers
 
 	@(#) $Id$
 
-	CAxCryptMeta.h - Handle Ax Crypt meta information in headers
+	CXecretsFileMeta.h - Handle Ax Crypt meta information in headers
 
 	Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -36,7 +36,7 @@ extern "C" {
 #include "CXecretsFileLibMisc.h"
 
 #include "Assert.h"
-#define ASSERT_FILE "CAxCryptMeta.h"
+#define ASSERT_FILE "CXecretsFileMeta.h"
 
 //
 // Ensure the correct and expected structures regardless of optimizations.
@@ -156,7 +156,7 @@ namespace axcl {
 	/// The base class is a std::list of CMetaSection. This is where
 	/// we define the various instances of CMetaSection in detail,
 	/// and interpret them.
-	class CAxCryptMeta : public std::list<CMetaSection> {
+	class CXecretsFileMeta : public std::list<CMetaSection> {
 		/// \brief The file version we understand/generate.
 	protected:
 		/// TODO: For the next file version revision, fix:
@@ -303,7 +303,7 @@ namespace axcl {
 
 	public:
 		/// \brief Initialize member variables
-		CAxCryptMeta(AXCL_PARAM* pParam, int iKeyTypeDec) : std::list<CMetaSection>() {
+		CXecretsFileMeta(AXCL_PARAM* pParam, int iKeyTypeDec) : std::list<CMetaSection>() {
 			m_pParam = pParam;
 			m_iKeyIndex = iKeyTypeDec;
 			Init();
@@ -317,7 +317,7 @@ namespace axcl {
 		}
 
 		/// \brief delete owned buffers
-		~CAxCryptMeta() {
+		~CXecretsFileMeta() {
 		}
 
 		const void* Callback(int iCallbackAction, const void* p, size_t cb, int* piResult) {
@@ -363,7 +363,7 @@ namespace axcl {
 		/// \brief A virtual access to the class
 		///
 		/// Enables all derived and base classes to correctly identify the type
-		/// of this class, by comparing with CAxCryptMeta::ClassId().
+		/// of this class, by comparing with CXecretsFileMeta::ClassId().
 		virtual void* RTClassId() {
 			return ClassId();
 		}
@@ -482,7 +482,7 @@ namespace axcl {
 		bool CheckDecryptKey() {
 			// Find the appropriate key-wrap in the headers
 			iterator i = FindType(eKeyWrap1);
-			ASSCHK(i != end(), _T("CAxCryptMeta::CheckDecryptKey() [No eKeyWrap1 found]"));
+			ASSCHK(i != end(), _T("CXecretsFileMeta::CheckDecryptKey() [No eKeyWrap1 found]"));
 
 			// Get a pointer to the wrapped key
 			SKeyWrap1* pKeyWrap = (SKeyWrap1*)(i->Data());
@@ -494,7 +494,7 @@ namespace axcl {
 
 		/// \brief Find the first section of the given type
 		/// \param eType the type to find
-		/// \return An iterator point to the found block, or CAxCryptMeta::end()
+		/// \return An iterator point to the found block, or CXecretsFileMeta::end()
 		iterator FindType(TBlockType eType) {
 			iterator i;
 			for (i = begin(); i != end(); i++) {
@@ -682,4 +682,4 @@ namespace axcl {
 } // namespace axcl
 
 #pragma pack(pop)
-#endif CAXCRYPTMETA_H
+#endif CXECRETSFILEMETA_H

@@ -46,8 +46,8 @@
 extern AxPipe::CGlobalInit AxPipeGlobalInit;
 
 namespace axcl {
-	class CEncryptMeta : public axcl::CAxCryptMeta, public AxPipe::CCriticalSection {
-		typedef axcl::CAxCryptMeta base;
+	class CEncryptMeta : public axcl::CXecretsFileMeta, public AxPipe::CCriticalSection {
+		typedef axcl::CXecretsFileMeta base;
 	public:
 		typedef AxPipe::CCriticalSection::Lock<CEncryptMeta> LockT;
 
@@ -472,7 +472,7 @@ namespace axcl {
 	/// the blocks will tend to arrive in nice chunks anyway.
 	/// This is the actual encryptor, it expects to only see
 	/// a stream of plain-text blocks to encrypt.
-	/// The key comes from m_pCXecretsFileLib->m_pCAxCryptMeta which must be prepared for encryption
+	/// The key comes from m_pCXecretsFileLib->m_pCXecretsFileMeta which must be prepared for encryption
 	class CPipeEncrypt : public AxPipe::CPipeBlock {
 		typedef AxPipe::CPipeBlock base;
 
@@ -651,7 +651,7 @@ namespace axcl {
 			// Allocate a new memory segment just large enough for the place-holder headers.
 			AxPipe::CSeg* pSeg = new AxPipe::CSeg(m_pEncryptMeta->Emit(NULL));
 			if (m_pEncryptMeta->Emit(pSeg->PtrWr()) != pSeg->Len()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CAxCryptMeta::Emit()"));
+				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
 				return false;
 			}
 			Out(pSeg);
@@ -682,7 +682,7 @@ namespace axcl {
 			// Allocate a new memory segment just large enough for the freshly re-generated buffers.
 			AxPipe::CSeg* pSeg = new AxPipe::CSeg(m_pEncryptMeta->Emit(NULL));
 			if (m_pEncryptMeta->Emit(pSeg->PtrWr()) != pSeg->Len()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CAxCryptMeta::Emit()"));
+				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
 				return;
 			}
 			Out(pSeg);
@@ -716,7 +716,7 @@ namespace axcl {
 			// Allocate a new memory segment just large enough for the freshly re-generated buffers.
 			pSeg = new AxPipe::CSeg(m_pEncryptMeta->Emit(NULL));
 			if (m_pEncryptMeta->Emit(pSeg->PtrWr()) != pSeg->Len()) {
-				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CAxCryptMeta::Emit()"));
+				SetError(axcl::ERROR_CODE_AXCRYPT, _TT("Internal error, length inconsistency between two calls to CXecretsFileMeta::Emit()"));
 				return;
 			}
 			Out(pSeg);

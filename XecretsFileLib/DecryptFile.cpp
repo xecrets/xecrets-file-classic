@@ -45,8 +45,8 @@
 #define ASSERT_FILE "DecryptFile.cpp"
 
 namespace axcl {
-	class CDecryptMeta : public axcl::CAxCryptMeta, public AxPipe::CCriticalSection {
-		typedef axcl::CAxCryptMeta base;
+	class CDecryptMeta : public axcl::CXecretsFileMeta, public AxPipe::CCriticalSection {
+		typedef axcl::CXecretsFileMeta base;
 
 	public:
 		typedef AxPipe::CCriticalSection::Lock<CDecryptMeta> LockT;
@@ -62,7 +62,7 @@ namespace axcl {
 	};
 
 	/// \brief Parse Ax Crypt Meta information/headers
-	/// Read and parses headers into a CAxCryptMeta object. Sends nothing
+	/// Read and parses headers into a CXecretsFileMeta object. Sends nothing
 	/// downstream.
 	class CPipeAxCryptDecryptMeta : public AxPipe::CFilterBlock {
 		typedef AxPipe::CFilterBlock base;
@@ -159,17 +159,17 @@ namespace axcl {
 				return false;
 			}
 
-			// Go through all the headers, and store them in the CAxCryptMeta object
+			// Go through all the headers, and store them in the CXecretsFileMeta object
 			AxPipe::CAutoSeg pSegHeaderData;
 			do {
-				apSeg = In(sizeof CAxCryptMeta::SHeader);
-				if (!apSeg.get() || apSeg->Len() != sizeof CAxCryptMeta::SHeader) {
+				apSeg = In(sizeof CXecretsFileMeta::SHeader);
+				if (!apSeg.get() || apSeg->Len() != sizeof CXecretsFileMeta::SHeader) {
 					SetError(axcl::ERROR_CODE_AXCRYPT, _T("Could not read expected header"));
 					return false;
 				}
 
 				// Get the length of the header data, following the header-header
-				size_t cbHeaderData = CAxCryptMeta::GetHeaderDataLen((CAxCryptMeta::SHeader*)apSeg->PtrRd());
+				size_t cbHeaderData = CXecretsFileMeta::GetHeaderDataLen((CXecretsFileMeta::SHeader*)apSeg->PtrRd());
 
 				// Get extra data - do not ask for zero bytes from In(), it'll get all available.
 				pSegHeaderData = cbHeaderData ? In(cbHeaderData) : new AxPipe::CSeg(0);
@@ -177,7 +177,7 @@ namespace axcl {
 					SetError(axcl::ERROR_CODE_AXCRYPT, _T("Error reading header data"));
 					return false;
 				}
-			} while (m_pDecryptMeta->AddSection((CAxCryptMeta::SHeader*)apSeg->PtrRd(), pSegHeaderData->PtrRd(), pSegHeaderData->Len()));
+			} while (m_pDecryptMeta->AddSection((CXecretsFileMeta::SHeader*)apSeg->PtrRd(), pSegHeaderData->PtrRd(), pSegHeaderData->Len()));
 
 			if (!m_pDecryptMeta->GetError().empty()) {
 				SetError(axcl::ERROR_CODE_AXCRYPT, m_pDecryptMeta->GetError().c_str());
@@ -241,9 +241,9 @@ namespace axcl {
 	};
 
 	/// \brief Parse Ax Crypt Meta information/headers
-	/// Reads and buffers data, parsing headers into a CAxCryptMeta object.
+	/// Reads and buffers data, parsing headers into a CXecretsFileMeta object.
 	/// Sends the raw data downstream, including the headers.
-	class CPipeAxCryptMeta : public CPipeAxCryptDecryptMeta {
+	class CPipeXecretsFileMeta : public CPipeAxCryptDecryptMeta {
 		typedef CPipeAxCryptDecryptMeta base;
 
 		/// \brief Push back a segment that we've already read.
@@ -357,7 +357,7 @@ namespace axcl {
 		/// The base class will calculate the HMAC of a data stream, given
 		/// a key and an offset whence to start from via a call to Init().
 		/// What we do here is to call Init() with those parameters, gleaned from
-		/// the meta data CAxCryptMeta pointer we got via OutSpecial.
+		/// the meta data CXecretsFileMeta pointer we got via OutSpecial.
 		/// \return true to indicate the Close() should be cascaded downstream
 		bool OutOpen() {
 			ASSPTR(m_pDecryptMeta);                    // Just ensure that it's non-NULL
@@ -694,7 +694,7 @@ int axcl_DecryptFileData(AXCL_PARAM* pParam, int iKeyTypeDec, const _TCHAR* szCi
 
 	// Build the process sequence
 	In.Append((new AxPipe::Stock::CPipeFindSync)->Init(&axcl::guidAxCryptFileIdInverse, sizeof axcl::guidAxCryptFileIdInverse, true));
-	In.Append((new axcl::CPipeAxCryptMeta)->Init(pDecryptMeta.get()));
+	In.Append((new axcl::CPipeXecretsFileMeta)->Init(pDecryptMeta.get()));
 	In.Append((new axcl::CPipeHMAC_SHA1_128)->Init(pDecryptMeta.get()));
 	In.Append((new axcl::CPipeStripHeaders)->Init(pDecryptMeta.get()));
 	In.Append((new axcl::CPipeDecrypt)->Init(pDecryptMeta.get()));

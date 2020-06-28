@@ -60,12 +60,12 @@
 
 	The decryption stream is passed through the following sections:
 
-	CPipeAxCryptMeta    - Reads and buffers data, parsing headers into a CAxCryptMeta object. Sends the object
+	CPipeXecretsFileMeta    - Reads and buffers data, parsing headers into a CXecretsFileMeta object. Sends the object
 						  downstream, followed by the raw datastream with or without the headers.
-	CPipeAxPromptKey    - Accepts an in-band CAxCryptMeta object, and prompts for a key. Sends it downstream
+	CPipeAxPromptKey    - Accepts an in-band CXecretsFileMeta object, and prompts for a key. Sends it downstream
 						  as CAxKeyMeta when ok, or aborts, followed by the raw unmodifed datastream. May
 						  accept a parent window handle, or a pointer to a parent window handle.
-	CPipeAxPromptFile   - Accepts an in-band CAxCryptMeta-object and a CAxKeyMeta, performs any GUI-related
+	CPipeAxPromptFile   - Accepts an in-band CXecretsFileMeta-object and a CAxKeyMeta, performs any GUI-related
 						  prompting needed to determine location and file name, and sends a resulting CAxFileMeta-
 						  object downstream.
 	CPipeAxDecrypt      - Accepts an in-band key object, parses headers (again), uses the key to decrypt them.
@@ -76,7 +76,7 @@
 
 	Objects used and passed thus include:
 
-	CAxCryptMeta        - A collection of parsed headers, which may be encrypted or not. If a key
+	CXecretsFileMeta        - A collection of parsed headers, which may be encrypted or not. If a key
 						  is present, they are decrypted and may be written and encrypted with this key.
 
 	CAxFileMeta         - A set of file-related information necessary to re-create a file as it was,
@@ -89,20 +89,20 @@
 
 	CPipeAxDecrypt actually contains the following sections:
 
-	CPipeAxCryptMeta    - Reads and buffers data, parsing headers into a CAxCryptMeta object. Sends the object
+	CPipeXecretsFileMeta    - Reads and buffers data, parsing headers into a CXecretsFileMeta object. Sends the object
 						  downstream, followed by the raw datastream with or without the headers.
-	CPipeAxCalcHMAC     - Calculate HMAC. Receives CAxCryptMeta. Sends CAxHMACMeta. Also stores for later.
-	CPipeAxDecryptData  - Actually decrypts the data stream. Receives CAxCryptMeta.
-	CPipeAxDecompress   - Decompress, if necessary. Recieves CAxCryptMeta.
+	CPipeAxCalcHMAC     - Calculate HMAC. Receives CXecretsFileMeta. Sends CAxHMACMeta. Also stores for later.
+	CPipeAxDecryptData  - Actually decrypts the data stream. Receives CXecretsFileMeta.
+	CPipeAxDecompress   - Decompress, if necessary. Recieves CXecretsFileMeta.
 	CPipeAxCheckHMAC    - Verify HMAC correctness. Receives CAxHMACMeta.
 
 	Encryption:
 
-	CPipeAxPromptKey    - Accepts an in-band CAxCryptMeta object, and prompts for a key. Sends it downstream
+	CPipeAxPromptKey    - Accepts an in-band CXecretsFileMeta object, and prompts for a key. Sends it downstream
 						  as CAxKeyMeta when ok, or aborts, followed by the raw unmodifed datastream.
 	CPipeAxPromptFile   - Accepts an in-band CAxFileMeta-object and performs any GUI-related prompting needed,
 						  possibly modifying the object and sending it onwards.
-	CPipeAxEncrypt      - Receives CAxCryptMeta (decrypted) w/key through Init()-call or in-band signalling.
+	CPipeAxEncrypt      - Receives CXecretsFileMeta (decrypted) w/key through Init()-call or in-band signalling.
 						  Sends a complete file-stream (except HMAC which must be fixed up).
 	CSinkAxFile         - A CFileIO-derived sink that will accept a data-stream, and write it to
 						  a specified file, using a CAxFileMeta-object to control the operation. No
@@ -112,8 +112,8 @@
 
 	CPipeAxWriteHeaders - Write the info in the headers, encrypted.
 	CPipeAxCompress     - Compress if determined useful. Compression ratio needed set through Init()-call.
-	CPipeAxEncryptData  - Actually encrypt the data datastream. Receives AxCryptMeta.
-	CPipeAxCalcHMAC     - Calculate HMAC. Receives CAxCryptMeta. Sends CAxHMACMeta. Also stores for later.
+	CPipeAxEncryptData  - Actually encrypt the data datastream. Receives XecretsFileMeta.
+	CPipeAxCalcHMAC     - Calculate HMAC. Receives CXecretsFileMeta. Sends CAxHMACMeta. Also stores for later.
 
 */
 #include "stdafx.h"
