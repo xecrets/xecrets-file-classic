@@ -5,7 +5,7 @@
 
 	@(#) $Id$
 
-	Copyright (C) 2009 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2009-2020 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;
@@ -54,7 +54,7 @@ namespace AxLib {
 	/// Determine Windows Version and bit-ness etc.
 	class IWinVersion {
 	public:
-		static IWinVersion *New();
+		static IWinVersion* New();
 		virtual int GetVersion() = 0;
 		virtual ~IWinVersion() = 0;
 	};

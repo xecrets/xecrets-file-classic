@@ -11,7 +11,7 @@ real reason to make the distributions so large etc.
 
 It's of course also possible to build a partial or full library in the respective solution.
 
-Copyright (C) 2009 Svante Seleborg/Axantum Software AB, All rights reserved.
+Copyright (C) 2009-2020 Svante Seleborg/Axantum Software AB, All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it under the terms
 of the GNU General Public License as published by the Free Software Foundation;
@@ -41,20 +41,20 @@ AxAssert.cpp
 #define AXLIB_ASSERT_FILE "CWinVersion.cpp"
 
 namespace AxLib {
-    class CWinVersion : public IWinVersion {
-        int GetVersion();
-    };
+	class CWinVersion : public IWinVersion {
+		int GetVersion();
+	};
 
-    IWinVersion::~IWinVersion() {
-    }
+	IWinVersion::~IWinVersion() {
+	}
 
-    IWinVersion *IWinVersion::New() {
-        return new CWinVersion();
-    }
+	IWinVersion* IWinVersion::New() {
+		return new CWinVersion();
+	}
 
-    int CWinVersion::GetVersion() {
+	int CWinVersion::GetVersion() {
 		// See https://msdn.microsoft.com/en-us/library/windows/desktop/dn424972(v=vs.85).aspx
-        int version;
+		int version;
 		if (IsWindows8OrGreater()) {
 			version = WINXX;
 		}
@@ -68,7 +68,7 @@ namespace AxLib {
 			version = WINXX;
 		}
 
-		typedef void (WINAPI *PFGETNATIVESYSTEMINFO)(LPSYSTEM_INFO lpSystemInfo);
+		typedef void (WINAPI* PFGETNATIVESYSTEMINFO)(LPSYSTEM_INFO lpSystemInfo);
 		HMODULE hKernel32;
 		PFGETNATIVESYSTEMINFO pfGetNativeSystemInfo;
 
@@ -87,9 +87,9 @@ namespace AxLib {
 		}
 
 		if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64) {
-            version |= X64;
-        }
+			version |= X64;
+		}
 
-        return version;
-    }
+		return version;
+	}
 }

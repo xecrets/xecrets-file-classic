@@ -7,30 +7,30 @@
 #ifndef AXLIB_ASSERT
 #define AXLIB_ASSERT
 /*! \file
-    \brief Fatal assertions and formatted message box etc.
+	\brief Fatal assertions and formatted message box etc.
 
-    @(#) $Id$
+	@(#) $Id$
 
-    Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2001-2020 Svante Seleborg/Axon Data, All rights reserved.
 
-    This program is free software; you can redistribute it and/or modify it under the terms
-    of the GNU General Public License as published by the Free Software Foundation;
-    either version 2 of the License, or (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify it under the terms
+	of the GNU General Public License as published by the Free Software Foundation;
+	either version 2 of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	See the GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License along with this program;
-    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-    Boston, MA 02111-1307 USA
+	You should have received a copy of the GNU General Public License along with this program;
+	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+	Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
-    AxAssert.h
+	AxAssert.h
 
-    E-mail                          YYYY-MM-DD              Reason
-    software@axantum.com             2003-11-22              Initial
+	E-mail                          YYYY-MM-DD              Reason
+	software@axantum.com             2003-11-22              Initial
 
 */
 
@@ -71,31 +71,31 @@
 #endif
 
 namespace AxLib {
-    /// \brief Some assert-definintions, and a debug-printf using a MessageBox
-    ///
-    /// Use asserts where you want to assert(sic!) a condition, and if it it's not
-    /// ok, there's no use to continue execution. All Ass* 'functions' here will
-    /// exit() after displaying a message - so this is for fatal errors, such as
-    /// internal inconstencies, end of memory conditions, unexpected and un-manageable
-    /// Win32-API returns etc.
-    ///
-    /// Macros #ASSCHK, #ASSAPI and #ASSPTR are used to actually call the function
-    /// so as to get the correct file and line into the message produced.
+	/// \brief Some assert-definintions, and a debug-printf using a MessageBox
+	///
+	/// Use asserts where you want to assert(sic!) a condition, and if it it's not
+	/// ok, there's no use to continue execution. All Ass* 'functions' here will
+	/// exit() after displaying a message - so this is for fatal errors, such as
+	/// internal inconstencies, end of memory conditions, unexpected and un-manageable
+	/// Win32-API returns etc.
+	///
+	/// Macros #ASSCHK, #ASSAPI and #ASSPTR are used to actually call the function
+	/// so as to get the correct file and line into the message produced.
 
-    /// \brief Get last Win32 API error as static text string.
-    extern const _TCHAR *LastErrorMsg();
-    /// \brief Get a string representation of the most recent system error
-    extern _TCHAR *APerror(const _TCHAR *sz = NULL);
-    /// \brief Display formatted message on failed assertion and exit
-    extern void AssFunc(bool fOk, const _TCHAR *sz, const _TCHAR *szFile, int iLine);
-    /// \brief A MessageBox() with printf() functionality
-    extern void MessageBoxF(const _TCHAR *szFmt, const _TCHAR *szCaption, unsigned int uType, ...);
+	/// \brief Get last Win32 API error as static text string.
+	extern const _TCHAR* LastErrorMsg();
+	/// \brief Get a string representation of the most recent system error
+	extern _TCHAR* APerror(const _TCHAR* sz = NULL);
+	/// \brief Display formatted message on failed assertion and exit
+	extern void AssFunc(bool fOk, const _TCHAR* sz, const _TCHAR* szFile, int iLine);
+	/// \brief A MessageBox() with printf() functionality
+	extern void MessageBoxF(const _TCHAR* szFmt, const _TCHAR* szCaption, unsigned int uType, ...);
 #ifdef _DEBUG
-    /// \brief A OutputDebugString() with printf() functionality
-    extern void OutputDebugStringF(const _TCHAR *szFmt, ...);
+	/// \brief A OutputDebugString() with printf() functionality
+	extern void OutputDebugStringF(const _TCHAR* szFmt, ...);
 #else
-    /// \brief A OutputDebugString() with printf() functionality
-    inline void OutputDebugStringF(const _TCHAR *szFmt, ...) { szFmt; }
+	/// \brief A OutputDebugString() with printf() functionality
+	inline void OutputDebugStringF(const _TCHAR* szFmt, ...) { szFmt; }
 #endif
 } // namespace AxLib
 

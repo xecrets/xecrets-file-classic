@@ -20,7 +20,7 @@
 	either patched after the build into the executable, or have them contained in an external configuration
 	file, typically a signed XML-file. The actual strategy may vary depending on the target platform.
 
-	Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2005-2020 Svante Seleborg/Axantum Software AB, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

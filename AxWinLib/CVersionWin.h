@@ -1,17 +1,17 @@
 /*! \file
-    \brief Get various version info from version resources of an exectuable
+	\brief Get various version info from version resources of an exectuable
 
-    @(#) $Id$
+	@(#) $Id$
 
-    AxLib - Collection of useful code. All code here is generally intended to be simply included in
-    the projects, the intention is not to províde a stand-alone linkable library, since so many
-    variants are possible (single/multithread release/debug etc) and also because it is frequently
-    used in open source programs, and then the distributed source must be complete and there is no
-    real reason to make the distributions so large etc.
+	AxLib - Collection of useful code. All code here is generally intended to be simply included in
+	the projects, the intention is not to províde a stand-alone linkable library, since so many
+	variants are possible (single/multithread release/debug etc) and also because it is frequently
+	used in open source programs, and then the distributed source must be complete and there is no
+	real reason to make the distributions so large etc.
 
-    It's of course also possible to build a partial or full library in the respective solution.
+	It's of course also possible to build a partial or full library in the respective solution.
 
-	Copyright (C) 2006 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2006-2020 Svante Seleborg/Axantum Software AB, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;
@@ -31,29 +31,27 @@
 */
 
 namespace AxLib {
-    /// \brief Get version from version resources
-    ///
-    /// Get various version info from version resources of an
-    /// executable, perhaps ourselves.
-    class CVersion {
-	    VS_FIXEDFILEINFO *m_pFixedFileInfo;     ///< Fixed info, references m_pFileVersionInfo
-	    void *m_pFileVersionInfo;               ///< The version resources from the executable
+	/// \brief Get version from version resources
+	///
+	/// Get various version info from version resources of an
+	/// executable, perhaps ourselves.
+	class CVersion {
+		VS_FIXEDFILEINFO* m_pFixedFileInfo;     ///< Fixed info, references m_pFileVersionInfo
+		void* m_pFileVersionInfo;               ///< The version resources from the executable
 
-    private:
-        _TCHAR *newLoadString(UINT uId, HMODULE hModule = NULL); ///< Load a string resource into an new'd string buffer
+	private:
+		_TCHAR* newLoadString(UINT uId, HMODULE hModule = NULL); ///< Load a string resource into an new'd string buffer
 
-    public:
-	    CVersion(HINSTANCE hInstance = NULL);   ///< Load the resources
-	    ~CVersion();                            ///< Free allocated memory
-	    WORD Major();                           ///< Get the Major version word
-	    WORD Minor();                           ///< Get the Minor version word
-	    WORD Minuscle();                        ///< Get the Minuscle version word
-	    WORD Patch();                           ///< Get the Patch level version word
-	    _TCHAR *newProductName();               ///< Product name, from resource. Allocated.
-        _TCHAR *newCompanyName();               ///< Company name, from resource. Allocated.
-        _TCHAR *newLegalCopyright();            ///< Copyright string, from resource. Allocated.
-        _TCHAR *newNameVersionString(UINT uProductName = 0);         ///< Formatted version string. Allocated.
-    };
+	public:
+		CVersion(HINSTANCE hInstance = NULL);   ///< Load the resources
+		~CVersion();                            ///< Free allocated memory
+		WORD Major();                           ///< Get the Major version word
+		WORD Minor();                           ///< Get the Minor version word
+		WORD Minuscle();                        ///< Get the Minuscle version word
+		WORD Patch();                           ///< Get the Patch level version word
+		_TCHAR* newProductName();               ///< Product name, from resource. Allocated.
+		_TCHAR* newCompanyName();               ///< Company name, from resource. Allocated.
+		_TCHAR* newLegalCopyright();            ///< Copyright string, from resource. Allocated.
+		_TCHAR* newNameVersionString(UINT uProductName = 0);         ///< Formatted version string. Allocated.
+	};
 } // namespace AxLib
-
-

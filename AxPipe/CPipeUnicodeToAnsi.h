@@ -6,7 +6,7 @@
 
 AxPipe - Binary Stream Framework
 
-Copyright (C) 2005 Svante Seleborg/Axon Data, All rights reserved.
+Copyright (C) 2005-2020 Svante Seleborg/Axon Data, All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it under the terms
 of the GNU General Public License as published by the Free Software Foundation;
@@ -63,10 +63,10 @@ namespace AxPipe {
 			///
 			/// Padding is removed, only actual plain text is passed along.
 			/// \param pSeg The data to consume. Note that we're guaranteed a multiple of the block size here.
-			void Out(CSeg *pSeg) {
+			void Out(CSeg* pSeg) {
 				// Here we're guaranteed an even multiple of the block size requested.
-				wchar_t *unicode = (wchar_t *)pSeg->PtrRd();
-				CSeg *pAnsiSeg = new CSeg(pSeg->Len() / (sizeof(wchar_t) / sizeof(char)));
+				wchar_t* unicode = (wchar_t*)pSeg->PtrRd();
+				CSeg* pAnsiSeg = new CSeg(pSeg->Len() / (sizeof(wchar_t) / sizeof(char)));
 				for (int i = 0; i < pAnsiSeg->Len(); ++i) {
 					pAnsiSeg->PtrWr()[i] = (char)unicode[i];
 				}

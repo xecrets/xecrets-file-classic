@@ -7,7 +7,7 @@
 
 	Xecrets File/AxDecrypt et. al - Common definitions for passphrase handling
 
-	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2001-2020 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

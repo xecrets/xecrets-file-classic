@@ -7,7 +7,7 @@
 
 	AxPipe - Binary Stream Framework
 
-	Copyright (C) 2003 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2003-2020 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;
@@ -37,8 +37,6 @@
 
 	C[T]SourceStdIn  - a source [in it's own thread]
 	C[T]SinkStdOut   - a sink [in it's own thread]
-
-	Copyright 2003, Axon Data/Svante Seleborg, All Rights Reserved.
 */
 #include    "AxPipe.h"
 #include    <stdio.h>
@@ -56,7 +54,7 @@ namespace AxPipe {
 		/// \param fBinary set to true for binary style reading
 		/// \param cbChunk the size of the read buffer
 		/// \return A pointer to this
-		CSourceStdIn *Init(bool fBinary = false, size_t cbChunk = 64 * 1024) {
+		CSourceStdIn* Init(bool fBinary = false, size_t cbChunk = 64 * 1024) {
 			m_cbChunk = cbChunk;
 			ASSCHK(_setmode(_fileno(stdin), fBinary ? _O_BINARY : _O_TEXT) != -1, _T("CSourceStdIn::Init() setmode() failed"));
 			return this;
@@ -71,14 +69,14 @@ namespace AxPipe {
 	protected:
 		///< Get the next chunk from the input file
 		/// \return data, or zero-length on EOF or NULL on error
-		CSeg *In() {
+		CSeg* In() {
 			if (ferror(stdin)) {
 				return NULL;
 			}
 			if (feof(stdin)) {
 				return new CSeg(0);
 			}
-			CSeg *pSeg = new CSeg(m_cbChunk);
+			CSeg* pSeg = new CSeg(m_cbChunk);
 			size_t cbLen = fread(pSeg->PtrWr(), 1, pSeg->Size(), stdin);
 			if (cbLen < pSeg->Size()) {
 				if (ferror(stdin)) {
@@ -98,7 +96,7 @@ namespace AxPipe {
 		/// \brief Set file mode
 		/// \param fBinary Set to true for binary mode writing
 		/// \return A pointer to this
-		CSinkStdOut *Init(bool fBinary = false) {
+		CSinkStdOut* Init(bool fBinary = false) {
 			ASSCHK(_setmode(_fileno(stdout), fBinary ? _O_BINARY : _O_TEXT) != -1, _T("CSourceStdOut::Init() setmode() failed"));
 			return this;
 		}
@@ -111,7 +109,7 @@ namespace AxPipe {
 		/// \brief output a segment
 		/// Check with CError::GetErrorCode() and CError::GetErrorMsg() for errors
 		/// \param pSeg The segment to write
-		virtual void Out(CSeg *pSeg) {
+		virtual void Out(CSeg* pSeg) {
 			size_t cbLen = fwrite(pSeg->PtrRd(), 1, pSeg->Len(), stdout);
 			if (cbLen != pSeg->Len()) {
 				wchar_t buf[200];

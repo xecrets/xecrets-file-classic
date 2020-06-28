@@ -1,9 +1,9 @@
 /*! \file
-    \brief Implement launch-and-wait functionality for a document.
+	\brief Implement launch-and-wait functionality for a document.
 
-    @(#) $Id$
+	@(#) $Id$
 
-	Copyright (C) 2006 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2006-2020 Svante Seleborg/Axantum Software AB, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;
@@ -28,33 +28,33 @@
 #include "IDocumentAppLaunch.h"
 
 namespace awl {
-    class CDocumentAppLaunch : public IDocumentAppLaunch {
-        std::wstring m_ErrorMessage;
+	class CDocumentAppLaunch : public IDocumentAppLaunch {
+		std::wstring m_ErrorMessage;
 
-    public:
-        CDocumentAppLaunch() : m_ErrorMessage() {
-        }
+	public:
+		CDocumentAppLaunch() : m_ErrorMessage() {
+		}
 
-        /// \brief Launch the app and wait.
-        /// \param wzDocumentPath The full path to the document.
-        /// \return true if all went well.
-        virtual bool LaunchAndWait(const wchar_t *wzDocumentPath) {
-            m_ErrorMessage = L"Not Yet Implemented";
-            return false;
-        }
+		/// \brief Launch the app and wait.
+		/// \param wzDocumentPath The full path to the document.
+		/// \return true if all went well.
+		virtual bool LaunchAndWait(const wchar_t* wzDocumentPath) {
+			m_ErrorMessage = L"Not Yet Implemented";
+			return false;
+		}
 
-        /// \brief If an error, an error message is kept here.
-        /// \return The error message, or an empty string.
-        virtual const wchar_t *ErrorMessage() {
-            return m_ErrorMessage.c_str();
-        }
+		/// \brief If an error, an error message is kept here.
+		/// \return The error message, or an empty string.
+		virtual const wchar_t* ErrorMessage() {
+			return m_ErrorMessage.c_str();
+		}
 
-        virtual ~CDocumentAppLaunch() {
-        }
-    };
+		virtual ~CDocumentAppLaunch() {
+		}
+	};
 
-    /// \brief Create an instance of CDocumentAppLaunch
-    IDocumentAppLaunch *IDocumentAppLaunch::New() {
-        return new CDocumentAppLaunch();
-    }
+	/// \brief Create an instance of CDocumentAppLaunch
+	IDocumentAppLaunch* IDocumentAppLaunch::New() {
+		return new CDocumentAppLaunch();
+	}
 }
