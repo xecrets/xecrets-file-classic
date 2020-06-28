@@ -21,7 +21,7 @@
     <ClCompile Include="XecretsFileLibPP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CAxCryptAES.cpp">
+    <ClCompile Include="CXecretsFileAES.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CXecretsFileLib.cpp">
@@ -56,7 +56,7 @@
     <ClInclude Include="BlockTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAxCryptAES.h">
+    <ClInclude Include="CXecretsFileAES.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CXecretsFileLib.h">

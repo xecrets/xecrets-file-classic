@@ -83,7 +83,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="CAxCryptAES.cpp">
+    <ClCompile Include="CXecretsFileAES.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
@@ -117,7 +117,7 @@
     <ClInclude Include="XecretsFileLib.h" />
     <ClInclude Include="XecretsFileLibPP.h" />
     <ClInclude Include="BlockTypes.h" />
-    <ClInclude Include="CAxCryptAES.h" />
+    <ClInclude Include="CXecretsFileAES.h" />
     <ClInclude Include="CXecretsFileLib.h" />
     <ClInclude Include="CXecretsFileLibMisc.h" />
     <ClInclude Include="CAxCryptMeta.h" />

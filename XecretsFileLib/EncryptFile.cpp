@@ -107,7 +107,7 @@ namespace axcl {
 				ASSCHK(m_fKeyIsValid, _TT("Attempt to add header without valid key"));
 
 				// Initialize an AES structure with the Data Encrypting Key and the proper direction.
-				axcl::CAxCryptAES aesContext(axcl::CAxCryptAESSubKey().Set(GetMasterDEK(), axcl::CAxCryptAESSubKey::eHeaders).Get(), axcl::CAxCryptAES::eCBC, axcl::CAxCryptAES::eEncrypt);
+				axcl::CXecretsFileAES aesContext(axcl::CXecretsFileAESSubKey().Set(GetMasterDEK(), axcl::CXecretsFileAESSubKey::eHeaders).Get(), axcl::CXecretsFileAES::eCBC, axcl::CXecretsFileAES::eEncrypt);
 
 				// Encrypt/Decrypt the block with default IV of zero.
 				aesContext.Xblock(static_cast<axcl::TBlock*>(p), static_cast<axcl::TBlock*>(p), cb / sizeof axcl::TBlock);
@@ -477,7 +477,7 @@ namespace axcl {
 		typedef AxPipe::CPipeBlock base;
 
 		CEncryptMeta* m_pEncryptMeta;           ///< All the collective controlling stuff
-		axcl::CAxCryptAES m_AesCtx;             ///< Our encryption CBC context
+		axcl::CXecretsFileAES m_AesCtx;             ///< Our encryption CBC context
 		axcl::int64 m_cb;                       ///< The number of bytes in the encrypted stream, including padding
 
 	public:
@@ -504,7 +504,7 @@ namespace axcl {
 					return false;
 				}
 				// Initialize an AES structure with the Data Encrypting Key and the proper direction.
-				m_AesCtx.Init(axcl::CAxCryptAESSubKey().Set(m_pEncryptMeta->GetMasterDEK(), axcl::CAxCryptAESSubKey::eData).Get(), axcl::CAxCryptAES::eCBC, axcl::CAxCryptAES::eEncrypt);
+				m_AesCtx.Init(axcl::CXecretsFileAESSubKey().Set(m_pEncryptMeta->GetMasterDEK(), axcl::CXecretsFileAESSubKey::eData).Get(), axcl::CXecretsFileAES::eCBC, axcl::CXecretsFileAES::eEncrypt);
 				const axcl::TBlock* pIV = m_pEncryptMeta->GetIV();
 				ASSPTR(pIV);
 				m_AesCtx.SetIV(pIV);
@@ -586,7 +586,7 @@ namespace axcl {
 	public:
 		CPipeEncHMAC_SHA1_128* Init(CEncryptMeta* pEncryptMeta) {
 			// Give the base-class the key and the offset to start from.
-			base::Init(reinterpret_cast<AxPipe::Stock::TBits<128>*>(CAxCryptAESSubKey().Set(pEncryptMeta->GetMasterDEK(), CAxCryptAESSubKey::eHMAC).Get()),
+			base::Init(reinterpret_cast<AxPipe::Stock::TBits<128>*>(CXecretsFileAESSubKey().Set(pEncryptMeta->GetMasterDEK(), CXecretsFileAESSubKey::eHMAC).Get()),
 				pEncryptMeta->GetOffsetHMAC());
 			return this;
 		}

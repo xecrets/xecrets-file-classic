@@ -366,8 +366,8 @@ namespace axcl {
 			CDecryptMeta::LockT aLock(m_pDecryptMeta);
 
 			// Give the base-class the key and the offset to start from.
-			base::Init(reinterpret_cast<AxPipe::Stock::TBits<128>*>(axcl::CAxCryptAESSubKey().Set(m_pDecryptMeta->GetMasterDEK(),
-				axcl::CAxCryptAESSubKey::eHMAC).Get()),
+			base::Init(reinterpret_cast<AxPipe::Stock::TBits<128>*>(axcl::CXecretsFileAESSubKey().Set(m_pDecryptMeta->GetMasterDEK(),
+				axcl::CXecretsFileAESSubKey::eHMAC).Get()),
 				m_pDecryptMeta->GetOffsetHMAC());
 
 			// Set up the HMAC for processing.
@@ -462,7 +462,7 @@ namespace axcl {
 		typedef AxPipe::CPipeBlock base;
 
 		CDecryptMeta* m_pDecryptMeta;           ///< All the collective controlling stuff
-		axcl::CAxCryptAES m_AesCtx;             ///< Our decryption CBC context
+		axcl::CXecretsFileAES m_AesCtx;             ///< Our decryption CBC context
 		axcl::int64 m_cb;                       ///< The number of bytes to decrypt
 
 	public:
@@ -488,7 +488,7 @@ namespace axcl {
 			}
 
 			// Initialize an AES structure with the Data Encrypting Key and the proper direction.
-			m_AesCtx.Init(axcl::CAxCryptAESSubKey().Set(m_pDecryptMeta->GetMasterDEK(), axcl::CAxCryptAESSubKey::eData).Get(), axcl::CAxCryptAES::eCBC, axcl::CAxCryptAES::eDecrypt);
+			m_AesCtx.Init(axcl::CXecretsFileAESSubKey().Set(m_pDecryptMeta->GetMasterDEK(), axcl::CXecretsFileAESSubKey::eData).Get(), axcl::CXecretsFileAES::eCBC, axcl::CXecretsFileAES::eDecrypt);
 			const axcl::TBlock* pIV = m_pDecryptMeta->GetIV();
 			ASSPTR(pIV);
 			m_AesCtx.SetIV(pIV);

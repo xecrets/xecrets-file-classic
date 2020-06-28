@@ -1,5 +1,5 @@
 /*! \file
-	\brief CAxCryptAES.cpp - An Ax Crypt special purpose AES-wrapper
+	\brief CXecretsFileAES.cpp - An Ax Crypt special purpose AES-wrapper
 
 	@(#) $Id$
 
@@ -34,7 +34,7 @@
 #include <memory>
 #include <memory.h>
 
-#include "CAxCryptAES.h"
+#include "CXecretsFileAES.h"
 #include "CXecretsFileLibMisc.h"
 
 // Need to use C linkage specification. Alternatively compile as C++
@@ -43,16 +43,16 @@ extern "C" {
 }
 
 #include "Assert.h"
-#define ASSERT_FILE "CAxCryptAES.cpp"
+#define ASSERT_FILE "CXecretsFileAES.cpp"
 
 namespace axcl {
 	/// Default constructor - just mark it as not ready.
-	CAxCryptAES::CAxCryptAES() {
+	CXecretsFileAES::CXecretsFileAES() {
 		m_bStateOk = false;
 		m_pdwRoundKeys = NULL;
 	}
 	/// delete allocated memory
-	CAxCryptAES::~CAxCryptAES() {
+	CXecretsFileAES::~CXecretsFileAES() {
 		if (m_pdwRoundKeys != NULL) delete m_pdwRoundKeys;
 	}
 
@@ -61,7 +61,7 @@ namespace axcl {
 	/// \param eMode The mode (eCBC or eECB)
 	/// \param eDirection eEncrypt or eDecrypt
 	/// \param eKeyLength eKey128Bits only supported now
-	CAxCryptAES::CAxCryptAES(const TKey* putKey, etMode eMode, etDirection eDirection, etKeyLength eKeyLength) {
+	CXecretsFileAES::CXecretsFileAES(const TKey* putKey, etMode eMode, etDirection eDirection, etKeyLength eKeyLength) {
 		m_pdwRoundKeys = NULL;
 		Init(putKey, eMode, eDirection, eKeyLength);
 	}
@@ -74,7 +74,7 @@ namespace axcl {
 	/// \param eDirection eEncrypt or eDecrypt
 	/// \param eKeyLength eKey128Bits only supported now
 	void
-		CAxCryptAES::Init(const TKey* putKey, etMode eMode, etDirection eDirection, etKeyLength eKeyLength) {
+		CXecretsFileAES::Init(const TKey* putKey, etMode eMode, etDirection eDirection, etKeyLength eKeyLength) {
 		if (m_pdwRoundKeys != NULL) {
 			delete m_pdwRoundKeys;
 			m_pdwRoundKeys = NULL;
@@ -116,7 +116,7 @@ namespace axcl {
 	/// \param nBlocks Number of blocks to transform.
 	/// \return true if all is ok - false otherwise.
 	bool
-		CAxCryptAES::Xblock(const TBlock* putSrc, TBlock* putDst, size_t nBlocks) {
+		CXecretsFileAES::Xblock(const TBlock* putSrc, TBlock* putDst, size_t nBlocks) {
 		if (m_bStateOk) {
 			if (m_eDirection == eEncrypt) {
 				if (m_eMode == eECB) {
@@ -167,17 +167,17 @@ namespace axcl {
 	/// Set the initial IV
 	/// \param putIV Pointer to an IV
 	void
-		CAxCryptAES::SetIV(const TBlock* putIV) {
+		CXecretsFileAES::SetIV(const TBlock* putIV) {
 		memcpy(&m_utIV, putIV, sizeof m_utIV);
 	}
 
-	CAxCryptAESSubKey::CAxCryptAESSubKey() {
+	CXecretsFileAESSubKey::CXecretsFileAESSubKey() {
 		m_pSubKey = new TKey;
 		ASSPTR(m_pSubKey);
 	}
 
 	/// Free allocated memory
-	CAxCryptAESSubKey::~CAxCryptAESSubKey() {
+	CXecretsFileAESSubKey::~CXecretsFileAESSubKey() {
 		delete m_pSubKey;
 	}
 
@@ -187,10 +187,10 @@ namespace axcl {
 	/// \param pMasterKey The master key to use
 	/// \param eSubKey The sub-key to generate. The enum value is used as an int and is encrypted to form the sub-key.
 	/// \return A reference to self.
-	CAxCryptAESSubKey&
-		CAxCryptAESSubKey::Set(TKey* pMasterKey, etSubKey eSubKey) {
+	CXecretsFileAESSubKey&
+		CXecretsFileAESSubKey::Set(TKey* pMasterKey, etSubKey eSubKey) {
 		TBlock utSubKeyData(eSubKey);
-		CAxCryptAES utCAesCtx(pMasterKey, CAxCryptAES::eECB, CAxCryptAES::eEncrypt);
+		CXecretsFileAES utCAesCtx(pMasterKey, CXecretsFileAES::eECB, CXecretsFileAES::eEncrypt);
 
 		// We know that a TBlock and a TKey is of the same size... Change here if this
 		// changes, or you want to write solid code...
@@ -200,19 +200,19 @@ namespace axcl {
 	}
 
 	TKey*
-		CAxCryptAESSubKey::Get() {
+		CXecretsFileAESSubKey::Get() {
 		return m_pSubKey;
 	}
 
 	/// \brief  The value of the constant according to FIPS recommendations
-	axcl::byte CAxCryptAESWrap::m_aoKeyWrapA[8] = {
+	axcl::byte CXecretsFileAESWrap::m_aoKeyWrapA[8] = {
 		0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6
 	};
 
 	/// Construct a wrapping object with the appropriate parameters
 	/// \param nIter The number of iterations - increase for work-factor increase
 	/// \param nKeySize The key-size in bytes, i.e. 16 for 128-bit keys
-	CAxCryptAESWrap::CAxCryptAESWrap(longlong nIter, int nKeySize) {
+	CXecretsFileAESWrap::CXecretsFileAESWrap(longlong nIter, int nKeySize) {
 		m_pSalt = NULL;
 		m_pWrap = NULL;
 		Init(nIter, nKeySize);
@@ -221,7 +221,7 @@ namespace axcl {
 	/// Initialize a wrapping object with the appropriate parameters
 	/// \param nIter The number of iterations - increase for work-factor increase
 	/// \param nKeySize The key-size in bytes, i.e. 16 for 128-bit keys
-	void CAxCryptAESWrap::Init(longlong nIter, int nKeySize) {
+	void CXecretsFileAESWrap::Init(longlong nIter, int nKeySize) {
 		m_nIter = nIter;
 		m_nKeySize = nKeySize;
 
@@ -235,7 +235,7 @@ namespace axcl {
 	}
 
 	/// Free and clear allocated memory
-	CAxCryptAESWrap::~CAxCryptAESWrap() {
+	CXecretsFileAESWrap::~CXecretsFileAESWrap() {
 		if (m_pSalt != NULL) {
 			memset(m_pSalt, 0, m_nKeySize);
 			delete[] m_pSalt;
@@ -254,7 +254,7 @@ namespace axcl {
 	/// \param pKeyToWrap A key (of the same size as the wrapping key) to wrap
 	/// \param pSalt A random non-secret salt (of the same size as the key)
 	void
-		CAxCryptAESWrap::Wrap(const void* pWrappingKey, const void* pKeyToWrap, const void* pSalt) {
+		CXecretsFileAESWrap::Wrap(const void* pWrappingKey, const void* pKeyToWrap, const void* pSalt) {
 		SetKeyAndSalt(pKeyToWrap, pSalt);
 
 		// Finally generate the Salted Key Wrapping Key by XOR-ing the given key with the salt.
@@ -264,8 +264,8 @@ namespace axcl {
 		XorMemory(pSaltedWrappingKey.get(), pWrappingKey, m_pSalt, m_nKeySize);
 
 		// Use AES in Electronic Code Book mode.
-		CAxCryptAES utAes;
-		utAes.Init((TKey*)(byte*)(pSaltedWrappingKey.get()), CAxCryptAES::eECB, CAxCryptAES::eEncrypt, CAxCryptAES::eKey128Bits);
+		CXecretsFileAES utAes;
+		utAes.Init((TKey*)(byte*)(pSaltedWrappingKey.get()), CXecretsFileAES::eECB, CXecretsFileAES::eEncrypt, CXecretsFileAES::eKey128Bits);
 
 		// Allocate the temporary B-block on the secured heap too.
 		std::auto_ptr<TBlock> putB(new TBlock);    // Will call delete on destruction.
@@ -296,7 +296,7 @@ namespace axcl {
 	/// \param pSalt Pointer to the salt used
 	/// \return true if all ok
 	bool
-		CAxCryptAESWrap::UnWrap(const void* pWrappingKey, const void* pWrappedKey, const void* pSalt) {
+		CXecretsFileAESWrap::UnWrap(const void* pWrappingKey, const void* pWrappedKey, const void* pSalt) {
 		// Copy the wrapped data to class local storage
 		memcpy(m_pWrap, pWrappedKey, sizeof m_aoKeyWrapA + m_nKeySize);
 
@@ -307,8 +307,8 @@ namespace axcl {
 		XorMemory(pSaltedWrappingKey.get(), pWrappingKey, pSalt, m_nKeySize);
 
 		// Use AES in Electronic Code Book mode.
-		CAxCryptAES utAes;
-		utAes.Init((TKey*)(byte*)(pSaltedWrappingKey.get()), CAxCryptAES::eECB, CAxCryptAES::eDecrypt, CAxCryptAES::eKey128Bits);
+		CXecretsFileAES utAes;
+		utAes.Init((TKey*)(byte*)(pSaltedWrappingKey.get()), CXecretsFileAES::eECB, CXecretsFileAES::eDecrypt, CXecretsFileAES::eKey128Bits);
 
 		// Allocate the temporary B-block on the secured heap too.
 		std::auto_ptr<TBlock> putB(new TBlock);    // Will call delete on destruction.
@@ -337,31 +337,31 @@ namespace axcl {
 	/// Do what the name says.
 	/// \return The pointer to the salt. The size is set in the constructor or Init()-call.
 	byte*
-		CAxCryptAESWrap::GetSalt() {
+		CXecretsFileAESWrap::GetSalt() {
 		return m_pSalt;
 	}
 
 	/// Get the actual key location. This is only relevant after unwrapping.
 	/// \return A pointer to a byte array of the size given on init.
 	byte*
-		CAxCryptAESWrap::GetKey() {
+		CXecretsFileAESWrap::GetKey() {
 		return &m_pWrap[sizeof m_aoKeyWrapA];
 	}
 
 	/// Get the entire wrapped block. This is only relevant after wrapping.
 	/// \return a A pointer to a byte array, size of the wrap constant plus the given size of the key
 	byte*
-		CAxCryptAESWrap::GetWrap() {
+		CXecretsFileAESWrap::GetWrap() {
 		return m_pWrap;
 	}
 
 	size_t
-		CAxCryptAESWrap::WrapSize() {
+		CXecretsFileAESWrap::WrapSize() {
 		return m_nKeySize + 8;
 	}
 
 	void
-		CAxCryptAESWrap::SetKeyAndSalt(const void* pKeyToWrap, const void* pSalt) {
+		CXecretsFileAESWrap::SetKeyAndSalt(const void* pKeyToWrap, const void* pSalt) {
 		// Init according to FIPS recommendation.
 		memcpy(&m_pWrap[0], m_aoKeyWrapA, sizeof m_aoKeyWrapA);
 

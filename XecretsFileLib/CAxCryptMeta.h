@@ -32,7 +32,7 @@ extern "C" {
 #include "XecretsFileLib.h"
 }
 #include "BlockTypes.h"
-#include "CAxCryptAES.h"
+#include "CXecretsFileAES.h"
 #include "CXecretsFileLibMisc.h"
 
 #include "Assert.h"
@@ -180,7 +180,7 @@ namespace axcl {
 		size_t m_cbOffsetData;                  ///< Offset in stream to actual data to decrypt.
 		bool m_fKeyIsValid;                     ///< true if we have a valid key
 		axcl::tstring m_sError;                 ///< An error string
-		axcl::CAxCryptAESWrap m_AesWrap;        ///< Helper to unwrap the key after user entry of passphrase
+		axcl::CXecretsFileAESWrap m_AesWrap;        ///< Helper to unwrap the key after user entry of passphrase
 
 		/// \brief The common header of all sections
 	public:
@@ -288,7 +288,7 @@ namespace axcl {
 			if ((eType & eEncryptedFlag)) {
 				if (m_fKeyIsValid) {
 					// Initialize an AES structure with the Data Encrypting Key and the proper direction.
-					axcl::CAxCryptAES aesContext(axcl::CAxCryptAESSubKey().Set(GetMasterDEK(), axcl::CAxCryptAESSubKey::eHeaders).Get(), axcl::CAxCryptAES::eCBC, axcl::CAxCryptAES::eDecrypt);
+					axcl::CXecretsFileAES aesContext(axcl::CXecretsFileAESSubKey().Set(GetMasterDEK(), axcl::CXecretsFileAESSubKey::eHeaders).Get(), axcl::CXecretsFileAES::eCBC, axcl::CXecretsFileAES::eDecrypt);
 
 					// Encrypt/Decrypt the block with default IV of zero.
 					aesContext.Xblock(reinterpret_cast<const axcl::TBlock*>(p), reinterpret_cast<axcl::TBlock*>(p), static_cast<axcl::uint32>(i->Len()) / sizeof axcl::TBlock);

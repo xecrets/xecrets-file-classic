@@ -1,11 +1,11 @@
-#ifndef CAXCRYPTAES_H
-#define CAXCRYPTAES_H
+#ifndef CXECRETSFILEAES_H
+#define CXECRETSFILEAES_H
 /*! \file
-	\brief CAxCryptAES.h - An Ax Crypt special purpose AES-wrapper
+	\brief CXecretsFileAES.h - An Ax Crypt special purpose AES-wrapper
 
 	@(#) $Id$
 
-	CAxCryptAES.h - An Ax Crypt special purpose AES-wrapper
+	CXecretsFileAES.h - An Ax Crypt special purpose AES-wrapper
 
 	Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -32,7 +32,7 @@ extern "C" {
 #include "BlockTypes.h"
 
 #include "Assert.h"
-#define ASSERT_FILE "CAxCryptAES.h"
+#define ASSERT_FILE "CXecretsFileAES.h"
 
 namespace axcl {
 	/// \brief Simple wrapper class for the AES-code.
@@ -53,7 +53,7 @@ namespace axcl {
 	///  Please note that padding must be done external to this code - we only
 	///  handle whole blocks here.
 	///
-	class CAxCryptAES {
+	class CXecretsFileAES {
 	public:
 		/// \brief Parameter values to control the algorithm direction
 		enum etDirection {
@@ -73,10 +73,10 @@ namespace axcl {
 		};
 
 		/// \brief If used, must set parameters with Init().
-		CAxCryptAES();
-		~CAxCryptAES();
+		CXecretsFileAES();
+		~CXecretsFileAES();
 		/// \brief Construct and set all parameters.
-		CAxCryptAES(const TKey* putKey, etMode eMode, etDirection eDirection, etKeyLength eKeyLength = eKey128Bits);
+		CXecretsFileAES(const TKey* putKey, etMode eMode, etDirection eDirection, etKeyLength eKeyLength = eKey128Bits);
 		/// \brief Set all parameters.
 		void Init(const TKey* putKey, etMode eMode, etDirection eDirection, etKeyLength eKeyLength = eKey128Bits);
 		/// \brief Copy IV
@@ -103,7 +103,7 @@ namespace axcl {
 	/// Exposing one or more subkeys must not endanger either the other subkeys, or the
 	/// master key. In fact, the eValidator key is exposed in the file, and never used
 	/// for actual encryption.
-	class CAxCryptAESSubKey {
+	class CXecretsFileAESSubKey {
 	private:
 		TKey* m_pSubKey;                        ///< The generated sub-key
 	public:
@@ -115,11 +115,11 @@ namespace axcl {
 			eData                               ///< The actual data-encrypting sub-key
 		};
 
-		CAxCryptAESSubKey();
-		~CAxCryptAESSubKey();
+		CXecretsFileAESSubKey();
+		~CXecretsFileAESSubKey();
 
 		/// \brief Generate a sub-key, given a master key
-		CAxCryptAESSubKey& Set(TKey* pMasterKey, etSubKey eSubKey);
+		CXecretsFileAESSubKey& Set(TKey* pMasterKey, etSubKey eSubKey);
 		/// \brief Get the generated sub-key.
 		TKey* Get();
 	};
@@ -129,7 +129,7 @@ namespace axcl {
 	/// This is a self-checking iterative transformation, that can also be
 	/// used as a work-factor increaser, since this transformation may well
 	/// take a bit of time if the iterations are large enough.
-	class CAxCryptAESWrap {
+	class CXecretsFileAESWrap {
 		static byte m_aoKeyWrapA[8];            ///< FIPS recommended constant value.
 
 		byte* m_pWrap;                          ///< The Key Data (A + DEK).
@@ -138,10 +138,10 @@ namespace axcl {
 		longlong m_nIter;                       ///< Custom number of iterations for work factor increase
 	public:
 		/// \brief Constructor, define iter and salt-size params.
-		CAxCryptAESWrap(longlong nIter = 6, int nKeySize = 16);
+		CXecretsFileAESWrap(longlong nIter = 6, int nKeySize = 16);
 		/// \brief Init, define iterations and salt-size params.
 		void Init(longlong nIter, int nKeySize = 16);
-		~CAxCryptAESWrap();
+		~CXecretsFileAESWrap();
 		/// \brief FIPS-wrap a key using the specified parameters
 		void Wrap(const void* pWrappingKey, const void* pKeyToWrap, const void* pSalt);
 		/// \brief Unwrap a FIPS-wrapped key using the specified parameters
@@ -158,4 +158,4 @@ namespace axcl {
 		void SetKeyAndSalt(const void* pKeyToWrap, const void* pSalt);
 	};
 } // namespace axcl
-#endif CAXCRYPTAES_H
+#endif CXECRETSFILEAES_H
