@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by AxCrypt.rc
+// Used by XecretsFile.rc
 //
 #define IDD_ENTERPASSPHRASE             102
 #define IDD_OLDNEWPASSPHRASE            103

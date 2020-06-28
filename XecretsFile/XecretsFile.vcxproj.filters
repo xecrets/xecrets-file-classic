@@ -18,7 +18,7 @@
     <ClInclude Include="AxConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AxCrypt.h">
+    <ClInclude Include="XecretsFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CActiveThreads.h">
@@ -83,12 +83,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AxCrypt.rc">
+    <ResourceCompile Include="XecretsFile.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AxCrypt.cpp">
+    <ClCompile Include="XecretsFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CActiveThreads.cpp">
@@ -150,10 +150,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AxCrypt.manifest.Win32">
+    <None Include="XecretsFile.manifest.Win32">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="AxCrypt.manifest.x64">
+    <None Include="XecretsFile.manifest.x64">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

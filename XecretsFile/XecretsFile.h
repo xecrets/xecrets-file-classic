@@ -21,7 +21,7 @@
 
 	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
-	AxCrypt.h						WinMain() and friends.
+	XecretsFile.h					WinMain() and friends.
 
 	E-mail							YYYY-MM-DD				Reason
 	software@axantum.com			    2001					Initial

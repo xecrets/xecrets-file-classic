@@ -73,7 +73,7 @@
 #include "../XecretsFileCommon/Types.h"
 #include "XecretsFileTexts.h"
 #include "../XecretsFileCommon/AxCommon.h"
-#include "AxCrypt.h"
+#include "XecretsFile.h"
 #include "AxConfig.h"
 #include "../XecretsFileCommon/Utility.h"
 #include "../XecretsFileCommon/CAssert.h"

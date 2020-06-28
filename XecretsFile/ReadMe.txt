@@ -1,26 +1,25 @@
 ========================================================================
-    WIN32 APPLICATION : AxCrypt Project Overview
+    WIN32 APPLICATION : XecretsFile Project Overview
 ========================================================================
 
 AppWizard has created this AxCrypt application for you.
 
 This file contains a summary of what you will find in each of the files that
-make up your AxCrypt application.
+make up your XecretsFile application.
 
-
-AxCrypt.vcproj
+XecretsFile.vcproj
     This is the main project file for VC++ projects generated using an Application Wizard.
     It contains information about the version of Visual C++ that generated the file, and
     information about the platforms, configurations, and project features selected with the
     Application Wizard.
 
-AxCrypt.cpp
+XecretsFile.cpp
     This is the main application source file.
 
 /////////////////////////////////////////////////////////////////////////////
 AppWizard has created the following resources:
 
-AxCrypt.rc
+XecretsFile.rc
     This is a listing of all of the Microsoft Windows resources that the
     program uses.  It includes the icons, bitmaps, and cursors that are stored
     in the RES subdirectory.  This file can be directly edited in Microsoft
@@ -30,21 +29,21 @@ Resource.h
     This is the standard header file, which defines new resource IDs.
     Microsoft Visual C++ reads and updates this file.
 
-AxCrypt.ico
+XecretsFile.ico
     This is an icon file, which is used as the application's icon (32x32).
-    This icon is included by the main resource file AxCrypt.rc.
+    This icon is included by the main resource file XecretsFile.rc.
 
 small.ico
     This is an icon file, which contains a smaller version (16x16)
     of the application's icon. This icon is included by the main resource
-    file AxCrypt.rc.
+    file XecretsFile.rc.
 
 /////////////////////////////////////////////////////////////////////////////
 Other standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
-    named AxCrypt.pch and a precompiled types file named StdAfx.obj.
+    named XecretsFile.pch and a precompiled types file named StdAfx.obj.
 
 /////////////////////////////////////////////////////////////////////////////
 Other notes:

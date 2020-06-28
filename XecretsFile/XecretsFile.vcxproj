@@ -107,7 +107,7 @@
       <AdditionalIncludeDirectories>$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Manifest>
-      <AdditionalManifestFiles>AxCrypt.manifest.Win32 %(AdditionalManifestFiles)</AdditionalManifestFiles>
+      <AdditionalManifestFiles>XecretsFile.manifest.Win32 %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,7 +133,7 @@
       <AdditionalIncludeDirectories>$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Manifest>
-      <AdditionalManifestFiles>AxCrypt.manifest.x64 %(AdditionalManifestFiles)</AdditionalManifestFiles>
+      <AdditionalManifestFiles>XecretsFile.manifest.x64 %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -163,7 +163,7 @@
       <AdditionalIncludeDirectories>$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Manifest>
-      <AdditionalManifestFiles>AxCrypt.manifest.Win32 %(AdditionalManifestFiles)</AdditionalManifestFiles>
+      <AdditionalManifestFiles>XecretsFile.manifest.Win32 %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -193,12 +193,12 @@
       <AdditionalIncludeDirectories>$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Manifest>
-      <AdditionalManifestFiles>AxCrypt.manifest.x64 %(AdditionalManifestFiles)</AdditionalManifestFiles>
+      <AdditionalManifestFiles>XecretsFile.manifest.x64 %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AxConfig.h" />
-    <ClInclude Include="AxCrypt.h" />
+    <ClInclude Include="XecretsFile.h" />
     <ClInclude Include="CActiveThreads.h" />
     <ClInclude Include="CChildProc.h" />
     <ClInclude Include="CConfigVerify.h" />
@@ -221,7 +221,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AxCrypt.rc">
+    <ResourceCompile Include="XecretsFile.rc">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -229,7 +229,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AxCrypt.cpp">
+    <ClCompile Include="XecretsFile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -420,8 +420,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AxCrypt.manifest.Win32" />
-    <None Include="AxCrypt.manifest.x64" />
+    <None Include="XecretsFile.manifest.Win32" />
+    <None Include="XecretsFile.manifest.x64" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="..\Build\Build.targets" />
