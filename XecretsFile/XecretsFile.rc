@@ -64,7 +64,7 @@ GROUPBOX        "Keyfile", IDC_KEYFILE, 5, 65, 165, 30
 LTEXT           "Verify", IDC_ENTER_VERIFY, 10, 30, 155, 8
 CONTROL         "Retain for decryption during session", IDC_CHECKCACHE_D,
 "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 7, 100, 160, 10
-CTEXT           "Try Xecrets On Line Password Manager", IDC_TRYXECRETS, 7, 143, 168, 8, SS_NOTIFY
+CTEXT           "Visit Xecrets File Encryption Homepage", IDC_HOMEPAGE, 7, 143, 168, 8, SS_NOTIFY
 END
 
 IDD_PASSPHRASE DIALOGEX 0, 0, 182, 153
@@ -83,7 +83,7 @@ EDITTEXT        IDS_KEYFILENAME, 10, 65, 130, 12, ES_AUTOHSCROLL | ES_READONLY |
 GROUPBOX        "Keyfile", IDC_KEYFILE, 5, 55, 165, 30
 LTEXT           "File", IDS_FILENAME, 10, 5, 155, 10, SS_SUNKEN
 CONTROL         "Session default for Encryption", IDC_CHECKCACHE_E, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 100, 160, 10
-CTEXT           "Xecrets On Line Password Manager", IDC_TRYXECRETS, 7, 135, 168, 8, SS_NOTIFY
+CTEXT           "Visit Xecrets File Encryption Homepage", IDC_HOMEPAGE, 7, 135, 168, 8, SS_NOTIFY
 END
 
 IDD_LICENSE DIALOGEX 0, 0, 254, 105
