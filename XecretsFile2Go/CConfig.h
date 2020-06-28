@@ -5,7 +5,7 @@
 
 	@(#) $Id$
 
-	XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
+	XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road.
 
 	This file defines configuration data that might differ for different builds, and provides an
 	interface for the rest of the code to fetch strings and other values that might differ between

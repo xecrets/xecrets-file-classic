@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -31,7 +31,7 @@
 
 #ifdef _DEBUG
 #undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
+static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif
 
@@ -43,8 +43,8 @@ CActiveThreads::CActiveThreads(CActiveThreads*& pRoot, HANDLE hThread, DWORD dwT
 	m_pNext = pRoot;
 	pRoot = this;
 	m_hThread = hThread;
-    m_dwThreadId = dwThreadId;
-    m_dwUniqueInternalId = (DWORD)InterlockedIncrement(&unique_internal_id);
+	m_dwThreadId = dwThreadId;
+	m_dwUniqueInternalId = (DWORD)InterlockedIncrement(&unique_internal_id);
 }
 //
 // Destructor
@@ -65,7 +65,8 @@ CActiveThreads::Remove(CActiveThreads*& pRoot, DWORD dwUniqueInternalId) {
 			pToDelete->m_pNext = NULL;
 			delete pToDelete;
 			return;
-		} else {
+		}
+		else {
 			ppPrevNext = &(*ppPrevNext)->m_pNext;
 		}
 	}
@@ -80,12 +81,12 @@ CActiveThreads::Thread() {
 
 DWORD
 CActiveThreads::ThreadId() {
-    return m_dwThreadId;
+	return m_dwThreadId;
 }
 
 DWORD
 CActiveThreads::UniqueInternalId() {
-    return m_dwUniqueInternalId;
+	return m_dwUniqueInternalId;
 }
 
 //

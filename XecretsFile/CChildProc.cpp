@@ -1,7 +1,7 @@
 /*
 	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -47,7 +47,7 @@ CChildProc::CChildProc() {
 	InitFunctionPointers();
 }
 
-CChildProc::CChildProc(DWORD dwProcId, const TCHAR *szExecName) {
+CChildProc::CChildProc(DWORD dwProcId, const TCHAR* szExecName) {
 	m_hWndThread = NULL;
 	InitFunctionPointers();
 	Mark(dwProcId, szExecName);
@@ -63,7 +63,7 @@ CChildProc::~CChildProc() {
 //  is already started.
 //
 void
-CChildProc::Mark(DWORD dwProcId, const TCHAR *szExecFile) {
+CChildProc::Mark(DWORD dwProcId, const TCHAR* szExecFile) {
 	CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::Mark() [GetCurrentThreadId()]"), GetCurrentThreadId()).LogEvent(2);
 	CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::Mark() [szExecFile]"), szExecFile).LogEvent(2);
 	CMessage().Wrap(0).AppMsg(INF_DEBUG2, _T("CChildProc::Mark() [dwProcId]"), dwProcId).LogEvent(2);
@@ -125,7 +125,7 @@ CChildProc::ThreadFound() {
 // Wait for all processes to go input idle
 //
 void
-CChildProc::WaitForInputIdle(const TCHAR *szFileName) {
+CChildProc::WaitForInputIdle(const TCHAR* szFileName) {
 	// What can happen here is that several processes are started as the result of a document opening. Not necessarily
 	// all of them may have a message queue. Specifically, Open Office once again does tricky things, and starts up to
 	// three processes, one of which (typically swriter.exe) will not return until the timeout from ::WaitForInputIdle().
@@ -575,7 +575,7 @@ CChildProc::CheckAllThreads(dwSetT& threads) {
 }
 
 /// \brief Enumerate and add windows to new that are not in old
-void CChildProc::AddNewWindows(hwndSetT &hwndOld, hwndSetT &hwndNew) {
+void CChildProc::AddNewWindows(hwndSetT& hwndOld, hwndSetT& hwndNew) {
 	m_SetOfSnapHwnd.clear();
 	EnumWindows(EnumWindowsProc, (LPARAM)this);
 	hwndSetT::iterator it;

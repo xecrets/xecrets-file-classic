@@ -1,12 +1,12 @@
 /*! \file
-	\brief AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
+	\brief AxDecrypt - Stand-alone Xecrets File-decrypter and self-extractor.
 
-    @(#) $Id$
+	@(#) $Id$
 
-    A 'just-enough' bunch of routines that replace the equivalent things
-    from the C Run Time Library.
+	A 'just-enough' bunch of routines that replace the equivalent things
+	from the C Run Time Library.
 
-    Copyright (C) 2004 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2004 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;
@@ -80,7 +80,7 @@
 /// malloc/calloc/realloc/new/new[]/free/delete/delete[] are all compatible in this mini-implementation
 /// \param cb The number of bytes
 /// \return A pointer to the memory block, or NULL
-void * operator new(size_t cb) {
+void* operator new(size_t cb) {
 	return malloc(cb);
 }
 
@@ -89,7 +89,7 @@ void * operator new(size_t cb) {
 /// malloc/calloc/realloc/new/new[]/free/delete/delete[] are all compatible in this mini-implementation
 /// \param cb The number of bytes
 /// \return A pointer to the memory block, or NULL
-void * operator new[](size_t cb) {
+void* operator new[](size_t cb) {
 	return malloc(cb);
 }
 
@@ -97,29 +97,29 @@ void * operator new[](size_t cb) {
 ///
 /// malloc/calloc/realloc/new/new[]/free/delete/delete[] are all compatible in this mini-implementation
 /// \param p Pointer to a memory block, or NULL (ignored)
-extern "C" __declspec(noalias) void __cdecl free(void *p) {
+extern "C" __declspec(noalias) void __cdecl free(void* p) {
 #ifdef _DEBUG
-    (void)::HeapValidate(::GetProcessHeap(), 0, p);
+	(void)::HeapValidate(::GetProcessHeap(), 0, p);
 #endif
-    if (p) {
-        ::HeapFree(::GetProcessHeap(), 0, p);
-    }
+	if (p) {
+		::HeapFree(::GetProcessHeap(), 0, p);
+	}
 }
 
 /// \brief free a previously allocated memory block
 ///
 /// malloc/calloc/realloc/new/new[]/free/delete/delete[] are all compatible in this mini-implementation
 /// \param p Pointer to a memory block, or NULL (ignored)
-void operator delete(void *p) {
-    free(p);
+void operator delete(void* p) {
+	free(p);
 }
 
 /// \brief free a previously allocated memory block
 ///
 /// malloc/calloc/realloc/new/new[]/free/delete/delete[] are all compatible in this mini-implementation
 /// \param p Pointer to a memory block, or NULL (ignored)
-void operator delete[](void *p) {
-    free(p);
+void operator delete[](void* p) {
+	free(p);
 }
 
 /// \brief Change the size of an allocated memory block, preserving data
@@ -128,16 +128,17 @@ void operator delete[](void *p) {
 /// \param p Pointer to a previously allocated memory block, or NULL for first alloc
 /// \param cb The number of bytes for the new memory block
 /// \return A pointer to the memory block, or NULL
-extern "C" __declspec(noalias) __declspec(restrict) void * __cdecl realloc(void * p, size_t cb) {
+extern "C" __declspec(noalias) __declspec(restrict) void* __cdecl realloc(void* p, size_t cb) {
 #ifdef _DEBUG
-    (void)::HeapValidate(::GetProcessHeap(), 0, p);
+	(void)::HeapValidate(::GetProcessHeap(), 0, p);
 #endif
-    if (p) {
-        return ::HeapReAlloc(::GetProcessHeap(), 0, p, cb);
-    } else {
-        // Realloc with NULL
-        return malloc(cb);
-    }
+	if (p) {
+		return ::HeapReAlloc(::GetProcessHeap(), 0, p, cb);
+	}
+	else {
+		// Realloc with NULL
+		return malloc(cb);
+	}
 }
 
 /// \brief Allocate a number of blocks, all zero-initialized
@@ -146,11 +147,11 @@ extern "C" __declspec(noalias) __declspec(restrict) void * __cdecl realloc(void 
 /// \param nitems The number of items
 /// \param cb The size of one item
 /// \return A pointer to the memory block, or NULL
-extern "C" __declspec(noalias) __declspec(restrict) void * __cdecl calloc(size_t nitems, size_t cb) {
+extern "C" __declspec(noalias) __declspec(restrict) void* __cdecl calloc(size_t nitems, size_t cb) {
 #ifdef _DEBUG
-    (void)::HeapValidate(::GetProcessHeap(), 0, NULL);
+	(void)::HeapValidate(::GetProcessHeap(), 0, NULL);
 #endif
-    return ::HeapAlloc(::GetProcessHeap(), HEAP_ZERO_MEMORY, nitems * cb);
+	return ::HeapAlloc(::GetProcessHeap(), HEAP_ZERO_MEMORY, nitems * cb);
 }
 
 /// \brief Allocate a block of memory
@@ -158,25 +159,25 @@ extern "C" __declspec(noalias) __declspec(restrict) void * __cdecl calloc(size_t
 /// malloc/calloc/realloc/new/new[]/free/delete/delete[] are all compatible in this mini-implementation
 /// \param cb The number of bytes to allocate
 /// \return A pointer to the memory block, or NULL
-extern "C" __declspec(noalias) __declspec(restrict) void * __cdecl malloc(size_t cb) {
+extern "C" __declspec(noalias) __declspec(restrict) void* __cdecl malloc(size_t cb) {
 #ifdef _DEBUG
-    HANDLE h = ::GetProcessHeap();
+	HANDLE h = ::GetProcessHeap();
 	ASSAPI(h != NULL);
-    (void)::HeapValidate(h, 0, NULL);
-	void *vp = ::HeapAlloc(h, 0, cb);
+	(void)::HeapValidate(h, 0, NULL);
+	void* vp = ::HeapAlloc(h, 0, cb);
 	ASSPTR(vp);
-    (void)::HeapValidate(h, 0, vp);
+	(void)::HeapValidate(h, 0, vp);
 	return vp;
 #else
-    return ::HeapAlloc(::GetProcessHeap(), 0, cb);
+	return ::HeapAlloc(::GetProcessHeap(), 0, cb);
 #endif
 }
 
 /// \brief This is where we go when a pure function is called.
 /// \return Always returns zero... Just a dummy.
 extern "C" int __cdecl _purecall(void) {
-    MessageBox(NULL, _T("Pure function called."), _T("AxDecrypt"), MB_OK|MB_ICONSTOP);
-    return 0;
+	MessageBox(NULL, _T("Pure function called."), _T("AxDecrypt"), MB_OK | MB_ICONSTOP);
+	return 0;
 }
 
 /// \brief Copy source buffer to destination buffer
@@ -190,16 +191,16 @@ extern "C" int __cdecl _purecall(void) {
 /// \param src Pointer to source buffer
 /// \param count Number of bytes to copy
 /// \return Pointer to the destination buffer
-void * __cdecl memcpy(void *dst, const void *src, size_t count) {
-    void *ret = dst;
+void* __cdecl memcpy(void* dst, const void* src, size_t count) {
+	void* ret = dst;
 
-    while (count--) {
-            *(char *)dst = *(char *)src;
-            ++(char *&)dst;
-            ++(char *&)src;
-    }
+	while (count--) {
+		*(char*)dst = *(char*)src;
+		++(char*&)dst;
+		++(char*&)src;
+	}
 
-    return ret;
+	return ret;
 }
 
 /// \brief Sets "count" bytes at "dst" to "val"
@@ -211,15 +212,15 @@ void * __cdecl memcpy(void *dst, const void *src, size_t count) {
 /// \param val Value to put in dst bytes
 /// \param count Number of bytes of dst to fill
 /// \return Pointer to destination buffer, with filled bytes
-void * __cdecl memset(void *dst, int val, size_t count) {
-        void *start = dst;
+void* __cdecl memset(void* dst, int val, size_t count) {
+	void* start = dst;
 
-        while (count--) {
-            *(char *)dst = (char)val;
-            ++(char *&)dst;
-        }
+	while (count--) {
+		*(char*)dst = (char)val;
+		++(char*&)dst;
+	}
 
-        return start;
+	return start;
 }
 
 /// \brief Compare memory for lexical order
@@ -231,17 +232,17 @@ void * __cdecl memset(void *dst, int val, size_t count) {
 /// \param buf2 Pointer to second memory section to compare
 /// \param count Length of sections to compare
 /// \return &lt; 0 if buf1 &lt; buf2, 0 if buf1 == buf2, &gt; 0 if buf1 &gt; buf2
-int __cdecl memcmp(const void * buf1, const void * buf2, size_t count) {
-    if (!count) {
-        return 0;
-    }
+int __cdecl memcmp(const void* buf1, const void* buf2, size_t count) {
+	if (!count) {
+		return 0;
+	}
 
-    while (--count && *(char *)buf1 == *(char *)buf2) {
-        ++(char *&)buf1;
-        ++(char *&)buf2;
-    }
+	while (--count && *(char*)buf1 == *(char*)buf2) {
+		++(char*&)buf1;
+		++(char*&)buf2;
+	}
 
-    return *((unsigned char *)buf1) - *((unsigned char *)buf2);
+	return *((unsigned char*)buf1) - *((unsigned char*)buf2);
 }
 
 /// \brief Search a string for a character
@@ -252,17 +253,17 @@ int __cdecl memcmp(const void * buf1, const void * buf2, size_t count) {
 /// \param string String to search in
 /// \param c Character to search for
 /// \return Pointer to the first occurrence of c in string, NULL if c does not occur in string.
-const char * __cdecl strchr(const char * string, int ch)
+const char* __cdecl strchr(const char* string, int ch)
 {
-    while (*string && *string != (char)ch) {
-        ++string;
-    }
+	while (*string && *string != (char)ch) {
+		++string;
+	}
 
-    if (*string == (char)ch) {
-        return (char *)string;
-    }
+	if (*string == (char)ch) {
+		return (char*)string;
+	}
 
-    return NULL;
+	return NULL;
 }
 
 #if UINT_MAX != 0xffffffff
@@ -281,9 +282,9 @@ const char * __cdecl strchr(const char * string, int ch)
 /// \param shift Number of bits to rotate by
 /// \return Rotated value
 unsigned long __cdecl _lrotl(unsigned long val, int shift) {
-    shift &= 0x1f;
-    val = (val>>(0x20 - shift)) | (val << shift);
-    return val;
+	shift &= 0x1f;
+	val = (val >> (0x20 - shift)) | (val << shift);
+	return val;
 }
 
 /// \brief Performs a rotate right on an unsigned integer
@@ -294,9 +295,9 @@ unsigned long __cdecl _lrotl(unsigned long val, int shift) {
 /// \param shift Number of bits to rotate by
 /// \return Rotated value
 unsigned long __cdecl _lrotr(unsigned long val, int shift) {
-    shift &= 0x1f;
-    val = (val<<(0x20 - shift)) | (val >> shift);
-    return val;
+	shift &= 0x1f;
+	val = (val << (0x20 - shift)) | (val >> shift);
+	return val;
 }
 
 extern "C" void __cdecl main() {
@@ -314,43 +315,44 @@ WinMainCRTStartup(void)
 #endif
 
 {
-    char *lpszCommandLine = GetCommandLineA();
+	char* lpszCommandLine = GetCommandLineA();
 
-    // Skip past program name (first token in command line).
+	// Skip past program name (first token in command line).
 
-    if (*lpszCommandLine == '"') {
-        // Check for and handle quoted program name
+	if (*lpszCommandLine == '"') {
+		// Check for and handle quoted program name
 		lpszCommandLine++;	// Get past the first quote
 
-        // Now, scan, and skip over, subsequent characters until  another
-        // double-quote or a null is encountered
-        while (*lpszCommandLine && (*lpszCommandLine != '"')) {
-            lpszCommandLine++;
-        }
+		// Now, scan, and skip over, subsequent characters until  another
+		// double-quote or a null is encountered
+		while (*lpszCommandLine && (*lpszCommandLine != '"')) {
+			lpszCommandLine++;
+		}
 
-        // If we stopped on a double-quote (usual case), skip over it.
+		// If we stopped on a double-quote (usual case), skip over it.
 
-        if (*lpszCommandLine == '"') {
-            lpszCommandLine++;
-        }
-    } else {
-        // First token wasn't a quote
-        while (*lpszCommandLine > ' ') {
-            lpszCommandLine++;
-        }
-    }
+		if (*lpszCommandLine == '"') {
+			lpszCommandLine++;
+		}
+	}
+	else {
+		// First token wasn't a quote
+		while (*lpszCommandLine > ' ') {
+			lpszCommandLine++;
+		}
+	}
 
-    // Skip past any white space preceeding the second token.
+	// Skip past any white space preceeding the second token.
 
-    while (*lpszCommandLine && (*lpszCommandLine <= ' ')) {
-        lpszCommandLine++;
-    }
+	while (*lpszCommandLine && (*lpszCommandLine <= ' ')) {
+		lpszCommandLine++;
+	}
 
-    STARTUPINFO StartupInfo;
-    StartupInfo.dwFlags = 0;
-    GetStartupInfo(&StartupInfo);
+	STARTUPINFO StartupInfo;
+	StartupInfo.dwFlags = 0;
+	GetStartupInfo(&StartupInfo);
 
-    ExitProcess(WinMain(GetModuleHandle(NULL), NULL, lpszCommandLine,
-                        StartupInfo.dwFlags & STARTF_USESHOWWINDOW
-                        ? StartupInfo.wShowWindow : SW_SHOWDEFAULT));
+	ExitProcess(WinMain(GetModuleHandle(NULL), NULL, lpszCommandLine,
+		StartupInfo.dwFlags & STARTF_USESHOWWINDOW
+		? StartupInfo.wShowWindow : SW_SHOWDEFAULT));
 }

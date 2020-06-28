@@ -1,9 +1,9 @@
 #ifndef	_CACTIVETHREADS
 #define	_CACTIVETHREADS
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -36,15 +36,15 @@
 class CActiveThreads {
 	CActiveThreads* m_pNext;
 	HANDLE m_hThread;
-    DWORD m_dwThreadId;
-    DWORD m_dwUniqueInternalId;
+	DWORD m_dwThreadId;
+	DWORD m_dwUniqueInternalId;
 public:
 	CActiveThreads(CActiveThreads*& pRoot, HANDLE hThread, DWORD dwThreadId);
 	~CActiveThreads();
 	void Remove(CActiveThreads*& pRoot, DWORD dwUniqueInternalId);
 	HANDLE Thread();
-    DWORD ThreadId();
-    DWORD UniqueInternalId();
+	DWORD ThreadId();
+	DWORD UniqueInternalId();
 	CActiveThreads* Next();
 };
 #endif	_CACTIVETHREADS

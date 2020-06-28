@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -48,7 +48,7 @@
 
 CSubKey::CSubKey() {
 	m_pSubKey = new TKey;
-    ASSPTR(m_pSubKey);
+	ASSPTR(m_pSubKey);
 }
 
 CSubKey::~CSubKey() {
@@ -56,13 +56,13 @@ CSubKey::~CSubKey() {
 }
 
 CSubKey&
-CSubKey::Set(TKey *pMasterKey, etSubKey eSubKey) {
+CSubKey::Set(TKey* pMasterKey, etSubKey eSubKey) {
 	TBlock utSubKeyData(eSubKey);
 	CAes utCAesCtx(pMasterKey, CAes::eECB, CAes::eEncrypt);
 
 	// We know that a TBlock and a TKey is of the same size... Change here if this
 	// changes, or you want to write solid code...
-	utCAesCtx.Xblock(&utSubKeyData, (TBlock *)m_pSubKey);
+	utCAesCtx.Xblock(&utSubKeyData, (TBlock*)m_pSubKey);
 
 	return *this;
 }

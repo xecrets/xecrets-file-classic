@@ -1,8 +1,8 @@
 #pragma once
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -51,48 +51,48 @@ extern HWND ghProgressWnd;
 extern CPtrTo<CEntropy> pgEntropyPool;
 extern CPtrTo<CCryptoRand> pgPRNG;
 //
-extern CConfigVerify *gpConfig;
-extern CTrialMgr *gpTrialMgr;
-extern CLicMgr *gpLicMgr;
-extern CRestrictMgr *gpRestrictMgr;
+extern CConfigVerify* gpConfig;
+extern CTrialMgr* gpTrialMgr;
+extern CLicMgr* gpLicMgr;
+extern CRestrictMgr* gpRestrictMgr;
 //
 extern DWORD MessageWaitForObject(HANDLE hObject, DWORD dwTimeout = INFINITE);
-extern void ApplyTerms(const XNode *pRestrictXML);
+extern void ApplyTerms(const XNode* pRestrictXML);
 //
 //  Command request ID's
 //
 enum eRequestType {
 	EN_OPEN = 1,    // Decrypt, decompress, launch, recompress and encrypt
-    EN_ENCRYPTZC,   // Compress, encrypt as copy
-    EN_ENCRYPTZCF,  // Compress, encrypt as copy, but fast (possibly unsafe).
+	EN_ENCRYPTZC,   // Compress, encrypt as copy
+	EN_ENCRYPTZCF,  // Compress, encrypt as copy, but fast (possibly unsafe).
 	EN_ENCRYPTZ,    // Compress, encrypt an wipe original
 	EN_ENCRYPTZF,   // Compress, encrypt an delete original (no wiping)
 	EN_ENCRYPT,
 	EN_WIPE,        // Wipe a file
-    EN_WIPES,       // Wipe a file silently
+	EN_WIPES,       // Wipe a file silently
 	EN_DECRYPT,     // Decrypt, decompress and wipe original
 	EN_DECRYPTF,    // Decrypt, decompress and delete original (no wiping)
-    EN_DECRYPTC,    // Decrypt, decompress and retain original
-    EN_DECRYPTCF,   // Decrypt, decompress and retain original, but fast (possibly insecure)
+	EN_DECRYPTC,    // Decrypt, decompress and retain original
+	EN_DECRYPTCF,   // Decrypt, decompress and retain original, but fast (possibly insecure)
 	EN_EXIT,        // Terminate master
 	EN_INSTALL,     // Install in registry etc
 	EN_UNINSTALL,   // Uninstall from registry etc
 	EN_PSPTEST,     // Test the need for the psp library on NT
-    EN_CLEARKEYS,   // Clear all keys in memory (or only a batch)
-    EN_ADDKEYENC,   // Add an enc key to the cache (or for a batch)
-    EN_ADDKEYDEC,   // Add a dec key to the cache (or for a batch)
-    EN_ASKKEYENC,   // Prompt for an enc key to the cache (or for a batch)
-    EN_ASKKEYDEC,   // Prompt for a dec key to the cache (or for a batch)
-    EN_RENAME,      // Rename a file to an anonymous name
-    EN_TESTHAVEKEY, // Test if we have the key for the file(s) in the cache.
+	EN_CLEARKEYS,   // Clear all keys in memory (or only a batch)
+	EN_ADDKEYENC,   // Add an enc key to the cache (or for a batch)
+	EN_ADDKEYDEC,   // Add a dec key to the cache (or for a batch)
+	EN_ASKKEYENC,   // Prompt for an enc key to the cache (or for a batch)
+	EN_ASKKEYDEC,   // Prompt for a dec key to the cache (or for a batch)
+	EN_RENAME,      // Rename a file to an anonymous name
+	EN_TESTHAVEKEY, // Test if we have the key for the file(s) in the cache.
 	EN_SHOWTAG,		// Display the IdTag, if any, for files following.
 	EN_GETPROCID,	// Get the primary process id
-    EN_BRUTEFORCE,  // Attempt a brute-force attack to find a missing password
-    EN_SFXENCNEW,                           ///< Encrypt to new SFX
-    EN_SFXENCAPP,                           ///< Encrypt and append to SFX
-    EN_MAKEKEYFILE,                         ///< Generate and save key-file
-    EN_LICENSEMGR,                          ///< Invoke the license manager
-    EN_GETTHREADEXIT,                        ///< Get the thread exit code from a worker thread.
+	EN_BRUTEFORCE,  // Attempt a brute-force attack to find a missing password
+	EN_SFXENCNEW,                           ///< Encrypt to new SFX
+	EN_SFXENCAPP,                           ///< Encrypt and append to SFX
+	EN_MAKEKEYFILE,                         ///< Generate and save key-file
+	EN_LICENSEMGR,                          ///< Invoke the license manager
+	EN_GETTHREADEXIT,                        ///< Get the thread exit code from a worker thread.
 	EN_REGISTRATION 						///< Invoke the registration dialog
 };
 //
@@ -100,44 +100,44 @@ enum eRequestType {
 //
 class CCmdParam {
 public:
-    CCmdParam() { ZeroMemory(this, sizeof *this); }
-    CCmdParam(CCmdParam& rhs) { *this = rhs; }
-    CCmdParam& operator=(CCmdParam& rhs) {
-        eRequest = rhs.eRequest;
-        szParam1 = rhs.szParam1;
-        szParam2 = rhs.szParam2;
-        szIdTag = rhs.szIdTag;
-        szCurDir = rhs.szCurDir;
-        dwBatch = rhs.dwBatch;
-        nWipePasses = rhs.nWipePasses;
-        fIgnoreEncrypted = rhs.fIgnoreEncrypted;
-        fIsEncKey = rhs.fIsEncKey;
-        fSlowSafe = rhs.fSlowSafe;
-        fRecurseDir = rhs.fRecurseDir;
-        fAppend = rhs.fAppend;
-        hProgressWnd = rhs.hProgressWnd;
-        hForegroundWnd = rhs.hForegroundWnd;
-        hStdOut = rhs.hStdOut;
-        pDlgProgress = rhs.pDlgProgress;
-        return *this;
-    }
+	CCmdParam() { ZeroMemory(this, sizeof * this); }
+	CCmdParam(CCmdParam& rhs) { *this = rhs; }
+	CCmdParam& operator=(CCmdParam& rhs) {
+		eRequest = rhs.eRequest;
+		szParam1 = rhs.szParam1;
+		szParam2 = rhs.szParam2;
+		szIdTag = rhs.szIdTag;
+		szCurDir = rhs.szCurDir;
+		dwBatch = rhs.dwBatch;
+		nWipePasses = rhs.nWipePasses;
+		fIgnoreEncrypted = rhs.fIgnoreEncrypted;
+		fIsEncKey = rhs.fIsEncKey;
+		fSlowSafe = rhs.fSlowSafe;
+		fRecurseDir = rhs.fRecurseDir;
+		fAppend = rhs.fAppend;
+		hProgressWnd = rhs.hProgressWnd;
+		hForegroundWnd = rhs.hForegroundWnd;
+		hStdOut = rhs.hStdOut;
+		pDlgProgress = rhs.pDlgProgress;
+		return *this;
+	}
 
-    enum eRequestType eRequest;     // What we want done...
-    axpl::ttstring szParam1;        // A parameter
-    axpl::ttstring szParam2;        // A second one..
+	enum eRequestType eRequest;     // What we want done...
+	axpl::ttstring szParam1;        // A parameter
+	axpl::ttstring szParam2;        // A second one..
 	axpl::ttstring szIdTag;		    // An id-tag, if any given.
-    axpl::ttstring szCurDir;        // Current directory of the caller.
-    DWORD dwBatch;                  // The batch-id for this command.
-    int nWipePasses;                  // The number of passes for wipe
-    BOOL fIgnoreEncrypted;          // TRUE if we should not encrypt already encrypted.
-    BOOL fIsEncKey;                 // TRUE if a key should be an encryption key
-    BOOL fSlowSafe;                // TRUE if we should be slow and safe
-    BOOL fRecurseDir;               // TRUE if we should descend recursively
-    BOOL fAppend;                   // TRUE if we should append to the output file
-    HWND hProgressWnd;              // The handle to a progress-bar window, if provided.
-    HWND hForegroundWnd;            // Handle to the most recent foreground window.
+	axpl::ttstring szCurDir;        // Current directory of the caller.
+	DWORD dwBatch;                  // The batch-id for this command.
+	int nWipePasses;                  // The number of passes for wipe
+	BOOL fIgnoreEncrypted;          // TRUE if we should not encrypt already encrypted.
+	BOOL fIsEncKey;                 // TRUE if a key should be an encryption key
+	BOOL fSlowSafe;                // TRUE if we should be slow and safe
+	BOOL fRecurseDir;               // TRUE if we should descend recursively
+	BOOL fAppend;                   // TRUE if we should append to the output file
+	HWND hProgressWnd;              // The handle to a progress-bar window, if provided.
+	HWND hForegroundWnd;            // Handle to the most recent foreground window.
 	HANDLE hStdOut;				    // Handle to caller (secondary) stdout, if any.
-    CProgressDialog *pDlgProgress;
+	CProgressDialog* pDlgProgress;
 };
 //
 //	Some useful stuff
@@ -147,9 +147,9 @@ public:
 //
 //  CAssert wrapper to be able to use code in other cases.
 //
-inline void CChkAss(bool fOk, const _TCHAR *sz) {
-    CAssert(fOk).App(MSG_INTERNAL_ERROR, (_TCHAR *)sz).Throw();
+inline void CChkAss(bool fOk, const _TCHAR* sz) {
+	CAssert(fOk).App(MSG_INTERNAL_ERROR, (_TCHAR*)sz).Throw();
 }
 
-/// \brief The size in bytes of a key-file generated by Ax Crypt
+/// \brief The size in bytes of a key-file generated by Xecrets File
 const size_t gcbAxCryptKeyFile = sizeof "xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx" - 1;

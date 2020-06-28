@@ -3,7 +3,7 @@
 /*
     @(#) $Id$
 
-    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+    Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
     Server or Web Storage of Document Files.
 
     Copyright (C) 2004 Svante Seleborg/Axantum Software AB, All rights reserved.

@@ -1,7 +1,7 @@
 /*
 	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -44,7 +44,7 @@
 /// random number generator. At that time it was new, and it was not quite clear how users would
 /// react to such a use. At this time, 2006, there has been no weaknesses spotted and it seems
 /// reasonable to use the Crypto API instead of this homegrown. Also, it's been a FAQ about why
-/// Ax Crypt consumes memory and processor time even when not idle, and that's caused more grief
+/// Xecrets File consumes memory and processor time even when not idle, and that's caused more grief
 /// than any possible kudos received due to the careful design of the entropy generator. So, as
 /// a first step, we introduce a new default behavior which is to check for a new registry value,
 /// and if it says TRUE we revert back to the old behavior, otherwise we shunt all the entropy

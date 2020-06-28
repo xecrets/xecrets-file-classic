@@ -1,5 +1,5 @@
 /*! \file
-	\brief XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
+	\brief XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road.
 
 	This is the portable parts of the main program. OS-dependent parts, including the actual
 	entry-point, must be compiled and linked separately.
@@ -9,7 +9,7 @@
 
 	@(#) $Id$
 */
-/*! \page License XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road
+/*! \page License XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road
 
 	Copyright (C) 2004 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -30,7 +30,7 @@
 */
 //    version
 //    htmlinclude Version.txt
-/*! \mainpage XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road
+/*! \mainpage XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road
 
 	\author
 	Svante Seleborg/Axantum Software AB

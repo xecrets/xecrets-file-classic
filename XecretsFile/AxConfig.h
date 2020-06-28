@@ -1,9 +1,9 @@
 #ifndef	_AXCONFIG
 #define	_AXCONFIG
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -41,7 +41,7 @@
 //
 //	Use small values in debug, large values for effiency in release builds.
 //
-//	As of Beta 5, 2001-12-16, Each active instance of Ax Crypt requires approx 1K of secure heap.
+//	As of Beta 5, 2001-12-16, Each active instance of Xecrets File requires approx 1K of secure heap.
 //
 #ifdef	_DEBUG
 #define		MAX_VIEW_SIZE		(64*1024)

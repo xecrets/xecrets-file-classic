@@ -1,7 +1,7 @@
 /*
 @(#) $Id$
 
-Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 Server or Web Storage of Document Files.
 
 Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -907,7 +907,7 @@ CShellExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT i
 
 				InsertMenuItem(hMenu, indexMenu++, TRUE, &mii);
 
-				// Show a nice little bitmap alongside the Ax Crypt menu selection
+				// Show a nice little bitmap alongside the Xecrets File menu selection
 				if (ghBitmap == NULL) {
 					ghBitmap = LoadBitmap(ghInstance, MAKEINTRESOURCE(IDB_AXCRYPT));
 					CAssert(ghBitmap != NULL).Sys(MSG_SYSTEM_CALL, _T("CShellExt::QueryContextMenu() [LoadBitmap()]")).Throw();
@@ -1525,7 +1525,7 @@ CShellExt::DoDecrypt(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFo
 
 DWORD
 CShellExt::DoWipe(itEventT eventId, HWND hProgressWnd, IShellFolder* pShellFolder, LPCITEMIDLIST pidlFile, CParam** ppParam) {
-	// We use the parameter for this run to keep track of if the user in Ax Crypt has selected the 'Yes to all'
+	// We use the parameter for this run to keep track of if the user in Xecrets File has selected the 'Yes to all'
 	// option, so we don't have to ask all the time...
 	enum { ASKFOREACH, YESTOALL };
 	DWORD dwReturn = 0;
@@ -1831,11 +1831,11 @@ AboutDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		std::auto_ptr<_TCHAR> szSprintfBuf(new _TCHAR[1024]);
 		CVersion verAxCryptDll(ghInstance);
 
-		// Setup Ax Crypt main program version info.
+		// Setup Xecrets File main program version info.
 		fnPath.SetPath2ExeName(ghInstance).SetTitle(gszAxCryptProgramName);
 		CVersion verAxCrypt(fnPath.Get());
 
-		// Generate the version string text for Ax Crypt
+		// Generate the version string text for Xecrets File
 		aboutOneLine(GetDlgItem(hwndDlg, IDC_LISTABOUT), fnPath.GetTitle(), verAxCrypt, dwMaxExtent);
 
 		// Generate the version string text for the Shell Extension
@@ -1851,7 +1851,7 @@ AboutDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 		SetDlgItemText(hwndDlg, IDC_INF_ABOUT, msg.Wrap(0).AppMsg(INF_ABOUT, verAxCrypt.LegalCopyright()).GetMsg());
 
-		// Set window title 'About Ax Crypt'
+		// Set window title 'About Xecrets File'
 		msg.AppMsg(INF_MENU_ABOUT);
 		wsprintf(szSprintfBuf.get(), _T("%s %s"), msg.GetMsg(), verAxCrypt.String());
 		SetWindowText(hwndDlg, szSprintfBuf.get());
@@ -1959,7 +1959,7 @@ CShellExt::DoBugReport(itEventT eventId, HWND hProgressWnd, IShellFolder* pShell
 	case IT_INIT:
 		// Launch the URL or whatever from the registry
 		if (szBugReport.get()[0]) {
-			// Setup Ax Crypt main program version info.
+			// Setup Xecrets File main program version info.
 			CFileName fnPath;
 			fnPath.SetPath2ExeName(ghInstance).SetTitle(gszAxCryptProgramName);
 			CVersion verAxCrypt(fnPath.Get());

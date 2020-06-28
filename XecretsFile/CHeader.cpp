@@ -1,7 +1,7 @@
 /*
 	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -661,7 +661,7 @@ CHeaders::SetIdTag(const wchar_t* szIdTag) {
 		Add(pIdTag);
 	}
 
-	// Ax Crypt was originally not a Unicode app, so header data is stored in
+	// Xecrets File was originally not a Unicode app, so header data is stored in
 	// Ansi Code Page. Since we're now Unicode, we'll convert the incoming Unicode
 	// text to ACP. It's simply not worth it to store it in both Unicode and Ansi
 	// for backwards compatiblity. It's simply easier to say that comments are only

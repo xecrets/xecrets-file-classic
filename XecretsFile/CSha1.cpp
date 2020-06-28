@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -34,7 +34,7 @@
 
 CSha1::CSha1() {
 	m_putContext = new SHA1_CTX;
-    ASSPTR(m_putContext);
+	ASSPTR(m_putContext);
 }
 
 CSha1::~CSha1() {
@@ -47,50 +47,50 @@ CSha1::~CSha1() {
 //
 //	The key object must be deleted by the caller.
 //
-TKey *
-CSha1::GetKeyHash(BYTE *poMsg, size_t iLen, TCHAR *szFileName) {
-	TKey *putKeyHash = new TKey;
-    ASSPTR(putKeyHash);
+TKey*
+CSha1::GetKeyHash(BYTE* poMsg, size_t iLen, TCHAR* szFileName) {
+	TKey* putKeyHash = new TKey;
+	ASSPTR(putKeyHash);
 
 	SHA1Init(m_putContext);
 
 	// Add the key-data to the hash.
 	SHA1Update(m_putContext, poMsg, (unsigned int)iLen);
 
-    // If we have a key-file as well, hash that in too. The idea is to
-    // actually make it possible to have a key-file that is compatible
-    // with a manually entered key.
-    if (szFileName) {
-        CFileIO fileKey;
-        fileKey.Open(szFileName, FALSE, GENERIC_READ, FILE_SHARE_READ);
+	// If we have a key-file as well, hash that in too. The idea is to
+	// actually make it possible to have a key-file that is compatible
+	// with a manually entered key.
+	if (szFileName) {
+		CFileIO fileKey;
+		fileKey.Open(szFileName, FALSE, GENERIC_READ, FILE_SHARE_READ);
 
-        // This must be a small memory buffer that does not get swapped to disk
-        // Small because the OS won't allow us to lock much memory.
-        const size_t cbBuf = 4096;
-        BYTE *pbBuf = (BYTE *)VirtualAlloc(NULL, cbBuf, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-        ASSAPI(pbBuf != NULL);
-        ASSAPI(VirtualLock(pbBuf, cbBuf));
+		// This must be a small memory buffer that does not get swapped to disk
+		// Small because the OS won't allow us to lock much memory.
+		const size_t cbBuf = 4096;
+		BYTE* pbBuf = (BYTE*)VirtualAlloc(NULL, cbBuf, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+		ASSAPI(pbBuf != NULL);
+		ASSAPI(VirtualLock(pbBuf, cbBuf));
 
-        size_t cb;
-        do {
-            cb = cbBuf;
-            fileKey.ReadData(pbBuf, &cb);
-            if (cb) {
-                SHA1Update(m_putContext, pbBuf, (unsigned int)cb);
-            }
-        } while (cb);
+		size_t cb;
+		do {
+			cb = cbBuf;
+			fileKey.ReadData(pbBuf, &cb);
+			if (cb) {
+				SHA1Update(m_putContext, pbBuf, (unsigned int)cb);
+			}
+		} while (cb);
 
-        // Clear the memory, unlock it and release it
-        ZeroMemory(pbBuf, cbBuf);
-        ASSAPI(VirtualUnlock(pbBuf, cbBuf));
-        ASSAPI(VirtualFree(pbBuf, 0, MEM_RELEASE));
+		// Clear the memory, unlock it and release it
+		ZeroMemory(pbBuf, cbBuf);
+		ASSAPI(VirtualUnlock(pbBuf, cbBuf));
+		ASSAPI(VirtualFree(pbBuf, 0, MEM_RELEASE));
 
-        fileKey.Close();
-    }
+		fileKey.Close();
+	}
 
 	// Get the final hash
 	THash utHash;
-	SHA1Final((BYTE *)&utHash, m_putContext);
+	SHA1Final((BYTE*)&utHash, m_putContext);
 
 	// Copy the key hash before returning a valid pointer.
 	*putKeyHash = *utHash.KeyHash();

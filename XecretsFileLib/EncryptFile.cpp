@@ -574,7 +574,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Ax Crypt encryption specific derivation of HMAC_SHA1 calculation
+	/// \brief Xecrets File encryption specific derivation of HMAC_SHA1 calculation
 	///
 	/// \see AxPipe::Stock::CPipeHMAC_SHA1
 	class CPipeEncHMAC_SHA1_128 : public AxPipe::Stock::CPipeHMAC_SHA1<128> {
@@ -592,7 +592,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Ax Crypt specific derivation which calls back for the name of the file
+	/// \brief Xecrets File specific derivation which calls back for the name of the file
 	///
 	/// The output file name is recived via a callback.
 	class CEncryptSinkFile : public AxPipe::CSinkFileIO {

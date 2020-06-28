@@ -1,29 +1,29 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-    Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
-    Server or Web Storage of Document Files.
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Server or Web Storage of Document Files.
 
-    Copyright (C) 2004 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2004 Svante Seleborg/Axantum Software AB, All rights reserved.
 
-    This program is free software; you can redistribute it and/or modify it under the terms
-    of the GNU General Public License as published by the Free Software Foundation;
-    either version 2 of the License, or (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify it under the terms
+	of the GNU General Public License as published by the Free Software Foundation;
+	either version 2 of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	See the GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License along with this program;
-    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-    Boston, MA 02111-1307 USA
+	You should have received a copy of the GNU General Public License along with this program;
+	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+	Boston, MA 02111-1307 USA
 
-    The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
-    CVerifyFileSigs.cpp - Verify file signatures
+	CVerifyFileSigs.cpp - Verify file signatures
 
-    E-mail                          YYYY-MM-DD              Reason
-    software@axantum.com             2004-09-13              Initial
+	E-mail                          YYYY-MM-DD              Reason
+	software@axantum.com             2004-09-13              Initial
 
 */
 #include "stdafx.h"
@@ -42,18 +42,19 @@
 /// a slash to the path to the sigs file.
 /// \param sSigs a file system path to the signature XML
 /// \param sPath a file system path to the folder of the signature XML
-CConfigVerify::CConfigVerify(const axpl::ttstring &sSigs, const axpl::ttstring &sPath) : CConfig(sSigs, sPath) {
+CConfigVerify::CConfigVerify(const axpl::ttstring& sSigs, const axpl::ttstring& sPath) : CConfig(sSigs, sPath) {
 }
 
 /// \brief Load the BERencoded binary public key used for file signature validation
 void
-CConfigVerify::SetBEREncodedFilePublicKey(const unsigned char *bPublicKey, const size_t cbPublicKey) {
-    try {
-        // Load the key into the verifier object
-        m_PublicKey.AccessKey().BERDecode(StringStore(bPublicKey, cbPublicKey));
-    } catch (CryptoPP::Exception Err) {
-        ASSCHK(false, axpl::s2t(Err.GetWhat()).c_str());
-    }
+CConfigVerify::SetBEREncodedFilePublicKey(const unsigned char* bPublicKey, const size_t cbPublicKey) {
+	try {
+		// Load the key into the verifier object
+		m_PublicKey.AccessKey().BERDecode(StringStore(bPublicKey, cbPublicKey));
+	}
+	catch (CryptoPP::Exception Err) {
+		ASSCHK(false, axpl::s2t(Err.GetWhat()).c_str());
+	}
 }
 
 /// \brief Recursively descend the XML tree and find all signatures we can find.
@@ -63,20 +64,20 @@ CConfigVerify::SetBEREncodedFilePublicKey(const unsigned char *bPublicKey, const
 /// \param pXNode A XML tree to descend
 /// \param spvFileSigs A vector of string pairs where we return the File/Sig-pairs.
 void
-CConfigVerify::GetFilesSigsFromXML(const XNode *pXNode, axpl::ttstringpairvector &spvFileSigs) {
-    if (pXNode) {
-        if (TTStringCompareIgnoreCase(pXNode->name, _TT("signature"))) {
-            for (XAttrs::const_iterator it = pXNode->attrs.begin(); it != pXNode->attrs.end(); it++) {
-                if (TTStringCompareIgnoreCase((*it)->name, _TT("file"))) {
-                    spvFileSigs.push_back(ttstringpair((*it)->value, pXNode->value));
-                }
-            }
-        }
+CConfigVerify::GetFilesSigsFromXML(const XNode* pXNode, axpl::ttstringpairvector& spvFileSigs) {
+	if (pXNode) {
+		if (TTStringCompareIgnoreCase(pXNode->name, _TT("signature"))) {
+			for (XAttrs::const_iterator it = pXNode->attrs.begin(); it != pXNode->attrs.end(); it++) {
+				if (TTStringCompareIgnoreCase((*it)->name, _TT("file"))) {
+					spvFileSigs.push_back(ttstringpair((*it)->value, pXNode->value));
+				}
+			}
+		}
 
-        for (XNodes::const_iterator it = pXNode->childs.begin(); it != pXNode->childs.end(); it++) {
-            GetFilesSigsFromXML(*it, spvFileSigs);
-        }
-    }
+		for (XNodes::const_iterator it = pXNode->childs.begin(); it != pXNode->childs.end(); it++) {
+			GetFilesSigsFromXML(*it, spvFileSigs);
+		}
+	}
 }
 
 /// \brief Verify that a file signature is correct
@@ -84,47 +85,48 @@ CConfigVerify::GetFilesSigsFromXML(const XNode *pXNode, axpl::ttstringpairvector
 /// \param sSig The purported signature
 /// \return true if ok, false otherwise. See GetLastErrorMsg() for details.
 bool
-CConfigVerify::VerifyFile(const axpl::ttstring &sFile, const axpl::ttstring &sSig, const axpl::ttstring &sPath) {
-    try {
-        // Get BufferedTransformation which also decodes the hex-representation
-        StringSource publicKey(axpl::t2s(sSig), true, new HexDecoder());
+CConfigVerify::VerifyFile(const axpl::ttstring& sFile, const axpl::ttstring& sSig, const axpl::ttstring& sPath) {
+	try {
+		// Get BufferedTransformation which also decodes the hex-representation
+		StringSource publicKey(axpl::t2s(sSig), true, new HexDecoder());
 
-        // Verify that the length is the same as the expected signature length.
-        if (publicKey.MaxRetrievable() != m_PublicKey.SignatureLength()) {
-            m_sLastError = _TT("Invalid public verification key length");
-            return false;
-        }
+		// Verify that the length is the same as the expected signature length.
+		if (publicKey.MaxRetrievable() != m_PublicKey.SignatureLength()) {
+			m_sLastError = _TT("Invalid public verification key length");
+			return false;
+		}
 
-	    // Allocate a memory block for the signature, and then get it
-        SecByteBlock signature(m_PublicKey.SignatureLength());
-        publicKey.Get(signature, m_PublicKey.SignatureLength());
+		// Allocate a memory block for the signature, and then get it
+		SecByteBlock signature(m_PublicKey.SignatureLength());
+		publicKey.Get(signature, m_PublicKey.SignatureLength());
 
-		SignatureVerificationFilter *pVerifierFilter(new SignatureVerificationFilter(m_PublicKey));
-	    pVerifierFilter->Put(signature, m_PublicKey.SignatureLength());
-        FileSource f(axpl::t2s((sPath.empty() ? sFile : sPath + _TT("/") + sFile)).c_str(), true, pVerifierFilter);
+		SignatureVerificationFilter* pVerifierFilter(new SignatureVerificationFilter(m_PublicKey));
+		pVerifierFilter->Put(signature, m_PublicKey.SignatureLength());
+		FileSource f(axpl::t2s((sPath.empty() ? sFile : sPath + _TT("/") + sFile)).c_str(), true, pVerifierFilter);
 
-        if (!pVerifierFilter->GetLastResult()) {
-            m_sLastError = _TT("Invalid signature for: ") + sFile;
-            return false;
-        }
-    } catch (CryptoPP::Exception Err) {
-        m_sLastError = axpl::s2t(Err.GetWhat());
-        return false;
-    }
+		if (!pVerifierFilter->GetLastResult()) {
+			m_sLastError = _TT("Invalid signature for: ") + sFile;
+			return false;
+		}
+	}
+	catch (CryptoPP::Exception Err) {
+		m_sLastError = axpl::s2t(Err.GetWhat());
+		return false;
+	}
 
-    // Yes! All was well, the file was untampered with.
-    return true;
+	// Yes! All was well, the file was untampered with.
+	return true;
 }
 
 /// \brief Verify the file signatures in the provided array of string pairs.
 /// \param spvFileSigs Pairs of file names and signatures to be verified
 /// \return true if all are verified and no other errors occurr. See GetLastErrorMsg() othewise.
 bool
-CConfigVerify::VerifyFiles(const axpl::ttstringpairvector &spvFileSigs, const axpl::ttstring &sPath) {
-    for (axpl::ttstringpairvector::const_iterator it = spvFileSigs.begin(); it != spvFileSigs.end(); it++) {
-        if (!VerifyFile(it->first, it->second, sPath)) {
-            return false;
-        }
-    }
-    return true;
+CConfigVerify::VerifyFiles(const axpl::ttstringpairvector& spvFileSigs, const axpl::ttstring& sPath) {
+	for (axpl::ttstringpairvector::const_iterator it = spvFileSigs.begin(); it != spvFileSigs.end(); it++) {
+		if (!VerifyFile(it->first, it->second, sPath)) {
+			return false;
+		}
+	}
+	return true;
 }

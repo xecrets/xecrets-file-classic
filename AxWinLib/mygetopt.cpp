@@ -1,7 +1,7 @@
 /*
 	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -181,11 +181,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-TCHAR   *optarg;        // global argument pointer
+TCHAR* optarg;        // global argument pointer
 int     optind = 0;     // global argv index
 
-TCHAR mygetopt(int argc, TCHAR *argv[], TCHAR *optstring) {
-	static TCHAR *next = NULL;
+TCHAR mygetopt(int argc, TCHAR* argv[], TCHAR* optstring) {
+	static TCHAR* next = NULL;
 	if (optind == 0) next = NULL;
 
 	optarg = NULL;
@@ -214,7 +214,7 @@ TCHAR mygetopt(int argc, TCHAR *argv[], TCHAR *optstring) {
 	}
 
 	TCHAR c = *next++;
-	TCHAR *cp = _tcschr(optstring, c);
+	TCHAR* cp = _tcschr(optstring, c);
 
 	if (cp == NULL || c == _T(':')) {
 		return _T('?');

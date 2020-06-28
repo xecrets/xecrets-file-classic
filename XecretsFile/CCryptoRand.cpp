@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -67,20 +67,20 @@ DWORD CCryptoRand::m_dwInitKey[5] = {
 CCryptoRand::CCryptoRand() {
 	// Must allocate here, not as members to ensure that it winds up in the
 	// secured heap.
-	m_putXKey = new THash((BYTE *)&m_dwInitKey, sizeof THash);
-    ASSPTR(m_putXKey);
+	m_putXKey = new THash((BYTE*)&m_dwInitKey, sizeof THash);
+	ASSPTR(m_putXKey);
 
 	m_putXSeed = new THash;
-    ASSPTR(m_putXSeed);
+	ASSPTR(m_putXSeed);
 
 	m_putContext = new SHA1_CTX;
-    ASSPTR(m_putContext);
+	ASSPTR(m_putContext);
 }
 
 CCryptoRand::~CCryptoRand() {
 	delete m_putContext;
-    delete m_putXSeed;
-    delete m_putXKey;
+	delete m_putXSeed;
+	delete m_putXKey;
 }
 
 //
@@ -96,20 +96,20 @@ CCryptoRand::~CCryptoRand() {
 //	are appreciated as comments to me!
 //
 CCryptoRand&
-CCryptoRand::Seed(void *pvXSeed, int iLen) {
+CCryptoRand::Seed(void* pvXSeed, int iLen) {
 	SHA1Init(m_putContext);
 
 	// Hash in the user supplied (secret) data.
-	SHA1Update(m_putContext, (BYTE *)pvXSeed, iLen);
+	SHA1Update(m_putContext, (BYTE*)pvXSeed, iLen);
 
 	// Hash in tick count from system
 	DWORD dwTickCount = GetTickCount();
-	SHA1Update(m_putContext, (BYTE *)&dwTickCount, sizeof dwTickCount);
+	SHA1Update(m_putContext, (BYTE*)&dwTickCount, sizeof dwTickCount);
 
 	// Also hash in the sytem time.
 	SYSTEMTIME sdtSystemTime;
 	GetSystemTime(&sdtSystemTime);
-	SHA1Update(m_putContext, (BYTE *)&sdtSystemTime, sizeof sdtSystemTime);
+	SHA1Update(m_putContext, (BYTE*)&sdtSystemTime, sizeof sdtSystemTime);
 
 	// Add 128 bits of entropy from the entropy pool
 	BYTE aoEntropy[16];
@@ -117,10 +117,10 @@ CCryptoRand::Seed(void *pvXSeed, int iLen) {
 	SHA1Update(m_putContext, aoEntropy, sizeof aoEntropy);
 
 	// Re-hash the old seed to get full dependency of all previous.
-	SHA1Update(m_putContext, (BYTE *)m_putXSeed, sizeof *m_putXSeed);
+	SHA1Update(m_putContext, (BYTE*)m_putXSeed, sizeof * m_putXSeed);
 
 	// Get the final hash to the seed.
-	SHA1Final((BYTE *)m_putXSeed, m_putContext);
+	SHA1Final((BYTE*)m_putXSeed, m_putContext);
 	return *this;
 }
 //
@@ -136,22 +136,22 @@ CCryptoRand::Seed(void *pvXSeed, int iLen) {
 //	for padding, we just simply discard the trailing bits.
 //
 void
-CCryptoRand::RandomFill(void *vpBuf, DWORD dwLen) {
+CCryptoRand::RandomFill(void* vpBuf, DWORD dwLen) {
 	THash utXVal;
 	while (dwLen) {
 		SHA1Init(m_putContext);
 
 		utXVal = *m_putXKey + *m_putXSeed;			// XVAL = (XKEY + XSEED) mod 2**160
 
-		SHA1Transform(m_putContext, (BYTE *)&utXVal);
+		SHA1Transform(m_putContext, (BYTE*)&utXVal);
 
 		// Update XKey: XKEY = (1 + XKEY + Xj) mod 2**160
-		*m_putXKey = *m_putXKey + THash(1) + *(THash *)m_putContext->state;
+		*m_putXKey = *m_putXKey + THash(1) + *(THash*)m_putContext->state;
 
 		CopyMemory(vpBuf, m_putContext->state, min(sizeof THash, dwLen));
 
 		// Update buffer pointer, decrease length.
-		vpBuf = (BYTE *)vpBuf + sizeof THash;
+		vpBuf = (BYTE*)vpBuf + sizeof THash;
 		dwLen -= min(sizeof THash, dwLen);
 	}
 }

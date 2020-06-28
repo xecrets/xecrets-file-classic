@@ -1,9 +1,9 @@
 /*! \file
-	\brief CXecretsFileAES.cpp - An Ax Crypt special purpose AES-wrapper
+	\brief CXecretsFileAES.cpp - An Xecrets File special purpose AES-wrapper
 
 	@(#) $Id$
 
-	axcl - Common support library for Ax Crypt
+	axcl - Common support library for Xecrets File
 
 	Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -26,7 +26,7 @@
 ----
 \verbatim
 	YYYY-MM-DD              Reason
-	2005-06-26              Initial (moved/restructured from Ax Crypt)
+	2005-06-26              Initial (moved/restructured from Xecrets File)
 \endverbatim
 */
 #include "stdafx.h"

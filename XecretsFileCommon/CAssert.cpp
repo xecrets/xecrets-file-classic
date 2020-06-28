@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -26,7 +26,7 @@
 	software@axantum.com 			2001					Initial
 									2001-12-23				Added logging support
 									2002-02-11				Use CHKey in LogLevel to fix handle leak
-                                    2002-08-11              Rel 1.2
+									2002-08-11              Rel 1.2
 */
 #include	"StdAfx.h"
 #include	"CFileName.h"
@@ -53,9 +53,9 @@ CMessage::CMessage(HWND hWnd) : m_wMaxWidth(50) {
 static DWORD dwTlsIndex = TLS_OUT_OF_INDEXES;
 
 static void FreeTls(void) {
-    if (dwTlsIndex != TLS_OUT_OF_INDEXES) {
-        TlsFree(dwTlsIndex);
-    }
+	if (dwTlsIndex != TLS_OUT_OF_INDEXES) {
+		TlsFree(dwTlsIndex);
+	}
 }
 
 static void AllocTls(void) {
@@ -73,50 +73,51 @@ static void AllocTls(void) {
 //
 CStrPtr
 CMessage::Msg(DWORD dwFlag, DWORD dwMsgID, CStrPtr utStr1, CStrPtr utStr2) {
-    // This is initialized once per process start/dll load, early.
-    static long lAllocTls = 0;
+	// This is initialized once per process start/dll load, early.
+	static long lAllocTls = 0;
 
-    long l;
-    do {
-        switch (l = InterlockedExchange(&lAllocTls, 1)) {
-        case 0:
-            // First call by any thread, allocate the TLS index we need.
-            AllocTls();
-            InterlockedExchange(&lAllocTls, 2);
-            break;
-        case 1:
-            // Race condition - retry.
-            Sleep(10);
-            break;
-        case 2:
-            // All is well. Restore.
-            InterlockedExchange(&lAllocTls, 2);
-        default:
-            break;
-        }
-    } while (l == 1);   // Loop to avoid race condition.
-    // The problem is that this code is used in many situations, both as a DLL
-    // and as part of the main code, and it's sort of non-trivial to ensure that a
-    // critical section object gets initalized before any thing executes which may
-    // call this code. The whole purpose of the TLS exercise
-    // here is anyway just to gracefully handle the situation with a double-exception,
-    // which in turn is a rather rare event hopefully.
+	long l;
+	do {
+		switch (l = InterlockedExchange(&lAllocTls, 1)) {
+		case 0:
+			// First call by any thread, allocate the TLS index we need.
+			AllocTls();
+			InterlockedExchange(&lAllocTls, 2);
+			break;
+		case 1:
+			// Race condition - retry.
+			Sleep(10);
+			break;
+		case 2:
+			// All is well. Restore.
+			InterlockedExchange(&lAllocTls, 2);
+		default:
+			break;
+		}
+	} while (l == 1);   // Loop to avoid race condition.
+	// The problem is that this code is used in many situations, both as a DLL
+	// and as part of the main code, and it's sort of non-trivial to ensure that a
+	// critical section object gets initalized before any thing executes which may
+	// call this code. The whole purpose of the TLS exercise
+	// here is anyway just to gracefully handle the situation with a double-exception,
+	// which in turn is a rather rare event hopefully.
 
-    // The TlsGetValue()/TlsSetValue() sequence here and below is by definition thread-safe,
-    // as they access thread-local storage.
-    // dwTlsIndex is only modified by AllocTls() above (and FreeTls()), so it's usage here
-    // is also thread-safe.
-    if (dwTlsIndex == TLS_OUT_OF_INDEXES) {
-        return _T("Error - Out of TLS indexes. Cannot get message safely.");
-    } else if (TlsGetValue(dwTlsIndex)) {
+	// The TlsGetValue()/TlsSetValue() sequence here and below is by definition thread-safe,
+	// as they access thread-local storage.
+	// dwTlsIndex is only modified by AllocTls() above (and FreeTls()), so it's usage here
+	// is also thread-safe.
+	if (dwTlsIndex == TLS_OUT_OF_INDEXES) {
+		return _T("Error - Out of TLS indexes. Cannot get message safely.");
+	}
+	else if (TlsGetValue(dwTlsIndex)) {
 		return _T("Error - Double exception. Cannot get message.");
 	}
-    TlsSetValue(dwTlsIndex, (LPVOID)1);
+	TlsSetValue(dwTlsIndex, (LPVOID)1);
 
 	LPCTSTR aszArg[4];
 
-    aszArg[0] = gszAxCryptExternalName;
-    aszArg[1] = utStr1;
+	aszArg[0] = gszAxCryptExternalName;
+	aszArg[1] = utStr1;
 	aszArg[2] = utStr2;
 	aszArg[3] = m_utMsg;
 
@@ -134,44 +135,44 @@ CMessage::Msg(DWORD dwFlag, DWORD dwMsgID, CStrPtr utStr1, CStrPtr utStr2) {
 	//	using the System Default, then the thread locale, if that doesn't work,
 	//	I let it pick up whatever it can find.
 	//
-    DWORD dwLanguageId = CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValDefaultLanguageId).GetDword(0);
-    if (!dwLanguageId) {
-        dwLanguageId = CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValDefaultLanguageId).GetDword(GetSystemDefaultLangID());
-    }
-    //
-    //	Note to developers: Newer versions of the message compiler produces Unicode messages, there
-    //	is no switch do disable this. This in turn, causes messages to be erroneously formatted.
-    //	Currently Ax Crypt is not Unicode-enabled, thus please use the old message compiler. The compiler
-    //	may reside in for example Microsoft SDK\bin or Microsoft Visual Studio\VC98\bin. A good (for
-    //	this purpose) version is dated 1998-04-20 and is named mc.exe.
-    //
+	DWORD dwLanguageId = CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValDefaultLanguageId).GetDword(0);
+	if (!dwLanguageId) {
+		dwLanguageId = CRegistry(HKEY_LOCAL_MACHINE, gszAxCryptRegKey, szRegValDefaultLanguageId).GetDword(GetSystemDefaultLangID());
+	}
+	//
+	//	Note to developers: Newer versions of the message compiler produces Unicode messages, there
+	//	is no switch do disable this. This in turn, causes messages to be erroneously formatted.
+	//	Currently Xecrets File is not Unicode-enabled, thus please use the old message compiler. The compiler
+	//	may reside in for example Microsoft SDK\bin or Microsoft Visual Studio\VC98\bin. A good (for
+	//	this purpose) version is dated 1998-04-20 and is named mc.exe.
+	//
 	if (!FormatMessage(
-			FORMAT_MESSAGE_ALLOCATE_BUFFER | dwFlag | FORMAT_MESSAGE_ARGUMENT_ARRAY | m_wMaxWidth,	// Max width of text
-			ghMsgModule, dwMsgID, dwLanguageId,
-			(LPTSTR)&szMsg,	0, (va_list *)aszArg)) {
+		FORMAT_MESSAGE_ALLOCATE_BUFFER | dwFlag | FORMAT_MESSAGE_ARGUMENT_ARRAY | m_wMaxWidth,	// Max width of text
+		ghMsgModule, dwMsgID, dwLanguageId,
+		(LPTSTR)&szMsg, 0, (va_list*)aszArg)) {
 		if (!FormatMessage(
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | dwFlag | FORMAT_MESSAGE_ARGUMENT_ARRAY | m_wMaxWidth,	// Max width of text
-				ghMsgModule, dwMsgID, (WORD)GetThreadLocale(),
-				(LPTSTR)&szMsg,	0, (va_list *)aszArg)) {
+			FORMAT_MESSAGE_ALLOCATE_BUFFER | dwFlag | FORMAT_MESSAGE_ARGUMENT_ARRAY | m_wMaxWidth,	// Max width of text
+			ghMsgModule, dwMsgID, (WORD)GetThreadLocale(),
+			(LPTSTR)&szMsg, 0, (va_list*)aszArg)) {
 			if (!FormatMessage(
-					FORMAT_MESSAGE_ALLOCATE_BUFFER | dwFlag | FORMAT_MESSAGE_ARGUMENT_ARRAY | m_wMaxWidth,	// Max width of text
-					ghMsgModule, dwMsgID, 0,
-					(LPTSTR)&szMsg,	0, (va_list *)aszArg)) {
+				FORMAT_MESSAGE_ALLOCATE_BUFFER | dwFlag | FORMAT_MESSAGE_ARGUMENT_ARRAY | m_wMaxWidth,	// Max width of text
+				ghMsgModule, dwMsgID, 0,
+				(LPTSTR)&szMsg, 0, (va_list*)aszArg)) {
 				// Pretty catastrophic - can't even read the proper error message.
-                TlsSetValue(dwTlsIndex, (LPVOID)0);
+				TlsSetValue(dwTlsIndex, (LPVOID)0);
 				return _T("Error - cannot read message definitions.");
 			}
 		}
 	}
-    // Sometimes trailing spaces cause trouble.
-    _TCHAR *szEnd = &szMsg[_tcslen(szMsg)];
-    while (szEnd > szMsg && iswspace(*--szEnd)) {
-        *szEnd = '\0';
-    }
+	// Sometimes trailing spaces cause trouble.
+	_TCHAR* szEnd = &szMsg[_tcslen(szMsg)];
+	while (szEnd > szMsg && iswspace(*--szEnd)) {
+		*szEnd = '\0';
+	}
 
 	CStrPtr	utStrReturn = szMsg;						// Save the text
 	(void)LocalFree(szMsg);						// Free system allocated memory.
-    TlsSetValue(dwTlsIndex, (LPVOID)0);
+	TlsSetValue(dwTlsIndex, (LPVOID)0);
 	return utStrReturn;
 }
 //
@@ -180,44 +181,45 @@ CMessage::Msg(DWORD dwFlag, DWORD dwMsgID, CStrPtr utStr1, CStrPtr utStr2) {
 //
 int
 CMessage::ShowDialog(UINT uiStyleMask) {
-    if (!CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValServerMode).GetDword(FALSE)) {
-        //if (m_hWnd == NULL) MySetForegroundWindow();
+	if (!CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValServerMode).GetDword(FALSE)) {
+		//if (m_hWnd == NULL) MySetForegroundWindow();
 
-	    return MessageBox(
-		    //m_hWnd == NULL ? /*GetForegroundWindow()*/NULL/*<SS 2002-09-01 testing...>*/ : m_hWnd,
-            NULL,
-		    m_utMsg,
-            // Show version information depending on ShowNoVersion option, unless it's an error display in which case we always display the version
-		    CVersion().String(gfAxCryptShowNoVersion && ((uiStyleMask & MB_ICONERROR) == 0)),
-		    MB_TOPMOST | MB_SETFOREGROUND | uiStyleMask);
-    } else {
-        LogEvent(0);
-        switch (uiStyleMask & MB_TYPEMASK) {
-        case MB_OK:
-        case MB_OKCANCEL:
-            return IDOK;
+		return MessageBox(
+			//m_hWnd == NULL ? /*GetForegroundWindow()*/NULL/*<SS 2002-09-01 testing...>*/ : m_hWnd,
+			NULL,
+			m_utMsg,
+			// Show version information depending on ShowNoVersion option, unless it's an error display in which case we always display the version
+			CVersion().String(gfAxCryptShowNoVersion && ((uiStyleMask & MB_ICONERROR) == 0)),
+			MB_TOPMOST | MB_SETFOREGROUND | uiStyleMask);
+	}
+	else {
+		LogEvent(0);
+		switch (uiStyleMask & MB_TYPEMASK) {
+		case MB_OK:
+		case MB_OKCANCEL:
+			return IDOK;
 
-        case MB_ABORTRETRYIGNORE:
-            return IDIGNORE;
+		case MB_ABORTRETRYIGNORE:
+			return IDIGNORE;
 
-        case MB_YESNOCANCEL:
-        case MB_YESNO:
-            return IDYES;
+		case MB_YESNOCANCEL:
+		case MB_YESNO:
+			return IDYES;
 
-        case MB_RETRYCANCEL:
-            return IDCANCEL;
+		case MB_RETRYCANCEL:
+			return IDCANCEL;
 
-        default:
-            return IDOK;
-        }
-    }
+		default:
+			return IDOK;
+		}
+	}
 }
 //
 //	Return the log level in the registry, or zero if the key
 //	does not exist.
 /*static */ DWORD
 CMessage::LogLevel() {
-    return CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValEventLogLevel).GetDword(0);
+	return CRegistry(HKEY_CURRENT_USER, gszAxCryptRegKey, szRegValEventLogLevel).GetDword(0);
 }
 
 CMessage&
@@ -254,11 +256,12 @@ CMessage::SysMsg(DWORD dwMsgID, CStrPtr utArg1, CStrPtr utArg2) {
 
 CMessage&
 CMessage::Wrap(WORD wMaxWidth) {
-    if (wMaxWidth) {
-	    m_wMaxWidth = wMaxWidth;
-    } else {
-        m_wMaxWidth = FORMAT_MESSAGE_MAX_WIDTH_MASK;
-    }
+	if (wMaxWidth) {
+		m_wMaxWidth = wMaxWidth;
+	}
+	else {
+		m_wMaxWidth = FORMAT_MESSAGE_MAX_WIDTH_MASK;
+	}
 	return *this;
 }
 
@@ -286,18 +289,18 @@ CMessage::LogEvent(DWORD dwLogLevel) {
 	if (LogLevel() >= dwLogLevel) {
 		CFileName utLogFile;
 
-        utLogFile.SetPath2SysTempDir();
+		utLogFile.SetPath2SysTempDir();
 
 		utLogFile.SetDir(CStrPtr(utLogFile.GetDir()) + CStrPtr(_T("\\")));
 		utLogFile.SetName(gszAxCryptInternalName);
 		utLogFile.SetExt(_T(".log"));
-		HANDLE hLogFile = CreateFile(utLogFile.Get(), GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL , NULL);
-        if (hLogFile == INVALID_HANDLE_VALUE) {
-            // Here we should probably do something smart to hande an error, but
-            // we can't just throw the exception, as we risk infinite recursion
-            // and other bad things.
-            return;
-        }
+		HANDLE hLogFile = CreateFile(utLogFile.Get(), GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		if (hLogFile == INVALID_HANDLE_VALUE) {
+			// Here we should probably do something smart to hande an error, but
+			// we can't just throw the exception, as we risk infinite recursion
+			// and other bad things.
+			return;
+		}
 		CAssert(SetFilePointer(hLogFile, 0, NULL, FILE_END) != 0xffffffff).Sys().Throw();
 
 		DWORD dwBytesWritten;
@@ -307,34 +310,34 @@ CMessage::LogEvent(DWORD dwLogLevel) {
 		_stprintf_s(szDateTime, sizeof szDateTime / sizeof szDateTime[0], _T("%04d-%02d-%02d %02d.%02d.%02d "), stLocalTime.wYear, stLocalTime.wMonth, stLocalTime.wDay, stLocalTime.wHour, stLocalTime.wMinute, stLocalTime.wSecond);
 		(void)WriteFile(hLogFile, szDateTime, (DWORD)(_tcslen(szDateTime) * sizeof TCHAR), &dwBytesWritten, NULL);
 
-        // Quick & dirty remove '\r' and '\n' from the message.
-        CPtrTo<TCHAR> szOneLine = CopySz(m_utMsg);
-        int iSpaceCount = 0;
-        TCHAR *pIn, *pOut;
-        // It is guaranteed that the output is not longer than the input
-        for (pIn = pOut = szOneLine; *pIn; pIn++) {
-            switch (*pIn) {
-            case _T('\r'):
-            case _T('\n'):
-            case _T('\t'):
-                if (!iSpaceCount) iSpaceCount = 1;
-                break;
-            case _T(' '):
-                iSpaceCount++;
-                break;
-            default:
-                if (iSpaceCount) {
-                    do {
-                        *pOut++ = _T(' ');
-                    } while (--iSpaceCount);
-                }
-                *pOut++ = *pIn;
-            }
-        }
-        *pOut = _T('\0');
+		// Quick & dirty remove '\r' and '\n' from the message.
+		CPtrTo<TCHAR> szOneLine = CopySz(m_utMsg);
+		int iSpaceCount = 0;
+		TCHAR* pIn, * pOut;
+		// It is guaranteed that the output is not longer than the input
+		for (pIn = pOut = szOneLine; *pIn; pIn++) {
+			switch (*pIn) {
+			case _T('\r'):
+			case _T('\n'):
+			case _T('\t'):
+				if (!iSpaceCount) iSpaceCount = 1;
+				break;
+			case _T(' '):
+				iSpaceCount++;
+				break;
+			default:
+				if (iSpaceCount) {
+					do {
+						*pOut++ = _T(' ');
+					} while (--iSpaceCount);
+				}
+				*pOut++ = *pIn;
+			}
+		}
+		*pOut = _T('\0');
 
 		(void)WriteFile(hLogFile, szOneLine, (DWORD)(_tcslen(szOneLine) * sizeof TCHAR), &dwBytesWritten, NULL);
-        (void)WriteFile(hLogFile, _T("\r\n"), (DWORD)(_tcslen(_T("\r\n")) * sizeof TCHAR), &dwBytesWritten, NULL);
+		(void)WriteFile(hLogFile, _T("\r\n"), (DWORD)(_tcslen(_T("\r\n")) * sizeof TCHAR), &dwBytesWritten, NULL);
 		(void)CloseHandle(hLogFile);
 	}
 }
@@ -342,9 +345,9 @@ CMessage::LogEvent(DWORD dwLogLevel) {
 // Must be deleted by caller...
 CStrPtr*
 CMessage::FmtInt(LPCTSTR szFmt, int iInt) {
-    const int strSize = 40;
-	CStrPtr *pszStr = new CStrPtr(strSize);			// Should be enough...
-    ASSPTR((TCHAR *)pszStr);
+	const int strSize = 40;
+	CStrPtr* pszStr = new CStrPtr(strSize);			// Should be enough...
+	ASSPTR((TCHAR*)pszStr);
 	(void)_stprintf_s(*pszStr, strSize, szFmt, iInt);
 	return pszStr;
 }
@@ -373,8 +376,8 @@ CAssert::CAssert(BOOL bOk) {
 //  Alternate for other error code sources than GetLastError()
 //
 CAssert::CAssert(BOOL bOk, DWORD dwError) {
-    m_bOk = bOk;
-    m_dwLastError = dwError;
+	m_bOk = bOk;
+	m_dwLastError = dwError;
 }
 //
 //	Display a proper message box for a ready formatted message.
@@ -403,14 +406,14 @@ CAssert::LastError() {
 //
 void
 CAssert::Throw() {
-    if (!m_bOk) {
-        // Now this is tricky... When we throw an exception, the CAssert
-        // object contains dynamically allocated memory, thus we must
-        // adjust for a leak here.
-        HEAP_CHECK_BEGIN(_T("CAssert::Throw()"), TRUE);
-        throw *this;
-        HEAP_CHECK_END
-    }
+	if (!m_bOk) {
+		// Now this is tricky... When we throw an exception, the CAssert
+		// object contains dynamically allocated memory, thus we must
+		// adjust for a leak here.
+		HEAP_CHECK_BEGIN(_T("CAssert::Throw()"), TRUE);
+		throw* this;
+		HEAP_CHECK_END
+	}
 }
 //
 //	Generate application error msg, MsgID

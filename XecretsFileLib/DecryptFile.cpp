@@ -61,7 +61,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Parse Ax Crypt Meta information/headers
+	/// \brief Parse Xecrets File Meta information/headers
 	/// Read and parses headers into a CXecretsFileMeta object. Sends nothing
 	/// downstream.
 	class CPipeAxCryptDecryptMeta : public AxPipe::CFilterBlock {
@@ -221,7 +221,7 @@ namespace axcl {
 		/// \brief The main filter override
 		///
 		/// Process the input, which is restricted to a single file at this point
-		/// and it must start with the Ax Crypt GUID, so any preceeding
+		/// and it must start with the Xecrets File GUID, so any preceeding
 		/// data must be discarded before getting here.
 		void InFilter() {
 			// We call Sync(), ensuring that any pending Close() operation finishes. We then
@@ -240,7 +240,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Parse Ax Crypt Meta information/headers
+	/// \brief Parse Xecrets File Meta information/headers
 	/// Reads and buffers data, parsing headers into a CXecretsFileMeta object.
 	/// Sends the raw data downstream, including the headers.
 	class CPipeXecretsFileMeta : public CPipeAxCryptDecryptMeta {
@@ -260,7 +260,7 @@ namespace axcl {
 		/// \brief The main filter override
 		///
 		/// Process the input, which may consist of several appended encrypted
-		/// files, but it must start with the Ax Crypt GUID, so any preceeding
+		/// files, but it must start with the Xecrets File GUID, so any preceeding
 		/// data must be discarded before getting here.
 		void InFilter() {
 			while (true) {
@@ -330,7 +330,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Ax Crypt-specific derivation of HMAC_SHA1 calculation
+	/// \brief Xecrets File-specific derivation of HMAC_SHA1 calculation
 	///
 	/// \see AxPipe::Stock::CPipeHMAC_SHA1
 	class CPipeHMAC_SHA1_128 : public AxPipe::Stock::CPipeHMAC_SHA1<128> {
@@ -397,7 +397,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Skip the headers from an Ax Crypt stream
+	/// \brief Skip the headers from an Xecrets File stream
 	///
 	/// Using info from the meta data about the offset to
 	/// the data, skip bytes before starting to pass it
@@ -539,7 +539,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Inflate (decompress) with ZLib for Ax Crypt
+	/// \brief Inflate (decompress) with ZLib for Xecrets File
 	///
 	/// Only inflate if the stream was compressed - otherwise
 	/// just pass through. Get the compress flag through the
@@ -608,7 +608,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Ax Crypt specific derivation which calls back for the name of the file
+	/// \brief Xecrets File specific derivation which calls back for the name of the file
 	///
 	/// The output file name is recived via a callback.
 	class CDecryptSinkFile : public AxPipe::CSinkFileIO {

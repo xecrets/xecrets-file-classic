@@ -3,7 +3,7 @@
 
 @(#) $Id$
 
-Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 Server or Web Storage of Document Files.
 
 Copyright (C) 2009 Svante Seleborg/Axon Data, All rights reserved.
@@ -104,7 +104,7 @@ INT_PTR CALLBACK DlgProcRegistration(
 	}
 }
 
-/// \brief Get a Windows version string formatted for Ax Crypt registration
+/// \brief Get a Windows version string formatted for Xecrets File registration
 wstring
 GetWindowsVersionString() {
 	auto_ptr<AxLib::IWinVersion> pIWinVersion(AxLib::IWinVersion::New());

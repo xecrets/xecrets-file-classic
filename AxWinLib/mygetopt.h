@@ -3,7 +3,7 @@
 /*
 	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -71,8 +71,8 @@
 #include <string.h>
 
 extern int optind, opterr;
-extern TCHAR *optarg;
+extern TCHAR* optarg;
 
-TCHAR mygetopt(int argc, TCHAR *argv[], TCHAR *optstring);
+TCHAR mygetopt(int argc, TCHAR* argv[], TCHAR* optstring);
 
 #endif

@@ -1,9 +1,9 @@
 /*! \file
-	\brief AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
+	\brief AxDecrypt - Stand-alone Xecrets File-decrypter and self-extractor.
 
 	@(#) $Id$
 
-	Ax Crypt/AxDecrypt et. al - Common definitions for passphrase handling
+	Xecrets File/AxDecrypt et. al - Common definitions for passphrase handling
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -75,11 +75,11 @@ CSafeEdit::SafeEdit(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 					if (OpenClipboard(hwnd)) {
 						HANDLE hClipData = GetClipboardData(CF_TEXT);
 						if (hClipData) {
-							const char *szClipData = (const char *)GlobalLock(hClipData);
+							const char* szClipData = (const char*)GlobalLock(hClipData);
 							if (szClipData) {
-								const char *cp = szClipData;
+								const char* cp = szClipData;
 								while (*cp) {
-									if (strchr((const char *)szPassphraseChars, *cp++) == NULL) {
+									if (strchr((const char*)szPassphraseChars, *cp++) == NULL) {
 										(void)MessageBeep(MB_OK);
 										break;
 									}
@@ -165,7 +165,7 @@ CSafeEdit::SafeEdit(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			}
 			// If we need to grow the passphrase buffer...
 			if (lstrlenA(pThis->m_szPassphrase) == (int)(pThis->m_cbLen - 1)) {
-				char *p = new char[pThis->m_cbLen += pThis->m_cbLen];
+				char* p = new char[pThis->m_cbLen += pThis->m_cbLen];
 				ASSPTR(p);
 				lstrcpyA(p, pThis->m_szPassphrase);
 				delete pThis->m_szPassphrase;
@@ -192,14 +192,14 @@ CSafeEdit::SafeEdit(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 /// \param hWnd Handle to parent for the dialog
 /// \param szDefault The default name to use
 /// \return An allocated string with the name, or NULL. Do remember to delete.
-_TCHAR *
-AGetOpenFileNameDialog(HWND hWnd, _TCHAR *szDefault) {
+_TCHAR*
+AGetOpenFileNameDialog(HWND hWnd, _TCHAR* szDefault) {
 	// Build the filter string, i.e. for example "*.txt\0*.txt\0\0"
 	// They don't make it easy by using nul chars...
-	_TCHAR *szPathExt = PathFindExtension(szDefault);
+	_TCHAR* szPathExt = PathFindExtension(szDefault);
 	_TCHAR szFilter[1024 + 1024];    // wsprintf guarantee (but we call it twice, so...)
 	if (szPathExt[0]) {
-		_TCHAR *cpNextPart = szFilter;
+		_TCHAR* cpNextPart = szFilter;
 		wsprintf(cpNextPart, _T("*%s"), szPathExt);
 		cpNextPart = &cpNextPart[lstrlen(cpNextPart) + 1];
 		wsprintf(cpNextPart, _T("*%s"), szPathExt);
@@ -232,13 +232,13 @@ AGetOpenFileNameDialog(HWND hWnd, _TCHAR *szDefault) {
 }
 
 #ifdef UNICODE
-static _TCHAR *
-AStrTch(const char *sz) {
+static _TCHAR*
+AStrTch(const char* sz) {
 	if (!sz) {
 		return NULL;
 	}
 	int cc = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sz, -1, NULL, 0);
-	TCHAR *wz = new TCHAR[cc];
+	TCHAR* wz = new TCHAR[cc];
 	if (!MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sz, -1, wz, cc)) {
 		delete[] wz;
 		return NULL;
@@ -256,11 +256,11 @@ AStrTch(const char *sz) {
 /// \return TRUE if we processed the message
 INT_PTR
 CAxPassphrase::DialogProc(HWND hWndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	CAxPassphrase *pThis;
+	CAxPassphrase* pThis;
 	switch (uMsg) {
 		// Return TRUE to have the default control selected with SetFocus
 	case WM_INITDIALOG: {
-		pThis = (CAxPassphrase *)lParam;
+		pThis = (CAxPassphrase*)lParam;
 #pragma warning ( push )
 #pragma warning ( disable : 4244 )  // Compiler problem, reports 'possible loss of data' in error
 		SetWindowLongPtr(hWndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
@@ -294,7 +294,7 @@ CAxPassphrase::DialogProc(HWND hWndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		SetFocus(GetDlgItem(hWndDlg, IDC_EDIT_PASSPHRASE));
 
-		_TCHAR *sz = ALoadString(IDS_AXDECRYPT);
+		_TCHAR* sz = ALoadString(IDS_AXDECRYPT);
 		SetWindowText(hWndDlg, sz);
 		delete sz;
 
@@ -321,7 +321,7 @@ CAxPassphrase::DialogProc(HWND hWndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		// This is to handle a compiler problem with warnings when using the 64-bit compatible defines
 #pragma warning ( push )
 #pragma warning ( disable : 4312 )
-		pThis = (CAxPassphrase *)GetWindowLongPtr(hWndDlg, GWLP_USERDATA);
+		pThis = (CAxPassphrase*)GetWindowLongPtr(hWndDlg, GWLP_USERDATA);
 #pragma warning ( pop )
 
 		// Change default when text is entered

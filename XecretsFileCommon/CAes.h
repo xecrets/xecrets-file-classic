@@ -3,7 +3,7 @@
 /*
     @(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -37,14 +37,14 @@
 //	we need to ensure that keys and round keys are kept in dynamically allocated
 //	storage that we know is safe. This requires that the 'new' and 'delete' operators
 //	are redefined to guarantuee the safety of the data in whatever way is deemed
-//	appropriate. In Ax Crypt this is done by way of a memory mapped file as the heap.
+//	appropriate. In Xecrets File this is done by way of a memory mapped file as the heap.
 //
 //	The Init Vector is never secret - so we keep it in regular memory.
 //
 //	To get full control we only use the low-level algoritm parts.
 //
 //	This class is not a complete API - it only implements exactly the modes
-//	needed by Ax Crypt.
+//	needed by Xecrets File.
 //
 //	Please note that padding must be done external to this code - we only
 //	handle whole blocks here.

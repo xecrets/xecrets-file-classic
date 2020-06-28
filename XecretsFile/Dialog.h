@@ -1,9 +1,9 @@
 #ifndef	_DIALOG
 #define	_DIALOG
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -36,8 +36,8 @@ extern axpl::ttstring MainDlgTitleBar(HINSTANCE hInstance = NULL);
 //
 //	Dialog functions
 //
-bool GetNewPassphrase(char **szPassphrase, TCHAR **szKeyFileName, HWND hWnd = NULL);
-bool GetPassphrase(int iPromptID, LPCTSTR szFileName, auto_ptr<char> &szPassphrase, auto_ptr<TCHAR> &szKeyFileName, HWND hWnd = NULL);
+bool GetNewPassphrase(char** szPassphrase, TCHAR** szKeyFileName, HWND hWnd = NULL);
+bool GetPassphrase(int iPromptID, LPCTSTR szFileName, auto_ptr<char>& szPassphrase, auto_ptr<TCHAR>& szKeyFileName, HWND hWnd = NULL);
 bool WarningDlg(LPCTSTR szFileName, DWORD dwMsg, DWORD dwNotAgainMsg, BOOL& fNotAgain);
 void FlashBox();
 #endif	_DIALOG

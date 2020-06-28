@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -43,9 +43,9 @@ THash::THash() {
 //	If shorter, pad on the right, i.e. with the Least
 //	Signifcant Bytes (sic!)
 //
-THash::THash(BYTE *bpInit, int i) {
+THash::THash(BYTE* bpInit, int i) {
 	ZeroMemory(aoH, sizeof aoH);
-    CopyMemory(aoH, bpInit, i < sizeof aoH ? i : sizeof aoH);
+	CopyMemory(aoH, bpInit, i < sizeof aoH ? i : sizeof aoH);
 }
 //
 //	Initialize with an integer, QWORD is the largest native so it will have
@@ -63,9 +63,9 @@ THash::THash(QWORD qwV) {
 //	Return a (subset) useful as the HMAC.
 //	It says 'leftmost' bits in the RFC...
 //
-THmac *
+THmac*
 THash::Hmac() {
-	return (THmac *)&aoH[0];
+	return (THmac*)&aoH[0];
 }
 //
 //	Return a (subset) useful as an encryption Key.
@@ -73,7 +73,7 @@ THash::Hmac() {
 //
 TKey*
 THash::KeyHash() {
-	return (TKey *)&aoH[0];
+	return (TKey*)&aoH[0];
 }
 //
 //	Perform arbitrary, endianess independent long addition.
@@ -92,6 +92,6 @@ THash::operator+(THash& utHash) {
 //
 THmac&
 THmac::operator =(THash& utH) {
-	CopyMemory(this, &utH, sizeof *this);
+	CopyMemory(this, &utH, sizeof * this);
 	return *this;
 }

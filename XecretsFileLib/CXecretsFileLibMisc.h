@@ -5,7 +5,7 @@
 
 	@(#) $Id$
 
-	axcl - Ax Crypt support classes and types
+	axcl - Xecrets File support classes and types
 
 	Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -41,7 +41,7 @@ namespace axcl {
 	const int chunkSize = 0x100000;           ///< The chunk size we work in.
 #endif
 
-/// \brief The Ax Crypt GUID
+/// \brief The Xecrets File GUID
 	extern byte guidAxCryptFileIdInverse[16];
 
 	/// \brief Custom error codes from ::AxPipe -derived classes.
@@ -52,7 +52,7 @@ namespace axcl {
 		ERROR_CODE_ABORT,                       ///< User cancelled whilst working
 		ERROR_CODE_MORE,                        ///< Not an error - want a bigger dialog
 		ERROR_CODE_WRONGKEY,                    ///< The key provided does not work for this data
-		AXCRYPT_CODE_DATA,                      ///< Not an error - we found Ax Crypt data status
+		AXCRYPT_CODE_DATA,                      ///< Not an error - we found Xecrets File data status
 	};
 
 	/// \brief Simple helper to XOR two memory blocks to a third.

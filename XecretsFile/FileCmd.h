@@ -1,9 +1,9 @@
 #ifndef	_FILECMD_H
 #define	_FILECMD_H
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -29,28 +29,28 @@
 
 */
 
-DWORD CmdEncryptZFile(CCmdParam *pCmdParam);
-DWORD CmdEncryptZCFile(CCmdParam *pCmdParam);
-DWORD CmdSfxEncNewFile(CCmdParam *pCmdParam);
-DWORD CmdDecryptFile(CCmdParam *pCmdParam);
-DWORD CmdDecryptCFile(CCmdParam *pCmdParam);
-DWORD CmdDecryptOpenLaunch(CCmdParam *pCmdParam);
-DWORD CmdWipe(CCmdParam *pCmdParam);
-DWORD CmdWipeSilent(CCmdParam *pCmdParam);
-DWORD CmdClearKeys(CCmdParam *pCmdParam);
-DWORD CmdAddKey(CCmdParam *pCmdParam);
-DWORD CmdMakeKeyFile(CCmdParam *pCmdParam);
-DWORD CmdPromptKey(CCmdParam *pCmdParam);
-DWORD CmdAnonRename(CCmdParam *pCmdParam);
-DWORD CmdTestHaveKey(CCmdParam *pCmdParam);
-DWORD CmdShowIdTag(CCmdParam *pCmdParam);
-DWORD CmdBruteForce(CCmdParam *pCmdParam);
-DWORD CmdInstallInRegistry(CCmdParam *pCmdParam);
-DWORD CmdRemoveFromRegistry(CCmdParam *pCmdParam);
-DWORD CmdLicenseMgr(CCmdParam *pCmdParam);
-DWORD CmdRegistration(CCmdParam *pCmdParam);
+DWORD CmdEncryptZFile(CCmdParam* pCmdParam);
+DWORD CmdEncryptZCFile(CCmdParam* pCmdParam);
+DWORD CmdSfxEncNewFile(CCmdParam* pCmdParam);
+DWORD CmdDecryptFile(CCmdParam* pCmdParam);
+DWORD CmdDecryptCFile(CCmdParam* pCmdParam);
+DWORD CmdDecryptOpenLaunch(CCmdParam* pCmdParam);
+DWORD CmdWipe(CCmdParam* pCmdParam);
+DWORD CmdWipeSilent(CCmdParam* pCmdParam);
+DWORD CmdClearKeys(CCmdParam* pCmdParam);
+DWORD CmdAddKey(CCmdParam* pCmdParam);
+DWORD CmdMakeKeyFile(CCmdParam* pCmdParam);
+DWORD CmdPromptKey(CCmdParam* pCmdParam);
+DWORD CmdAnonRename(CCmdParam* pCmdParam);
+DWORD CmdTestHaveKey(CCmdParam* pCmdParam);
+DWORD CmdShowIdTag(CCmdParam* pCmdParam);
+DWORD CmdBruteForce(CCmdParam* pCmdParam);
+DWORD CmdInstallInRegistry(CCmdParam* pCmdParam);
+DWORD CmdRemoveFromRegistry(CCmdParam* pCmdParam);
+DWORD CmdLicenseMgr(CCmdParam* pCmdParam);
+DWORD CmdRegistration(CCmdParam* pCmdParam);
 
-typedef DWORD (*pfCmdT)(CCmdParam *);
-DWORD FileExpand(pfCmdT pfCmd, CCmdParam *pCmdParam, const TCHAR *szDir, const TCHAR *szPattern);
+typedef DWORD(*pfCmdT)(CCmdParam*);
+DWORD FileExpand(pfCmdT pfCmd, CCmdParam* pCmdParam, const TCHAR* szDir, const TCHAR* szPattern);
 
 #endif	_FILECMD_H

@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -24,7 +24,7 @@
 
 	E-mail							YYYY-MM-DD				Reason
 	software@axantum.com 			2001					Initial
-                                    2002-08-11              Rel 1.2
+									2002-08-11              Rel 1.2
 
 */
 #include	"StdAfx.h"
@@ -60,23 +60,23 @@ CFileName::SetPath2ExeName(HINSTANCE hInstance) {
 CFileName&
 CFileName::SetPath2TempDir() {
 	// Be Terminal Services / Fast User Switching aware here
-    typedef BOOL (WINAPI *pfProcessIdToSessionIdT)(DWORD dwProcessId, DWORD* pSessionId);
+	typedef BOOL(WINAPI* pfProcessIdToSessionIdT)(DWORD dwProcessId, DWORD* pSessionId);
 	pfProcessIdToSessionIdT pfProcessIdToSessionId = (pfProcessIdToSessionIdT)GetProcAddress(GetModuleHandle(_T("kernel32.dll")), "ProcessIdToSessionId");
-	TCHAR *szSubDir = gszAxCryptInternalName, sz[1024];
+	TCHAR* szSubDir = gszAxCryptInternalName, sz[1024];
 	DWORD  dw = 0;
-	if (pfProcessIdToSessionId != NULL)  {
+	if (pfProcessIdToSessionId != NULL) {
 		// Terminal Services appear to exist in this environment
 		pfProcessIdToSessionId(GetCurrentProcessId(), &dw);
 	}
 	// If the session ID is non-zero only do we modify the default name
-	if (dw != 0)   {
+	if (dw != 0) {
 		wsprintf(sz, _TT("%s%d"), gszAxCryptInternalName, dw);
 		szSubDir = sz;
 	}
 
 	SetPath2SysTempDir();
 
-    SetDir(CStrPtr(GetDir()) + /*CStrPtr(_T("\\")) +*/ CStrPtr(szSubDir) + CStrPtr(_T("\\")));
+	SetDir(CStrPtr(GetDir()) + /*CStrPtr(_T("\\")) +*/ CStrPtr(szSubDir) + CStrPtr(_T("\\")));
 	if (!CreateDirectory(GetDir(), NULL)) {
 		CAssert(GetLastError() == ERROR_ALREADY_EXISTS).Sys().Throw();
 	}
@@ -88,27 +88,27 @@ CFileName::SetPath2TempDir() {
 //
 CFileName&
 CFileName::SetPath2SysTempDir() {
-    // The user may set unexpected values to TMP for example, including just a drive-
-    // letter such as Z:, or a root directory such as Z:\. This complicates matters,
-    // and it appears
+	// The user may set unexpected values to TMP for example, including just a drive-
+	// letter such as Z:, or a root directory such as Z:\. This complicates matters,
+	// and it appears
 	DWORD dwTempPathLen = GetTempPath(0, NULL);
 	CStrPtr szTempPath(dwTempPathLen);
-    // The length returned is sometimes not exact - just sufficient, so check for non-overflow not exactness.
+	// The length returned is sometimes not exact - just sufficient, so check for non-overflow not exactness.
 	CAssert(GetTempPath(dwTempPathLen, szTempPath) < dwTempPathLen).Sys(MSG_SYSTEM_CALL, _T("GetTempPath() [CFileIO::MakeTemp()]")).Throw();
 
-    SetDir(szTempPath);
+	SetDir(szTempPath);
 
-    // If we by some chance do not get a directory, let's use the root folder.
-    if (!m_szDir[0]) {
-        SetDir(GetRootDir());
-    }
+	// If we by some chance do not get a directory, let's use the root folder.
+	if (!m_szDir[0]) {
+		SetDir(GetRootDir());
+	}
 
 	// Not all os's guarantees the existance of the directory... But do not try to
-    // create the root dir - that's guaranteed to exist!
-    if ((_tcscmp(m_szDir, _T("\\")) != 0) && (!CreateDirectory(GetDir(), NULL))) {
+	// create the root dir - that's guaranteed to exist!
+	if ((_tcscmp(m_szDir, _T("\\")) != 0) && (!CreateDirectory(GetDir(), NULL))) {
 		CAssert((GetLastError() == ERROR_ALREADY_EXISTS) || (GetLastError() == ERROR_FILE_EXISTS)).Sys().Throw();
 	}
-    return *this;
+	return *this;
 }
 //
 //	Set name only
@@ -123,7 +123,7 @@ CFileName::SetName(LPCTSTR szFileName) {
 //
 CFileName&
 CFileName::SetExt(LPCTSTR szExt) {
-    _tsplitpath_s(szExt, NULL, 0, NULL, 0, NULL, 0, m_szExt, sizeof m_szExt / sizeof m_szExt[0]);
+	_tsplitpath_s(szExt, NULL, 0, NULL, 0, NULL, 0, m_szExt, sizeof m_szExt / sizeof m_szExt[0]);
 	return *this;
 }
 //
@@ -131,7 +131,7 @@ CFileName::SetExt(LPCTSTR szExt) {
 //
 CFileName&
 CFileName::SetTitle(LPCTSTR szTitle) {
-    _tsplitpath_s(szTitle, NULL, 0, NULL, 0, m_szName, sizeof m_szName / sizeof m_szName[0], m_szExt, sizeof m_szExt / sizeof m_szExt[0]);
+	_tsplitpath_s(szTitle, NULL, 0, NULL, 0, m_szName, sizeof m_szName / sizeof m_szName[0], m_szExt, sizeof m_szExt / sizeof m_szExt[0]);
 	return *this;
 }
 //
@@ -147,7 +147,7 @@ CFileName::SetDir(LPCTSTR szDir) {
 //
 CFileName&
 CFileName::SetDrive(LPCTSTR szDrive) {
-    _tsplitpath_s(szDrive, m_szDrive, sizeof m_szDrive / sizeof m_szDrive[0], NULL, 0, NULL, 0, NULL, 0);
+	_tsplitpath_s(szDrive, m_szDrive, sizeof m_szDrive / sizeof m_szDrive[0], NULL, 0, NULL, 0, NULL, 0);
 	return *this;
 }
 //
@@ -155,8 +155,8 @@ CFileName::SetDrive(LPCTSTR szDrive) {
 //
 CFileName&
 CFileName::Set(LPCTSTR szFullName) {
-    Split(szFullName);
-    return *this;
+	Split(szFullName);
+	return *this;
 }
 
 /// \brief Merge the current directory with the possibly partial (relative) specification already present.
@@ -167,21 +167,21 @@ CFileName::Set(LPCTSTR szFullName) {
 /// \return A reference to 'this'
 CFileName&
 CFileName::SetCurDir(LPCTSTR szCurDir) {
-    // If there's no drive in the current path, or the drive is the same as the provided current directory
-    if (!m_szDrive[0] || _tcsnicmp(m_szDrive, szCurDir, 1) == 0) {
-        // If there's either no directory specified, or it's not an absolute directory
-        if (!m_szDir[0] || m_szDir[0] != _T('\\')) {
-            _tcsncpy_s(m_szWorkName, sizeof m_szWorkName / sizeof m_szWorkName[0], szCurDir, sizeof m_szWorkName / sizeof m_szWorkName[0]);
-            m_szWorkName[sizeof m_szWorkName / sizeof m_szWorkName[0] - 1] = _T('\0');
-            ASSCHK(PathAppend(m_szWorkName, m_szDir), _T("PathAppend() failed"));
-            ASSCHK(PathCanonicalize(m_szDir, m_szWorkName), _T("PathCanonicalize failed"));
+	// If there's no drive in the current path, or the drive is the same as the provided current directory
+	if (!m_szDrive[0] || _tcsnicmp(m_szDrive, szCurDir, 1) == 0) {
+		// If there's either no directory specified, or it's not an absolute directory
+		if (!m_szDir[0] || m_szDir[0] != _T('\\')) {
+			_tcsncpy_s(m_szWorkName, sizeof m_szWorkName / sizeof m_szWorkName[0], szCurDir, sizeof m_szWorkName / sizeof m_szWorkName[0]);
+			m_szWorkName[sizeof m_szWorkName / sizeof m_szWorkName[0] - 1] = _T('\0');
+			ASSCHK(PathAppend(m_szWorkName, m_szDir), _T("PathAppend() failed"));
+			ASSCHK(PathCanonicalize(m_szDir, m_szWorkName), _T("PathCanonicalize failed"));
 
-            _tcsncpy_s(m_szWorkName, sizeof m_szWorkName / sizeof m_szWorkName[0], m_szDir, sizeof m_szWorkName / sizeof m_szWorkName[0]);
-            m_szWorkName[sizeof m_szWorkName / sizeof m_szWorkName[0] - 1] = _T('\0');
-            SetDir(m_szWorkName);
-        }
-    }
-    return *this;
+			_tcsncpy_s(m_szWorkName, sizeof m_szWorkName / sizeof m_szWorkName[0], m_szDir, sizeof m_szWorkName / sizeof m_szWorkName[0]);
+			m_szWorkName[sizeof m_szWorkName / sizeof m_szWorkName[0] - 1] = _T('\0');
+			SetDir(m_szWorkName);
+		}
+	}
+	return *this;
 }
 //
 //	Override the components that exist in the given path
@@ -191,29 +191,29 @@ CFileName::Override(LPCTSTR szPath) {
 	CFileName Path;
 	Path.Set(szPath);
 
-    // The VS 2005 version of splitpath requires both pointer and count to be zero when ignoring a component.
-    _TCHAR *szDrive = NULL, *szDir = NULL, *szName = NULL, *szExt = NULL;
-    size_t ccDrive = 0, ccDir = 0, ccName = 0, ccExt = 0;
-    if (Path.m_szDrive[0] != _T('\0')) {
-        szDrive = m_szDrive;
-        ccDrive = sizeof m_szDrive / sizeof m_szDrive[0];
-    }
-    if (Path.m_szDir[0] != _T('\0')) {
-        szDir = m_szDir;
-        ccDir = sizeof m_szDir / sizeof m_szDir[0];
-    }
-    if (Path.m_szName[0] != _T('\0')) {
-        szName = m_szName;
-        ccName = sizeof m_szName / sizeof m_szName[0];
-    }
-    if (Path.m_szExt[0] != _T('\0')) {
-        szExt = m_szExt;
-        ccExt = sizeof m_szExt / sizeof m_szExt[0];
-    }
+	// The VS 2005 version of splitpath requires both pointer and count to be zero when ignoring a component.
+	_TCHAR* szDrive = NULL, * szDir = NULL, * szName = NULL, * szExt = NULL;
+	size_t ccDrive = 0, ccDir = 0, ccName = 0, ccExt = 0;
+	if (Path.m_szDrive[0] != _T('\0')) {
+		szDrive = m_szDrive;
+		ccDrive = sizeof m_szDrive / sizeof m_szDrive[0];
+	}
+	if (Path.m_szDir[0] != _T('\0')) {
+		szDir = m_szDir;
+		ccDir = sizeof m_szDir / sizeof m_szDir[0];
+	}
+	if (Path.m_szName[0] != _T('\0')) {
+		szName = m_szName;
+		ccName = sizeof m_szName / sizeof m_szName[0];
+	}
+	if (Path.m_szExt[0] != _T('\0')) {
+		szExt = m_szExt;
+		ccExt = sizeof m_szExt / sizeof m_szExt[0];
+	}
 
-    _tsplitpath_s(szPath, szDrive, ccDrive, szDir, ccDir, szName, ccName, szExt, ccExt);
+	_tsplitpath_s(szPath, szDrive, ccDrive, szDir, ccDir, szName, ccName, szExt, ccExt);
 
-    return *this;
+	return *this;
 }
 /// \brief Convert dot to dash in extension.
 /// Change the dot in an extension (if any) to a dash,
@@ -222,12 +222,12 @@ CFileName::Override(LPCTSTR szPath) {
 /// \return A reference to *this.
 CFileName&
 CFileName::DashExt() {
-    if (m_szExt[0] == _T('.')) {
-        m_szExt[0] = _T('-');
-    }
-    _tcscat_s(m_szName, sizeof m_szName / sizeof m_szName[0], m_szExt);
-    m_szExt[0] = _T('\0');
-    return *this;
+	if (m_szExt[0] == _T('.')) {
+		m_szExt[0] = _T('-');
+	}
+	_tcscat_s(m_szName, sizeof m_szName / sizeof m_szName[0], m_szExt);
+	m_szExt[0] = _T('\0');
+	return *this;
 }
 
 //
@@ -254,19 +254,19 @@ CFileName::AddExt(LPCTSTR szExt) {
 /// \return *this
 CFileName&
 CFileName::AddName(LPCTSTR szName) {
-    const TCHAR *sz = Get();
-    bool fNoExtraBackslash = false;
-    if (sz[0]) {
-        fNoExtraBackslash = sz[_tcslen(sz) - 1] == _T('\\');
-    }
+	const TCHAR* sz = Get();
+	bool fNoExtraBackslash = false;
+	if (sz[0]) {
+		fNoExtraBackslash = sz[_tcslen(sz) - 1] == _T('\\');
+	}
 
-    TCHAR szWorkName[sizeof m_szWorkName / sizeof m_szWorkName[0]];
-    _tcscpy_s(szWorkName, sizeof szWorkName / sizeof szWorkName[0], Get());
-    _tcscat_s(szWorkName, sizeof szWorkName / sizeof szWorkName[0], fNoExtraBackslash ? _T("") : _T("\\"));
-    _tcscat_s(szWorkName, sizeof szWorkName / sizeof szWorkName[0], szName);
+	TCHAR szWorkName[sizeof m_szWorkName / sizeof m_szWorkName[0]];
+	_tcscpy_s(szWorkName, sizeof szWorkName / sizeof szWorkName[0], Get());
+	_tcscat_s(szWorkName, sizeof szWorkName / sizeof szWorkName[0], fNoExtraBackslash ? _T("") : _T("\\"));
+	_tcscat_s(szWorkName, sizeof szWorkName / sizeof szWorkName[0], szName);
 
-    Split(szWorkName);
-    return *this;
+	Split(szWorkName);
+	return *this;
 }
 
 //
@@ -323,7 +323,7 @@ CFileName::GetExt() {
 LPCTSTR
 CFileName::GetQuoted() {
 	Get();
-	MoveMemory(&m_szWorkName[1], m_szWorkName, (_tcslen(m_szWorkName)+1) * sizeof TCHAR);
+	MoveMemory(&m_szWorkName[1], m_szWorkName, (_tcslen(m_szWorkName) + 1) * sizeof TCHAR);
 	m_szWorkName[0] = _T('"');
 	_tcscat_s(m_szWorkName, sizeof m_szWorkName / sizeof m_szWorkName[0], _T("\""));
 	return m_szWorkName;
@@ -333,13 +333,13 @@ CFileName::GetQuoted() {
 //
 void
 CFileName::Split(LPCTSTR szFileName) {
-    // The 'new' _tsplitpath_s has new semantics and won't allow an empty string, but this is what we want:
-    if (szFileName == NULL || szFileName[0] == _T('\0')) {
-        m_szDrive[0] = _T('\0');
-        m_szDir[0] = _T('\0');
-        m_szName[0] = _T('\0');
-        m_szExt[0] = _T('\0');
-        return;
-    }
+	// The 'new' _tsplitpath_s has new semantics and won't allow an empty string, but this is what we want:
+	if (szFileName == NULL || szFileName[0] == _T('\0')) {
+		m_szDrive[0] = _T('\0');
+		m_szDir[0] = _T('\0');
+		m_szName[0] = _T('\0');
+		m_szExt[0] = _T('\0');
+		return;
+	}
 	_tsplitpath_s(szFileName, m_szDrive, sizeof m_szDrive / sizeof m_szDrive[0], m_szDir, sizeof m_szDir / sizeof m_szDir[0], m_szName, sizeof m_szName / sizeof m_szName[0], m_szExt, sizeof m_szExt / sizeof m_szExt[0]);
 }

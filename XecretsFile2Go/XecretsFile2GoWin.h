@@ -7,7 +7,7 @@
 
 	@(#) $Id$
 
-	XecretsFile2Go - Stand-Alone Install-free Ax Crypt for the road.
+	XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road.
 
 	Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 

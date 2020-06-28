@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -53,10 +53,10 @@ CStrPtr::CStrPtr() {
 //	Reserve space for n TCHAR's
 //
 CStrPtr::CStrPtr(int iSiz) {
-    m_szStr = NULL;
+	m_szStr = NULL;
 	if (iSiz) {
 		m_szStr = new TCHAR[iSiz];
-        ASSPTR(m_szStr);
+		ASSPTR(m_szStr);
 	}
 }
 //
@@ -96,8 +96,8 @@ CStrPtr::operator LPCTSTR() {
 //
 //	Another variant
 //
-CStrPtr::operator BYTE *() {
-	return (BYTE *)m_szStr;
+CStrPtr::operator BYTE* () {
+	return (BYTE*)m_szStr;
 }
 //
 //	Proper copy-assignment, copying data, not pointers.
@@ -106,12 +106,13 @@ CStrPtr&
 CStrPtr::operator= (LPCTSTR szStr) {
 	if (m_szStr != NULL) delete m_szStr;
 	if (szStr != NULL) {
-        size_t ccStr = _tcslen(szStr) + 1;
+		size_t ccStr = _tcslen(szStr) + 1;
 		m_szStr = new TCHAR[ccStr];
-        ASSPTR(m_szStr);
+		ASSPTR(m_szStr);
 
-        _tcscpy_s(m_szStr, ccStr, szStr);
-	} else {
+		_tcscpy_s(m_szStr, ccStr, szStr);
+	}
+	else {
 		m_szStr = NULL;
 	}
 	return *this;
@@ -128,12 +129,12 @@ CStrPtr::operator= (CStrPtr& utStr) {
 //
 CStrPtr&
 CStrPtr::operator +(CStrPtr& utStr) {
-    size_t ccNew = _tcslen(m_szStr) + _tcslen(utStr.m_szStr) + 1;
+	size_t ccNew = _tcslen(m_szStr) + _tcslen(utStr.m_szStr) + 1;
 	LPTSTR szNew = new TCHAR[ccNew];
-    ASSPTR(m_szStr);
+	ASSPTR(m_szStr);
 
-    _tcscpy_s(szNew, ccNew, m_szStr);
-    _tcscat_s(szNew, ccNew, utStr.m_szStr);
+	_tcscpy_s(szNew, ccNew, m_szStr);
+	_tcscat_s(szNew, ccNew, utStr.m_szStr);
 	delete[] m_szStr;
 	m_szStr = szNew;
 	return *this;

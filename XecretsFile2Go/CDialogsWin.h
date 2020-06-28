@@ -381,7 +381,7 @@ protected:
 	}
 
 protected:
-	/// \brief Get a pointer to the passphrase in it's Ansi representation - filtered for Ax Crypt 1.x legal chars
+	/// \brief Get a pointer to the passphrase in it's Ansi representation - filtered for Xecrets File 1.x legal chars
 	/// \param sPassphrase a pointer to a buffer (or NULL)
 	/// \param ccPassphrase the size of the buffer
 	/// \return The number of chars needed - if ccPassphrase == 0, sPassphrase is not used

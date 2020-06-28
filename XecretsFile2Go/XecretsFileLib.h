@@ -1,13 +1,13 @@
 #ifndef XECRETSFILELIB_H
 #define XECRETSFILELIB_H
 /*! \file
-	\brief XecretsFileLib.h - An Ax Crypt support library
+	\brief XecretsFileLib.h - An Xecrets File support library
 
 	@(#) $Id$
 
-	XecretsFileLib - An Ax Crypt support library
+	XecretsFileLib - An Xecrets File support library
 
-	This interface may be used directly by code implementing Ax Crypt-functions.
+	This interface may be used directly by code implementing Xecrets File-functions.
 
 	The library is built around a single parameter buffer, which is a struct AXCL_PARAM
 	and various function calls, passing this parameter buffer and other things as parameters.
@@ -195,7 +195,7 @@ typedef int _TINT;
 
 #endif // !_UNICODE
 
-/// \brief The C-library interface to Ax Crypt functions
+/// \brief The C-library interface to Xecrets File functions
 /// This should be included within extern "C" if used from C++ as a DLL
 
 #ifndef AXCL_CHUNK_SIZE
@@ -223,11 +223,11 @@ enum {
 	AXCL_E_NOTFOUND,                        ///< File not found
 	AXCL_E_HMAC,                            ///< HMAC mismatch
 	AXCL_E_BAD_VERSION,                     ///< Too new version
-	AXCL_E_BAD_GUID,                        ///< Not an Ax Crypt file
+	AXCL_E_BAD_GUID,                        ///< Not an Xecrets File file
 	AXCL_E_ACCESS,                          ///< Some form of access error
 	AXCL_E_CANCEL,                          ///< Cancel requested/performed
 	AXCL_E_IGNORED,                         ///< Requested action/function ignored
-	AXCL_E_AXCRYPT,                         ///< Ax Crypt error
+	AXCL_E_AXCRYPT,                         ///< Xecrets File error
 	AXCL_E_MEMORY,                          ///< Memory allocation error or similar
 	AXCL_E_NOTYET,                          ///< Not Yet Implemented
 	AXCL_E_BADOP,                           ///< Unknown operation requested

@@ -1,10 +1,10 @@
 #pragma once
 /*! \file
-	\brief AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
+	\brief AxDecrypt - Stand-alone Xecrets File-decrypter and self-extractor.
 
 	@(#) $Id$
 
-	AxDecrypt - Stand-alone Ax Crypt-decrypter and self-extractor.
+	AxDecrypt - Stand-alone Xecrets File-decrypter and self-extractor.
 
 	Copyright (C) 2004 Svante Seleborg/Axon Data, All rights reserved.
 

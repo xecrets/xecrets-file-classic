@@ -1,7 +1,7 @@
 /*
 	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2002 Svante Seleborg/Axon Data, All rights reserved.
@@ -61,7 +61,7 @@
 		-   Data is kept locally secure, excepting untimely crashes, with the caveat that we have no control
 			of other applications caretaking of the data, i.e. temp-files and paging-files from Word etc.
 
-	The extension .xxx is registered to start Ax Crypt which
+	The extension .xxx is registered to start Xecrets File which
 	then does the following:
 
 	- Tries cached keys or asks if necessary for a key
@@ -77,7 +77,7 @@
 	- Exits
 
 	We are also hooked into the right-click properties menu of the shell
-	with the action "Encrypt and Wrap with Ax Crypt", as well as "Decrypt and Unwrap from Ax Crypt".
+	with the action "Encrypt and Wrap with Xecrets File", as well as "Decrypt and Unwrap from Xecrets File".
 
 	Internally there is one primary instance that responds to requests from
 	subsequent instances. This is primarily to give central protected access to cached
@@ -2324,7 +2324,7 @@ WinMainInternal(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, i
 					// this. Don't know why we ended up with this mess, it should be created/opened
 					// always by the caller, and then taking action from there. I.e. - if it was
 					// created by a secondary instance _then_ we initate a primary etc. Let's fix
-					// that for version 2.0. Not to be forgotten is that the caller of Ax Crypt
+					// that for version 2.0. Not to be forgotten is that the caller of Xecrets File
 					// should always be able to wait on the instance that gets started, thus if
 					// we get called, and need to start a primary instance, that must be 'secondary'
 					// to the one called.

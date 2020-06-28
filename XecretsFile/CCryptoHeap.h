@@ -1,9 +1,9 @@
 #ifndef	_CCRYPTOHEAP
 #define	_CCRYPTOHEAP
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -49,27 +49,27 @@ class CCryptoHeap : public CFileIO {
 	friend CHeapCheck;
 #endif	_DEBUG
 
-	friend void *basenew(size_t);
-	friend void operator delete(void *);
+	friend void* basenew(size_t);
+	friend void operator delete(void*);
 
 	CRITICAL_SECTION csThreadLock;
 	UNIT* free;
 	UNIT* heap;
-	UNIT* compact(UNIT *p, size_t nsize);
-    UNIT* reuse(UNIT *p, size_t nsize);
+	UNIT* compact(UNIT* p, size_t nsize);
+	UNIT* reuse(UNIT* p, size_t nsize);
 	BOOL* m_pfHeapValid;					// Static marker to ensure proper heap access
 public:
 	size_t m_stHeapLen;						// The length of the heap to allocate.
 private:
 
-	void Free(void *ptr);
-	void *Alloc(size_t size);
+	void Free(void* ptr);
+	void* Alloc(size_t size);
 	void Compact(void);
 
 	HANDLE m_hMapping;			            // The mapping, which always maps the entire file
-    DWORD m_nWipePasses;                    ///< We need to keep this around for the destructor
+	DWORD m_nWipePasses;                    ///< We need to keep this around for the destructor
 public:
-	CCryptoHeap(size_t len, BOOL *pfHeapValid);
+	CCryptoHeap(size_t len, BOOL* pfHeapValid);
 	~CCryptoHeap();
 	void Init();							// Actually init and allocate it..
 	size_t CurrentAlloc();

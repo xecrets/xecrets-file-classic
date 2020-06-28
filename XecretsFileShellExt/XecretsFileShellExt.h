@@ -2,7 +2,7 @@
 /*
 @(#) $Id$
 
-Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 Server or Web Storage of Document Files.
 
 Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -21,7 +21,7 @@ Boston, MA 02111-1307 USA
 
 The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ----
-ShellExt.h      				Definition of Class Factory and Object for the Ax Crypt
+ShellExt.h      				Definition of Class Factory and Object for the Xecrets File
 Shell Extension.
 
 E-mail							YYYY-MM-DD				Reason
@@ -70,7 +70,7 @@ software@axantum.com	    		2001					Initial
 #include "../AxPipe/AxPipe.h"
 
 //
-// The class ID of the Ax Crypt Shell Extension class.
+// The class ID of the Xecrets File Shell Extension class.
 //
 // class id:  1918AECB-5BDB-43D9-83B4-FDD4BEC67E4F
 //

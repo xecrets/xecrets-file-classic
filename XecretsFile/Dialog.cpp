@@ -1,7 +1,7 @@
 /*
 	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -597,7 +597,7 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
 				SetFocus(GetDlgItem(hwndDlg, IDC_NEWPASSPHRASE1));
 				return FALSE;
 			}
-			// Check if the key-file appears to match the look of an Ax Crypt-generated key-file
+			// Check if the key-file appears to match the look of an Xecrets File-generated key-file
 			if (pDlgInfo->szKeyFileName.get() && pDlgInfo->szKeyFileName.get()[0]) {
 				// Check if we have a different length than expected
 				HANDLE hFile = CreateFile(pDlgInfo->szKeyFileName.get(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);

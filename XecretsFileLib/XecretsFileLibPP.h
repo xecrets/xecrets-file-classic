@@ -5,7 +5,7 @@
 
 	@(#) $Id$
 
-	XecretsFileLib - C-callable library for Ax Crypt
+	XecretsFileLib - C-callable library for Xecrets File
 
 	Copyright (C) 2005 Svante Seleborg/Axantum Software AB, All rights reserved.
 

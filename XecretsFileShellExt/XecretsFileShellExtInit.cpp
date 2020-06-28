@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -24,7 +24,7 @@
 
 	E-mail							YYYY-MM-DD				Reason
 	software@axantum.com 			2001					Initial
-                                    2002-08-07              Rel 1.2
+									2002-08-07              Rel 1.2
 
 */
 #include "StdAfx.h"
@@ -46,12 +46,13 @@
 //		Registry key for the file object or folder type.
 //
 STDMETHODIMP
-CShellExt::Initialize(LPCITEMIDLIST pidlFolder, IDataObject *pdObj, HKEY hkeyProgID) {
-    try {
-        m_pSelection->SetObject(pdObj);      // Save the selection object reference for later
-    } catch (TAssert utErr) {
-        utErr.Show();
-        return E_UNEXPECTED;
-    }
-    return NOERROR;
+CShellExt::Initialize(LPCITEMIDLIST pidlFolder, IDataObject* pdObj, HKEY hkeyProgID) {
+	try {
+		m_pSelection->SetObject(pdObj);      // Save the selection object reference for later
+	}
+	catch (TAssert utErr) {
+		utErr.Show();
+		return E_UNEXPECTED;
+	}
+	return NOERROR;
 }

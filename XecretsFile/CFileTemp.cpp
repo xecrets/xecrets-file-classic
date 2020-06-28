@@ -1,7 +1,7 @@
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -47,21 +47,21 @@ CFileTemp::New() {
 //
 CTempDir::~CTempDir() {
 	if (m_szDir[0]) {
-        DWORD dwLastError;
-        if (dwLastError = RemoveDir()) {
-            CMessage().SysMsg(dwLastError).AppMsg(WRN_DIR_NOT_EMPTY, m_szDir).ShowWarning(MB_OK);
-        }
+		DWORD dwLastError;
+		if (dwLastError = RemoveDir()) {
+			CMessage().SysMsg(dwLastError).AppMsg(WRN_DIR_NOT_EMPTY, m_szDir).ShowWarning(MB_OK);
+		}
 #ifdef NOTOBSOLETEAFTERALL
 		int i = 0;
 		while (!RemoveDirectory(GetDir())) {
 			switch (GetLastError()) {
-			// And of course Win 9x and 2K have different codes for the same thing...
+				// And of course Win 9x and 2K have different codes for the same thing...
 			case ERROR_PATH_NOT_FOUND:
 			case ERROR_FILE_NOT_FOUND:
 				return;
-			// For whatever reason, some apps seem to lock the temp-directory for deletion for a while after
-			// the app is actually exited. This is not critical here - all else is already release so we may
-			// well wait for these 10 seconds...
+				// For whatever reason, some apps seem to lock the temp-directory for deletion for a while after
+				// the app is actually exited. This is not critical here - all else is already release so we may
+				// well wait for these 10 seconds...
 			case ERROR_SHARING_VIOLATION:
 				if (i++ < 20) {	// 10 seconds...
 					Sleep(500);	// Some apps seem to need a little extra time to clean up..
@@ -92,7 +92,8 @@ CTempDir::New() {
 		SetDir(CStrPtr(m_szDrive) + CStrPtr(m_szDir) + CStrPtr(m_szWorkName));
 		if (CreateDirectory(Get(), NULL)) {
 			return *this;
-		} else {
+		}
+		else {
 			CAssert(GetLastError() == ERROR_ALREADY_EXISTS).Sys().Throw();
 		}
 	}
@@ -119,8 +120,8 @@ CTempDir::SetPath2TempDir() {
 //
 DWORD
 CTempDir::RemoveDir() {
-    // Lock reference to the current directory while we're operating with it.
-    CCriticalSection critCurDir(&gCurrentDirectoryCritical, TRUE);
+	// Lock reference to the current directory while we're operating with it.
+	CCriticalSection critCurDir(&gCurrentDirectoryCritical, TRUE);
 
 	return RmDir(GetDir());
 }
@@ -140,61 +141,63 @@ CTempDir::RmDir(LPCTSTR szDir) {
 	DWORD dwLen = GetCurrentDirectory(0, NULL);
 	CAssert(dwLen).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [GetCurrentDirectory(0)]")).Throw();
 	CPtrTo<TCHAR> szCurDir = new TCHAR[dwLen];	// Self-destructing pointer.
-    ASSPTR(szCurDir);
+	ASSPTR(szCurDir);
 
 	CAssert(GetCurrentDirectory(dwLen, szCurDir)).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [GetCurrentDirectory(szCurDir)]")).Throw();
 
 	DWORD dwReturn = 0;
-    // Fail silently if the directory just does not exist.
-    if (!SetCurrentDirectory(szDir)) {
-        // Win 95/98 and others use different error codes for the same thing...
-        CAssert((GetLastError() == ERROR_PATH_NOT_FOUND) || (GetLastError() == ERROR_FILE_NOT_FOUND)).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [SetCurrentDirectory(szDir)]")).Throw();
-        return GetLastError();
-    }
+	// Fail silently if the directory just does not exist.
+	if (!SetCurrentDirectory(szDir)) {
+		// Win 95/98 and others use different error codes for the same thing...
+		CAssert((GetLastError() == ERROR_PATH_NOT_FOUND) || (GetLastError() == ERROR_FILE_NOT_FOUND)).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [SetCurrentDirectory(szDir)]")).Throw();
+		return GetLastError();
+	}
 
-    int iRetry = 2;
-    bool fNeedRetry = false;
-    do {
-        fNeedRetry = false;
-        WIN32_FIND_DATA stFindData;
-	    CHFind hFindFile = FindFirstFile(_T("*.*"), &stFindData);	// Self-closing handle
-	    CAssert(hFindFile.IsValid()).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [FindFirstFile()]")).Throw();
+	int iRetry = 2;
+	bool fNeedRetry = false;
+	do {
+		fNeedRetry = false;
+		WIN32_FIND_DATA stFindData;
+		CHFind hFindFile = FindFirstFile(_T("*.*"), &stFindData);	// Self-closing handle
+		CAssert(hFindFile.IsValid()).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [FindFirstFile()]")).Throw();
 
-	    do {
-		    if (stFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-			    if (_tcscmp(stFindData.cFileName, _T(".")) && _tcscmp(stFindData.cFileName, _T(".."))) {
-				    dwReturn = dwReturn || RmDir(stFindData.cFileName);
-			    }
-		    } else {
-			    try {
-                    // Try to remove read-only attributes, if any, on files in the temp-directory.
-                    DWORD dwAttrib = GetFileAttributes(stFindData.cFileName);
-                    CAssert(dwAttrib != INVALID_FILE_ATTRIBUTES).Sys(MSG_SYSTEM_CALL, _T("CTempDir::RmDir() [GetFileAttributes]")).Throw();
-                    if ((dwAttrib & FILE_ATTRIBUTE_READONLY) != 0) {
-                        CAssert(SetFileAttributes(stFindData.cFileName, dwAttrib & ~FILE_ATTRIBUTE_READONLY)).Sys(MSG_SYSTEM_CALL, _T("CTempDir::RmDir() [SetFileAttributes]")).Throw();
-                    }
+		do {
+			if (stFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+				if (_tcscmp(stFindData.cFileName, _T(".")) && _tcscmp(stFindData.cFileName, _T(".."))) {
+					dwReturn = dwReturn || RmDir(stFindData.cFileName);
+				}
+			}
+			else {
+				try {
+					// Try to remove read-only attributes, if any, on files in the temp-directory.
+					DWORD dwAttrib = GetFileAttributes(stFindData.cFileName);
+					CAssert(dwAttrib != INVALID_FILE_ATTRIBUTES).Sys(MSG_SYSTEM_CALL, _T("CTempDir::RmDir() [GetFileAttributes]")).Throw();
+					if ((dwAttrib & FILE_ATTRIBUTE_READONLY) != 0) {
+						CAssert(SetFileAttributes(stFindData.cFileName, dwAttrib & ~FILE_ATTRIBUTE_READONLY)).Sys(MSG_SYSTEM_CALL, _T("CTempDir::RmDir() [SetFileAttributes]")).Throw();
+					}
 
-				    CFileIO utFile2Delete;
-				    utFile2Delete.Open(stFindData.cFileName, TRUE, GENERIC_READ|GENERIC_WRITE, 0);
-				    utFile2Delete.WipeTemp(NULL, m_nWipePasses);
-				    utFile2Delete.Close();
-			    } catch (TAssert utErr) {
-                    dwReturn = GetLastError();
-                    fNeedRetry = true;
-			    }
-		    }
-	    } while (FindNextFile(hFindFile, &stFindData));
-	    CAssert(GetLastError() == ERROR_NO_MORE_FILES).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [FindNextFile()]")).Throw();
-	    CAssert(hFindFile.Close()).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [hFindFile.Close()]")).Throw();
-        if (fNeedRetry) {
-            // It's an inexact science... Give the apps some time to let go of the files.
-            Sleep(100);
-        }
-    } while (fNeedRetry && --iRetry);
+					CFileIO utFile2Delete;
+					utFile2Delete.Open(stFindData.cFileName, TRUE, GENERIC_READ | GENERIC_WRITE, 0);
+					utFile2Delete.WipeTemp(NULL, m_nWipePasses);
+					utFile2Delete.Close();
+				}
+				catch (TAssert utErr) {
+					dwReturn = GetLastError();
+					fNeedRetry = true;
+				}
+			}
+		} while (FindNextFile(hFindFile, &stFindData));
+		CAssert(GetLastError() == ERROR_NO_MORE_FILES).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [FindNextFile()]")).Throw();
+		CAssert(hFindFile.Close()).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [hFindFile.Close()]")).Throw();
+		if (fNeedRetry) {
+			// It's an inexact science... Give the apps some time to let go of the files.
+			Sleep(100);
+		}
+	} while (fNeedRetry && --iRetry);
 
-    CAssert(SetCurrentDirectory(szCurDir)).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [SetCurrentDirectory(szCurDir)]")).Throw();
-    if (!RemoveDirectory(szDir)) {
-        dwReturn = GetLastError();
-    }
+	CAssert(SetCurrentDirectory(szCurDir)).Sys(MSG_SYSTEM_CALL, _T("CFileName::RmDir() [SetCurrentDirectory(szCurDir)]")).Throw();
+	if (!RemoveDirectory(szDir)) {
+		dwReturn = GetLastError();
+	}
 	return dwReturn;
 }

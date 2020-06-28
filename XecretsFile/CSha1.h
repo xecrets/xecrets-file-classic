@@ -1,9 +1,9 @@
 #ifndef	_CSHA1
 #define	_CSHA1
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -33,10 +33,10 @@ extern "C" {
 }
 
 class CSha1 {
-	SHA1_CTX *m_putContext;
+	SHA1_CTX* m_putContext;
 public:
 	CSha1();
 	~CSha1();
-	TKey *GetKeyHash(BYTE *poMsg, size_t iLen, TCHAR *szFileName = NULL);
+	TKey* GetKeyHash(BYTE* poMsg, size_t iLen, TCHAR* szFileName = NULL);
 };
 #endif	_CSHA1

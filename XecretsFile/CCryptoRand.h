@@ -1,9 +1,9 @@
 #ifndef	_CCRYPTORAND
 #define	_CCRYPTORAND
 /*
-    @(#) $Id$
+	@(#) $Id$
 
-	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001 Svante Seleborg/Axon Data, All rights reserved.
@@ -41,14 +41,14 @@ class CCryptoRand {
 public:
 	CCryptoRand();
 	~CCryptoRand();
-	CCryptoRand& Seed(void *pvXSeed, int iLen);
-	void RandomFill(void *vpBuf, DWORD dwLen);
+	CCryptoRand& Seed(void* pvXSeed, int iLen);
+	void RandomFill(void* vpBuf, DWORD dwLen);
 private:
 	BYTE m_aoEntropyPool[128];
 	unsigned int uiPoolIndex;
-	THash *m_putXKey;		// The next XKEY to use.
-	THash *m_putXSeed;		// The next XSEED to use.
+	THash* m_putXKey;		// The next XKEY to use.
+	THash* m_putXSeed;		// The next XSEED to use.
 	static DWORD m_dwInitKey[5];	// Initial XKEY used.
-	SHA1_CTX *m_putContext;
+	SHA1_CTX* m_putContext;
 };
 #endif _CCRYPTORAND
