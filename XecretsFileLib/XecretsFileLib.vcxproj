@@ -120,7 +120,7 @@
     <ClInclude Include="CXecretsFileAES.h" />
     <ClInclude Include="CXecretsFileLib.h" />
     <ClInclude Include="CXecretsFileLibMisc.h" />
-    <ClInclude Include="CAxCryptMeta.h" />
+    <ClInclude Include="CXecretsFileMeta.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

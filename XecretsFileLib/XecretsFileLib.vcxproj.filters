@@ -65,7 +65,7 @@
     <ClInclude Include="CXecretsFileLibMisc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAxCryptMeta.h">
+    <ClInclude Include="CXecretsFileMeta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">

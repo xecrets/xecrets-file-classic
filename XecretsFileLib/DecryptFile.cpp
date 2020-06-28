@@ -35,7 +35,7 @@
 
 #include "CXecretsFileLib.h"
 #include "BlockTypes.h"
-#include "CAxCryptMeta.h"
+#include "CXecretsFileMeta.h"
 #include "../AxPipe/CPipeFindSync.h"
 #include "../AxPipe/CPipeSHA1.h"
 #include "../AxPipe/CPipeHMAC_SHA1.h"
