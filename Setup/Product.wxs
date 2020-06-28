@@ -106,10 +106,10 @@
     <WixVariable Id="WixUILicenseRtf"
                  Value="$(var.Package.TargetDir)\License.rtf" />
 
-    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX"
+    <!--<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX"
               Value="1" />
     <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT"
-              Value="!(loc.Register)" />
+              Value="!(loc.Register)" />-->
     <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT"
               Value="!(loc.ExitDialogText)" />
 
