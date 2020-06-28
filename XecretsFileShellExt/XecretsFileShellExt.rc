@@ -9,7 +9,7 @@
 //
 #include "winresrc.h"
 
-#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE "AxCrypt Shell Extension"
+#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE "XecretsFile Shell Extension"
 #define VERSION_PROJECT_INTERNAL_NAME_VALUE "ShellExt"
 #define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE "ShellExt.dll"
 #define VERSION_PROJECT_FILETYPE VFT_DLL
@@ -146,7 +146,7 @@ END
 2 TEXTINCLUDE
 BEGIN
 "#include ""winresrc.h""\r\r\n"
-"#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""AxCrypt Shell Extension""\r\n"
+"#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""XecretsFile Shell Extension""\r\n"
 "#define VERSION_PROJECT_INTERNAL_NAME_VALUE ""ShellExt""\r\n"
 "#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE ""ShellExt.dll""\r\n"
 "#define VERSION_PROJECT_FILETYPE VFT_DLL\r\n"

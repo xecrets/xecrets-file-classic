@@ -2,9 +2,9 @@
 <WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
   <String Id="Copyright">Copyright © 2002-2014 Svante Seleborg, All Rights Reserved.</String>
   <String Id="CompanyName">Axantum Software AB</String>
-  <String Id="InternalName">axcrypt</String>
-  <String Id="ExternalName">AxCrypt</String>
-  <String Id="Description">AxCrypt File Encryption</String>
+  <String Id="InternalName">xecretsfile</String>
+  <String Id="ExternalName">XecretsFile</String>
+  <String Id="Description">Xecrets File Encryption</String>
   <String Id="Win95NotSupported">Windows 95 is not supported! Version 1.6.3 is the last to do so.</String>
   <String Id="Win98NotSupported">Windows 98 is not supported! Version 1.6.3 is the last to do so.</String>
   <String Id="WinMENotSupported">Windows ME is not supported! Version 1.6.3 is the last to do so.</String>
@@ -13,26 +13,26 @@
   <String Id="WinXPNotSupported">Windows XP is not supported! Version 1.7.3180 is the last to do so.</String>
   <String Id="Win2003NotSupported">Windows 2003 is not supported! Version 1.7.3180 is the last to do so.</String>
   <String Id="DoNotInstall32BitOn64Bit">This is a 32 bit MSI installer. You have 64-bit Windows. Get the MSI with 'x64' in the filename instead of 'Win32'.</String>
-  <String Id="MainExecutablesTitle">AxCrypt Program Files</String>
+  <String Id="MainExecutablesTitle">XecretsFile Program Files</String>
   <String Id="ShellExtensionTitle">Windows Right-Click Integration</String>
   <String Id="SelfDecryptionTitle">Self Decryption</String>
   <String Id="XecretsFile2GoTitle">XecretsFile2Go Portable Encryption and Decryption</String>
-  <String Id="ArpComments">AxCrypt File Encryption</String>
-  <String Id="FileTypeName">AxCrypt Encrypted File</String>
+  <String Id="ArpComments">XecretsFile File Encryption</String>
+  <String Id="FileTypeName">XecretsFile Encrypted File</String>
   <String Id="NoDowngrade">Newer or same version already installed! Please uninstall that version before proceeding. Be sure to reboot when asked to.</String>
-  <String Id="LegacyAxCrypt">You must uninstall the previous version of AxCrypt before proceeding. Be sure to reboot when asked to.</String>
+  <String Id="LegacyAxCrypt">You must uninstall the previous version before proceeding. Be sure to reboot when asked to.</String>
   <String Id="Register">Register</String>
   <String Id="DefaultLanguageId">1033</String>
   <String Id="RebootFirst">Please complete the currently pending reboot before proceeding.</String>
-  <String Id="UninstallAxCrypt">Uninstall AxCrypt</String>
-  <String Id="UninstallAxCryptDescription">Uninstalls AxCrypt</String>
+  <String Id="UninstallAxCrypt">Uninstall XecretsFile</String>
+  <String Id="UninstallAxCryptDescription">Uninstalls XecretsFile</String>
   <String Id="RegisterAxCrypt">My Registration Account</String>
   <String Id="RegisterAxCryptDescription">Modify or delete your registration account</String>
   <String Id="XecretsShortcut">Log On to Xecrets</String>
   <String Id="XecretsShortcutDescription">Log on to or create an account for secure on-line password storage</String>
   <String Id="ManualShortcut">Documentation</String>
-  <String Id="ManualShortcutDescription">Download the AxCrypt Manual as PDF</String>
+  <String Id="ManualShortcutDescription">Download the XecretsFile Manual as PDF</String>
   <String Id="HomePageShortcut">Home Page</String>
   <String Id="HomePageShortcutDescription">Browse to Axantum Home Page</String>
-  <String Id="ExitDialogText">QUICK START: To encrypt a file, right-click the file in Windows Explorer and select AxCrypt | Encrypt.</String>
+  <String Id="ExitDialogText">QUICK START: To encrypt a file, right-click the file in Windows Explorer and select XecretsFile | Encrypt.</String>
 </WixLocalization>

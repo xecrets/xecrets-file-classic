@@ -1,7 +1,7 @@
 #ifndef	_AXOEM
 #define	_AXOEM
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -25,7 +25,7 @@
 	Oem.h                           Name definitions etc
 */
 
-#define AXPRODUCTFILENAME L"AxCrypt"
+#define AXPRODUCTFILENAME L"XecretsFile"
 #define AXENCRYPTEDFILEEXT L".axx"
 
 #endif _AXOEM

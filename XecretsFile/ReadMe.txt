@@ -2,7 +2,7 @@
     WIN32 APPLICATION : XecretsFile Project Overview
 ========================================================================
 
-AppWizard has created this AxCrypt application for you.
+AppWizard has created this XecretsFile application for you.
 
 This file contains a summary of what you will find in each of the files that
 make up your XecretsFile application.

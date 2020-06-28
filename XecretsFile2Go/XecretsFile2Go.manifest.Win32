@@ -4,7 +4,7 @@
                  manifestVersion="1.0">
   <assemblyIdentity version="1.7.0.0"
                     processorArchitecture="x86"
-                    name="Axantum.AxCrypt.XecretsFile2Go"
+                    name="Axantum.XecretsFile.XecretsFile2Go"
                     type="win32" />
   <description>XecretsFile2Go - Portable Xecrets File Encryption</description>
 

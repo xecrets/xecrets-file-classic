@@ -1,7 +1,7 @@
 #ifndef	_UTILITY
 #define	_UTILITY
 /*
-    @(#) $Id$
+	@(#) $Id$
 
 	Ax Crypt - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
@@ -48,21 +48,21 @@
 //
 #pragma warning(disable: 4284)
 template<class T> class CPtrTo {
-    T *m_p;
+	T* m_p;
 public:
-    CPtrTo() { m_p = NULL/*new T*/; }
-	CPtrTo(T *p) { m_p = p; }
-    ~CPtrTo() { if (m_p != NULL) delete m_p; }
-	CPtrTo<T>& operator=(T *p) {
-        if (m_p) delete m_p;
+	CPtrTo() { m_p = NULL/*new T*/; }
+	CPtrTo(T* p) { m_p = p; }
+	~CPtrTo() { if (m_p != NULL) delete m_p; }
+	CPtrTo<T>& operator=(T* p) {
+		if (m_p) delete m_p;
 		m_p = p;
 		return *this;
 	}
-    CPtrTo<T>& operator=(T& p) { *this = (T *)p; }
-    T** operator&() { return &m_p; }
-    operator T*() { return m_p; }
-    T* operator ->() { return m_p; }
-    T* rel() { T *p = m_p; m_p = NULL; }
+	CPtrTo<T>& operator=(T& p) { *this = (T*)p; }
+	T** operator&() { return &m_p; }
+	operator T* () { return m_p; }
+	T* operator ->() { return m_p; }
+	T* rel() { T* p = m_p; m_p = NULL; }
 };
 #pragma warning(default: 4284)
 //
@@ -77,7 +77,7 @@ public:
 //		Name of return type from close handle,
 //		Address of close handle function.
 //
-template<class T, class CloseT, CloseT (_stdcall * CloseFunc)(T)> class THandle {
+template<class T, class CloseT, CloseT(_stdcall* CloseFunc)(T)> class THandle {
 	T m_h;
 public:
 	THandle() {
@@ -92,7 +92,7 @@ public:
 		return *this;
 	}
 	operator T() { return m_h; }
-    T *operator &() { return &m_h; }
+	T* operator &() { return &m_h; }
 	CloseT Close() {
 		T h = m_h;
 		m_h = T(-1);
@@ -103,17 +103,17 @@ public:
 
 /// \brief A super-minimal helper class to handle auto-deletion of pointers to arrays.
 template<class T> class CAutoArray {
-    T* m_pa;
+	T* m_pa;
 public:
-    CAutoArray(T* p) {
-        m_pa = p;
-    }
-    ~CAutoArray() {
-        delete[] m_pa;
-    }
-    T * Get() {
-        return m_pa;
-    }
+	CAutoArray(T* p) {
+		m_pa = p;
+	}
+	~CAutoArray() {
+		delete[] m_pa;
+	}
+	T* Get() {
+		return m_pa;
+	}
 };
 //
 //	Now define common handles as safe classes.
@@ -133,13 +133,13 @@ typedef class THandle<HWND, BOOL, &DestroyWindow> CHWnd;
 //
 class CCriticalSection {
 private:
-	CRITICAL_SECTION *m_pCriticalSection;
+	CRITICAL_SECTION* m_pCriticalSection;
 	BOOL m_fIsIn;
 public:
-	CCriticalSection(CRITICAL_SECTION *pCritSect, BOOL fStartState = FALSE) {
+	CCriticalSection(CRITICAL_SECTION* pCritSect, BOOL fStartState = FALSE) {
 		m_pCriticalSection = pCritSect;
-        if (fStartState) Enter();
-        m_fIsIn = fStartState;
+		if (fStartState) Enter();
+		m_fIsIn = fStartState;
 	}
 	~CCriticalSection() {
 		if (m_fIsIn) {
@@ -159,8 +159,8 @@ public:
 //	Simple helper to XOR two memory blocks to a third.
 //
 inline void
-XorMemory(void *dst, void *src1, void *src2, int len) {
-	while (len--) *((char *&)(dst))++ = *((char *&)src1)++ ^ *((char *&)src2)++;
+XorMemory(void* dst, void* src1, void* src2, int len) {
+	while (len--) *((char*&)(dst))++ = *((char*&)src1)++ ^ *((char*&)src2)++;
 }
 //
 // This little sucker is a workaround for SetForegroundWindow that MS broke in 98/2K
@@ -168,16 +168,16 @@ XorMemory(void *dst, void *src1, void *src2, int len) {
 inline void
 MySetForegroundWindow(void) {
 #ifdef _DEBUG
-    if (GetForegroundWindow() == NULL) {
-        MessageBox(NULL, _T("No foreground window!"), _T("AxCrypt Debug"), MB_OK);
-    }
+	if (GetForegroundWindow() == NULL) {
+		MessageBox(NULL, _T("No foreground window!"), _T("XecretsFile Debug"), MB_OK);
+	}
 #else
 #endif
-    CHWnd hWnd = CreateWindow(_T("STATIC"), _T(""), WS_POPUP, 0, 0, 0, 0, GetForegroundWindow(), NULL, GetModuleHandle(NULL), NULL);
+	CHWnd hWnd = CreateWindow(_T("STATIC"), _T(""), WS_POPUP, 0, 0, 0, 0, GetForegroundWindow(), NULL, GetModuleHandle(NULL), NULL);
 	ShowWindow(hWnd, SW_NORMAL);
 	SetFocus(hWnd);
 	UpdateWindow(hWnd);
-    DestroyWindow(hWnd);    // 2002-07-22 /SS - remove if problems
+	DestroyWindow(hWnd);    // 2002-07-22 /SS - remove if problems
 }
 
 //
@@ -186,9 +186,9 @@ MySetForegroundWindow(void) {
 extern LPTSTR CopySz(LPCTSTR szSrc);
 extern LPTSTR FormatSz(LPCTSTR szFormat, ...);
 
-extern LPITEMIDLIST CopyPidl(IMalloc *pMalloc, LPCITEMIDLIST pidl);
-extern WCHAR *CopySzWz(LPCSTR szIn);
-extern LPSTR CopyWzSz(WCHAR *wzIn);
+extern LPITEMIDLIST CopyPidl(IMalloc* pMalloc, LPCITEMIDLIST pidl);
+extern WCHAR* CopySzWz(LPCSTR szIn);
+extern LPSTR CopyWzSz(WCHAR* wzIn);
 
 extern void DebugBox(LPTSTR szMsg);
 extern HWND ForegroundWait(HWND hWnd, unsigned int iTimeOut);

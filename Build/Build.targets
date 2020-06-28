@@ -16,7 +16,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Win32</Platform>
     <OutputPlatformName Condition=" '$(OutputPlatformName)' == '' ">$(Platform)</OutputPlatformName>
-    <OutputName Condition=" '$(OutputName)' == '' ">AxCrypt</OutputName>
+    <OutputName Condition=" '$(OutputName)' == '' ">XecretsFile</OutputName>
     <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'x64' ">x64\$(Configuration)\</AxPlatformConfigurationDir>
     <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'Win32' ">$(Configuration)\</AxPlatformConfigurationDir>
     <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'x86' ">$(Configuration)\</AxPlatformConfigurationDir>
@@ -39,7 +39,7 @@
 
   <!-- Common string version resources go here. -->
   <PropertyGroup>
-    <ProductName>AxCrypt</ProductName>
+    <ProductName>XecretsFile</ProductName>
     <CompanyName>Axantum Software AB</CompanyName>
     <Copyright>Copyright \251 2002-2014 Svante Seleborg</Copyright>
     <Trademark>All Rights Reserved</Trademark>

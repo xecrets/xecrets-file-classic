@@ -11,16 +11,16 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <!-- Change the UpgradeCode when the major version changes, i.e. it's essentially a new product. -->
   <Product Id="*"
-           Name="AxCrypt $(var.Version)"
+           Name="XecretsFile $(var.Version)"
            Language="1033"
            Version="$(var.Version)"
            Manufacturer="Axantum Software AB"
            UpgradeCode="$(var.UpgradeCode)">
     <?define AxCryptCLSID="{C3DFC144-30F8-4138-81F9-578DBEB9324A}" ?>
     <?define AxCryptExtension=".axx" ?>
-    <?define AxCryptInternalName="axcrypt" ?>
-    <?define AxCryptExternalName="AxCrypt" ?>
-    <?define AxCryptProgID="axcrypt.File" ?>
+    <?define AxCryptInternalName="xecretsfile" ?>
+    <?define AxCryptExternalName="XecretsFile" ?>
+    <?define AxCryptProgID="xecretsfile.File" ?>
     <?define AxCryptRegKey="Software\Axantum\AxCrypt" ?>
 
     <Package InstallerVersion="200"
@@ -99,7 +99,7 @@
 
     <CustomAction Id="LaunchApplication"
                   Return="asyncNoWait"
-                  FileKey="AxCrypt.exe"
+                  FileKey="XecretsFile.exe"
                   ExeCommand="-L $(var.Version)"
                   Impersonate="yes" />
 
@@ -411,7 +411,7 @@
     </UI>
 
     <Media Id="1"
-           Cabinet="AxCrypt.cab"
+           Cabinet="XecretsFile.cab"
            EmbedCab="yes" />
 
     <?if $(var.Platform) = "x64" ?>
@@ -489,17 +489,17 @@
         <Directory Id="CompanyDir"
                    Name="Axantum">
           <Directory Id="APPLICATIONFOLDER"
-                     Name="AxCrypt" />
+                     Name="XecretsFile" />
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
         <Directory Id="AxantumProgramMenu"
-                   Name="Axantum AxCrypt" />
+                   Name="Axantum XecretsFile" />
       </Directory>
     </Directory>
 
     <Property Id="ApplicationFolderName"
-              Value="Axantum\AxCrypt" />
+              Value="Axantum\XecretsFile" />
     <!--<Property Id="WixAppFolder" Value="WixPerMachineFolder" />-->
 
     <DirectoryRef Id="CompanyDir">
@@ -511,12 +511,12 @@
     </DirectoryRef>
 
     <DirectoryRef Id="APPLICATIONFOLDER">
-      <Component Id="AxCrypt.exe"
+      <Component Id="XecretsFile.exe"
                  Guid="*"
                  DiskId="1">
-        <File Id="AxCrypt.exe"
-              Name="AxCrypt.exe"
-              Source="$(var.Package.TargetDir)\AxCrypt.exe"
+        <File Id="XecretsFile.exe"
+              Name="XecretsFile.exe"
+              Source="$(var.Package.TargetDir)\XecretsFile.exe"
               KeyPath="yes"
               Checksum="yes" />
       </Component>
@@ -721,7 +721,7 @@
                      Key="$(var.AxCryptProgID)\DefaultIcon"
                      ForceDeleteOnUninstall="yes">
           <RegistryValue Type="string"
-                         Value="[APPLICATIONFOLDER]AxCrypt.exe,0" />
+                         Value="[APPLICATIONFOLDER]XecretsFile.exe,0" />
         </RegistryKey>
         <RegistryKey Root="HKCR"
                      Key="$(var.AxCryptProgID)\shellex\PropertySheetHandlers\$(var.AxCryptCLSID)"
@@ -731,7 +731,7 @@
                      Key="$(var.AxCryptProgID)\shell\open\command"
                      ForceDeleteOnUninstall="yes">
           <RegistryValue Type="string"
-                         Value="&quot;[APPLICATIONFOLDER]AxCrypt.exe&quot; &quot;%1&quot;" />
+                         Value="&quot;[APPLICATIONFOLDER]XecretsFile.exe&quot; &quot;%1&quot;" />
         </RegistryKey>
       </Component>
 
@@ -822,7 +822,7 @@
     <Feature Id="MainExecutables"
              Title="!(loc.MainExecutablesTitle)"
              Level="1">
-      <ComponentRef Id="AxCrypt.exe" />
+      <ComponentRef Id="XecretsFile.exe" />
       <ComponentRef Id="Messages.dll" />
       <ComponentRef Id="Config.xml" />
       <ComponentRef Id="Sigs.xml" />
@@ -839,7 +839,7 @@
     <Feature Id="ShellExtension"
              Title="!(loc.ShellExtensionTitle)"
              Level="1">
-      <ComponentRef Id="AxCrypt.exe" />
+      <ComponentRef Id="XecretsFile.exe" />
       <ComponentRef Id="Messages.dll" />
       <ComponentRef Id="ShellExt.dll" />
       <ComponentRef Id="Config.xml" />
