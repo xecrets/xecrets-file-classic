@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <_AxPrivateBuildPath>..\..\axcrypt-private\Private\</_AxPrivateBuildPath>
+    <_AxPrivateBuildPath>..\..\xecrest-file-private\Private\</_AxPrivateBuildPath>
     <_AxPrivateBuildTargetsPath>$(_AxPrivateBuildPath)Private.targets</_AxPrivateBuildTargetsPath>
   </PropertyGroup>
 
