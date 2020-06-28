@@ -592,7 +592,7 @@ PrimaryInitApplication(HINSTANCE hInstance) {
 	wcx.hInstance = hInstance;          // handle of instance
 	wcx.hIcon = (HICON)LoadImage(
 		hInstance,
-		MAKEINTRESOURCE(IDI_AXCRYPT),
+		MAKEINTRESOURCE(IDI_XECRETSFILE),
 		IMAGE_ICON,
 		GetSystemMetrics(SM_CXICON),
 		GetSystemMetrics(SM_CYICON),
@@ -603,7 +603,7 @@ PrimaryInitApplication(HINSTANCE hInstance) {
 		WHITE_BRUSH);                   // white background brush
 	wcx.lpszClassName = gszAxCryptInternalName; // name of window class
 	wcx.hIconSm = (HICON)LoadImage(hInstance,
-		MAKEINTRESOURCE(IDI_AXCRYPT),
+		MAKEINTRESOURCE(IDI_XECRETSFILE),
 		IMAGE_ICON,
 		GetSystemMetrics(SM_CXSMICON),
 		GetSystemMetrics(SM_CYSMICON),

@@ -28,7 +28,7 @@
     <None Include="Sigs.xml">
       <Filter>AxCryptConfig</Filter>
     </None>
-    <None Include="AxCrypt.ico">
+    <None Include="XecretsFile.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Sigs.template.xml">

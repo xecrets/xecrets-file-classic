@@ -148,7 +148,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)$(TargetName)$(TargetExt)</Outputs>
     </ClInclude>
     <None Include="..\Build.cmd" />
-    <None Include="AxCrypt.ico" />
+    <None Include="XecretsFile.ico" />
     <None Include="Build.targets">
       <SubType>Designer</SubType>
     </None>

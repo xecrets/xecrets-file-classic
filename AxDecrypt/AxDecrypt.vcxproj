@@ -137,7 +137,7 @@
     <ResourceCompile Include="AxDecrypt.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Build\AxCrypt.ico" />
+    <None Include="..\Build\XecretsFile.ico" />
     <None Include="AxDecrypt.manifest.Win32">
       <SubType>Designer</SubType>
     </None>

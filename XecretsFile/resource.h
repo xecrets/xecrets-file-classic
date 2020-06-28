@@ -14,7 +14,7 @@
 #define IDD_PASSPHRASE                  124
 #define IDD_OLD2PASSPHRASE              125
 #define IDI_ICON1                       130
-#define IDI_AXCRYPT                     130
+#define IDI_XECRETSFILE                 130
 #define IDD_REGISTRATION                132
 #define IDC_PASSPHRASE                  1000
 #define IDC_NEWPASSPHRASE1              1001
@@ -46,7 +46,7 @@
 #define IDC_REGISTRATIONPROMPT          -1
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

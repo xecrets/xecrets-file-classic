@@ -178,7 +178,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_AXCRYPT             ICON                    "..\\Build\\AxCrypt.ico"
+IDI_XECRETSFILE         ICON                    "..\\Build\\XecretsFile.ico"
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -426,9 +426,9 @@
     <Property Id="ARPURLINFOABOUT">http://www.axantum.com</Property>
     <Property Id="ARPURLUPDATEINFO">http://www.axantum.com</Property>
     <Property Id="ARPHELPTELEPHONE">http://www.axantum.com</Property>
-    <Icon Id="axcrypt.ico"
-          SourceFile="..\Build\AxCrypt.ico" />
-    <Property Id="ARPPRODUCTICON">axcrypt.ico</Property>
+    <Icon Id="xecretsfile.ico"
+          SourceFile="..\Build\XecretsFile.ico" />
+    <Property Id="ARPPRODUCTICON">xecretsfile.ico</Property>
 
     <CustomAction Id="SetReadmePath"
                   Property="ARPREADME"
