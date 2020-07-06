@@ -26,10 +26,10 @@
     <_AxVersionFilePath>$(MSBuildThisFileDirectory)Version.txt</_AxVersionFilePath>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <_AxPrivateBuildPath>..\..\xecrets-file-private\Private\</_AxPrivateBuildPath>
-    <_AxPrivateBuildTargetsPath>$(_AxPrivateBuildPath)Private.targets</_AxPrivateBuildTargetsPath>
-  </PropertyGroup>
+    <PropertyGroup>
+        <_AxPrivateBuildPath>..\..\xecrets-file-private\Private\</_AxPrivateBuildPath>
+        <_AxPrivateBuildTargetsPath>$(_AxPrivateBuildPath)Private.targets</_AxPrivateBuildTargetsPath>
+    </PropertyGroup>
 
   <!-- A GPL build is different, due to code signing and other issues. We do not distribute our private key in the GPL obviously for example -->
   <PropertyGroup>
