@@ -8,3 +8,5 @@ bin
 /AxCrypt/AxCrypt.vcxproj.user
 /Build/Version.txt
 /AxCrypt2Go/AxCrypt2Go.vcxproj.user
+*.user
+*.aps
