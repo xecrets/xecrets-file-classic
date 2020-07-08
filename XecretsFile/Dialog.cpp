@@ -470,7 +470,7 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
 	case WM_INITDIALOG:
 		pDlgInfo = (SDlgInfo*)lParam;
 
-		SetDlgItemText(hwndDlg, IDC_HOMEPAGE, CMessage().AppMsg(IDC_HOMEPAGE_HYPERLINK).GetMsg());
+		SetDlgItemText(hwndDlg, IDC_HOMEPAGE, CMessage().AppMsg(INF_HOMEPAGE_HYPERLINK).GetMsg());
 		awl::IStaticHyperlink::GetInstance().EnableHyperlink(GetDlgItem(hwndDlg, IDC_HOMEPAGE));
 
 		(void)SetWindowLongPtr(hwndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
@@ -661,7 +661,7 @@ INT_PTR CALLBACK PassphraseDlgProc(
 	case WM_INITDIALOG:
 		pDlgInfo = (SDlgInfo*)lParam;
 
-		SetDlgItemText(hwndDlg, IDC_HOMEPAGE, CMessage().AppMsg(IDC_HOMEPAGE_HYPERLINK).GetMsg());
+		SetDlgItemText(hwndDlg, IDC_HOMEPAGE, CMessage().AppMsg(INF_HOMEPAGE_HYPERLINK).GetMsg());
 		awl::IStaticHyperlink::GetInstance().EnableHyperlink(GetDlgItem(hwndDlg, IDC_HOMEPAGE));
 
 		(void)SetWindowLongPtr(hwndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
