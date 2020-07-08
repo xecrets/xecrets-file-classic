@@ -466,8 +466,8 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
 	case WM_INITDIALOG:
         pDlgInfo = (SDlgInfo *)lParam;
 
-        SetDlgItemText(hwndDlg, IDC_TRYXECRETS, CMessage().AppMsg(INF_XECRETS_HYPERLINK).GetMsg());
-        awl::IStaticHyperlink::GetInstance().EnableHyperlink(GetDlgItem(hwndDlg, IDC_TRYXECRETS));
+        SetDlgItemText(hwndDlg, IDC_HOMEPAGE, CMessage().AppMsg(INF_HOMEPAGE_HYPERLINK).GetMsg());
+        awl::IStaticHyperlink::GetInstance().EnableHyperlink(GetDlgItem(hwndDlg, IDC_HOMEPAGE));
 
         (void)SetWindowLongPtr(hwndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
 
@@ -572,7 +572,7 @@ INT_PTR CALLBACK NewPassphraseDlgProc(
             }
         }
             break;
-        case IDC_TRYXECRETS:
+        case IDC_HOMEPAGE:
             ::ShellExecute(hwndDlg, L"open", gszXecretsUrl, NULL, NULL, SW_SHOWNORMAL);
             break;
 		case IDOK:
@@ -655,8 +655,8 @@ INT_PTR CALLBACK PassphraseDlgProc(
 	case WM_INITDIALOG:
         pDlgInfo = (SDlgInfo *)lParam;
 
-        SetDlgItemText(hwndDlg, IDC_TRYXECRETS, CMessage().AppMsg(INF_XECRETS_HYPERLINK).GetMsg());
-        awl::IStaticHyperlink::GetInstance().EnableHyperlink(GetDlgItem(hwndDlg, IDC_TRYXECRETS));
+        SetDlgItemText(hwndDlg, IDC_HOMEPAGE, CMessage().AppMsg(INF_HOMEPAGE_HYPERLINK).GetMsg());
+        awl::IStaticHyperlink::GetInstance().EnableHyperlink(GetDlgItem(hwndDlg, IDC_HOMEPAGE));
 
         (void)SetWindowLongPtr(hwndDlg, GWLP_USERDATA, (LONG_PTR)lParam);
 
@@ -736,7 +736,7 @@ INT_PTR CALLBACK PassphraseDlgProc(
                 SetDlgItemText(hwndDlg, IDS_KEYFILENAME, pDlgInfo->szKeyFileName.get());
             }
             break;
-        case IDC_TRYXECRETS:
+        case IDC_HOMEPAGE:
             ::ShellExecute(hwndDlg, L"open", gszXecretsUrl, NULL, NULL, SW_SHOWNORMAL);
             break;
 		case IDOK:

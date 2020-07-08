@@ -41,7 +41,7 @@
 #define IDC_ENTER_REGISTRATION          1026
 #define IDC_ENTERREGISTRATION           1026
 #define IDC_REGISTRATIONEMAIL           1027
-#define IDC_TRYXECRETS                  1030
+#define IDC_HOMEPAGE                  1030
 #define IDC_STATIC                      -1
 #define IDC_REGISTRATIONPROMPT          -1
 
