@@ -1,3 +1,13 @@
+1.7.3233 Release 2020-07-08
+Update to Visual Studio 2019, and some fixes as a result of that. Also
+some changes in URLs and texts due to separation of AxCrypt 1.x/2.x
+and a future name change due to trademark restrictions. Update third
+party libraries.
+
+1.7.3201 Release 2018-06-11
+Update to Visual Studio 2019, and some fixes as a result of that.
+Fix some obsolete warnings, update third party libraries.
+
 1.7.3180 Release 2016-07-04
 Remove OpenCandy since it is discontinued. Update to Visual Studio 2015,
 and some fixes as a result of new compiler warnings etc. Use SHA256
