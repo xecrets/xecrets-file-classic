@@ -1,3 +1,9 @@
+1.7.3233.0 Release 2020-07-08
+- Chg: Upgrade tooling to VS 2019.
+- Chg: Upgrade Crypto++ to 8.2.
+- Chg: Upgrade WTL to 10.10077.
+- Chg: Updates to reflect separation of AxCrypt 2.x etc w/1.x
+
 1.7.3201.0 Release 2018-06-11
 - Chg: Upgrade tooling to VS 2017.
 - Chg: Upgrade Crypto++ to 7.0.
