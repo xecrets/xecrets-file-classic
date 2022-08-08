@@ -1,3 +1,7 @@
+1.7.3234 Release 2022-08-08
+Update to Visual Studio 2022 and build with Crypto++ 8.7, zlib 1.2.12
+and WTL 10.10320. Change name to Xecrets File Encryption 1.7.x .
+
 1.7.3233 Release 2020-07-08
 Update to Visual Studio 2019, and some fixes as a result of that. Also
 some changes in URLs and texts due to separation of AxCrypt 1.x/2.x

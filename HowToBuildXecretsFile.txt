@@ -1,7 +1,7 @@
 How to build Xecrets File Encryption
 
 This is the file encryption software previously known as AxCrypt 1.x.
-["AxCrypt" is now a trademark of AxCrypt AB. Xecrets File Encryption is in no way endorsed by, or connected except by history to, AxCrypt AB or their products.]
+["AxCrypt" is now a EU trademark of AxCrypt AB. Xecrets File Encryption is in no way endorsed by, or connected except by history to, AxCrypt AB or their products.]
 
 Introduction
 ============
@@ -20,8 +20,8 @@ requirements. This list may be incomplete, please let me know if this is the cas
   
 - Build the Win32 configuration first, since the x64 configuration depends on it.
   
-- Xecrets File Encryption is developed with Visual Studio 2019 Professional. It should be possible to build Xecrets File Encryption entirely
-  with free tools (Visual Studio 2019 Community and/or MSBuild).
+- Xecrets File Encryption is developed with Visual Studio 2022 Professional. It should be possible to build Xecrets File Encryption entirely
+  with free tools (Visual Studio 2022 Community and/or MSBuild).
 
 - There are some special tweaks to handle the different build environments for Xecrets File Encryption, such as GPL Builds, Axantum developer builds and
   Axantum build server builds. This is why you'll find some conditional code in various MSBuild project files.
@@ -34,12 +34,12 @@ Tools and Dependencies Installation
 
 Executive summary (details in respective section below):
 
-- Install, set AX_CRYPTOPP=install-path and build Crypto++ 8.2.0 (or later at your own risk)
-- Install, set AX_ZLIB=install-path and build zlib 1.2.11 (or later at your own risk)
-- Install WTL 10.0.10077 and set AX_WTL=Install-path (or later at your own risk)
-- Install Microsoft Visual Studio 2019 Community Edition or Microsoft Visual Studio 2019 Professional Edition or better.
+- Install, set AX_CRYPTOPP=install-path and build Crypto++ 8.7.0 (or later at your own risk)
+- Install, set AX_ZLIB=install-path and build zlib 1.2.12 (or later at your own risk)
+- Install WTL 10.0.10320 and set AX_WTL=Install-path (or later at your own risk)
+- Install Microsoft Visual Studio 2022 Community Edition or Microsoft Visual Studio 2022 Professional Edition or better.
 - Install Windows Installer XML (WiX) toolset v3.11.2 (or later at your own risk)
-- Start Visual Studio 2019, open the Xecrets File Encryption solution, and build.
+- Start Visual Studio 2022, open the Xecrets File Encryption solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
 
@@ -61,18 +61,18 @@ Build Server: "C:\Lib\[CONTRIBUTION]"
 Crypto++
 ========
 
-Download Crypto++ Library 8.2.0 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
+Download Crypto++ Library 8.7.0 (or possibly later at your own risk) from http://www.cryptopp.com, unpack the zip-file.
 
 Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp820" .
 You may need to restart Windows Explorer for the setting to take effect.
 
-Open x64_x86 Cross Tools Command Prompt for VS 2019 (on X64 build host)
+Open x64_x86 Cross Tools Command Prompt for VS 2022 (on X64 build host)
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open x64 Native Tools Command Prompt for VS 2019 (on X64 build host)
+Open x64 Native Tools Command Prompt for VS 2022 (on X64 build host)
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
@@ -81,44 +81,52 @@ msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
 zlib
 ====
 
-Download zlib 1.2.11 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
+Download zlib 1.2.12 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
 
 Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.11" .
 You may need to restart Windows Explorer for the setting to take effect.
 
 Due to a bug in zlibstat.vcxproj:
 
-Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio 2019, Upgrade to toolset v142 and SDK 10.0.18362.0 (or later at your own risk).
+Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio 2022, Upgrade to toolset v143 and SDK 10.0.19041.0 (or later at your own risk).
 
 Change 'zlibstat'
 
 Properties | C/C++ | Code Generation | Runtime Library:
 
-[Configuration Debug and All Platforms]
+[Configuration Debug for both Win32 and x64]
 "Multi-threaded Debug (/MTd)"
 
-[Configuration ReleaseWithoutAsm and All Platforms (Win32 is actually ok in 1.2.11)]
+[Configuration ReleaseWithoutAsm and x64 (Win32 is actually ok in 1.2.11)]
 "Multi-threaded (/MT)"
 
 Librarian | All Options | Additional Options
 
-[All Configurations and All Platforms]
+[All Configurations for Win32 and x64]
 (Empty)
 
 Librarian | General | Target Machine
 
 [All Configurations and Win32]
-MachineX86 (/MACHINE:X86)
+MachineX86 (/MACHINE:X86) (Is actually ok in 1.2.12 apparently)
+
+Edit crc32.c to avoid three errors due to VSC++ being more and more picky for each generation
+
+Line 1089:    return crc32_combine64(crc1, crc2, (z_off64_t)len2);
+Line 1106:    return crc32_combine_gen64((z_off64_t)len2);
+Line 1110: ZEXTERN uLong ZEXPORT crc32_combine_op(crc1, crc2, op)
+
+Exclude inffas8664.c from the zlibstat project, it doesn't exist any more
 
 Save the solution and project!
 
-Open x64 x86 Cross Tools Command Prompt for VS 2017 (on X64 build host)
+Open x64 x86 Cross Tools Command Prompt for VS 2022 (on X64 build host)
 
 cd %AX_ZLIB%\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm;Platform=Win32
 
-Open x64 Native Tools Command Prompt for VS 2017 (on X64 build host)
+Open x64 Native Tools Command Prompt for VS 2022 (on X64 build host)
 
 cd %AX_ZLIB%\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
@@ -127,18 +135,18 @@ msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm;Platform=x64
 WTL
 ===
 
-Download WTL 10.0.10077 (or possibly later at your own risk) from https://sourceforge.net/projects/wtl/files/ .
+Download WTL 10.0.10320 (or possibly later at your own risk) from https://sourceforge.net/projects/wtl/files/ .
 
-Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL10_10077" .
+Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL10_10320_Release" .
 You may need to restart Windows Explorer for the setting to take effect.
 
 WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is currently included
-in Visual Studio 2019 all versions, but if not you can get it via the Windows Driver Kit. See more below.
+in Visual Studio 2022 all versions, but if not you can get it via the Windows Driver Kit. See more below.
 
 ATL
 ===
 
-ATL is part of Visual Studio 2019 Professional and Visual Studio 2019 Community Edition. No further action is needed, although you may
+ATL is part of Visual Studio 2022 Professional and Visual Studio 2022 Community Edition. No further action is needed, although you may
 need to add it as an optional component in the Visual Studio installer.
 
 Otherwise...
@@ -149,6 +157,12 @@ MSBuild.Community.Tasks
 =======================
 
 The build process is dependent on a few extensions to MSBuild. It is included via a nuget package.
+
+Visual Studio 2019 Community and Professional
+=============================================
+
+It was possible to build with Visual Studio 2019, but we have not regression tested this after upgrading to 2022. You'll probably have
+to change toolset and target SDK. Possibly more.
 
 Visual Studio 2017 Community and Professional
 =============================================

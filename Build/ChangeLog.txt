@@ -1,3 +1,9 @@
+1.7.3234.0 Release 2022-08-08
+- Chg: Upgrade tooling to VS 2022.
+- Chg: Upgrade Crypto++ to 8.7.
+- Chg: Upgrade Zlib to 1.2.12.
+- Chg: Upgrade WTL to 10.10320.
+
 1.7.3233.0 Release 2020-07-08
 - Chg: Upgrade tooling to VS 2019.
 - Chg: Upgrade Crypto++ to 8.2.
