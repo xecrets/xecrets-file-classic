@@ -13,7 +13,7 @@
 		not divide conveniently into a few bytes this gets a bit more complicated than for
 		example base 8, base 16 or for that matter base 64.
 
-	Copyright (C) 2005-2020 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2005-2022 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

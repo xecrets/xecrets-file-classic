@@ -12,7 +12,7 @@
 	The definition of these control the encoding along with the AnyBase and BitPrecision
 	parameters.
 
-	Copyright (C) 2005-2020 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2005-2022 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

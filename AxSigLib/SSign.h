@@ -7,7 +7,7 @@
 
 	The SECDSA Signer
 
-	Copyright (C) 2001-2020 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2001-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
 
 	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
 ---

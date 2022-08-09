@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
-  <String Id="Copyright">Copyright © 2002-2020 Svante Seleborg, All Rights Reserved.</String>
+  <String Id="Copyright">Copyright © 2002-2022 Svante Seleborg, All Rights Reserved.</String>
   <String Id="CompanyName">Axantum Software AB</String>
   <String Id="InternalName">xecretsfile</String>
   <String Id="ExternalName">XecretsFile</String>

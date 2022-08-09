@@ -5,7 +5,7 @@
 
 	OpenCloseParam.cpp - Open and Close the XecretsFileLib parameter block
 
-	Copyright (C) 2005-2020 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2005-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

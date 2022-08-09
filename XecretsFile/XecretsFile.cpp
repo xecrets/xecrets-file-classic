@@ -4,7 +4,7 @@
 	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
-	Copyright (C) 2002-2020 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2002-2022 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

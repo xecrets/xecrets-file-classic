@@ -6,7 +6,7 @@
 	Decode Base34 strings. These are strings using A-N, P-Z, 1-9 as their digits,
 	valued in that sequence, i.e. A is zero, 9 is thirty-two.
 
-	Copyright (C) 2005-2020 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2005-2022 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

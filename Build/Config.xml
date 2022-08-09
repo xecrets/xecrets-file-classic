@@ -1,6 +1,6 @@
 <Configuration>
   <Self File="XecretsFile.exe" />
-  <Copyright>Copyright © 2002-2020 Svante Seleborg, All Rights Reserved.</Copyright>
+  <Copyright>Copyright © 2002-2022 Svante Seleborg, All Rights Reserved.</Copyright>
   <CompanyName>Axantum Software AB</CompanyName>
   <InternalName>xecretsfile</InternalName>
   <ExternalName>GPL XecretsFile</ExternalName>
