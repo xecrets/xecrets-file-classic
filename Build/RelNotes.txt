@@ -1,4 +1,4 @@
-1.7.3234 Release 2022-08-08
+1.7.3235 Release 2022-08-09
 Update to Visual Studio 2022 and build with Crypto++ 8.7, zlib 1.2.12
 and WTL 10.10320. Change name to Xecrets File Encryption 1.7.x .
 
