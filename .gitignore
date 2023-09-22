@@ -8,3 +8,4 @@ bin
 /Build/Version.txt
 *.user
 *.aps
+/Setup/HeatWaveConvert.log

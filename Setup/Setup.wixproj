@@ -1,17 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project Sdk="WixToolset.Sdk/4.0.2">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.0</ProductVersion>
-    <ProjectGuid>{849f9898-b773-4fb9-a0c7-359cebb5d330}</ProjectGuid>
-    <SchemaVersion>2.0</SchemaVersion>
     <OutputName>XecretsFile</OutputName>
-    <OutputType>Package</OutputType>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
-    <SpecialBuildSuffix>
-    </SpecialBuildSuffix>
+    <SpecialBuildSuffix></SpecialBuildSuffix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <ConfigPlatformPathPart>$(Configuration)</ConfigPlatformPathPart>
@@ -21,16 +12,11 @@
     <ConfigPlatformPathPart>$(Platform)\$(Configuration)</ConfigPlatformPathPart>
     <OutputPlatformName>x64</OutputPlatformName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-  </PropertyGroup>
   <PropertyGroup>
     <OutputPath>bin\$(ConfigPlatformPathPart)\</OutputPath>
     <IntermediateOutputPath>obj\$(ConfigPlatformPathPart)</IntermediateOutputPath>
     <PackageTargetDir>..\$(ConfigPlatformPathPart)\Package</PackageTargetDir>
     <SolutionDir Condition=" '$(SolutionDir)' == '' ">$(MSBuildThisFileDirectory)..\</SolutionDir>
-    <DefineSolutionProperties>false</DefineSolutionProperties>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DefineConstants>Debug;Package.TargetDir=$(SolutionDir)$(Configuration);Package.TargetDirWin32=$(SolutionDir)$(Configuration);Version.IncludeDir=$(SolutionDir)$(Configuration)</DefineConstants>
@@ -45,20 +31,8 @@
     <DefineConstants>Package.TargetDir=$(SolutionDir)x64\$(Configuration);Package.TargetDirWin32=$(SolutionDir)$(Configuration);Version.IncludeDir=$(SolutionDir)x64\$(Configuration)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Product.wxs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WixExtension Include="WixUtilExtension">
-      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
-      <Name>WixUtilExtension</Name>
-    </WixExtension>
-    <WixExtension Include="WixUIExtension">
-      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
-      <Name>WixUIExtension</Name>
-    </WixExtension>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="en-US.wxl" />
+    <PackageReference Include="WixToolset.Util.wixext" Version="4.0.2" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="4.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Build\Version.txt">
@@ -91,6 +65,5 @@
       <RefTargetDir>INSTALLLOCATION</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(WixTargetsPath)" />
   <Import Project="..\Build\Build.targets" />
 </Project>
