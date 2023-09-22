@@ -277,10 +277,12 @@
   <Target Name="AxPrivateAfterBuild" />
 
   <!-- WiX Hooks -->
-  <Target Name="BeforeBuild"
+  <Target Name="WixBeforeBuild"
+          BeforeTargets="BeforeBuild"
           DependsOnTargets="AxWixProjBeforeBuild"
           Condition=" '$(OutputType)' == 'Package' " />
-  <Target Name="AfterBuild"
+  <Target Name="WixAfterBuild"
+          AfterTargets="AfterBuild"
           DependsOnTargets="AxWixProjAfterBuild"
           Condition=" '$(OutputType)' == 'Package' " />
 
