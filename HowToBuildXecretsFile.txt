@@ -83,7 +83,7 @@ zlib
 
 Download zlib 1.2.12 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
 
-Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.11" .
+Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.12" .
 You may need to restart Windows Explorer for the setting to take effect.
 
 Due to a bug in zlibstat.vcxproj:
@@ -97,7 +97,7 @@ Properties | C/C++ | Code Generation | Runtime Library:
 [Configuration Debug for both Win32 and x64]
 "Multi-threaded Debug (/MTd)"
 
-[Configuration ReleaseWithoutAsm and x64 (Win32 is actually ok in 1.2.11)]
+[Configuration ReleaseWithoutAsm and x64 (Win32 is actually ok in 1.2.12)]
 "Multi-threaded (/MT)"
 
 Librarian | All Options | Additional Options
