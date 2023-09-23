@@ -35,7 +35,7 @@ Tools and Dependencies Installation
 Executive summary (details in respective section below):
 
 - Install, set AX_CRYPTOPP=install-path and build Crypto++ 8.7.0 (or later at your own risk)
-- Install, set AX_ZLIB=install-path and build zlib 1.2.12 (or later at your own risk)
+- Install, set AX_ZLIB=install-path and build zlib 1.3 (or later at your own risk)
 - Install WTL 10.0.10320 and set AX_WTL=Install-path (or later at your own risk)
 - Install Microsoft Visual Studio 2022 Community Edition or Microsoft Visual Studio 2022 Professional Edition or better.
 - Install Windows Installer XML (WiX) toolset v3.11.2 (or later at your own risk)
@@ -81,14 +81,14 @@ msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=x64
 zlib
 ====
 
-Download zlib 1.2.12 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
+Download zlib 1.3 (or possibly later at your own risk) from http://www.zlib.net in zipfile format and unpack the zip-file.
 
-Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.2.12" .
+Set the environment variable AX_ZLIB to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\zlib-1.3" .
 You may need to restart Windows Explorer for the setting to take effect.
 
 Due to a bug in zlibstat.vcxproj:
 
-Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio 2022, Upgrade to toolset v143 and SDK 10.0.19041.0 (or later at your own risk).
+Open %AX_ZLIB%\contrib\vstudio\vc14\zlibvc.sln in Visual Studio 2022, Upgrade to toolset v143 and SDK 10.0.22621.0 (or later at your own risk).
 
 Change 'zlibstat'
 
@@ -97,7 +97,7 @@ Properties | C/C++ | Code Generation | Runtime Library:
 [Configuration Debug for both Win32 and x64]
 "Multi-threaded Debug (/MTd)"
 
-[Configuration ReleaseWithoutAsm and x64 (Win32 is actually ok in 1.2.12)]
+[Configuration ReleaseWithoutAsm and x64 (Win32 is actually ok in 1.3)]
 "Multi-threaded (/MT)"
 
 Librarian | All Options | Additional Options
@@ -108,19 +108,11 @@ Librarian | All Options | Additional Options
 Librarian | General | Target Machine
 
 [All Configurations and Win32]
-MachineX86 (/MACHINE:X86) (Is actually ok in 1.2.12 apparently)
-
-Edit crc32.c to avoid three errors due to VSC++ being more and more picky for each generation
-
-Line 1089:    return crc32_combine64(crc1, crc2, (z_off64_t)len2);
-Line 1106:    return crc32_combine_gen64((z_off64_t)len2);
-Line 1110: ZEXTERN uLong ZEXPORT crc32_combine_op(crc1, crc2, op)
-
-Exclude inffas8664.c from the zlibstat project, it doesn't exist any more
+MachineX86 (/MACHINE:X86) (Is actually ok in 1.3 apparently)
 
 Save the solution and project!
 
-Open x64 x86 Cross Tools Command Prompt for VS 2022 (on X64 build host)
+Open x64_x86 Cross Tools Command Prompt for VS 2022 (on X64 build host)
 
 cd %AX_ZLIB%\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
