@@ -1,7 +1,7 @@
 <Project Sdk="WixToolset.Sdk/4.0.2">
   <PropertyGroup>
     <ProductVersion>3.0</ProductVersion>
-    <OutputName>XecretsFile</OutputName>
+    <OutputName>XecretsFileClassic</OutputName>
     <SpecialBuildSuffix></SpecialBuildSuffix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">

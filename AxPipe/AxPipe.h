@@ -764,7 +764,7 @@ namespace AxPipe {
 		as they are some samples of derived filters and pipes, as well as AxPipe::CSourceFileMap
 		and AxPipe::CSinkFileMap.
 
-		For a complete real life example, please see the AxDecrypt program, part of the <A HREF="http://www.axantum.com">Xecrets File</A>
+		For a complete real life example, please see the AxDecrypt program, part of the <A HREF="http://www.axantum.com">Xecrets File Classic</A>
 		package. Download the source code and examine AxDecrypt.cpp.
 
 		\see \ref PageIntro "Introduction", \ref PageInstall "Installation", \ref PageSample1 "A First Example",

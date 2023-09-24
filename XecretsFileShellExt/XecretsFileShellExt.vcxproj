@@ -231,6 +231,9 @@
     <None Include="CtxMenu.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XecretsFileClassic\XecretsFileClassic.vcxproj">
+      <Project>{41bd6bdc-24b2-4dd9-b47b-86fbd1751387}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\XecretsFileMessages\XecretsFileMessages.vcxproj">
       <Project>{19193893-878c-4cb1-9400-de8fcef7ca45}</Project>
       <Private>false</Private>
@@ -273,9 +276,6 @@
     </ProjectReference>
     <ProjectReference Include="..\XecretsFileCommon\XecretsFileCommon.vcxproj">
       <Project>{b022a61b-b8dd-4200-9cd4-93bdb48137ea}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\XecretsFile\XecretsFile.vcxproj">
-      <Project>{41bd6bdc-24b2-4dd9-b47b-86fbd1751387}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

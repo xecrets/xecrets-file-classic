@@ -19,7 +19,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 
 	Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -574,7 +574,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Xecrets File encryption specific derivation of HMAC_SHA1 calculation
+	/// \brief Xecrets File Classic encryption specific derivation of HMAC_SHA1 calculation
 	///
 	/// \see AxPipe::Stock::CPipeHMAC_SHA1
 	class CPipeEncHMAC_SHA1_128 : public AxPipe::Stock::CPipeHMAC_SHA1<128> {
@@ -592,7 +592,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Xecrets File specific derivation which calls back for the name of the file
+	/// \brief Xecrets File Classic specific derivation which calls back for the name of the file
 	///
 	/// The output file name is recived via a callback.
 	class CEncryptSinkFile : public AxPipe::CSinkFileIO {

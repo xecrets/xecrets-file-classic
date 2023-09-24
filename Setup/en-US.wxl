@@ -5,11 +5,11 @@
   <String Id="CompanyName"
           Value="Axantum Software AB" />
   <String Id="InternalName"
-          Value="xecretsfile" />
+          Value="xecretsfileclassic" />
   <String Id="ExternalName"
-          Value="XecretsFile" />
+          Value="Xecrets File Classic" />
   <String Id="Description"
-          Value="Xecrets File Encryption" />
+          Value="Xecrets File Classic" />
   <String Id="Win95NotSupported"
           Value="Windows 95 is not supported! Version 1.6.3 is the last to do so." />
   <String Id="Win98NotSupported"
@@ -27,7 +27,7 @@
   <String Id="DoNotInstall32BitOn64Bit"
           Value="This is a 32 bit MSI installer. You have 64-bit Windows. Get the MSI with 'x64' in the filename instead of 'Win32'." />
   <String Id="MainExecutablesTitle"
-          Value="XecretsFile Program Files" />
+          Value="Xecrets File Classic Program Files" />
   <String Id="ShellExtensionTitle"
           Value="Windows Right-Click Integration" />
   <String Id="SelfDecryptionTitle"
@@ -35,9 +35,9 @@
   <String Id="XecretsFile2GoTitle"
           Value="XecretsFile2Go Portable Encryption and Decryption" />
   <String Id="ArpComments"
-          Value="XecretsFile File Encryption" />
+          Value="Xecrets File Classic Encryption" />
   <String Id="FileTypeName"
-          Value="XecretsFile Encrypted File" />
+          Value="Xecrets File Classic Encrypted File" />
   <String Id="NoDowngrade"
           Value="Newer or same version already installed! Please uninstall that version before proceeding. Be sure to reboot when asked to." />
   <String Id="LegacyAxCrypt"
@@ -49,9 +49,9 @@
   <String Id="RebootFirst"
           Value="Please complete the currently pending reboot before proceeding." />
   <String Id="UninstallAxCrypt"
-          Value="Uninstall XecretsFile" />
+          Value="Uninstall Xecrets File Classic" />
   <String Id="UninstallAxCryptDescription"
-          Value="Uninstalls XecretsFile" />
+          Value="Uninstalls Xecrets File Classic" />
   <String Id="RegisterAxCrypt"
           Value="My Registration Account" />
   <String Id="RegisterAxCryptDescription"
@@ -63,11 +63,11 @@
   <String Id="ManualShortcut"
           Value="Documentation" />
   <String Id="ManualShortcutDescription"
-          Value="Download the XecretsFile Manual as PDF" />
+          Value="Download the Xecrets File Classic Manual as PDF" />
   <String Id="HomePageShortcut"
           Value="Home Page" />
   <String Id="HomePageShortcutDescription"
           Value="Browse to Axantum Home Page" />
   <String Id="ExitDialogText"
-          Value="QUICK START: To encrypt a file, right-click the file in Windows Explorer and select XecretsFile | Encrypt." />
+          Value="QUICK START: To encrypt a file, right-click the file in Windows Explorer and select Xecrets File Classic | Encrypt." />
 </WixLocalization>

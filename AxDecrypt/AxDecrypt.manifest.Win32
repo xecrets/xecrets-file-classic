@@ -4,9 +4,9 @@
                  manifestVersion="1.0">
   <assemblyIdentity version="1.7.0.0"
                     processorArchitecture="x86"
-                    name="Axantum.XecretsFile.AxDecrypt"
+                    name="Axantum.XecretsFileClassic.AxDecrypt"
                     type="win32" />
-  <description>AxDecrypt - Decrypt XecretsFile/AxCrypt files</description>
+  <description>AxDecrypt - Decrypt Xecrets File Classic/AxCrypt 1.x files</description>
 
   <comv1:compatibility xmlns:comv1="urn:schemas-microsoft-com:compatibility.v1">
     <comv1:application>

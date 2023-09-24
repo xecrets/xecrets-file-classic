@@ -9,7 +9,7 @@
 //
 #include "Windows.h"
 
-#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE "Xecrets File Encryption Messages"
+#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE "Xecrets File Classic Messages"
 #define VERSION_PROJECT_INTERNAL_NAME_VALUE "Messages"
 #define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE "Messages.dll"
 #define VERSION_PROJECT_FILETYPE VFT_DLL
@@ -38,7 +38,7 @@ END
 2 TEXTINCLUDE
 BEGIN
 "#include ""Windows.h""\r\r\n"
-"#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""Xecrets File Encryption Messages""\r\n"
+"#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""Xecrets File Classic Messages""\r\n"
 "#define VERSION_PROJECT_INTERNAL_NAME_VALUE ""Messages""\r\n"
 "#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE ""Messages.dll""\r\n"
 "#define VERSION_PROJECT_FILETYPE VFT_DLL\r\n"

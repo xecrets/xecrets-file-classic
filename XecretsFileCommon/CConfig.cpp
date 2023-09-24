@@ -1,7 +1,7 @@
 /*
 	@(#) $Id$
 
-	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File Classic - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2004-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
@@ -18,12 +18,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 	CConfig.cpp                     Operations on basic encryption types (hashes, keys etc).
 
 	E-mail                          YYYY-MM-DD              Reason
-	software@axantum.com             2004-09-13              Initial
+	support@axantum.com             2004-09-13              Initial
 
 */
 #include "stdafx.h"

@@ -3,7 +3,7 @@
 
 	@(#) $Id$
 
-	axcl - Common support library for Xecrets File
+	axcl - Common support library for Xecrets File Classic
 
 	Copyright (C) 2005-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -19,14 +19,14 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 
 	Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
 ----
 \verbatim
 	YYYY-MM-DD              Reason
-	2005-06-26              Initial (moved/restructured from Xecrets File)
+	2005-06-26              Initial (moved/restructured from Xecrets File Classic)
 \endverbatim
 */
 #include "stdafx.h"

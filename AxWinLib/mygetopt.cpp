@@ -1,7 +1,7 @@
 /*
 	@(#) $Id$
 
-	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File Classic - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001-2022 Svante Seleborg/Axon Data, All rights reserved.
@@ -18,13 +18,13 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 	GetOption.cpp                   Parse the command line, standard stuff. This is taken
 									from Hans Dietrich XGetopt. Thank you Hans!
 
 	E-mail                          YYYY-MM-DD              Reason
-	software@axantum.com             2001                    Initial
+	support@axantum.com             2001                    Initial
 									2003-05-26              Switch to XGetopt. It's better.
 															Minor changes, return -1 instead of EOF
 															Allow optional arguments

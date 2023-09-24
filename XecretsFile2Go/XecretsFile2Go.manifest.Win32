@@ -4,9 +4,9 @@
                  manifestVersion="1.0">
   <assemblyIdentity version="1.7.0.0"
                     processorArchitecture="x86"
-                    name="Axantum.XecretsFile.XecretsFile2Go"
+                    name="Axantum.XecretsFileClassic.XecretsFile2Go"
                     type="win32" />
-  <description>XecretsFile2Go - Portable Xecrets File Encryption</description>
+  <description>XecretsFile2Go - Portable Xecrets File Classic</description>
 
   <comv1:compatibility xmlns:comv1="urn:schemas-microsoft-com:compatibility.v1">
     <comv1:application>

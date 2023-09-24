@@ -1,11 +1,11 @@
 #ifndef CXECRETSFILEAES_H
 #define CXECRETSFILEAES_H
 /*! \file
-	\brief CXecretsFileAES.h - An Xecrets File special purpose AES-wrapper
+	\brief CXecretsFileAES.h - An Xecrets File Classic special purpose AES-wrapper
 
 	@(#) $Id$
 
-	CXecretsFileAES.h - An Xecrets File special purpose AES-wrapper
+	CXecretsFileAES.h - An Xecrets File Classic special purpose AES-wrapper
 
 	Copyright (C) 2005-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -21,7 +21,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 */
 
@@ -48,7 +48,7 @@ namespace axcl {
 	///  To get full control we only use the low-level algoritm parts.
 	///
 	///  This class is not a complete API - it only implements exactly the modes
-	///  needed by Xecrets File.
+	///  needed by Xecrets File Classic.
 	///
 	///  Please note that padding must be done external to this code - we only
 	///  handle whole blocks here.

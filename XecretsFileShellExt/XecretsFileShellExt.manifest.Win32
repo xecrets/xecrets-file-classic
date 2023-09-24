@@ -4,9 +4,9 @@
                  manifestVersion="1.0">
   <assemblyIdentity version="1.7.0.0"
                     processorArchitecture="x86"
-                    name="Axantum.XecretsFile.ShellExt"
+                    name="Axantum.XecretsFileClassic.ShellExt"
                     type="win32" />
-  <description>XecretsFile - Axantum Shell Extension</description>
+  <description>Xecrets File Classic - Axantum Shell Extension</description>
 
   <comv1:compatibility xmlns:comv1="urn:schemas-microsoft-com:compatibility.v1">
     <comv1:application>

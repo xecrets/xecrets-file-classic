@@ -9,7 +9,7 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
      xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
   <!-- Change the UpgradeCode when the major version changes, i.e. it's essentially a new product. -->
-  <Package Name="XecretsFile $(var.Version)"
+  <Package Name="Xecrets File Classic $(var.Version)"
            Language="1033"
            Version="$(var.Version)"
            Manufacturer="Axantum Software AB"
@@ -18,9 +18,9 @@
            Scope="perMachine">
     <?define AxCryptCLSID="{C3DFC144-30F8-4138-81F9-578DBEB9324A}" ?>
     <?define AxCryptExtension=".axx" ?>
-    <?define AxCryptInternalName="xecretsfile" ?>
-    <?define AxCryptExternalName="XecretsFile" ?>
-    <?define AxCryptProgID="xecretsfile.File" ?>
+    <?define AxCryptInternalName="xecretsfileclassic" ?>
+    <?define AxCryptExternalName="Xecrets File Classic" ?>
+    <?define AxCryptProgID="xecretsfileclassic.File" ?>
     <?define AxCryptRegKey="Software\Axantum\AxCrypt" ?>
 
 
@@ -88,7 +88,7 @@
                   Return="asyncNoWait"
                   ExeCommand="-L $(var.Version)"
                   Impersonate="yes"
-                  FileRef="XecretsFile.exe" />
+                  FileRef="XecretsFileClassic.exe" />
 
     <WixVariable Id="WixUILicenseRtf"
                  Value="$(var.Package.TargetDir)\License.rtf" />
@@ -419,7 +419,7 @@
     </UI>
 
     <Media Id="1"
-           Cabinet="XecretsFile.cab"
+           Cabinet="XecretsFileClassic.cab"
            EmbedCab="yes" />
 
     <?if $(var.Platform) = "x64" ?>
@@ -431,7 +431,7 @@
     <Property Id="ARPCOMMENTS"
               Value="!(loc.ArpComments)" />
     <Property Id="ARPCONTACT"
-              Value="mailto:software@axantum.com" />
+              Value="mailto:support@axantum.com" />
     <Property Id="ARPHELPLINK"
               Value="http://www.axantum.com" />
     <Property Id="ARPURLINFOABOUT"
@@ -440,10 +440,10 @@
               Value="http://www.axantum.com" />
     <Property Id="ARPHELPTELEPHONE"
               Value="http://www.axantum.com" />
-    <Icon Id="xecretsfile.ico"
-          SourceFile="..\Build\XecretsFile.ico" />
+    <Icon Id="xecretsfileclassic.ico"
+          SourceFile="..\Build\XecretsFileClassic.ico" />
     <Property Id="ARPPRODUCTICON"
-              Value="xecretsfile.ico" />
+              Value="xecretsfileclassic.ico" />
 
     <CustomAction Id="SetReadmePath"
                   Property="ARPREADME"
@@ -503,7 +503,7 @@
 
 
     <Property Id="ApplicationFolderName"
-              Value="Axantum\XecretsFile" />
+              Value="Axantum\XecretsFileClassic" />
     <!--<Property Id="WixAppFolder" Value="WixPerMachineFolder" />-->
 
     <DirectoryRef Id="CompanyDir">
@@ -515,11 +515,11 @@
     </DirectoryRef>
 
     <DirectoryRef Id="APPLICATIONFOLDER">
-      <Component Id="XecretsFile.exe"
+      <Component Id="XecretsFileClassic.exe"
                  DiskId="1">
-        <File Id="XecretsFile.exe"
-              Name="XecretsFile.exe"
-              Source="$(var.Package.TargetDir)\XecretsFile.exe"
+        <File Id="XecretsFileClassic.exe"
+              Name="XecretsFileClassic.exe"
+              Source="$(var.Package.TargetDir)\XecretsFileClassic.exe"
               KeyPath="yes"
               Checksum="yes" />
       </Component>
@@ -700,7 +700,7 @@
                      Key="$(var.AxCryptProgID)\DefaultIcon"
                      ForceDeleteOnUninstall="yes">
           <RegistryValue Type="string"
-                         Value="[APPLICATIONFOLDER]XecretsFile.exe,0" />
+                         Value="[APPLICATIONFOLDER]XecretsFileClassic.exe,0" />
         </RegistryKey>
         <RegistryKey Root="HKCR"
                      Key="$(var.AxCryptProgID)\shellex\PropertySheetHandlers\$(var.AxCryptCLSID)"
@@ -710,7 +710,7 @@
                      Key="$(var.AxCryptProgID)\shell\open\command"
                      ForceDeleteOnUninstall="yes">
           <RegistryValue Type="string"
-                         Value="&quot;[APPLICATIONFOLDER]XecretsFile.exe&quot; &quot;%1&quot;" />
+                         Value="&quot;[APPLICATIONFOLDER]XecretsFileClassic.exe&quot; &quot;%1&quot;" />
         </RegistryKey>
       </Component>
 
@@ -799,7 +799,7 @@
     <Feature Id="MainExecutables"
              Title="!(loc.MainExecutablesTitle)"
              Level="1">
-      <ComponentRef Id="XecretsFile.exe" />
+      <ComponentRef Id="XecretsFileClassic.exe" />
       <ComponentRef Id="Messages.dll" />
       <ComponentRef Id="Config.xml" />
       <ComponentRef Id="Sigs.xml" />
@@ -816,7 +816,7 @@
     <Feature Id="ShellExtension"
              Title="!(loc.ShellExtensionTitle)"
              Level="1">
-      <ComponentRef Id="XecretsFile.exe" />
+      <ComponentRef Id="XecretsFileClassic.exe" />
       <ComponentRef Id="Messages.dll" />
       <ComponentRef Id="ShellExt.dll" />
       <ComponentRef Id="Config.xml" />
@@ -841,12 +841,12 @@
       <Directory Id="CompanyDir"
                  Name="Axantum">
         <Directory Id="APPLICATIONFOLDER"
-                   Name="XecretsFile" />
+                   Name="XecretsFileClassic" />
       </Directory>
     </StandardDirectory>
     <StandardDirectory Id="ProgramMenuFolder">
       <Directory Id="AxantumProgramMenu"
-                 Name="Axantum XecretsFile" />
+                 Name="Axantum Xecrets File Classic" />
     </StandardDirectory>
   </Package>
 </Wix>

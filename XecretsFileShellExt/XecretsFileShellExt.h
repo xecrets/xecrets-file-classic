@@ -2,7 +2,7 @@
 /*
 @(#) $Id$
 
-Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+Xecrets File Classic - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 Server or Web Storage of Document Files.
 
 Copyright (C) 2001-2022 Svante Seleborg/Axon Data, All rights reserved.
@@ -19,13 +19,13 @@ You should have received a copy of the GNU General Public License along with thi
 if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 Boston, MA 02111-1307 USA
 
-The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
-ShellExt.h      				Definition of Class Factory and Object for the Xecrets File
+ShellExt.h      				Definition of Class Factory and Object for the Xecrets File Classic
 Shell Extension.
 
 E-mail							YYYY-MM-DD				Reason
-software@axantum.com	    		2001					Initial
+support@axantum.com	    		2001					Initial
 2002-07-25              Ver 1.2
 */
 
@@ -70,7 +70,7 @@ software@axantum.com	    		2001					Initial
 #include "../AxPipe/AxPipe.h"
 
 //
-// The class ID of the Xecrets File Shell Extension class.
+// The class ID of the Xecrets File Classic Shell Extension class.
 //
 // class id:  1918AECB-5BDB-43D9-83B4-FDD4BEC67E4F
 //

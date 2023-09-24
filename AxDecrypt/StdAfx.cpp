@@ -1,9 +1,9 @@
 /*! \file
-	\brief AxDecrypt - Stand-alone Xecrets File-decrypter and self-extractor.
+	\brief AxDecrypt - Stand-alone Xecrets File Classic-decrypter and self-extractor.
 
 	@(#) $Id$
 
-	AxDecrypt - Stand-alone Xecrets File-decrypter and self-extractor.
+	AxDecrypt - Stand-alone Xecrets File Classic-decrypter and self-extractor.
 
 	Copyright (C) 2004-2022 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -19,7 +19,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 */
 #include "stdafx.h"

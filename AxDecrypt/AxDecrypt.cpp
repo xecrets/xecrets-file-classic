@@ -1,9 +1,9 @@
 /*! \file
-	\brief AxDecrypt - Stand-alone Xecrets File-decrypter and self-extractor.
+	\brief AxDecrypt - Stand-alone Xecrets File Classic-decrypter and self-extractor.
 
 	@(#) $Id$
 */
-/*! \page License AxDecrypt - Stand-alone Xecrets File-decrypter and self-extractor.
+/*! \page License AxDecrypt - Stand-alone Xecrets File Classic-decrypter and self-extractor.
 
 	Copyright (C) 2004-2022 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -19,12 +19,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 */
 //    version
 //    htmlinclude Version.txt
-/*! \mainpage Decrypt Xecrets File-archives as a stand-alone program.
+/*! \mainpage Decrypt Xecrets File Classic-archives as a stand-alone program.
 
 	\author
 	Svante Seleborg/Axon Data
@@ -94,10 +94,10 @@ enum {
 	ERROR_CODE_HMAC,                        ///< HMAC does not match
 	ERROR_CODE_ABORT,                       ///< User cancelled whilst working
 	ERROR_CODE_MORE,                        ///< Not an error - want a bigger dialog
-	XECRETSFILE_CODE_DATA,                      ///< Not an error - we found Xecrets File data status
+	XECRETSFILE_CODE_DATA,                      ///< Not an error - we found Xecrets File Classic data status
 };
 
-/// \brief Xecrets File Header Type Codes.
+/// \brief Xecrets File Classic Header Type Codes.
 ///
 /// The different header types. Preamble must be first, Data last.
 /// Sections with eEncryptedFlag set will be encrypted with variations
@@ -282,7 +282,7 @@ protected:
 	}
 };
 
-/// \brief Exactly one meta section from an Xecrets File-formated file stream.
+/// \brief Exactly one meta section from an Xecrets File Classic-formated file stream.
 class CMetaSection {
 	TBlockType m_eType;                     ///< The type of the section, defined by TBlockType
 	size_t m_cbLen;                         ///< The total length of m_pData (excluding type byte)
@@ -405,7 +405,7 @@ public:
 	}
 };
 
-/// \brief Manage the meta information of an Xecrets File stream.
+/// \brief Manage the meta information of an Xecrets File Classic stream.
 ///
 /// The base class is a std::list of CMetaSection. This is where
 /// we define the various instances of CMetaSection in detail,
@@ -1058,7 +1058,7 @@ public:
 	}
 };
 
-/// \brief Parse Xecrets File headers
+/// \brief Parse Xecrets File Classic headers
 ///
 /// Parse headers and call a call-back when all headers
 /// have been read and we're about to start sending
@@ -1374,7 +1374,7 @@ public:
 	}
 };
 
-/// \brief Xecrets File-specific derivation of HMAC_SHA1 calculation
+/// \brief Xecrets File Classic-specific derivation of HMAC_SHA1 calculation
 ///
 /// This derived class will accept header info and signal an error
 /// on mismatching HMAC
@@ -1441,7 +1441,7 @@ public:
 	}
 };
 
-/// \brief Skip the headers from an Xecrets File stream
+/// \brief Skip the headers from an Xecrets File Classic stream
 ///
 /// Using info from the meta data about the offset to
 /// the data, skip bytes before starting to pass it
@@ -1573,7 +1573,7 @@ public:
 	}
 };
 
-/// \brief Inflate (decompress) with ZLib for Xecrets File
+/// \brief Inflate (decompress) with ZLib for Xecrets File Classic
 ///
 /// Only inflate if the stream was compressed - otherwise
 /// just pass through. Get the compress flag through the
@@ -1642,7 +1642,7 @@ public:
 	}
 };
 
-/// \brief Xecrets File specific derivation which restores original file times
+/// \brief Xecrets File Classic specific derivation which restores original file times
 ///
 /// Using the file times gotten from the meta data in a CXecretsFileMeta
 /// structure, passed via CPipe::Signal() to CPipe::OutSignal(), we
@@ -2076,9 +2076,9 @@ AGetModuleFileName(HMODULE hModule = NULL) {
 	return szFileName;
 }
 
-/// \brief Check if there is any Xecrets File headers in a file
+/// \brief Check if there is any Xecrets File Classic headers in a file
 /// \param szPath The path to the file to check
-/// \return true if we recognize this as a proper Xecrets File file
+/// \return true if we recognize this as a proper Xecrets File Classic file
 static bool
 IsAxCryptFile(_TCHAR* szPath) {
 	CSourceFileIO In;

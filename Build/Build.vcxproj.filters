@@ -25,10 +25,10 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="Build.targets" />
-    <None Include="Sigs.xml">
+    <CustomBuild Include="Sigs.xml">
       <Filter>XecretsFileConfig</Filter>
-    </None>
-    <None Include="XecretsFile.ico">
+    </CustomBuild>
+    <None Include="XecretsFileClassic.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Sigs.template.xml">
@@ -61,6 +61,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\HowToBuildXecretsFile.txt" />
+    <Text Include="..\HowToBuildXecretsFileClassic.txt" />
   </ItemGroup>
 </Project>

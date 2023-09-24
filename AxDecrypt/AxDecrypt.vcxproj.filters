@@ -48,7 +48,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Build\XecretsFile.ico">
+    <None Include="..\Build\XecretsFileClassic.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="AxDecrypt.manifest.Win32">

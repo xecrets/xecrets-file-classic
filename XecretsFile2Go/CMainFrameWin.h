@@ -11,7 +11,7 @@
 
 	@(#) $Id$
 
-	XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road.
+	XecretsFile2Go - Stand-Alone Install-free Xecrets File Classic for the road.
 
 	Copyright (C) 2005-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -83,7 +83,7 @@ public:
 
 extern CMyAppModule _Module;
 
-/// \brief Wrap the system icon-list slightly to allow special handling of the Xecrets File icon
+/// \brief Wrap the system icon-list slightly to allow special handling of the Xecrets File Classic icon
 class CMyImageList {
 private:
 	/// \brief This maps System Image List indices to our private indices.
@@ -101,7 +101,7 @@ public:
 	}
 
 public:
-	/// \brief Dupliate the image-list and get the Xecrets File-icon
+	/// \brief Dupliate the image-list and get the Xecrets File Classic-icon
 	void Init(HIMAGELIST hSystemImageList) {
 		// This is complicated. We need to make a clone of the system image list, and then provide
 		// a map between our indices and the 'real' indices. We start by duplicating the current
@@ -114,11 +114,11 @@ public:
 			mapSystemToMy[i] = i;
 		}
 
-		// Get the dimensions of the icon in the system image-list, so we can get the same for the Xecrets File icon
+		// Get the dimensions of the icon in the system image-list, so we can get the same for the Xecrets File Classic icon
 		int cx, cy;
 		ASSCHK(::ImageList_GetIconSize(m_hMyImageList, &cx, &cy) == TRUE, _T("ImageList_GetIconSize()"));
 
-		// get the Xecrets File icon from our loaded module
+		// get the Xecrets File Classic icon from our loaded module
 		HICON hAxCryptIcon = (HICON)::LoadImage(_Module.GetModuleInstance(), MAKEINTRESOURCE(IDR_MAINFRAME), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR);
 		ASSAPI(hAxCryptIcon != NULL);
 
@@ -126,7 +126,7 @@ public:
 		ASSCHK(nXecretsFile2GoIconIndex == n, _T("ImageList_ReplaceIcon() failed"));
 		ASSAPI(::DestroyIcon(hAxCryptIcon));
 
-		// Finally, insert the dummy-mapping of -1 to our index for the Xecrets File icon
+		// Finally, insert the dummy-mapping of -1 to our index for the Xecrets File Classic icon
 		mapSystemToMy[-1] = nXecretsFile2GoIconIndex;
 	}
 

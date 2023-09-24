@@ -19,7 +19,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 
 	Why is this framework released as GPL and not LGPL? See http://www.gnu.org/philosophy/why-not-lgpl.html
 
@@ -61,7 +61,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Parse Xecrets File Meta information/headers
+	/// \brief Parse Xecrets File Classic Meta information/headers
 	/// Read and parses headers into a CXecretsFileMeta object. Sends nothing
 	/// downstream.
 	class CPipeAxCryptDecryptMeta : public AxPipe::CFilterBlock {
@@ -240,7 +240,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Parse Xecrets File Meta information/headers
+	/// \brief Parse Xecrets File Classic Meta information/headers
 	/// Reads and buffers data, parsing headers into a CXecretsFileMeta object.
 	/// Sends the raw data downstream, including the headers.
 	class CPipeXecretsFileMeta : public CPipeAxCryptDecryptMeta {
@@ -330,7 +330,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Xecrets File-specific derivation of HMAC_SHA1 calculation
+	/// \brief Xecrets File Classic-specific derivation of HMAC_SHA1 calculation
 	///
 	/// \see AxPipe::Stock::CPipeHMAC_SHA1
 	class CPipeHMAC_SHA1_128 : public AxPipe::Stock::CPipeHMAC_SHA1<128> {
@@ -397,7 +397,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Skip the headers from an Xecrets File stream
+	/// \brief Skip the headers from an Xecrets File Classic stream
 	///
 	/// Using info from the meta data about the offset to
 	/// the data, skip bytes before starting to pass it
@@ -539,7 +539,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Inflate (decompress) with ZLib for Xecrets File
+	/// \brief Inflate (decompress) with ZLib for Xecrets File Classic
 	///
 	/// Only inflate if the stream was compressed - otherwise
 	/// just pass through. Get the compress flag through the
@@ -608,7 +608,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Xecrets File specific derivation which calls back for the name of the file
+	/// \brief Xecrets File Classic specific derivation which calls back for the name of the file
 	///
 	/// The output file name is recived via a callback.
 	class CDecryptSinkFile : public AxPipe::CSinkFileIO {

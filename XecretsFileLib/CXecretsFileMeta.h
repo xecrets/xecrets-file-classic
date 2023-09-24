@@ -1,11 +1,11 @@
 #ifndef CXECRETSFILEMETA_H
 #define CXECRETSFILEMETA_H
 /*! \file
-	\brief CXecretsFileMeta.h - Handle Xecrets File meta information in headers
+	\brief CXecretsFileMeta.h - Handle Xecrets File Classic meta information in headers
 
 	@(#) $Id$
 
-	CXecretsFileMeta.h - Handle Xecrets File meta information in headers
+	CXecretsFileMeta.h - Handle Xecrets File Classic meta information in headers
 
 	Copyright (C) 2005-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
 
@@ -21,7 +21,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 */
 
@@ -45,7 +45,7 @@ extern "C" {
 #pragma pack(1)
 
 namespace axcl {
-	/// \brief Xecrets File Header Type Codes.
+	/// \brief Xecrets File Classic Header Type Codes.
 	///
 	/// The different header types. Preamble must be first, Data last.
 	/// Sections with eEncryptedFlag set will be encrypted with variations
@@ -75,7 +75,7 @@ namespace axcl {
 		eUnicodeFileNameInfo,               ///< Original file name in Unicode. 1.6.3.3
 	} TBlockType;
 
-	/// \brief Exactly one meta section from an Xecrets File-formated file stream.
+	/// \brief Exactly one meta section from an Xecrets File Classic-formated file stream.
 	class CMetaSection {
 		TBlockType m_eType;                     ///< The type of the section, defined by TBlockType
 		size_t m_cbLen;                         ///< The total length of m_pData (excluding type byte)
@@ -151,7 +151,7 @@ namespace axcl {
 		}
 	};
 
-	/// \brief Manage the meta information of an Xecrets File stream.
+	/// \brief Manage the meta information of an Xecrets File Classic stream.
 	///
 	/// The base class is a std::list of CMetaSection. This is where
 	/// we define the various instances of CMetaSection in detail,

@@ -152,7 +152,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)$(TargetName)$(TargetExt)</Outputs>
     </ClInclude>
     <None Include="..\Build.cmd" />
-    <None Include="XecretsFile.ico" />
+    <None Include="XecretsFileClassic.ico" />
     <None Include="Build.targets">
       <SubType>Designer</SubType>
     </None>
@@ -194,7 +194,9 @@
       <DeploymentContent>true</DeploymentContent>
     </CustomBuild>
     <None Include="README.txt" />
-    <None Include="Sigs.xml" />
+    <CustomBuild Include="Sigs.xml">
+      <DeploymentContent>true</DeploymentContent>
+    </CustomBuild>
     <None Include="Sigs.template.xml" />
     <None Include="Version.h.template" />
     <CustomBuild Include="Version.txt" />
@@ -214,7 +216,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\HowToBuildXecretsFile.txt" />
+    <Text Include="..\HowToBuildXecretsFileClassic.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="Build.targets" />

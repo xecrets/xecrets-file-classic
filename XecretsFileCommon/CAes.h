@@ -3,7 +3,7 @@
 /*
     @(#) $Id$
 
-	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File Classic - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001-2022 Svante Seleborg/Axon Data, All rights reserved.
@@ -20,12 +20,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 	CAes.h							Special purpose wrapper-class for AES-primitives.
 
 	E-mail							YYYY-MM-DD				Reason
-	software@axantum.com 			2001					Initial
+	support@axantum.com 			2001					Initial
                                     2002-08-04              Rel 1.2 (CAesWrap added)
 
 */
@@ -37,14 +37,14 @@
 //	we need to ensure that keys and round keys are kept in dynamically allocated
 //	storage that we know is safe. This requires that the 'new' and 'delete' operators
 //	are redefined to guarantuee the safety of the data in whatever way is deemed
-//	appropriate. In Xecrets File this is done by way of a memory mapped file as the heap.
+//	appropriate. In Xecrets File Classic this is done by way of a memory mapped file as the heap.
 //
 //	The Init Vector is never secret - so we keep it in regular memory.
 //
 //	To get full control we only use the low-level algoritm parts.
 //
 //	This class is not a complete API - it only implements exactly the modes
-//	needed by Xecrets File.
+//	needed by Xecrets File Classic.
 //
 //	Please note that padding must be done external to this code - we only
 //	handle whole blocks here.

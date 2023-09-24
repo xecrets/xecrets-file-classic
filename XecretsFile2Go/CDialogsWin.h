@@ -22,7 +22,7 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 */
 /*! \mainpage CDialogsWin.h - Various dialogs for XecretsFile2Go
@@ -381,7 +381,7 @@ protected:
 	}
 
 protected:
-	/// \brief Get a pointer to the passphrase in it's Ansi representation - filtered for Xecrets File 1.x legal chars
+	/// \brief Get a pointer to the passphrase in it's Ansi representation - filtered for Xecrets File Classic 1.x legal chars
 	/// \param sPassphrase a pointer to a buffer (or NULL)
 	/// \param ccPassphrase the size of the buffer
 	/// \return The number of chars needed - if ccPassphrase == 0, sPassphrase is not used
@@ -656,7 +656,7 @@ public:
 		SetDlgItemText(IDC_COPYRIGHT, sz);
 		delete[] sz;
 
-		StringCbPrintf(szMsg, sizeof szMsg, _("This is an ALPHA-version! Pre-BETA! Enjoy, but be aware, and please report problems and suggestions! Get the full version of %s for one-click encryption, decryption and viewing."), _("GlobalNames|XecretsFile"));
+		StringCbPrintf(szMsg, sizeof szMsg, _("This is an ALPHA-version! Pre-BETA! Enjoy, but be aware, and please report problems and suggestions! Get the full version of %s for one-click encryption, decryption and viewing."), _("GlobalNames|XecretsFileClassic"));
 		SetDlgItemText(IDC_ABOUTMSG, szMsg);
 
 		SetDlgItemText(IDC_GETXECRETSFILE, _("http://www.axantum.com"));

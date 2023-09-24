@@ -11,7 +11,7 @@
 #include "windows.h"
 #undef APSTUDIO_HIDDEN_SYMBOLS
 #include "resource.h"
-#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE "XecretsFile Self-Decrypter"
+#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE "Xecrets File Classic Self-Decrypter"
 #define VERSION_PROJECT_INTERNAL_NAME_VALUE "AxDecrypt"
 #define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE "AxDecrypt.exe"
 #define VERSION_PROJECT_FILETYPE VFT_APP
@@ -33,7 +33,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_AXDECRYPT           ICON                    "..\\Build\\XecretsFile.ico"
+IDI_AXDECRYPT           ICON                    "..\\Build\\XecretsFileClassic.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -178,7 +178,7 @@ BEGIN
 "#include ""windows.h""\r\n"
 "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
 "#include ""resource.h""\r\n"
-"#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""XecretsFile Self-Decrypter""\r\n"
+"#define VERSION_PROJECT_FILE_DESCRIPTION_VALUE ""Xecrets File Classic Self-Decrypter""\r\n"
 "#define VERSION_PROJECT_INTERNAL_NAME_VALUE ""AxDecrypt""\r\n"
 "#define VERSION_PROJECT_ORIGINAL_FILENAME_VALUE ""AxDecrypt.exe""\r\n"
 "#define VERSION_PROJECT_FILETYPE VFT_APP\r\n"
@@ -228,7 +228,7 @@ END
 STRINGTABLE
 BEGIN
 IDS_AXDECRYPT           "AxDecrypt"
-IDS_XECRETSFILE             "XecretsFile"
+IDS_XECRETSFILE             "XecretsFileClassic"
 END
 
 #endif    // English (United States) resources

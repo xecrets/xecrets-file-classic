@@ -1,15 +1,15 @@
 <Configuration>
-  <Self File="XecretsFile.exe" />
+  <Self File="XecretsFileClassic.exe" />
   <Copyright>Copyright © 2002-2022 Svante Seleborg, All Rights Reserved.</Copyright>
   <CompanyName>Axantum Software AB</CompanyName>
-  <InternalName>xecretsfile</InternalName>
-  <ExternalName>GPL XecretsFile</ExternalName>
+  <InternalName>xecretsfileclassic</InternalName>
+  <ExternalName>GPL Xecrets File Classic</ExternalName>
   <RegistryPath>Software\\Axantum\\AxCrypt</RegistryPath>
   <SfxName>AxDecrypt.exe</SfxName>
-  <ProgramName>XecretsFile.exe</ProgramName>
+  <ProgramName>XecretsFileClassic.exe</ProgramName>
   <MessagesName>Messages.dll</MessagesName>
   <ShellExtName>ShellExt.dll</ShellExtName>
-  <ProgramIconName>XecretsFile.ico</ProgramIconName>
+  <ProgramIconName>XecretsFileClassic.ico</ProgramIconName>
   <XecretsUrl>https://www.axantum.com/</XecretsUrl>
   <Options ShowNoVersion="true" />
 </Configuration>

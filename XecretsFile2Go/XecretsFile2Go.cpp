@@ -1,5 +1,5 @@
 /*! \file
-	\brief XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road.
+	\brief XecretsFile2Go - Stand-Alone Install-free Xecrets File Classic for the road.
 
 	This is the portable parts of the main program. OS-dependent parts, including the actual
 	entry-point, must be compiled and linked separately.
@@ -9,7 +9,7 @@
 
 	@(#) $Id$
 */
-/*! \page License XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road
+/*! \page License XecretsFile2Go - Stand-Alone Install-free Xecrets File Classic for the road
 
 	Copyright (C) 2004-2022 Svante Seleborg/Axon Data, All rights reserved.
 
@@ -25,12 +25,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 */
 //    version
 //    htmlinclude Version.txt
-/*! \mainpage XecretsFile2Go - Stand-Alone Install-free Xecrets File for the road
+/*! \mainpage XecretsFile2Go - Stand-Alone Install-free Xecrets File Classic for the road
 
 	\author
 	Svante Seleborg/Axantum Software AB

@@ -3,7 +3,7 @@
 /*
 	@(#) $Id$
 
-	Xecrets File - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
+	Xecrets File Classic - Compressing and Encrypting Wrapper and Application Launcher for Secure Local,
 	Server or Web Storage of Document Files.
 
 	Copyright (C) 2001-2022 Svante Seleborg/Axon Data, All rights reserved.
@@ -20,12 +20,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 	Utility.h						Misc utility code and declarations etc.
 
 	E-mail							YYYY-MM-DD				Reason
-	software@axantum.com 			2001					Initial
+	support@axantum.com 			2001					Initial
 
 */
 #include "shlobj.h"
@@ -169,7 +169,7 @@ inline void
 MySetForegroundWindow(void) {
 #ifdef _DEBUG
 	if (GetForegroundWindow() == NULL) {
-		MessageBox(NULL, _T("No foreground window!"), _T("XecretsFile Debug"), MB_OK);
+		MessageBox(NULL, _T("No foreground window!"), _T("XecretsFileClassic Debug"), MB_OK);
 	}
 #else
 #endif

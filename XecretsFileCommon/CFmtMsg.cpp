@@ -19,12 +19,12 @@
 	if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 	Boston, MA 02111-1307 USA
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 	CFmtMsg.cpp                     Actions on temporary files and directories
 
 	E-mail                          YYYY-MM-DD              Reason
-	software@axantum.com             2002-10-07              Initial
+	support@axantum.com             2002-10-07              Initial
 
 */
 #include "stdafx.h"

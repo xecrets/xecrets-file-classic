@@ -12,7 +12,7 @@
 
 	Copyright (C) 2005-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
 
-	The author may be reached at mailto:software@axantum.com and http://www.axantum.com
+	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
 */
 

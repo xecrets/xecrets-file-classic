@@ -14,7 +14,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Win32</Platform>
     <OutputPlatformName Condition=" '$(OutputPlatformName)' == '' ">$(Platform)</OutputPlatformName>
-    <OutputName Condition=" '$(OutputName)' == '' ">XecretsFile</OutputName>
+    <OutputName Condition=" '$(OutputName)' == '' ">XecretsFileClassic</OutputName>
     <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'x64' ">x64\$(Configuration)\</AxPlatformConfigurationDir>
     <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'Win32' ">$(Configuration)\</AxPlatformConfigurationDir>
     <AxPlatformConfigurationDir Condition=" '$(Platform)' == 'x86' ">$(Configuration)\</AxPlatformConfigurationDir>
@@ -37,7 +37,7 @@
 
   <!-- Common string version resources go here. -->
   <PropertyGroup>
-    <ProductName>XecretsFile</ProductName>
+    <ProductName>XecretsFileClassic</ProductName>
     <CompanyName>Axantum Software AB</CompanyName>
     <Copyright>Copyright \251 2002-2022 Svante Seleborg</Copyright>
     <Trademark>All Rights Reserved</Trademark>
@@ -226,6 +226,8 @@
     <ItemGroup>
       <AxContent Include="@(CustomBuild)"
                  Condition="'%(CustomBuild.ExcludedFromBuild)' != 'true' And '%(CustomBuild.Command)' == '' And '%(CustomBuild.DeploymentContent)' == 'true' " />
+      <AxContent Remove="Config.xml;Sigs.xml"
+                 Condition=" '$(AxIsGplBuild)' != 'true' " />
     </ItemGroup>
   </Target>
 
