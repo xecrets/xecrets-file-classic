@@ -1,4 +1,4 @@
-1.7.32xx Release 2023-09-25
+1.7.3268 Release 2023-09-25
 Update to build with Crypto++ 8.8, zlib 1.3, NSIS 3.09, WiX 4.02/HeatWave
 Change name to Xecrets File Classic 1.7.x .
 
