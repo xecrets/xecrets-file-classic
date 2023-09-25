@@ -146,6 +146,10 @@ public:
 	}
 };
 
+static char tolower_char(char c) {
+	return (char)::tolower(c);
+}
+
 /// \brief just a simple base class to add function for a common canonicalization method
 class Canonicalize {
 public:
@@ -162,7 +166,7 @@ public:
 				sCanon.push_back(sMessage[i]);
 			}
 		}
-		transform(sCanon.begin(), sCanon.end(), sCanon.begin(), tolower);
+		transform(sCanon.begin(), sCanon.end(), sCanon.begin(), tolower_char);
 		return sCanon;
 	}
 };
