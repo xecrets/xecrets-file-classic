@@ -5,6 +5,7 @@
 - Chg: Upgrade NSIS to 3.09
 - Chg: Upgrade WiX to 4.02 / HeatWave
 - Chg: Rename to Xecrets File Classic
+- Chg: Update copyright year
 
 1.7.3235.0 Release 2022-08-09
 - Chg: Upgrade tooling to VS 2022.

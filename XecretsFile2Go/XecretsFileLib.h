@@ -122,7 +122,7 @@
 		- A callable function to hash a passphrase 'pPassphrase/cbPassphrase' and possibly a key-file AXCL_PATHKEY to a key encrypting key pKEK/cbKEK.
 		- A callback to report progress in the scale of 0-10000, and check for cancellation
 
-	Copyright (C) 2005-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2005-2023 Svante Seleborg/Axantum Software AB, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

@@ -6,7 +6,7 @@
 	A 'just-enough' bunch of routines that replace the equivalent things
 	from the C Run Time Library.
 
-	Copyright (C) 2004-2022 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2004-2023 Svante Seleborg/Axon Data, All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

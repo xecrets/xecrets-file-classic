@@ -10,7 +10,7 @@
 	static const byte s_vecUpper[] = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789";
 	static const byte s_vecLower[] = "abcdefghijklmnpqrstuvwxyz123456789";
 
-	Copyright (C) 2005-2022 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2005-2023 Svante Seleborg/Axantum Software AB, All rights reserved.
 
 	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
