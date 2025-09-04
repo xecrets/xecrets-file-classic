@@ -7,7 +7,8 @@
 <!-- Releases are always released as major upgrades, i.e. a version number change + Product Code change. -->
 <?include $(var.Version.IncludeDir)\Version.wxi ?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
-     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
   <!-- Change the UpgradeCode when the major version changes, i.e. it's essentially a new product. -->
   <Package Name="Xecrets File Classic $(var.Version)"
            Language="1033"
@@ -226,8 +227,8 @@
                  Width="56"
                  Height="17"
                  Text="!(loc.WixUIPrint)">
-          <Publish Event="DoAction"
-                   Value="WixUIPrintEula_$(sys.BUILDARCHSHORT)" />
+          <Publish Event="MsiPrint"
+                   Value="1" />
         </Control>
         <Control Id="Back"
                  Type="PushButton"
