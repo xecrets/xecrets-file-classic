@@ -152,6 +152,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)$(TargetName)$(TargetExt)</Outputs>
     </ClInclude>
     <None Include="..\Build.cmd" />
+    <None Include="packages.config" />
     <None Include="XecretsFileClassic.ico" />
     <None Include="Build.targets">
       <SubType>Designer</SubType>
@@ -223,5 +224,12 @@
   <Target Name="_AxBuildBeforeBuild" BeforeTargets="Build" DependsOnTargets="AxBuildBeforeBuild" />
   <Target Name="_AxBuildBeforeClean" BeforeTargets="Clean" DependsOnTargets="AxExtraBuildClean" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
+  </Target>
 </Project>
