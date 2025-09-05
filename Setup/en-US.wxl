@@ -1,7 +1,7 @@
 ﻿<WixLocalization Culture="en-us"
                  xmlns="http://wixtoolset.org/schemas/v4/wxl">
   <String Id="Copyright"
-          Value="Copyright © 2002-2023 Svante Seleborg, All Rights Reserved." />
+          Value="Copyright © 2002-2025 Svante Seleborg/Axantum Software AB. All Rights Reserved." />
   <String Id="CompanyName"
           Value="Axantum Software AB" />
   <String Id="InternalName"

@@ -8,7 +8,7 @@
 	Encode Base34 strings. These are strings using A-N, P-Z, 1-9 as their digits,
 	valued in that sequence, i.e. A is zero, 9 is thirty-two.
 
-	Copyright (C) 2005-2023 Svante Seleborg/Axantum Software AB, All rights reserved.
+	Copyright (C) 2005-2025 Svante Seleborg/Axantum Software AB. All rights reserved.
 
 	The author may be reached at mailto:support@axantum.com and http://www.axantum.com
 ----
