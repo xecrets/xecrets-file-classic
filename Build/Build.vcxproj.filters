@@ -36,6 +36,7 @@
     </None>
     <None Include="README.txt" />
     <None Include="..\Build.cmd" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ChangeLog.txt" />
