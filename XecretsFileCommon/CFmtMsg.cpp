@@ -5,7 +5,7 @@
 	allocating strings that is the result for printf-like functionality. I'm
 	not sure how this should be done portably for a MacIntosh or Unix-platform...
 
-	Copyright (C) 2001-2023 Svante Seleborg/Axon Data, All rights reserved.
+	Copyright (C) 2001-2025 Svante Seleborg/Axantum Software AB. All rights reserved.
 
 	This program is free software; you can redistribute it and/or modify it under the terms
 	of the GNU General Public License as published by the Free Software Foundation;

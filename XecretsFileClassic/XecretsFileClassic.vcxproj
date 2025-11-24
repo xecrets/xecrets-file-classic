@@ -99,7 +99,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;shlwapi.lib;comctl32.lib;winmm.lib;winhttp.lib;version.lib;zlibstat.lib;cryptlib.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc14\x86\ZlibStat$(Configuration);$(AX_CRYPTOPP)\$(Platform)\Output\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc17\x86\ZlibStat$(Configuration);$(AX_CRYPTOPP)\$(Platform)\Output\$(Configuration)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <IgnoreSpecificDefaultLibraries>MSVCRTD</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -125,7 +125,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;shlwapi.lib;comctl32.lib;winmm.lib;winhttp.lib;version.lib;zlibstat.lib;cryptlib.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc14\x64\ZlibStat$(Configuration);$(AX_CRYPTOPP)\$(Platform)\Output\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc17\x64\ZlibStat$(Configuration);$(AX_CRYPTOPP)\$(Platform)\Output\$(Configuration)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <IgnoreSpecificDefaultLibraries>MSVCRTD</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -154,7 +154,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;shlwapi.lib;comctl32.lib;winmm.lib;winhttp.lib;version.lib;zlibstat.lib;cryptlib.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc14\x86\ZlibStat$(Configuration)WithoutAsm;$(AX_CRYPTOPP)\$(Platform)\Output\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc17\x86\ZlibStat$(Configuration)WithoutAsm;$(AX_CRYPTOPP)\$(Platform)\Output\$(Configuration)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
@@ -184,7 +184,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;shlwapi.lib;comctl32.lib;winmm.lib;winhttp.lib;version.lib;zlibstat.lib;cryptlib.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc14\x64\ZlibStat$(Configuration)WithoutAsm;$(AX_CRYPTOPP)\$(Platform)\Output\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc17\x64\ZlibStat$(Configuration)WithoutAsm;$(AX_CRYPTOPP)\$(Platform)\Output\$(Configuration)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
