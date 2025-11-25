@@ -15,13 +15,13 @@ requirements. This list may be incomplete, please let me know if this is the cas
 - When you first load the solution, you may get a "Security Warning for Setup". Please select "Load project normally". This is by design.
 
 - Because of inconsistencies in various packages included in Xecrets File Classic, there are three platforms actually defined, and Visual Studio may
-  start off with a default of 'Mixed Platforms'. Change this immediately, and only build for 'Win32' and 'x64'. (Not x86 - that's for
-  the Setup project).
+  starting off with a default of 'Mixed Platforms'. Change this immediately, and only build for 'Win32' and 'x64'.
+  (Not x86 - that's for the Setup project).
   
 - Build the Win32 configuration first, since the x64 configuration depends on it.
   
-- Xecrets File Classic is developed with Visual Studio 2022 Professional. It should be possible to build Xecrets File Classic entirely
-  with free tools (Visual Studio 2022 Community and/or MSBuild).
+- Xecrets File Classic is developed with Visual Studio 2026 Professional. It should be possible to build Xecrets File Classic entirely
+  with free tools (Visual Studio 2026 Community and/or MSBuild).
 
 - There are some special tweaks to handle the different build environments for Xecrets File Classic, such as GPL Builds, Axantum developer builds and
   Axantum build server builds. This is why you'll find some conditional code in various MSBuild project files.
@@ -34,12 +34,12 @@ Tools and Dependencies Installation
 
 Executive summary (details in respective section below):
 
-- Install, set AX_CRYPTOPP=install-path and build Crypto++ 8.9.0 (or later at your own risk)
-- Install, set AX_ZLIB=install-path and build zlib 1.3.1 (or later at your own risk)
-- Install WTL 10.0.10320 and set AX_WTL=Install-path (or later at your own risk)
-- Install Microsoft Visual Studio 2022 Community Edition or Microsoft Visual Studio 2022 Professional Edition or better.
-- Install Windows Installer XML (WiX) toolset v6.0.2/HeatWave (or later at your own risk)
-- Start Visual Studio 2022, open the Xecrets File Classic solution, and build.
+- Install, set AX_CRYPTOPP=install-path and build Crypto++ 8.9.0 (or later at your own risk) https://www.cryptopp.com/
+- Install, set AX_ZLIB=install-path and build zlib 1.3.1 (or later at your own risk) https://www.zlib.net/
+- Install WTL 10.0.10320 and set AX_WTL=Install-path (or later at your own risk) https://sourceforge.net/projects/wtl/
+- Install https://visualstudio.microsoft.com/vs/community/ or https://visualstudio.microsoft.com/vs/professional/ or better.
+- Install https://www.firegiant.com/heatwave/ VS2022 (sic!) 1.0.6 (v6.0.2/HeatWave) (or later at your own risk)
+- Start Visual Studio 2026, open the Xecrets File Classic solution, and build.
 
 AX_XXX refers to environment variables, used to refer to external dependency disk locations.
 
@@ -66,13 +66,13 @@ Download Crypto++ Library 8.9.0 (or possibly later at your own risk) from http:/
 Set the environment variable AX_CRYPTOPP to point to the installation directory, perhaps "C:\Users\[UserName]\Documents\Contrib\cryptopp890" .
 You may need to restart Windows Explorer for the setting to take effect.
 
-Open x64_x86 Cross Tools Command Prompt for VS 2022 (on X64 build host)
+Open "x64_x86 Cross Tools Command Prompt for VS" (on X64 build host)
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild cryptlib.vcxproj /p:Configuration=Release;Platform=Win32
 
-Open x64 Native Tools Command Prompt for VS 2022 (on X64 build host)
+Open "x64 Native Tools Command Prompt for VS" (on X64 build host)
 
 cd  %AX_CRYPTOPP%
 msbuild cryptlib.vcxproj /p:Configuration=Debug;Platform=x64
@@ -88,9 +88,12 @@ You may need to restart Windows Explorer for the setting to take effect.
 
 Due to a bug in zlibstat.vcxproj:
 
-Open %AX_ZLIB%\contrib\vstudio\vc17\zlibvc.sln in Visual Studio 2022, Ensure toolset v143 and SDK 10.0.22621.0 (or later at your own risk).
+Open %AX_ZLIB%\contrib\vstudio\vc17\zlibvc.sln in Visual Studio 2026
 
-Change 'zlibstat'
+Change 'zlibstat':
+
+Configuration Debug: Win32 and x64, ReleaseWithoutAsm: Win32 and x64
+Ensure toolset v145 and SDK 10.0.26100.0 (or later at your own risk).
 
 Properties | C/C++ | Code Generation | Runtime Library:
 
@@ -112,13 +115,13 @@ MachineX86 (/MACHINE:X86) (Is actually ok from 1.3 apparently)
 
 Save the solution and project!
 
-Open x64_x86 Cross Tools Command Prompt for VS 2022 (on X64 build host)
+Open "x64_x86 Cross Tools Command Prompt for VS" (on X64 build host)
 
 cd %AX_ZLIB%\contrib\vstudio\vc17
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=Win32
 msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm;Platform=Win32
 
-Open x64 Native Tools Command Prompt for VS 2022 (on X64 build host)
+Open "x64 Native Tools Command Prompt for VS" (on X64 build host)
 
 cd %AX_ZLIB%\contrib\vstudio\vc17
 msbuild zlibstat.vcxproj /p:Configuration=Debug;Platform=x64
@@ -134,12 +137,12 @@ Set the environment variable AX_WTL to point to the installation directory, perh
 You may need to restart Windows Explorer for the setting to take effect.
 
 WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is currently included
-in Visual Studio 2022 all versions, but if not you can get it via the Windows Driver Kit. See more below.
+in Visual Studio 2026 all versions, but if not you can get it via the Windows Driver Kit. See more below.
 
 ATL
 ===
 
-ATL is part of Visual Studio 2022 Professional and Visual Studio 2022 Community Edition. No further action is needed, although you may
+ATL is part of Visual Studio Professional and Visual Studio Community Edition. No further action is needed, although you may
 need to add it as an optional component in the Visual Studio installer.
 
 Otherwise...
@@ -150,6 +153,12 @@ MSBuild.Community.Tasks
 =======================
 
 The build process is dependent on a few extensions to MSBuild. It is included via a nuget package.
+
+Visual Studio 2022 Community and Professional
+=============================================
+
+It was possible to build with Visual Studio 2022, but we have not regression tested this after upgrading to 2026. You'll probably have
+to change toolset and target SDK. Possibly more.
 
 Visual Studio 2019 Community and Professional
 =============================================
@@ -225,7 +234,7 @@ Building from the command line
 
 All is built using MSBuild. Please see Microsoft documentation for details. Briefly:
 
-- Open a Developer Command Prompt for VS2022
+- Open a "Developer Command Prompt for VS"
 - Change current directory to the location of the source code.
 - Use the following to build for various configurations and platforms:
 

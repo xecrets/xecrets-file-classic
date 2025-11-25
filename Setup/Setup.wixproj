@@ -1,8 +1,10 @@
-﻿<Project Sdk="WixToolset.Sdk/6.0.2">
+<Project Sdk="WixToolset.Sdk/7.0.0" ToolsVersion="4.0">
   <PropertyGroup>
+    <AcceptEula>wix7</AcceptEula>
     <ProductVersion>3.0</ProductVersion>
     <OutputName>XecretsFileClassic</OutputName>
-    <SpecialBuildSuffix></SpecialBuildSuffix>
+    <SpecialBuildSuffix>
+    </SpecialBuildSuffix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <ConfigPlatformPathPart>$(Configuration)</ConfigPlatformPathPart>
@@ -31,8 +33,8 @@
     <DefineConstants>Package.TargetDir=$(SolutionDir)x64\$(Configuration);Package.TargetDirWin32=$(SolutionDir)$(Configuration);Version.IncludeDir=$(SolutionDir)x64\$(Configuration)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="WixToolset.Util.wixext" Version="6.0.2" />
-    <PackageReference Include="WixToolset.UI.wixext" Version="6.0.2" />
+    <PackageReference Include="WixToolset.Util.wixext" Version="7.0.0" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Build\Version.txt">
