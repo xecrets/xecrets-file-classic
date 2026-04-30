@@ -59,8 +59,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc17\x86\ZlibStat$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Version.lib;zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\build-$(Platform)-mtd\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Version.lib;zsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
@@ -92,8 +92,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(AX_ZLIB)\contrib\vstudio\vc17\x86\ZlibStat$(Configuration)WithoutAsm</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Version.lib;zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(AX_ZLIB)\build-$(Platform)-mt\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Version.lib;zs.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4254,4078 %(AdditionalOptions)</AdditionalOptions>
