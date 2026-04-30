@@ -36,7 +36,7 @@ Executive summary (details in respective section below):
 
 - Install, set AX_CRYPTOPP=install-path and build Crypto++ 8.9.0 (or later at your own risk) https://www.cryptopp.com/
 - Install, set AX_ZLIB=install-path and build zlib 1.3.2 (or later at your own risk) https://www.zlib.net/
-- Install WTL 10.0.10320 and set AX_WTL=Install-path (or later at your own risk) https://sourceforge.net/projects/wtl/
+- Install WTL 10.01 and set AX_WTL=Install-path (or later at your own risk) https://sourceforge.net/projects/wtl/
 - Install https://visualstudio.microsoft.com/vs/community/ or https://visualstudio.microsoft.com/vs/professional/ or better.
 - Install VS extension https://www.firegiant.com/heatwave/ VS2022 (sic!) 1.0.8 (v7.0.0/HeatWave) (or later at your own risk)
 - Start Visual Studio 2026, open the Xecrets File Classic solution and build first for Win32, then for x64 (ignore other platforms).
@@ -101,10 +101,10 @@ cmake --build build-x64-mt --config Release
 WTL
 ===
 
-Download WTL 10.0.10320 (or possibly later at your own risk) from https://sourceforge.net/projects/wtl/files/, https://github.com/Win32-WTL/WTL
-or https://www.nuget.org/packages/wtl.
+Download WTL 10.01 (or possibly later at your own risk) from https://sourceforge.net/projects/wtl/files/, https://github.com/Win32-WTL/WTL
+(not maintained it seems) or https://www.nuget.org/packages/wtl.
 
-Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL10_10320_Release" .
+Set the environment variable AX_WTL to point to the installation directory, perhaps "C:\Users\%USERNAME%\Documents\Contrib\WTL10_01_Release" .
 You may need to restart Windows Explorer for the setting to take effect.
 
 WTL needs no building, it's just a set of header files. But it does depend on ATL, Active Template Library, which is currently included

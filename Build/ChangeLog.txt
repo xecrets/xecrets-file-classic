@@ -2,6 +2,7 @@
 - Chg: Update to build with Visual Studio 2026
 - Chg: Upgrade WiX to 7.0.0 / HeatWave
 - Chg: Update to ZLib 1.3.2
+- Chg: Update to WTL 10.01
 
 1.7.3284.0 Release 2025-09-05
 - Chg: Digitally sign the installer and executables
